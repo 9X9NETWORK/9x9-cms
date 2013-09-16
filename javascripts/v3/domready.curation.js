@@ -2206,7 +2206,83 @@ $(function () {
 
                             // insert poi
                             if (tmplItemData.poiList && tmplItemData.poiList.length > 0) {
-                                insertAllPoi(tmplItem, program);
+                                $.each(tmplItemData.poiList, function (key, poiItem) {
+                                    if (poiItem.id && '' !== poiItem.id && isNaN(poiItem.id)) {
+                                        delete poiItem.id;
+                                        delete poiItem.eventId;
+                                        poiPointData = {
+                                            name: poiItem.name,
+                                            startTime: poiItem.startTime,
+                                            endTime: poiItem.endTime,
+                                            tag: poiItem.tag
+                                        };
+
+                                        cms.poiUtility.poiPoint.set(program.id, poiPointData)
+                                        .then(function (poi_point) {
+                                            tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
+                                            tmplItemData = tmplItem.data;
+                                            tmplItemData.poiList[key].id = poi_point.id;
+                                            tmplItemData.poiList[key].targetId = poi_point.targetId;
+                                            tmplItemData.poiList[key].type = poi_point.type;
+                                            poiEventContext = {
+                                                "message": tmplItemData.poiList[key].message,
+                                                "button": [{
+                                                    "text": tmplItemData.poiList[key].button,
+                                                    "actionUrl": tmplItemData.poiList[key].link
+                                                }]
+                                            };
+                                            poiEventData = {
+                                                name: tmplItemData.poiList[key].name,
+                                                type: tmplItemData.poiList[key].eventType,
+                                                context: JSON.stringify(poiEventContext),
+                                                notifyMsg: tmplItemData.poiList[key].notifyMsg,
+                                                notifyScheduler: tmplItemData.poiList[key].notifyScheduler
+                                            };
+
+                                            cms.poiUtility.poiEvent.set(cms.global.USER_DATA.id, poiEventData)
+                                            .then(function (poi_event) {
+                                                poiData = {
+                                                    pointId: poi_point.id,
+                                                    eventId: poi_event.id
+                                                };
+
+                                                cms.poiUtility.poi.set(cms.global.CAMPAIGN_ID, poiData)
+                                                .then(function (poi) {
+                                                    tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
+                                                    tmplItemData = tmplItem.data;
+                                                    poiEventContext = {
+                                                        "message": tmplItemData.poiList[key].message,
+                                                        "button": [{
+                                                            "text": tmplItemData.poiList[key].button,
+                                                            "actionUrl": tmplItemData.poiList[key].link
+                                                        }]
+                                                    };
+                                                    poiEventData = {
+                                                        name: tmplItemData.poiList[key].name,
+                                                        type: tmplItemData.poiList[key].eventType,
+                                                        context: JSON.stringify(poiEventContext),
+                                                        notifyMsg: tmplItemData.poiList[key].notifyMsg,
+                                                        notifyScheduler: tmplItemData.poiList[key].notifyScheduler
+                                                    };
+                                                    if (-1 !== $.inArray(cms.config.POI_TYPE_MAP[poi_event.type], ['event-scheduled', 'event-instant'])) {
+                                                        poiEventContext.button[0].actionUrl = cms.config.POI_ACTION_URL + poi.id;
+                                                        poiEventData.context = JSON.stringify(poiEventContext);
+                                                        tmplItemData.poiList[key].link = cms.config.POI_ACTION_URL + poi.id;
+                                                    }
+
+                                                    cms.poiUtility.poiEvent.update(poi_event.id, poiEventData)
+                                                    .then(function (poi_event) {
+                                                        // update poi to DOM
+                                                        tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
+                                                        tmplItemData = tmplItem.data;
+                                                        tmplItemData.poiList[key].eventId = poi_event.id;
+                                                        //tmplItem.update();
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    }
+                                });
                             }
 
                             // insert titlecard
