@@ -1923,7 +1923,7 @@ $(function () {
         } else {
             // insert mode
             if (!isNaN(programId) && programId > 0) {
-                insertPoi(data, poiItem);
+                insertPoiPoll(data, poiItem);
             } else {
                 // build timestamp id and update poi info in the browser
                 poiItem.id = 'temp-poi-point-id-' + $.now();
@@ -1935,7 +1935,7 @@ $(function () {
         }            
     }
     // Insert new poll event data to the server.
-    function insertPoi (data, poiItem) {
+    function insertPoiPoll (data, poiItem) {
         var poiPoint = data.poiPoint,
             poiEvent = data.poiEvent,
             eventContext = data.eventContext;
@@ -2035,6 +2035,71 @@ $(function () {
         $('#epcurate-curation ul.tabs li a.cur-poi').trigger('click');
     }
 
+    function insertAllPoi () {
+        var tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
+        var tmplItemData = tmplItem.data;
+
+        $.each(tmplItemData.poiList, function (key, poiItem) {
+            var poiPointData, poiEventData, poiEventContext, poiData;
+            if (poiItem.id && '' !== poiItem.id && isNaN(poiItem.id)) {
+                delete poiItem.id;
+                delete poiItem.eventId;
+                poiPointData = {
+                    name: poiItem.name,
+                    startTime: poiItem.startTime,
+                    endTime: poiItem.endTime,
+                    tag: poiItem.tag
+                };
+                poiEventContext = {
+                    "message": tmplItemData.poiList[key].message,
+                    "button": [{
+                        "text": tmplItemData.poiList[key].button,
+                        "actionUrl": tmplItemData.poiList[key].link
+                    }]
+                };
+                poiEventData = {
+                    name: tmplItemData.poiList[key].name,
+                    type: tmplItemData.poiList[key].eventType,
+                    context: JSON.stringify(poiEventContext),
+                    notifyMsg: tmplItemData.poiList[key].notifyMsg,
+                    notifyScheduler: tmplItemData.poiList[key].notifyScheduler
+                };
+
+                cms.poiUtility.poiPoint.set(program.id, poiPointData)
+                .then(function (poi_point) {                    
+                    
+                    tmplItemData.poiList[key].id = poi_point.id;
+                    tmplItemData.poiList[key].targetId = poi_point.targetId;
+                    tmplItemData.poiList[key].type = poi_point.type;
+
+                    cms.poiUtility.poiEvent.set(cms.global.USER_DATA.id, poiEventData)
+                    .then(function (poi_event) {
+                        tmplItemData.poiList[key].eventId = poi_event.id;
+                        poiData = {
+                            pointId: poi_point.id,
+                            eventId: poi_event.id
+                        };
+
+                        cms.poiUtility.poi.set(cms.global.CAMPAIGN_ID, poiData)
+                        .then(function (poi) {
+                            if (-1 !== $.inArray(cms.config.POI_TYPE_MAP[poi_event.type], ['event-scheduled', 'event-instant'])) {
+                                poiEventContext.button[0].actionUrl = cms.config.POI_ACTION_URL + poi.id;
+                                poiEventData.context = JSON.stringify(poiEventContext);
+                                tmplItemData.poiList[key].link = cms.config.POI_ACTION_URL + poi.id;
+                            }
+
+                            // cms.poiUtility.poiEvent.update(poi_event.id, poiEventData)
+                            // .then(function (poi_event) {
+                                // update poi to DOM
+                                //tmplItem.update();
+                            // });
+                        });
+                    });
+                });
+            }
+        });
+    }
+
     // Scroll storyboard horizontal video list with mouse wheel.
     $("#storyboard-wrap").mousewheel(function(event, delta) {
 
@@ -2121,83 +2186,7 @@ $(function () {
 
                             // insert poi
                             if (tmplItemData.poiList && tmplItemData.poiList.length > 0) {
-                                $.each(tmplItemData.poiList, function (key, poiItem) {
-                                    if (poiItem.id && '' !== poiItem.id && isNaN(poiItem.id)) {
-                                        delete poiItem.id;
-                                        delete poiItem.eventId;
-                                        poiPointData = {
-                                            name: poiItem.name,
-                                            startTime: poiItem.startTime,
-                                            endTime: poiItem.endTime,
-                                            tag: poiItem.tag
-                                        };
-
-                                        cms.poiUtility.poiPoint.set(program.id, poiPointData)
-                                        .then(function (poi_point) {
-                                            tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
-                                            tmplItemData = tmplItem.data;
-                                            tmplItemData.poiList[key].id = poi_point.id;
-                                            tmplItemData.poiList[key].targetId = poi_point.targetId;
-                                            tmplItemData.poiList[key].type = poi_point.type;
-                                            poiEventContext = {
-                                                "message": tmplItemData.poiList[key].message,
-                                                "button": [{
-                                                    "text": tmplItemData.poiList[key].button,
-                                                    "actionUrl": tmplItemData.poiList[key].link
-                                                }]
-                                            };
-                                            poiEventData = {
-                                                name: tmplItemData.poiList[key].name,
-                                                type: tmplItemData.poiList[key].eventType,
-                                                context: JSON.stringify(poiEventContext),
-                                                notifyMsg: tmplItemData.poiList[key].notifyMsg,
-                                                notifyScheduler: tmplItemData.poiList[key].notifyScheduler
-                                            };
-
-                                            cms.poiUtility.poiEvent.set(cms.global.USER_DATA.id, poiEventData)
-                                            .then(function (poi_event) {
-                                                poiData = {
-                                                    pointId: poi_point.id,
-                                                    eventId: poi_event.id
-                                                };
-
-                                                cms.poiUtility.poi.set(cms.global.CAMPAIGN_ID, poiData)
-                                                .then(function (poi) {
-                                                    tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
-                                                    tmplItemData = tmplItem.data;
-                                                    poiEventContext = {
-                                                        "message": tmplItemData.poiList[key].message,
-                                                        "button": [{
-                                                            "text": tmplItemData.poiList[key].button,
-                                                            "actionUrl": tmplItemData.poiList[key].link
-                                                        }]
-                                                    };
-                                                    poiEventData = {
-                                                        name: tmplItemData.poiList[key].name,
-                                                        type: tmplItemData.poiList[key].eventType,
-                                                        context: JSON.stringify(poiEventContext),
-                                                        notifyMsg: tmplItemData.poiList[key].notifyMsg,
-                                                        notifyScheduler: tmplItemData.poiList[key].notifyScheduler
-                                                    };
-                                                    if (-1 !== $.inArray(cms.config.POI_TYPE_MAP[poi_event.type], ['event-scheduled', 'event-instant'])) {
-                                                        poiEventContext.button[0].actionUrl = cms.config.POI_ACTION_URL + poi.id;
-                                                        poiEventData.context = JSON.stringify(poiEventContext);
-                                                        tmplItemData.poiList[key].link = cms.config.POI_ACTION_URL + poi.id;
-                                                    }
-
-                                                    cms.poiUtility.poiEvent.update(poi_event.id, poiEventData)
-                                                    .then(function (poi_event) {
-                                                        // update poi to DOM
-                                                        tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
-                                                        tmplItemData = tmplItem.data;
-                                                        tmplItemData.poiList[key].eventId = poi_event.id;
-                                                        //tmplItem.update();
-                                                    });
-                                                });
-                                            });
-                                        });
-                                    }
-                                });
+                                insertAllPoi();
                             }
 
                             // insert titlecard
@@ -2343,83 +2332,7 @@ $(function () {
 
                             // insert poi
                             if (tmplItemData.poiList && tmplItemData.poiList.length > 0) {
-                                $.each(tmplItemData.poiList, function (key, poiItem) {
-                                    if (poiItem.id && '' !== poiItem.id && isNaN(poiItem.id)) {
-                                        delete poiItem.id;
-                                        delete poiItem.eventId;
-                                        poiPointData = {
-                                            name: poiItem.name,
-                                            startTime: poiItem.startTime,
-                                            endTime: poiItem.endTime,
-                                            tag: poiItem.tag
-                                        };
-                                        nn.api('POST', cms.reapi('/api/programs/{programId}/poi_points', {
-                                            programId: program.id
-                                        }), poiPointData, function (poi_point) {
-                                            tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
-                                            tmplItemData = tmplItem.data;
-                                            tmplItemData.poiList[key].id = poi_point.id;
-                                            tmplItemData.poiList[key].targetId = poi_point.targetId;
-                                            tmplItemData.poiList[key].type = poi_point.type;
-                                            poiEventContext = {
-                                                "message": tmplItemData.poiList[key].message,
-                                                "button": [{
-                                                    "text": tmplItemData.poiList[key].button,
-                                                    "actionUrl": tmplItemData.poiList[key].link
-                                                }]
-                                            };
-                                            poiEventData = {
-                                                name: tmplItemData.poiList[key].name,
-                                                type: tmplItemData.poiList[key].eventType,
-                                                context: JSON.stringify(poiEventContext),
-                                                notifyMsg: tmplItemData.poiList[key].notifyMsg,
-                                                notifyScheduler: tmplItemData.poiList[key].notifyScheduler
-                                            };
-                                            nn.api('POST', cms.reapi('/api/users/{userId}/poi_events', {
-                                                userId: cms.global.USER_DATA.id
-                                            }), poiEventData, function (poi_event) {
-                                                poiData = {
-                                                    pointId: poi_point.id,
-                                                    eventId: poi_event.id
-                                                };
-                                                nn.api('POST', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
-                                                    poiCampaignId: cms.global.CAMPAIGN_ID
-                                                }), poiData, function (poi) {
-                                                    tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
-                                                    tmplItemData = tmplItem.data;
-                                                    poiEventContext = {
-                                                        "message": tmplItemData.poiList[key].message,
-                                                        "button": [{
-                                                            "text": tmplItemData.poiList[key].button,
-                                                            "actionUrl": tmplItemData.poiList[key].link
-                                                        }]
-                                                    };
-                                                    poiEventData = {
-                                                        name: tmplItemData.poiList[key].name,
-                                                        type: tmplItemData.poiList[key].eventType,
-                                                        context: JSON.stringify(poiEventContext),
-                                                        notifyMsg: tmplItemData.poiList[key].notifyMsg,
-                                                        notifyScheduler: tmplItemData.poiList[key].notifyScheduler
-                                                    };
-                                                    if (-1 !== $.inArray(cms.config.POI_TYPE_MAP[poi_event.type], ['event-scheduled', 'event-instant'])) {
-                                                        poiEventContext.button[0].actionUrl = cms.config.POI_ACTION_URL + poi.id;
-                                                        poiEventData.context = JSON.stringify(poiEventContext);
-                                                        tmplItemData.poiList[key].link = cms.config.POI_ACTION_URL + poi.id;
-                                                    }
-                                                    nn.api('PUT', cms.reapi('/api/poi_events/{poiEventId}', {
-                                                        poiEventId: poi_event.id
-                                                    }), poiEventData, function (poi_event) {
-                                                        // update poi to DOM
-                                                        tmplItem = $('#storyboard-list li:eq(' + idx + ')').tmplItem();
-                                                        tmplItemData = tmplItem.data;
-                                                        tmplItemData.poiList[key].eventId = poi_event.id;
-                                                        //tmplItem.update();
-                                                    });
-                                                });
-                                            });
-                                        });
-                                    }
-                                });
+                                insertAllPoi();
                             }
 
                             // insert titlecard
