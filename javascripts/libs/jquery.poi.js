@@ -1,3 +1,15 @@
+/*
+ *  Usage:
+ *      
+ *  $('.poi-display').poi({
+ *      type: cms.config.POI_TYPE_MAP[type].plugin,
+ *      displayText: displayText,
+ *      buttons: [buttonsText],
+ *      duration: -1,
+ *      onSelected: function(){}
+ *  });
+ */
+
 var POI = {
     HYPER_CHANNEL: "hyperChannel",
     SHOPPING_INFO: "shoppingInfo",
@@ -7,11 +19,11 @@ var POI = {
 
 (function($) {
     var defaults = {
-        "type": POI.HYPER_CHANNEL,
-        "displayText": "",
-        "buttons": ["new button"],
-        "duration": 10,
-        "onSelect": function() {
+        type: POI.HYPER_CHANNEL,
+        displayText: "",
+        buttons: ["new button"],
+        duration: 10,
+        onSelected: function() {
 
         }
     };
@@ -61,16 +73,16 @@ var POI = {
         $("#poi-btn-holder").addClass(getClass(type));
     };
     var self = this;
-    var onBtnClick = function(e) {
+    var onBtnClick = function(event) {
         if (buttons.length == 1) {
             $(self).poi("select");
         } else {
             //currently there's only hyper channel, enable below later
             // return;
-            $("#poi-btn-holder div").each(function(i, e) {
-                console.debug(e);
-                console.debug(this);
-                if (e == this) {
+            $("#poi-btn-holder div").each(function(i, element) {
+                // console.debug(element);
+                // console.debug(this);
+                if (event.currentTarget == this) {
                     selectedIndex = i;
                     console.debug(selectedIndex);
                     $(self).poi("select");
