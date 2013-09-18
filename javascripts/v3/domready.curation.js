@@ -1166,6 +1166,7 @@ $(function () {
             }
             // Add a poll item.
             $('#btn-add-poll-item').before($('#poi-poll-button-tmpl-item').tmpl({btnName: pollItemList.length + 1}));
+            $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('addButton', nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text']));
             // Add input char counter
             // $('input.poll-button').charCounter(8, {
             //     // container: '',
@@ -1184,6 +1185,7 @@ $(function () {
     $('#poi-event-overlay').on('click', '.poll-button-del', function (event) {
         var pollItemList;
         
+        $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('removeButtonAt', $('#eventPollForm p.text.poll').index($(this).parent()));
         $(this).parent().remove();
 
         pollItemList = $('#eventPollForm input.poll-button');
@@ -1503,6 +1505,11 @@ $(function () {
     $('#poi-event-overlay').on('change keyup keydown', 'input[name=btnText]', function () {
         var val = $common.strip_tags($(this).val().replace(/\n/g, ''));
         $('#poi-event-overlay .event .video-wrap .poi-display').poi('buttonText', val);
+    });
+    // Poll event button text change
+    $('#poi-event-overlay').on('change keyup keydown', 'input.poll-button', function () {
+        var val = $common.strip_tags($(this).val().replace(/\n/g, ''));
+        $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('buttonText', val, $('#eventPollForm p.text.poll').index($(this).parent()));
     });
     $('#poi-event-overlay').on('blur', 'input[name=displayText]', function () {
         var val = $common.strip_tags($(this).val().replace(/\n/g, ''));

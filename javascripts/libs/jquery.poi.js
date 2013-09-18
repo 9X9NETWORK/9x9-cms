@@ -84,7 +84,7 @@ var POI = {
                 // console.debug(this);
                 if (event.currentTarget == this) {
                     selectedIndex = i;
-                    console.debug(selectedIndex);
+                    // console.debug(selectedIndex);
                     $(self).poi("select");
                 }
             });
