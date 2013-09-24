@@ -182,6 +182,50 @@
             "your upload file is large than 500KB, please reupload file.": "您上傳的檔案超過500KB，請重新上傳較小檔案。"
         }
     },
+    "store-promotion": {
+        "html-title": {
+            "9x9.tv - Store Manage": "9x9.tv - 頻道商店 "
+        },
+        "func-nav": {
+            "My Portal": "我的入口",
+            "Channel Store": "頻道商店",
+            "Brand Settings": "品牌設定"
+        },
+        "title-func": {
+            "Channel Store": "頻道商店",
+            "Portal": "我的入口",
+            "Preview": "預覽",
+            "Save": "儲存",
+            "Set Name": "頻道組名稱"
+        },
+        "store-layer": {
+            "xxx channels in category:": "{0} 個頻道在這個分類:",
+            "You can manage your channel store manually.": "你可以手動管理頻道商店",
+            "Collapse": "收合分類",
+            "Expand Category": "展開分類",
+            "Load More": "載入更多",
+            "Processing...": "處理中..."
+        },
+        "channel-list": {
+            "Sorted by": "預設排序",
+            "Updated time": "依更新時間 ",
+            "Customized Order": "依指定排序",
+            "Best within 20 characters": "建議長度不超過20個字元",
+            "Set Name": "頻道組名稱 ",
+            "Channel List": "頻道列表 ",
+            "Channels": "頻道",
+            "Add channels": "新增頻道",
+            "Add channels sub": "",
+            "Please input channel URL": "請輸入頻道網址",
+            "Please input channel name or curator name": "請輸入頻道名稱或 Curator 名稱",
+            "Set on top": "置頂",
+            "Remove from top": "取消置頂",
+            "Remove channel": "移除此頻道",
+            "Add channel": "增加此頻道",
+            "You can only set 4 channels on top": "只能設定4個置頂頻道",
+            "Set name can't be empty": "頻道組名稱不可空白"
+        }
+    },
     "store-manage": {
         "html-title": {
             "9x9.tv - Store Manage": "9x9.tv - 頻道商店 "
@@ -649,6 +693,7 @@
             "Add interactive event": "設定互動事件",
             "Choose a type": "選擇事件類型",
             "Hyper Link": "超連結頻道",
+            "Poll": "投票",
             "User can go to watch another 9x9.tv channel or episode.": "使用者可前往觀賞另一個9x9.tv頻道或節目。",
             "Scheduled Notification": "排程通知",
             "Send a scheduled notification to user to get more information.": "設定排程通知，使用者可於特定時間獲得更多資訊。",

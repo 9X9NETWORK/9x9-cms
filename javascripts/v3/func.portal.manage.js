@@ -313,7 +313,8 @@
                 return a.seq > b.seq;
             });
             $page.nomoList.sort(function (a, b) {
-                return a.updateDate < b.updateDate;
+                // return parseInt(a.updateDate, 10) < parseInt(b.updateDate, 10);
+                return a.updateDate.toString() < b.updateDate.toString();
             });
         }
         $('#portal-set-chanels-tmpl').tmpl($page.onTopList).appendTo('#channel-list');

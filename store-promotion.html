@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="en" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="stylesheet" href="stylesheetsv3/perfect-scrollbar.css" />
+<link rel="stylesheet" href="stylesheetsv3/style.css?v=1278" />
+<link rel="stylesheet" href="stylesheetsv3/lightbox.css?v=1278" />
+<link rel="stylesheet" href="stylesheets/uniform.css?v=1278" />
+<link rel="stylesheet" href="stylesheets/episode.css?v=1278" />
+<link rel="stylesheet" href="stylesheetsv3/portal.css?v=1278" />
+<title>9x9.tv - Store Manage</title>
+</head>
+<body>
+<div id="fb-root"></div>
+
+<!-- Header Layer Begin -->
+<div id="header">
+    <a href="http://www.9x9.tv/" target="_blank" id="logo"></a>
+    <ul id="nav">
+        <li id="home"><span><a href="http://www.9x9.tv/" target="_blank">9x9.tv Official Web</a></span></li>
+        <li id="tv"><span><a href="http://www.9x9.tv/tv" target="_blank">Watch 9x9.tv on the Web</a></span></li>
+        <li id="profile">
+            <p id="btn-profile"></p>
+            <p id="selected-profile">Guest</p>
+            <ul id="profile-dropdown" class="dropdown">
+                <li><a id="profile-logout" href="signin.html">Log out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- Header Layer End -->
+
+<!-- Navigation Layer Begin -->
+<div id="studio-nav">
+    <div class="studio-nav-wrap">
+        <h3><a href="index.html"><span class="cms-icon">CMS</span><span class="sub-title">Content Management System</span></a></h3>
+        <ul>
+            <li><span><a href="index.html">My Channels</a></span></li>
+            <li class="on"><span><a href="portal-manage.html">My Portal</a></span></li>
+        </ul>
+        <div class="studio-setup">
+            <p class="btn-left"><span class="btn-right"><span class="btn-middle"><a href="cms-settings.html"><img src="images/icon_studio_setup.png" alt="" />CMS Settings</a></span></span></p>
+            <div class="reconnect-notice hide">
+                <img src="images/icon_notification.png" alt="" />
+                <p class="notice-left"><span class="notice-right"><span class="notice-middle langkey">Connection is inactive, click to restart it.</span></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navigation Layer End -->
+
+<!-- Content Layer Begin -->
+<div id="content-wrap">
+    <!-- Content Nav Layer Begin -->
+    <div id="content-nav">
+        <div id="func-nav">
+            <ul>
+                <li><a href="portal-manage.html" class="portal langkey">My Portal</a></li>
+                <li>
+                	<a href="store-manage.html" class="store langkey">Channel Store</a>
+                	<ul class="sub-nav">
+                		<li class="active"><a href="#">Promotion Category</a></li>
+                        <li><a href="store-manage.html">System Category</a></li>
+                    </ul>
+                </li>
+                <li><a href="brand-setting.html" class="brand langkey">Brand Settings</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Content Nav Layer End -->
+    <div id="main-wrap-slider" class="slider-wrap"><div class="slider-vertical"></div></div>
+    <div id="content-main">
+        <div id="title-func" class="clearfix">
+            <h2><span class="langkey">Channel Store</span> &gt; <span class="categry-type langkey">Promotion Category</span></h2>
+            <ul>
+                <li id="set-save" class="last"><p class="btns disable"><span><a href="javascript:void(0)" class="langkey">Save</a></span></p></li>
+            </ul>
+        </div>
+        <div class="intro clearfix">
+        	<p>
+            	<span class="langkey">Promotion category provides the best channel impression in channel store.</span>
+            	<a href="#" class="switch-on hide">ON</a>
+            	<a href="#" class="switch-off hide">OFF</a>
+            </p>
+            <p class="msg-error langkey">You have turnned off system category, your viewers will not see these categories and channels in store.</p>
+        </div>
+        <!-- Portal Layer Begin -->
+        <div id="store-layer" class="collapse">
+            <div id="store-slider" class="slider-wrap"><div class="slider-vertical"></div></div>
+            <div id="store-category" class="clearfix">
+                <ul id="store-category-ul">
+                </ul>
+                <div class="btn-gray collapse">
+                    <p class="left"></p>
+                    <p class="center"><span class="icon langkey">Collapse</span></p>
+                    <p class="right"></p>
+                </div>
+                <div class="btn-gray expand">
+                    <p class="left"></p>
+                    <p class="center"><span class="icon cat_name"></span></p>
+                    <p class="right"></p>
+                </div>
+                <div class="clear info">
+                    <span class="form-title"></span>
+                    <span class="form-content langkey">Sorted by: Updated time</span>
+                </div>
+            </div>
+            <h2 id="cntChannelEmpty" class="langkey hide">You can add 6 prmotion categories.</h2>
+            <div id="store-constrain">
+                <div id="store-list">
+                    <ul class="channel-list">
+                    </ul>
+                    <div class="load" style="display: none;">
+                        <p class="left"></p>
+                        <p class="center"><span><img src="images/icon_load.gif" alt="" /><span class="langkey">Load More</span></span></p>
+                        <p class="right"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Portal Layer End -->
+    </div>
+</div>
+<!-- Content Layer End -->
+
+<!-- Footer Layer Begin -->
+<p id="footer-control"></p>
+<div id="footer">
+    <span>© 2013 9x9.tv. All rights reserved.</span>
+    <ul id="footer-list">
+        <li id="language-change">
+            <p class="select-txt"><a href="javascript:void(0);" id="language">English</a></p>
+            <p class="select-btn"></p>
+            <ul class="select-list">
+                <li class="on"><a href="javascript:void(0);" id="language-en" data-meta="en">English</a></li>
+                <li><a href="javascript:void(0);" id="language-zh" data-meta="zh">中文</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- Footer Layer End -->
+
+<!-- Loading Layer Begin -->
+<div id="overlay-s">
+    <p class="overlay-content">
+        <span class="overlay-right">
+            <span class="overlay-middle"><img src="images/icon_load_l.gif" alt="" />Saving...</span>
+        </span>
+    </p>
+</div>
+<!-- Loading Layer End -->
+
+<!-- System Error Layer Begin -->
+<div id="system-error" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">You are not authorized to edit this episode.</p>
+            <div class="overlay-btn">
+                <p class="btns btn-ok"><span><a href="#">OK</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- System Error Layer End -->
+
+<!-- Poratl Add Layer Begin -->
+<div class="msg-layer store" id="portal-add-layer">
+    <div class="msg-holder">
+        <div class="msg-left"></div>
+        <div class="msg-center">
+            <p class="btn-msg-close"></p>
+            <h2 id="search-title">Add channels into your “<span>Promotion 1</span>”</h2>
+            <form onsubmit="return false;">
+                <span class="form-title langkey">Find Channels:</span>
+                <div class="select-gray" id="select-portal-ch">
+                    <div class="select-content-gray">
+                        <p id="btn-portal-ch" class="select-btn"></p>
+                        <p id="txt-portal-ch" class="select-txt-gray langkey">Channel URL</p>
+                        <ul id="dropdown-portal-ch" class="select-dropdown" kvale="url">
+                            <li kvale="url" data-tvalue="Please input channel URL" class="on langkey">Channel URL</li>
+                            <li kvale="keywords" data-tvalue="Please input channel name or curator name" class="langkey">Keywords</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="input-gray">
+                    <p class="left"></p>
+                    <p class="center">
+                        <input id="input-portal-ch" class="textfield langkeyVal" value="Please input channel URL" style="width: 100%" />
+                    </p>
+                    <p class="right"></p>
+                </div>
+                <div class="btn-white">
+                    <p class="left"></p>
+                    <p id="portal_search_channel" class="center langkey">Search</p>
+                    <p class="right"></p>
+                </div> 
+                <br />
+                <p>
+                    <b class="langkeyH">Results:</b> <tit id="sRusult" data-canAdd="0" class="langkeyH"></tit>
+                    <span id="msg-search" class="msg-error"></span>
+                </p>
+                <br />
+            </form>
+            <a href="#" id="searchPrev" class="prev" style="display: none">prev</a>
+            <a href="#" id="searchNext" class="next" style="display: none">next</a>
+            <div class="list-holder">
+                <ul id="search-channel-list" class="channel-list">
+                </ul>
+            </div>
+            <div class="msg-btn-holder">
+                <div id="searchAdd" class="btn-white" style="display: none">
+                    <p class="left"></p>
+                    <p id="portal_add_channel" class="center langkey">Add</p>
+                    <p class="right"></p>
+                </div> 
+            </div>
+        </div>
+        <div class="msg-right"></div>
+    </div>
+</div>
+<!-- Poratl Add Layer End -->
+
+<!-- Change Category Layer Begin -->
+<div id="change-category-overlay" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <!-- template = #change-category-overlay-tmpl -->
+    </div>
+</div>
+<!-- Change Category Layer End -->
+
+<!-- Unsave Prompt Layer Begin -->
+<div id="unsave-prompt" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">Unsaved changes will be lost, are you sure you want to leave?</p>
+            <div class="overlay-btn">
+                <p class="btns btn-no"><span><a href="#">No</a></span></p>
+                <p class="btns btn-leave"><span><a href="#">Yes</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Unsave Prompt Layer End -->
+
+<!-- confirm Prompt Layer Begin -->
+<div id="confirm-prompt" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">Unsaved changes will be lost, are you sure you want to leave?</p>
+            <div class="overlay-btn">
+                <p class="btns btn-no"><span><a href="#">No</a></span></p>
+                <p class="btns btn-leave"><span><a href="#">Yes</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm Prompt Layer End -->
+
+<!-- store-empty-category-li-tmpl Begin -->
+<script id="store-empty-category-li-tmpl" type="text/x-jquery-tmpl">
+<li class="empty addPromotionCategory{{if countCategory >= 6}} disable{{/if}}">
+	<span>
+		<a href="#">+ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Add Category'])}</a>
+	</span>
+</li>
+</script>
+<!-- store-empty-category-li-tmpl End -->
+
+<!-- store-category-li-tmpl Begin -->
+<script id="store-category-li-tmpl" type="text/x-jquery-tmpl">
+<li id="catLi_${id}" data-meta="${id}" data-seq="${seq}" data-zhname="${zhName}" data-enname="${enName}" class="catLi{{if $item.actCat == id }} on{{/if}}{{if $item.isNew === "new" }} newCat{{/if}}">
+	<span>
+		<a href="javascript:void(0);">${zhName}</a>
+	</span>
+	<div class="btn-remove"></div>
+	<div class="btn-edit"></div>
+</li>
+</script>
+<!-- store-category-li-tmpl End -->
+
+<!-- store-chanels-li-tmpl Begin -->
+<script id="store-chanels-li-tmpl" type="text/x-jquery-tmpl">
+{{if msoMinus === "on"}}
+    <li id="channel_${id}" class="channelItem minus">
+        <div class="thumb">
+			<div class="btn-top">
+				<div class="icon-holder"></div>
+				<div class="tip-white">
+					<p class="left"></p>
+					<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove from top'])}</p>
+					<p class="right"></p>
+				</div>
+				<div class="tip-top"></div>
+			</div>
+            <div class="btn-minus on">
+                <div class="icon-holder"></div>
+                <div class="tip-white">
+                    <p class="left"></p>
+                    <p id="" class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Add channel'])}</p>
+                    <p class="right"></p>
+                </div>
+                <div class="tip-top"></div>
+            </div>
+			<div class="btn-remove">
+				<div class="icon-holder"></div>
+				<div class="tip-white">
+					<p class="left"></p>
+					<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove channel'])}</p>
+					<p class="right"></p>
+				</div>
+            	<div class="tip-top"></div>
+        	</div>
+            <a href="/view?mso=${msoName}&ch=${id}" target="_blank">
+                <img class="watermark" alt="" src="images/icon_playlist.png" />
+            </a>
+            <div class="ch">
+                <div class="img">
+                    <img src="${imageUrl}" alt="" />
+                </div>
+            </div>
+        </div>
+        <p class="ch-title">${name}</p>
+    </li>
+{{else}}
+    <li id="channel_${id}" class="channelItem">
+        <div class="thumb">
+			<div class="btn-top">
+				<div class="icon-holder"></div>
+				<div class="tip-white">
+					<p class="left"></p>
+					<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}</p>
+					<p class="right"></p>
+				</div>
+				<div class="tip-top"></div>
+			</div>
+            <div class="btn-minus">
+                <div class="icon-holder"></div>
+                <div class="tip-white">
+                    <p class="left"></p>
+                    <p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove channel'])}</p>
+                    <p class="right"></p>
+                </div>
+                <div class="tip-top"></div>
+            </div>
+			<div class="btn-remove">
+				<div class="icon-holder"></div>
+				<div class="tip-white">
+					<p class="left"></p>
+					<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove channel'])}</p>
+					<p class="right"></p>
+				</div>
+            	<div class="tip-top"></div>
+        	</div>
+            <a href="/view?mso=${msoName}&ch=${id}" target="_blank">
+                <img class="watermark" alt="" src="images/icon_playlist.png" />
+            </a>
+            <div class="ch">
+                <div class="img">
+                    <img src="${imageUrl}" alt="" />
+                </div>
+            </div>
+        </div>
+        <p class="ch-title">${name}</p>
+    </li>
+{{/if}}
+</script>
+<!-- store-chanels-li-tmpl End -->
+
+<!-- store-empty-chanels-tmpl Begin -->
+<script id="store-empty-chanels-tmpl" type="text/x-jquery-tmpl">
+<li id="empty_channel" class="empty on">
+    <div class="thumb">
+		<div class="btn-top">
+			<div class="icon-holder"></div>
+			<div class="tip-white">
+				<p class="left"></p>
+				<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}</p>
+				<p class="right"></p>
+			</div>
+			<div class="tip-top"></div>
+		</div>
+        <div class="btn-minus">
+            <div class="icon-holder"></div>
+            <div class="tip-white">
+                <p class="left"></p>
+                <p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove channel'])}</p>
+                <p class="right"></p>
+            </div>
+            <div class="tip-top"></div>
+        </div>
+		<div class="btn-remove">
+			<div class="icon-holder"></div>
+			<div class="tip-white">
+				<p class="left"></p>
+				<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove channel'])}</p>
+				<p class="right"></p>
+			</div>
+            <div class="tip-top"></div>
+        </div>
+        <img src="images/icon_playlist.png" alt="" class="watermark" />
+        <div class="ch">
+            <img src="thumbnail/ch_default.png" alt="" />
+        </div>
+    </div>
+    <p class="ch-title addChanel">+ Add<br />&nbsp;&nbsp;&nbsp;Channels</p>
+</li>
+</script>
+<!-- store-empty-chanels-tmpl End -->
+
+<!-- change-category-overlay-tmpl Begin -->
+<script id="change-category-overlay-tmpl" type="text/x-jquery-tmpl">
+<div id="change-category-overlay-wrap" class="overlay-wrap">
+    <a href="#" class="btn-close">Close</a>
+    <h4>${overLayTitle}</h4>
+    <div class="change-category">
+        <form method="post" action="">
+            <p class="text"><span class="input-right"><span class="input-middle"><input type="text" id="proCatEnName" maxlength="16" value="${valEnName}" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'English Name'])}" class="text" /></span></span></p>
+			<p class="notice">Max length is 14 characters</p>
+            <p class="text"><span class="input-right"><span class="input-middle"><input type="text" id="proCatZhName" maxlength="16" value="${valZhName}" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'Chinese Name'])}" class="text" /></span></span></p>
+			<p class="notice">Max length is 8 chinese characters</p>
+        </form>
+    </div>
+    <div class="overlay-btn">
+        <p class="btns btn-cancel"><span><a href="#">${nn._([cms.global.PAGE_ID, 'overlay', 'Cancel'])}</a></span></p>
+        <p class="btns btn-chg-category" data-acttype="${actType}" data-catid="{{if catId}}${catId}{{/if}}"><span><a href="#">${actButton}</a></span></p>
+    </div>
+</div>
+</script>
+<!-- change-category-overlay-tmpl End -->
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="javascripts/libs/nn-sdk.js?v=1278"></script>
+<script src="javascripts/libs/jquery.mousewheel.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.ellipsis.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.blockUI.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.charcounter.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.tmpl.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.cookie.min.js?v=1278"></script>
+<script src="javascripts/libs/json2.min.js?v=1278"></script>
+<script src="javascripts/libs/purl.min.js?v=1278"></script>
+<script src="javascripts/libs/perfect-scrollbar.js"></script>
+<script src="javascripts/v2/config.js?v=1278"></script>
+<script src="javascripts/v3/func.common.js?v=1278"></script>
+<script src="javascripts/v3/func.portal.store.promotion.js?v=1278"></script>
+<script src="javascripts/v3/domready.common.js?v=1278"></script>
+<script src="javascripts/v3/domready.portal.store.promotion.js?v=1278"></script>
+</body>
+</html>

@@ -336,10 +336,10 @@
                 </div>
             </div>
         </div>
-        <p class="ch-title">${name}</p>
+        <p class="ch-title">${updateDate}--{name}</p>
     </li>
 {{else}}
-    <li id="set_${id}" class="itemList isSortable">
+    <li gg="${updateDate}" id="set_${id}" class="itemList isSortable">
         <div class="thumb">
             <div class="btn-top">
                 <div class="icon-holder"></div>
@@ -368,7 +368,7 @@
                 </div>
             </div>
         </div>
-        <p class="ch-title">${name}</p>
+        <p class="ch-title">${seq}--${updateDate}--${name}</p>
     </li>
 {{/if}}
 </script>
