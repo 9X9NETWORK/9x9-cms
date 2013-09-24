@@ -49,7 +49,7 @@ $(function () {
             }
             thisDiv.removeClass("on");
             upLi.removeClass("minus");
-            thisDiv.find("p.center").text(nn._([cms.global.PAGE_ID, 'channel-list', 'Remove channel']));
+            thisDiv.find("p.center").text(nn._([cms.global.PAGE_ID, 'channel-list', 'Remove program']));
             $('body').addClass('has-change');
             $("#set-save p.btns").removeClass("disable");
         } else {
@@ -63,7 +63,7 @@ $(function () {
             $("#set-save p.btns").removeClass("disable");
             thisDiv.addClass("on");
             upLi.addClass("minus");
-            thisDiv.find("p.center").text(nn._([cms.global.PAGE_ID, 'channel-list', 'Add channel']));
+            thisDiv.find("p.center").text(nn._([cms.global.PAGE_ID, 'channel-list', 'Add program']));
         }
     });
 

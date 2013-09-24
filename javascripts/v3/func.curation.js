@@ -585,7 +585,7 @@
     };
 
     $page.adaptTitleCardOption = function (opts) {
-        if (!opts || !opts.message) {
+        if (!opts) {
             opts = cms.config.TITLECARD_DEFAULT_OPTION;
         }
         var option = {
@@ -600,6 +600,7 @@
             backgroundColor: opts.bgColor,
             backgroundImage: opts.bgImage
         };
+        
         return option;
     };
 
@@ -1040,7 +1041,7 @@
     $page.buildTitleCardEditTmpl = function (opts, isUpdateMode, isDisableEdit) {
         $('.edit-title').html($('#titlecard-edit-tmpl').tmpl(opts, {
             isUpdateMode: isUpdateMode,
-            hasBgImage: (('' !== opts.bgImage && '' === opts.bgColor) || ('' !== opts.bgImage && '' !== opts.bgColor && cms.config.TITLECARD_DEFAULT_IMAGE_BY_SYSTEM !== opts.bgImage))
+            hasBgImage: (('' !== opts.bgImage ) || ('' !== opts.bgImage && '' !== opts.bgColor && cms.config.TITLECARD_DEFAULT_IMAGE_BY_SYSTEM !== opts.bgImage))
         }));
         $page.uploadImage(isDisableEdit);
         $('#cur-edit input, #cur-edit textarea, #cur-edit select').uniform();
@@ -1050,12 +1051,12 @@
     };
 
     $page.buildTitleCardTmpl = function (opts) {
-        if (opts && opts.message) {
+        if (opts) {
             $('#video-player .video').html($('#titlecard-tmpl').tmpl(opts, {
                 message: $common.nl2br($common.strip_tags($.trim(opts.message))),
                 outerHeight: ($('#epcurate-curation #video-player .video').height() - 44),  // 44: $('#video-control')
                 fontSize: Math.round($('#epcurate-curation #video-player .video').width() / opts.size),
-                hasBgImage: (('' !== opts.bgImage && '' === opts.bgColor) || ('' !== opts.bgImage && '' !== opts.bgColor && cms.config.TITLECARD_DEFAULT_IMAGE_BY_SYSTEM !== opts.bgImage))
+                hasBgImage: (('' !== opts.bgImage ) || ('' !== opts.bgImage && '' !== opts.bgColor && cms.config.TITLECARD_DEFAULT_IMAGE_BY_SYSTEM !== opts.bgImage))
             }));
             $('#play-time .played').text('00:00');
             $('#play-time .duration').text($common.formatDuration(opts.duration));
@@ -1084,7 +1085,7 @@
                 setClass = "schedule";
                 setText = nn._([cms.global.PAGE_ID, 'poi-event', 'Scheduled Notification']);
                 break;
-            case 2:
+            case 4:
                 setClass = "poll";
                 setText = nn._([cms.global.PAGE_ID, 'poi-event', 'Poll']);
                 break;
@@ -1131,6 +1132,24 @@
             $('.ellipsis').ellipsis();
             if (poiList && poiList.length > 0) {
                 $.each(poiList, function (i, item) {
+                    switch (item.eventType) {
+                        case 1:
+                            item.eventTypeName = 'Hyper Link';
+                            break;
+                        case 2:
+                            item.eventTypeName = 'Instant Notification';
+                            break;
+                        case 3:
+                            item.eventTypeName = 'Scheduled Notification';
+                            break;
+                        case 4:
+                            item.eventTypeName = 'Poll';
+                            break;
+                        default:
+                            item.eventType = 0;
+                            item.eventTypeName = null;
+                            break;
+                    }
                     if (poiItem.length > 0 && i % itemSize === 0) {
                         poiPage.push({
                             poiItem: poiItem
@@ -1318,7 +1337,7 @@
     $page.playTitleCardAndVideo = function (element) {
         if (element && element.children('.title').children('a.begin-title').length > 0) {
             var opts = element.tmplItem().data.beginTitleCard;
-            if (opts && opts.message) {
+            if (opts) {
                 $page.removeTitleCardPlayingHook();
                 $page.addTitleCardPlayingHook(element, 'begin');
                 $page.cancelTitleCard();
@@ -1339,7 +1358,11 @@
         }
     };
 
-    $page.playPoiEventAndVideo = function (type) {
+    $page.playPoiEventAndVideo = function (type, poiPointEventData) {
+        // POI buttons.
+        var buttons = [];
+        var displayText, buttonsText;
+
         if (type && isNaN(type) && cms.config.POI_TYPE_MAP[type]) {
             // load video
             $('#poi-event-overlay-wrap').data('poiEventType', cms.config.POI_TYPE_MAP[type].code);
@@ -1352,21 +1375,39 @@
             } else {
                 $page.loadYouTubeChrome($('#storyboard-listing li.playing').data('ytid'), '#' + type + '-video');
             }
+            // Get poi data.
+            // poiPointEventData = poiPointEventData || $('#poi-event-overlay-wrap').tmplItem().data;
             // load POI plugin
             $('#poi-event-overlay .event .video-wrap .poi-display').empty();
-            var displayText = $common.strip_tags($.trim($('#poi-event-overlay #' + type + ' input[name=displayText]').val())),
-                buttonsText = $common.strip_tags($.trim($('#poi-event-overlay #' + type + ' input[name=btnText]').val()));
+            displayText = $common.strip_tags($.trim($('#poi-event-overlay #' + type + ' input[name=displayText]').val()));
+            buttonsText = $common.strip_tags($.trim($('#poi-event-overlay #' + type + ' input[name=btnText]').val()));
             if ('' === displayText) {
                 displayText = nn._([cms.global.PAGE_ID, 'poi-event', 'Input display text']);
             }
             if ('' === buttonsText) {
                 buttonsText = nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text']);
             }
+            if (type !== 'event-poll') {
+                button.push(buttonsText);
+            } else if (type === 'event-poll') {
+                $('input.poll-button').each(function(index, element) {
+                    var text = $.trim($(this).val());
+                    if (text !== '') {
+                        buttons.push(text);
+                    } else {
+                        buttons.push(nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text']));
+                    }
+                });
+            }
             $('#poi-event-overlay #' + type + ' .video-wrap .poi-display').poi({
                 type: cms.config.POI_TYPE_MAP[type].plugin,
                 displayText: displayText,
-                buttons: [buttonsText],
-                duration: -1
+                // buttons: [buttonsText],
+                buttons: buttons,
+                duration: -1,
+                onSelected: function(index) {
+
+                }
             });
         } else {
             nn.log('POI type error!', 'error');
@@ -1411,7 +1452,7 @@
                     $('#poi-event-overlay').addClass('edit');
                     $('#' + poiEventTypeKey).removeClass('hide');
                     if (false === hasPoiEventCache) {
-                        $page.playPoiEventAndVideo(poiEventTypeKey);
+                        $page.playPoiEventAndVideo(poiEventTypeKey, poiPointEventData);
                     }
                 } else {
                     // insert mode
@@ -1571,8 +1612,8 @@
 
     // NOTE: page entry point (keep at the bottom of this file)
     $page.init = function (options) {
-        // fetch and set user locale info
-        var localePromise = cms.localeUtility.getLocale();
+        // // fetch and set user locale info
+        // var localePromise = cms.localeUtility.getLocale();
 
         nn.log({
             // NOTE: remember to change page-key to match file-name
@@ -1588,7 +1629,7 @@
         $('#epcurate-curation ul.tabs li a.cur-add').trigger('click');
         $('#cur-add textarea').attr('placeholder', nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add (separate with different lines)']));
         if (!eid && !cid) {
-            $common.showSystemErrorOverlayAndHookError('Invalid channel ID and episode ID, please try again.');
+            $common.showSystemErrorOverlayAndHookError('Invalid program ID and episode ID, please try again.');
             return;
         }
         if (!eid) {
@@ -1607,14 +1648,14 @@
                         });
                     }
                     if (-1 === $.inArray(parseInt(cid, 10), channelIds)) {
-                        $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this channel.');
+                        $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
                         return;
                     }
                     nn.api('GET', cms.reapi('/api/channels/{channelId}', {
                         channelId: cid
                     }), null, function (channel) {
                         if (channel.contentType === cms.config.YOUR_FAVORITE) {
-                            $common.showSystemErrorOverlayAndHookError('The favorites channel can not be edited.');
+                            $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
                             return;
                         }
                         $common.showProcessingOverlay();
@@ -1634,7 +1675,7 @@
                     });
                 });
             } else {
-                $common.showSystemErrorOverlayAndHookError('Invalid channel ID, please try again.');
+                $common.showSystemErrorOverlayAndHookError('Invalid program ID, please try again.');
                 return;
             }
         } else {
@@ -1692,7 +1733,7 @@
             }
 
             if (-1 === $.inArray(parseInt(episode.channelId, 10), channelIds)) {
-                $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this channel.');
+                $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
                 // return;
                 deferred.reject();
             } else {
@@ -1711,7 +1752,7 @@
             var deferred = $.Deferred();
 
             if (channel.contentType === cms.config.YOUR_FAVORITE) {
-                $common.showSystemErrorOverlayAndHookError('The favorites channel can not be edited.');
+                $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
                 // return;
                 deferred.reject();
             } else {
@@ -1813,8 +1854,8 @@
                             }
                         }
                     }
-                    if (beginTitleCard && beginTitleCard.message && '' !== $.trim(beginTitleCard.message)) {
-                        beginTitleCard.message = $.trim(beginTitleCard.message).replace(/\{BR\}/g, '\n');
+                    if (beginTitleCard && beginTitleCard.message && '' !== beginTitleCard.message) {
+                        beginTitleCard.message = beginTitleCard.message.replace(/\{BR\}/g, '\n');
                         if (beginTitleCard.bgImage && '' !== $.trim(beginTitleCard.bgImage)) {
                             preloadImage.push({
                                 image: beginTitleCard.bgImage
@@ -1823,8 +1864,8 @@
                     } else {
                         beginTitleCard = null;
                     }
-                    if (endTitleCard && endTitleCard.message && '' !== $.trim(endTitleCard.message)) {
-                        endTitleCard.message = $.trim(endTitleCard.message).replace(/\{BR\}/g, '\n');
+                    if (endTitleCard && endTitleCard.message && '' !== endTitleCard.message) {
+                        endTitleCard.message = endTitleCard.message.replace(/\{BR\}/g, '\n');
                         if (endTitleCard.bgImage && '' !== $.trim(endTitleCard.bgImage)) {
                             preloadImage.push({
                                 image: endTitleCard.bgImage

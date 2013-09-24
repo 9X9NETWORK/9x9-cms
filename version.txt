@@ -1,3 +1,111 @@
+版本: 5541
+作者: mars
+日期: 2013/9/23 18:38
+訊息:
+updage images
+----
+新增 : /images/icon_translation.png
+異動 : /images/banner_02.png
+異動 : /images/banner_03.png
+異動 : /images/banner_ch_01.png
+異動 : /images/banner_ch_02.png
+異動 : /stylesheetsv3/lightbox.css
+
+版本: 5539
+作者: mars
+日期: 2013/9/23 18:18
+訊息:
+1. 改名
+Set => Channel
+頻道組 => 頻道
+Channel => Program
+頻道 => 節目
+Episode and Sub-episode remains the same,
+----
+異動 : /lang/zh.json
+異動 : /lang/en.json
+異動 : /javascripts/v3/func.curation.js
+異動 : /javascripts/v3/func.channel-poi.js
+異動 : /javascripts/v3/func.channel.js
+異動 : /javascripts/v3/func.epcurate.js
+異動 : /javascripts/v3/func.episode.js
+異動 : /javascripts/v3/func.portal.store.js
+異動 : /javascripts/v3/domready.portal.store.js
+異動 : /javascripts/v3/domready.portal.manage.js
+異動 : /javascripts/v3/func.portal.manage.js
+異動 : /javascripts/v3/domready.index.js
+異動 : /epcurate-curation.html
+異動 : /signin.html
+異動 : /store-manage.html
+異動 : /brand-setting.html
+異動 : /portal-manage.html
+異動 : /cms-settings.html
+異動 : /channel-add.html
+異動 : /channel-setting.html
+異動 : /channel-poi.html
+異動 : /episode-list.html
+異動 : /index.html
+
+版本: 5492
+作者: yifan
+日期: 2013/9/16 10:00
+訊息:
+1. Restore poll event template.
+2. Correct event type id.
+3. Add poll event language data.
+4. Fix saving poll event bug.
+
+版本: 5472
+作者: yifan
+日期: 2013/9/11 18:00
+訊息:
+1. bug fix : 移除title card後，sub-episode異常移位常
+
+版本: 5468
+作者: yifan
+日期: 2013/9/11 09:50
+訊息:
+1. bug fix : Episode level list 顯示 POI type name language異常
+
+版本: 5467
+作者: yifan
+日期: 2013/9/10 17:09
+訊息:
+1. bug fix : Episode curation加入50個影片以後，storyboard的"Add videos"提示依然存在
+
+版本: 5466
+作者: yifan
+日期: 2013/9/10 17:02
+訊息:
+1. bug fix : Episode level list 顯示 POI icon異常
+
+版本: 5462
+作者: yifan
+日期: 2013/9/10 15:42
+訊息:
+1. bug fix : Episode level list 顯示 POI type name & icon異常
+
+版本: 5461
+作者: mars
+日期: 2013/9/9 11:36
+訊息:
+1. bug fix : 發現當 channel list 沒有頻道時，應該出現的 turorial 沒有出現。(janet) 
+----
+異動 : /javascripts/v3/domready.index.js
+異動 : /javascripts/v3/func.index.js
+
+版本: 5460
+作者: mars
+日期: 2013/9/9 11:10
+訊息:
+1. janet requirement allow titlecard with empty message 
+----
+異動 : /javascripts/libs/jquery.titlecard.js
+異動 : /javascripts/libs/jquery.titlecard.min.js
+異動 : /javascripts/v2/config.js
+異動 : /javascripts/v3/domready.curation.js
+異動 : /javascripts/v3/func.curation.js
+
 版本: 5430
 作者: mars
 日期: 2013/9/2 17:23
