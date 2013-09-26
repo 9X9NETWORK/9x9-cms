@@ -685,7 +685,8 @@
             "Hour": "Hour",
             "Minute": "Minute",
             "Mobile Notification Message": "Mobile Notification Message",
-            "If users press OK or Enter, the mobile notification will be send immediately.": "If users press OK or Enter, the mobile notification will be send immediately."
+            "If users press OK or Enter, the mobile notification will be send immediately.": "If users press OK or Enter, the mobile notification will be send immediately.",
+            "Please decrease the number of text. The text of display text and button text are longer than the video width.": "Please decrease the number of text. The text of display text and button text are longer than the video width."
         },
         "title-card": {
             "Text": "Text",

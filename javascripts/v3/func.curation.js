@@ -211,25 +211,46 @@
             return false;
         }
 
+        function chineseCount(word){
+            return word.split(/[\u4e00-\u9a05]/).length -1;
+        }
+
         if (poiEventTypeKey === 'event-poll') {
             var isAllButtonFilled = true;
+            var allText = fm.displayText.value;
+            var charCount = fm.displayText.value.length;
+            var maxCharCount = 42;
             $(fm).find('input.poll-button').each(function (index, element) {
                 if ($.trim(element.value) === '') {     
                     isAllButtonFilled = false;               
-                    $('#poi-event-overlay .event .func ul li.notice').show();
+                    $('#eventPollForm li.notice').html(nn._([cms.global.PAGE_ID, 'poi-event', 'Please fill in all required fields.']));
+                    $('#eventPollForm li.notice').show();
                     callback(false);
                     return false;
+                } else {
+                    allText += $.trim(element.value);
+                    charCount += $.trim(element.value).length;
                 }
             });
             
-            // notice and url reset
-            if (isAllButtonFilled) {
-                $('#poi-event-overlay .event .func ul li.notice').hide();
-                callback(true);
-                return true;
-            } else {
+            maxCharCount = maxCharCount - chineseCount(allText)/2;
+
+            if (charCount > maxCharCount) {
+                $('#eventPollForm li.notice').html(nn._([cms.global.PAGE_ID, 'poi-event', 'Please decrease the number of text. The text of display text and button text are longer than the video width.']));
+                $('#eventPollForm li.notice').show();
+                callback(false);
                 return false;
             }
+            
+            // notice and url reset
+            // if (isAllButtonFilled) {
+            $('#eventPollForm li.notice').html(nn._([cms.global.PAGE_ID, 'poi-event', 'Please fill in all required fields.']));
+            $('#eventPollForm li.notice').hide();
+                callback(true);
+                return true;
+            // } else {
+            //     return false;
+            // }
         } else {
             fm.btnText.value = $.trim(fm.btnText.value);
             if ('' === fm.btnText.value) {
