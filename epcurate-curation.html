@@ -845,14 +845,14 @@
             <div class="event-input">
                 <div class="fminput">
                     <label for="poll_display_text"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'poi-event', 'Display text'])}:</label>
-                    <p class="text"><span><input type="text" name="displayText" id="poll_display_text" maxlength="40" value="${message}" placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input display text'])}" class="text poll-text" /></span></p>
+                    <p class="text"><span><input type="text" name="displayText" id="poll_display_text" value="${message}" placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input display text'])}" class="text poll-text" /></span></p>
                 </div>
                 <div class="fminput">
                     <label for="poll_button_text"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'poi-event', 'Button text'])}:</label>
                     {{each pollButtons}}
                     <p class="text poll">
                         <span>
-                            <input type="text" name="btnText1" maxlength="8" value="${$value}" placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text'])}" class="text poll-button" />
+                            <input type="text" name="btnText1" value="${$value}" placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text'])}" class="text poll-button" />
                         </span>
                         <a href="#" class="poll-button-del"></a>
                     </p>
