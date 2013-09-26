@@ -1189,6 +1189,7 @@
             $('#poi-list-page').html('');
             $('#poi-list-page-tmpl').tmpl(poiPage).prependTo('#poi-list-page');
             $.each(poiList, function (i, item) {
+                if (!isNaN(item.id)) {
                 nn.api('GET', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
                     poiCampaignId: cms.global.CAMPAIGN_ID
                 }), {
@@ -1200,6 +1201,7 @@
                         $('#overlay-s').fadeOut(0);
                     }
                 });
+                }
             });
 
             $page.countPoiItem();

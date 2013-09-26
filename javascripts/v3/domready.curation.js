@@ -1395,6 +1395,14 @@ $(function () {
                             tmplItemData.poiList = poiTemp;
                             $page.buildPoiInfoTmpl($('#storyboard-listing li.playing'));
                             $page.buildPoiEventOverlayTmpl(poiPointEventData);
+
+                            // For poll event buttons
+                            if (!!poiPointEventData.pollButtons && poiPointEventData.pollButtons.length > 2) {                                                    
+                                $('.poll-button-del').addClass('deletable');
+                                if (poiPointEventData.pollButtons.length > 3) {
+                                    $('#btn-add-poll-item').addClass('disabled');
+                                }
+                            }
                         });
                     }
                 } else {
@@ -1925,6 +1933,9 @@ $(function () {
                 }, function () {
                     $('#overlay-s').fadeOut(0);
                 });
+            } else {
+                updatePoiInfo(poiItem);
+                $('#overlay-s').fadeOut(0);
             }
 
         } else {
