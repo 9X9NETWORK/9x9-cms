@@ -1395,6 +1395,14 @@ $(function () {
                             tmplItemData.poiList = poiTemp;
                             $page.buildPoiInfoTmpl($('#storyboard-listing li.playing'));
                             $page.buildPoiEventOverlayTmpl(poiPointEventData);
+
+                            // For poll event buttons
+                            if (!!poiPointEventData.pollButtons && poiPointEventData.pollButtons.length > 2) {                                                    
+                                $('.poll-button-del').addClass('deletable');
+                                if (poiPointEventData.pollButtons.length > 3) {
+                                    $('#btn-add-poll-item').addClass('disabled');
+                                }
+                            }
                         });
                     }
                 } else {
@@ -1509,7 +1517,7 @@ $(function () {
     // Poll event button text change
     $('#poi-event-overlay').on('change keyup keydown', 'input.poll-button', function () {
         var val = $common.strip_tags($(this).val().replace(/\n/g, ''));
-        $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('buttonText', val, $('#eventPollForm p.text.poll').index($(this).parent()));
+        $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('buttonText', val, $('#eventPollForm p.text.poll').index($(this).parent().parent()));
     });
     $('#poi-event-overlay').on('blur', 'input[name=displayText]', function () {
         var val = $common.strip_tags($(this).val().replace(/\n/g, ''));
@@ -1925,6 +1933,9 @@ $(function () {
                 }, function () {
                     $('#overlay-s').fadeOut(0);
                 });
+            } else {
+                updatePoiInfo(poiItem);
+                $('#overlay-s').fadeOut(0);
             }
 
         } else {
