@@ -1517,7 +1517,7 @@ $(function () {
     // Poll event button text change
     $('#poi-event-overlay').on('change keyup keydown', 'input.poll-button', function () {
         var val = $common.strip_tags($(this).val().replace(/\n/g, ''));
-        $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('buttonText', val, $('#eventPollForm p.text.poll').index($(this).parent()));
+        $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('buttonText', val, $('#eventPollForm p.text.poll').index($(this).parent().parent()));
     });
     $('#poi-event-overlay').on('blur', 'input[name=displayText]', function () {
         var val = $common.strip_tags($(this).val().replace(/\n/g, ''));

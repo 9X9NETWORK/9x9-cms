@@ -232,7 +232,7 @@
                     charCount += $.trim(element.value).length;
                 }
             });
-            
+
             maxCharCount = maxCharCount - chineseCount(allText)/2;
 
             if (charCount > maxCharCount) {
@@ -246,8 +246,8 @@
             // if (isAllButtonFilled) {
             $('#eventPollForm li.notice').html(nn._([cms.global.PAGE_ID, 'poi-event', 'Please fill in all required fields.']));
             $('#eventPollForm li.notice').hide();
-                callback(true);
-                return true;
+            callback(true);
+            return true;
             // } else {
             //     return false;
             // }
@@ -1190,17 +1190,17 @@
             $('#poi-list-page-tmpl').tmpl(poiPage).prependTo('#poi-list-page');
             $.each(poiList, function (i, item) {
                 if (!isNaN(item.id)) {
-                nn.api('GET', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
-                    poiCampaignId: cms.global.CAMPAIGN_ID
-                }), {
-                    poiPointId: item.id
-                }, function (pois) {
-                    if (pois && pois.length > 0 && pois[0] && pois[0].eventId && !isNaN(pois[0].eventId)) {
-                        $page.setPoiIcon(pois[0].pointId, pois[0].eventId);
-                    } else {
-                        $('#overlay-s').fadeOut(0);
-                    }
-                });
+                    nn.api('GET', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
+                        poiCampaignId: cms.global.CAMPAIGN_ID
+                    }), {
+                        poiPointId: item.id
+                    }, function (pois) {
+                        if (pois && pois.length > 0 && pois[0] && pois[0].eventId && !isNaN(pois[0].eventId)) {
+                            $page.setPoiIcon(pois[0].pointId, pois[0].eventId);
+                        } else {
+                            $('#overlay-s').fadeOut(0);
+                        }
+                    });                    
                 }
             });
 
@@ -1411,7 +1411,7 @@
                 buttonsText = nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text']);
             }
             if (type !== 'event-poll') {
-                button.push(buttonsText);
+                buttons.push(buttonsText);
             } else if (type === 'event-poll') {
                 $('input.poll-button').each(function(index, element) {
                     var text = $.trim($(this).val());

@@ -1722,6 +1722,9 @@ body.mac #title-func ul li p span a {
     color: #999;
     background: url(../images/btn_gray.png) repeat-x 0 -160px;
 }
+.btn-gray.disabled a {
+    cursor: default !important;
+}
 .center a, .center a {
     text-decoration: none;
     padding: 2px 24px 2px 24px;
