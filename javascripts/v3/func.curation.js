@@ -243,14 +243,14 @@
             }
             
             // notice and url reset
-            // if (isAllButtonFilled) {
-            $('#eventPollForm li.notice').html(nn._([cms.global.PAGE_ID, 'poi-event', 'Please fill in all required fields.']));
-            $('#eventPollForm li.notice').hide();
-            callback(true);
-            return true;
-            // } else {
-            //     return false;
-            // }
+            if (isAllButtonFilled) {
+                $('#eventPollForm li.notice').html(nn._([cms.global.PAGE_ID, 'poi-event', 'Please fill in all required fields.']));
+                $('#eventPollForm li.notice').hide();
+                callback(true);
+                return true;
+            } else {
+                return false;
+            }
         } else {
             fm.btnText.value = $.trim(fm.btnText.value);
             if ('' === fm.btnText.value) {
