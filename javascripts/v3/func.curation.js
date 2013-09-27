@@ -233,7 +233,7 @@
                 }
             });
 
-            maxCharCount = maxCharCount - chineseCount(allText)/2;
+            maxCharCount = maxCharCount - chineseCount(allText);
 
             if (charCount > maxCharCount) {
                 $('#eventPollForm li.notice').html(nn._([cms.global.PAGE_ID, 'poi-event', 'Please decrease the number of text. The text of display text and button text are longer than the video width.']));
