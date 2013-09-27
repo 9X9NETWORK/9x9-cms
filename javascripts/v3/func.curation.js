@@ -219,7 +219,7 @@
             var isAllButtonFilled = true;
             var allText = fm.displayText.value;
             var charCount = fm.displayText.value.length;
-            var maxCharCount = 42;
+            var maxCharCount = 60;
             $(fm).find('input.poll-button').each(function (index, element) {
                 if ($.trim(element.value) === '') {     
                     isAllButtonFilled = false;               
