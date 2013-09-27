@@ -658,6 +658,7 @@
             "Interactive event : Hyper Link": "Interactive event : Hyper Link",
             "Interactive event : Scheduled Notification": "Interactive event : Scheduled Notification",
             "Interactive event : Instant Notification": "Interactive event : Instant Notification",
+            "Interactive event : Poll": "Interactive event : Poll",
             "PREVIEW": "PREVIEW",
             "There is no valid video to preview.": "There is no valid video to preview.",
             "Display text": "Display text",
