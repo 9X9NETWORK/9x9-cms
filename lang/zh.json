@@ -188,19 +188,19 @@
         },
         "func-nav": {
             "My Portal": "我的入口",
-            "Channel Store": "頻道商店",
+            "Program Store": "節目商店",
             "Brand Settings": "品牌設定"
         },
         "title-func": {
-            "Channel Store": "頻道商店",
+            "Program Store": "節目商店",
             "Portal": "我的入口",
             "Preview": "預覽",
             "Save": "儲存",
-            "Set Name": "頻道組名稱"
+            "Channel Name": "頻道名稱"
         },
         "store-layer": {
-            "xxx channels in category:": "{0} 個頻道在這個分類:",
-            "You can manage your channel store manually.": "你可以手動管理頻道商店",
+            "xxx programs in category:": "{0} 個節目在這個分類:",
+            "You can manage your program store manually.": "你可以手動管理節目商店",
             "Collapse": "收合分類",
             "Expand Category": "展開分類",
             "Load More": "載入更多",
@@ -211,19 +211,19 @@
             "Updated time": "依更新時間 ",
             "Customized Order": "依指定排序",
             "Best within 20 characters": "建議長度不超過20個字元",
-            "Set Name": "頻道組名稱 ",
-            "Channel List": "頻道列表 ",
-            "Channels": "頻道",
-            "Add channels": "新增頻道",
-            "Add channels sub": "",
-            "Please input channel URL": "請輸入頻道網址",
-            "Please input channel name or curator name": "請輸入頻道名稱或 Curator 名稱",
+            "Program Name": "節目名稱 ",
+            "Program List": "節目列表 ",
+            "Programs": "節目",
+            "Add programs": "新增節目",
+            "Add programs sub": "",
+            "Please input program URL": "請輸入節目網址",
+            "Please input program name or curator name": "請輸入節目名稱或 Curator 名稱",
             "Set on top": "置頂",
             "Remove from top": "取消置頂",
-            "Remove channel": "移除此頻道",
-            "Add channel": "增加此頻道",
-            "You can only set 4 channels on top": "只能設定4個置頂頻道",
-            "Set name can't be empty": "頻道組名稱不可空白"
+            "Remove program": "移除此節目",
+            "Add program": "增加此節目",
+            "You can only set 4 programs on top": "只能設定4個置頂節目",
+            "Channel name can't be empty": "頻道名稱不可空白"
         }
     },
     "store-manage": {

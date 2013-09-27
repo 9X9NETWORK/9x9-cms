@@ -188,19 +188,19 @@
         },
         "func-nav": {
             "My Portal": "My Portal",
-            "Channel Store": "Channel Store",
+            "Program Store": "Program Store",
             "Brand Settings": "Brand Settings"
         },
         "title-func": {
-            "Channel Store": "Channel Store",
+            "Program Store": "Program Store",
             "Portal": "Preview",
             "Preview": "Preview",
             "Save": "Save",
-            "Set Name": "Set Name"
+            "Channel Name": "Channel Name"
         },
         "store-layer": {
-            "xxx channels in category:": "{0} channels in category:",
-            "You can manage your channel store manually.": "You can manage your channel store manually.",
+            "xxx programs in category:": "{0} programs in category:",
+            "You can manage your program store manually.": "You can manage your program store manually.",
             "Collapse": "Collapse",
             "Expand Category": "Expand Category",
             "Load More": "Load More",
@@ -211,19 +211,19 @@
             "Updated time": "Updated time ",
             "Customized Order": "Customized Order",
             "Best within 20 characters": "Best within 20 characters",
-            "Set Name": "Set Name ",
-            "Channel List": "Channel List ",
-            "Channels": "Channels",
-            "Add channels": "Add channels",
-            "Add channels sub": "",
-            "Please input channel URL": "Please input channel URL",
-            "Please input channel name or curator name": "Please input channel name or curator name",
+            "Channel Name": "Channel Name ",
+            "Program List": "Program List ",
+            "Programs": "Programs",
+            "Add programs": "Add programs",
+            "Add programs sub": "",
+            "Please input program URL": "Please input program URL",
+            "Please input program name or curator name": "Please input program name or curator name",
             "Set on top": "Set on top",
             "Remove from top": "Remove from top",
-            "Remove channel": "Remove channel",
-            "Add channel": "Add channel",
-            "You can only set 4 channels on top": "You can only set 4 channels on top",
-            "Set name can't be empty": "Set name can't be empty"
+            "Remove program": "Remove program",
+            "Add program": "Add program",
+            "You can only set 4 programs on top": "You can only set 4 programs on top",
+            "Channel name can't be empty": "Channel name can't be empty"
         }
     },
     "store-manage": {

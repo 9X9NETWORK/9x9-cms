@@ -10,7 +10,7 @@
 
     $page.promoCatRemoveList = [];
 
-    $page.sortingType = 1;
+    $page.sortingType = 2;
     $page.onTopLimit = 4;
     $page.setId = 0;
     $page.setCanChannel = 999999;
@@ -21,6 +21,139 @@
     $page.removeList = [];
     $page.onTopAddList = [];
     $page.onTopRemoveList = [];
+
+    // set save button on or off
+    $page.setSaveButton = function(inAction) {
+        if (inAction === "on") {
+            $('body').addClass('has-change');
+            $("#set-save p.btns").removeClass("disable");
+        } else {
+            $('body').removeClass('has-change');
+            $("#set-save p.btns").addClass("disable");
+        }
+    }
+
+    $page._search_channel_clean = function() {
+        // 用到
+        $("#msg-search").hide();
+        $("#sRusult").html("");
+        $("#search-channel-list").html("");
+        $("#searchAdd").hide();
+        $("#searchPrev").hide();
+        $("#searchNext").hide();
+        $("#input-portal-ch").val($("#input-portal-ch").data("tmpIn"));
+    };
+
+
+   $page.prepareChannels = function (inList) {
+        var retValue = [], temp = [], tmpId = 0, tmpMsoName = cms.global.MSOINFO.name || "9x9";
+
+        $.each(inList, function (i, channel) {
+            temp = [];
+            if (channel.imageUrl == '') {
+                channel.imageUrl = 'images/ch_default.png';
+                if (channel.moreImageUrl && '' !== $.trim(channel.moreImageUrl)) {
+                    temp = channel.moreImageUrl.split('|');
+                    if (temp[0] && temp[0] !== cms.config.EPISODE_DEFAULT_IMAGE) {
+                        channel.imageUrl = temp[0];
+                    }
+                }
+            }
+            tmpId = parseInt(channel.id, 10);
+            if (-1 === $.inArray(tmpId, $page.currentList)) {
+                channel.alreadyAdd = false;
+            } else {
+                channel.alreadyAdd = true;
+            }
+            channel.msoName = tmpMsoName;
+            retValue.push(channel);
+        });
+        return retValue;
+    };
+
+
+    $page.procPartList = function (inList, partType) {
+        // 用到
+        var retValue = [],
+            tmpOnTop = [],
+            tmpNomo = [];
+
+        $.each(inList, function (i, channel) {
+            if (channel.alwaysOnTop === true) {
+                tmpOnTop.push(channel);
+            } else {
+                tmpNomo.push(channel);
+            }
+        });
+
+        if ("onTop" === partType) {
+            retValue = tmpOnTop;
+        } else {
+            retValue = tmpNomo;
+        }
+        return retValue;
+    };
+
+
+    // filter nomo channel list
+    $page.procNomoList = function (inList, sortingType) {
+        // 用到
+        var retValue = [];
+        if (1 === sortingType) {
+            retValue = inList;
+        } else {
+            retValue = $page.procPartList(inList, "");
+        }
+        return retValue;
+    };
+
+    // filter allways on top channel list
+    $page.procOnTopList = function (inList, sortingType) {
+        // 用到
+        var retValue = [];
+        if (2 === sortingType) {
+            retValue = $page.procPartList(inList, "onTop");
+        }
+        return retValue;
+    };
+
+    // draw channels list
+    $page._drawChannelLis = function() {
+        // 用到
+
+        var cntChanels = $page.onTopList.length + $page.nomoList.length;
+
+        $('#store-list .channel-list').empty();
+        $("#cntChannelEmpty").addClass("hide")
+
+
+        $('#store-empty-chanels-tmpl').tmpl([{
+            cntChanels: 1
+        }]).appendTo('#store-list .channel-list');
+
+        $('#store-chanels-li-tmpl').tmpl($page.onTopList).appendTo('#store-list .channel-list');
+        $('#store-chanels-li-tmpl').tmpl($page.nomoList).appendTo('#store-list .channel-list');
+
+        // if has more then 1 set on top , sortable
+        if ($page.onTopList.length > 1) {
+            var expSort = ".empty, .notSortable";
+            $('#store-list .channel-list').sortable({
+                cursor: 'move',
+                revert: true,
+                cancel: expSort,
+                change: function(event, ui) {
+                    $page.setSaveButton("on");
+                }
+            });
+            $("#store-list .channel-list .Sortable").css("cursor", "move");
+        }
+        if (cntChanels < 1) {
+            $("#cntChannelEmpty").removeClass("hide");
+        }
+        $("#store-constrain").show();
+        $('#overlay-s').fadeOut("slow");
+        $(".load").hide();
+    };
 
     $page.categoryLocks = function (listCategory, listLock) {
         var retValue = [];
@@ -198,7 +331,8 @@
                 }
                 // $("#store-category-ul").show();
                 $("#store-category-ul li").show();
-                $('#overlay-s').fadeOut("slow");
+                // $('#overlay-s').fadeOut("slow");
+
             } else {
                 location.href = "./";
             }
@@ -219,41 +353,29 @@
         }), null, function (channels) {
             var pageInfo = [];
             var cntChannelSource = channels.length;
-            $('#portal-manage').html('');
+            $page.currentList = [];
+            $page.nomoList = [];
+            $page.onTopList = [];
+
+            $('.channel-list').empty();
+
             if (cntChannelSource > 0) {
-                $(".form-title").text(nn._([cms.global.PAGE_ID, 'store-layer', "xxx channels in category:"], [cntChannelSource]));
 
-                pageInfo["pageTotal"] = Math.ceil(cntChannelSource / inPageSize);
-                pageInfo["pageCurrent"] = 1;
-                if (pageInfo["pageTotal"] == 1) {
-                    pageInfo["pageNext"] = 1;
-                } else {
-                    pageInfo["pageNext"] = 2;
-                }
+                var tmpMsoName = tmpMsoName = cms.global.MSOINFO.name || "9x9";
+                $.each(channels, function(i, channel) {
+                    if ('' === channel.imageUrl) {
+                        channel.imageUrl = "images/ch_default.png";
+                    }
+                    channel.msoName = tmpMsoName;
+                    $page.currentList.push(channel.id);
+                });
+                nn.log("+++++ Channels:::" + channels.length);
 
-                cms.global.USER_DATA["pageInfo"] = pageInfo;
-                cms.global.USER_DATA["msoSource"] = channels;
-                cms.global.USER_DATA["msoAdd"] = [];
-                cms.global.USER_DATA["msoRemove"] = [];
-
-                $('.channel-list').empty();
-                $page._drawChannels(inPageSize, false);
-                // nn.api('GET', cms.reapi('/api/mso/{msoId}/store', {
-                //     msoId: inMsoId
-                // }), {
-                //     categoryId: inCatId
-                // }, function (channelsMso) {
-                //     var cntChannelsMso = channelsMso.length;
-                //     if (cntChannelsMso > 0) {
-                //         cms.global.USER_DATA["msoCurrent"] = channelsMso;
-                //     } else {
-                //         cms.global.USER_DATA["msoCurrent"] = [];
-                //     }
-                //     $('.channel-list').html("");
-                //     $page._drawChannels(inPageSize, false);
-                //     //alert(cntChanels);
-                // });
+                $page.nomoList = $page.procNomoList(channels, $page.sortingType);
+                $page.onTopList = $page.procOnTopList(channels, $page.sortingType);
+                $page._drawChannelLis();
             } else {
+                $page._drawChannelLis();
                 $('#overlay-s').fadeOut("slow");
             }
         });
@@ -273,6 +395,63 @@
         $page.listCatChannel(msoId, inObj, $page.channelPageSize);
         $('#store-list').perfectScrollbar('update');
     };
+
+
+
+    $page._setOnTop = function(inObj) {
+        var tmpArr = [];
+        // if (1 === $page.sortingType) {
+        //     tmpArr = $page.nomoList;
+        // } else {
+        //     tmpArr = $page.onTopList.concat($page.nomoList);
+        // }
+        tmpArr = $page.onTopList.concat($page.nomoList);
+        $.each(tmpArr, function(i, channel) {
+            if (undefined !== channel) {
+                if (inObj == channel.id) {
+                    if (tmpArr[i].alwaysOnTop === true) {
+                        tmpArr[i].alwaysOnTop = false;
+                        nn.log("沒有");
+                    } else {
+                        tmpArr[i].alwaysOnTop = true;
+                        nn.log("有");
+                    }
+                }
+            }
+        });
+
+        $page.nomoList = $page.procNomoList(tmpArr, $page.sortingType);
+        $page.onTopList = $page.procOnTopList(tmpArr, $page.sortingType);
+
+        nn.log("nomoList[" + $page.nomoList.length + "] :: onTopList[" + $page.onTopList.length + "]");
+
+        $page.setSaveButton("on");
+        $page._drawChannelLis();
+    };
+
+    $page._removeChannelFromList = function (inObj) {
+        $.each($page.nomoList, function (i, channel) {
+            if (undefined !== channel) {
+                if (inObj == channel.id) {
+                    $page.nomoList.splice(i, 1);
+                }
+            }
+        });
+
+        if (2 === $page.sortingType) {
+            $.each($page.onTopList, function (i, channel) {
+                if (undefined !== channel) {
+                    if (inObj == channel.id) {
+                        $page.onTopList.splice(i, 1);
+                    }
+                }
+            });
+
+        }
+
+    };
+
+
 
     // NOTE: page entry point (keep at the bottom of this file)
     $page.init = function (options) {
@@ -313,8 +492,7 @@
             $('#store-category-ul').sortable({
                 cancel: '.empty',
                 change: function(event, ui) {
-                    $('body').addClass('has-change');
-                    $("#set-save p.btns").removeClass("disable");
+                    $page.setSaveButton("on");
                 }
             });
 
