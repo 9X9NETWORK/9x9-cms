@@ -1418,7 +1418,7 @@
                     if (text !== '') {
                         buttons.push(text);
                     } else {
-                        buttons.push(nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text']));
+                        buttons.push(nn._([cms.global.PAGE_ID, 'poi-event', 'Button text']));
                     }
                 });
             }

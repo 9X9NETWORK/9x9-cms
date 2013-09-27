@@ -1166,7 +1166,7 @@ $(function () {
             }
             // Add a poll item.
             $('#btn-add-poll-item').before($('#poi-poll-button-tmpl-item').tmpl({btnName: pollItemList.length + 1}));
-            $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('addButton', nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text']));
+            $('#poi-event-overlay #event-poll .video-wrap .poi-display').poi('addButton', nn._([cms.global.PAGE_ID, 'poi-event', 'Button text']));
             // Add input char counter
             // $('input.poll-button').charCounter(8, {
             //     // container: '',
