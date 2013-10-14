@@ -206,16 +206,17 @@
             "Load More": "Load More",
             "Processing...": "Processing..."
         },
+        "portal-add-layer": {
+          "Add programs into your “<span>Set 2</span>”": "Add programs into your \"<span>{0}</span>\" promotion category"
+        },
         "channel-list": {
-            "Sorted by": "Sorted by",
-            "Updated time": "Updated time ",
-            "Customized Order": "Customized Order",
+            "Program List : ? Programs": "Program List : {0} Programs",
             "Best within 20 characters": "Best within 20 characters",
             "Channel Name": "Channel Name ",
             "Program List": "Program List ",
             "Programs": "Programs",
-            "Add programs": "Add programs",
-            "Add programs sub": "",
+            "Add programs": "Add",
+            "Add programs sub": "　Program",
             "Please input program URL": "Please input program URL",
             "Please input program name or curator name": "Please input program name or curator name",
             "Set on top": "Set on top",
@@ -316,7 +317,7 @@
             "Updated time": "Updated time ",
             "Customized Order": "Customized Order",
             "Best within 20 characters": "Best within 20 characters",
-            "Channel Name": "Channel Name ",
+            "Channel Name": "Channel Name",
             "Program List": "Program List ",
             "Programs": "Programs",
             "Add programs": "Add",

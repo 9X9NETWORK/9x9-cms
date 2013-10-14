@@ -60,10 +60,10 @@
             <ul>
                 <li><a href="portal-manage.html" class="portal langkey">My Portal</a></li>
                 <li>
-                    <a href="store-manage.html" class="store langkey">Program Store</a>
+                    <a href="store-promotion.html" class="store langkey">Program Store</a>
                     <ul class="sub-nav">
-                        <li class="active"><a href="#">Promotion Category</a></li>
-                        <li><a href="store-manage.html">System Category</a></li>
+                        <li class="active"><a href="store-promotion.html" class="langkey">Promotion Category</a></li>
+                        <li><a href="store-manage.html" class="langkey">System Category</a></li>
                     </ul>
                 </li>
                 <li><a href="brand-setting.html" class="brand langkey">Brand Settings</a></li>
@@ -76,7 +76,7 @@
         <div id="title-func" class="clearfix">
             <h2><span class="langkey">Program Store</span> &gt; <span class="categry-type langkey">Promotion Category</span></h2>
             <ul>
-                <li id="set-save" class="last"><p class="btns disable"><span><a href="javascript:void(0)" class="langkey">Save</a></span></p></li>
+                <li id="set-save" class="last"><p class="btns disableBB"><span><a href="javascript:void(0)" class="langkey">Save</a></span></p></li>
             </ul>
         </div>
         <div class="intro clearfix">
@@ -283,7 +283,7 @@
 
 <!-- store-empty-category-li-tmpl Begin -->
 <script id="store-empty-category-li-tmpl" type="text/x-jquery-tmpl">
-<li class="empty addPromotionCategory{{if countCategory >= 6}} disable{{/if}}">
+<li class="empty addPromotionCategory disable">
     <span>
         <a href="#">+ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Add Category'])}</a>
     </span>
@@ -384,7 +384,7 @@
             <img src="thumbnail/ch_default.png" alt="" />
         </div>
     </div>
-    <p class="ch-title addChanel">+ Add<br />&nbsp;&nbsp;&nbsp;Programs</p>
+    <p class="ch-title addChanel">+ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Add programs'])}<br />${nn._([cms.global.PAGE_ID, 'channel-list', 'Add programs sub'])}</p>
 </li>
 </script>
 <!-- store-empty-chanels-tmpl End -->
@@ -397,9 +397,9 @@
     <div class="change-category">
         <form method="post" action="">
             <p class="text"><span class="input-right"><span class="input-middle"><input type="text" id="proCatEnName" maxlength="16" value="${valEnName}" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'English Name'])}" class="text" /></span></span></p>
-            <p class="notice">Max length is 14 characters</p>
+            <p class="notice">${nn._([cms.global.PAGE_ID, 'overlay', 'Max length is 14 characters'])}</p>
             <p class="text"><span class="input-right"><span class="input-middle"><input type="text" id="proCatZhName" maxlength="16" value="${valZhName}" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'Chinese Name'])}" class="text" /></span></span></p>
-            <p class="notice">Max length is 8 chinese characters</p>
+            <p class="notice">${nn._([cms.global.PAGE_ID, 'overlay', 'Max length is 8 chinese characters'])}</p>
         </form>
     </div>
     <div class="overlay-btn">

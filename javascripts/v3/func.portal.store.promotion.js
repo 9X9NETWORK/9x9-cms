@@ -9,6 +9,7 @@
     $page.channelPageSize = 28;
 
     $page.promoCatRemoveList = [];
+    $page.promoCatLimit = 6;
 
     $page.sortingType = 2;
     $page.onTopLimit = 4;
@@ -26,10 +27,10 @@
     $page.setSaveButton = function(inAction) {
         if (inAction === "on") {
             $('body').addClass('has-change');
-            $("#set-save p.btns").removeClass("disable");
+            $("#set-save p.btns").removeClass("disableBB");
         } else {
             $('body').removeClass('has-change');
-            $("#set-save p.btns").addClass("disable");
+            $("#set-save p.btns").addClass("disableBB");
         }
     }
 
@@ -143,12 +144,16 @@
                 cancel: expSort,
                 change: function(event, ui) {
                     $page.setSaveButton("on");
+                    $('body').addClass('channel-change');
                 }
             });
             $("#store-list .channel-list .Sortable").css("cursor", "move");
         }
         if (cntChanels < 1) {
             $("#cntChannelEmpty").removeClass("hide");
+        }
+        else{
+            $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [cntChanels]));
         }
         $("#store-constrain").show();
         $('#overlay-s').fadeOut("slow");
@@ -172,26 +177,40 @@
     $page._categoryBlockSlide = function (inAction) {
         if ("down" === inAction) {
             $("#store-category ul").slideDown(400);
+            
+                        nn.log("#store-category.height(down)::"+$("#store-category-ul").height());
+
             $('#store-constrain').animate({
-                top: '+=90'
+                top: '+=80'
             }, {
                 complete: function () {
-                    var ulHeight = $("#store-category-ul").height();
-                    ulHeight += 68;
+                    var ulHeight = $("#store-category").height();
+                    // ulHeight += 8;
+                    nn.log("#store-category.height(down)::"+ulHeight);
                     $('#store-constrain').animate({
                         top: ulHeight
-                    }, 100);
+                    });
                     $("#store-layer").toggleClass("collapse");
                 }
             });
         } else {
             $("#store-category ul").slideUp(400);
-            var ulHeight = $("#store-category-ul").height();
+                                    nn.log("#store-category.height(down)::"+$("#store-category-ul").height());
+
             $('#store-constrain').animate({
-                top: '-=' + ulHeight
+                top: '-=80'
             }, {
                 complete: function () {
                     // If the page isn't filled with channels (no scrollbar && pageCurrent < pageTotal)
+                    // $('#store-constrain').animate({
+                    //     top: ulHeight
+                    // }, 100);
+            var ulHeight = $("#store-category").height();
+            nn.log("#store-category.height(up)::"+ulHeight);
+            // ulHeight += 12;
+            $('#store-constrain').animate({
+                        top: ulHeight
+                    });
                     if ($('#store-list').height() >= $('#store-list')[0].scrollHeight - $('#store-list .load').height() && cms.global.USER_DATA["pageInfo"].pageCurrent < cms.global.USER_DATA["pageInfo"].pageTotal) {
                         $('#store-list .load').fadeIn('slow');
                         $page.getMoreChannels();
@@ -280,12 +299,21 @@
         $page._drawChannels($page.channelPageSize, true);
     };
 
+    $page.emptyCategoryDisabled = function(inCatCount) {
+        // 用到
+        if ($page.promoCatLimit > inCatCount) {
+            $("#store-category-ul .addPromotionCategory").removeClass("disable");
+        } else {
+            $("#store-category-ul .addPromotionCategory").addClass("disable");
+        }
+    };
+
     $page.listCategory = function (inCategory, inCatId) {
+        // 用到
         $("#store-category-ul").html('');
         
-        $('#store-empty-category-li-tmpl').tmpl({
-            countCategory: inCategory.length
-        }).appendTo('#store-category-ul');
+        $('#store-empty-category-li-tmpl').tmpl().appendTo('#store-category-ul');
+        $page.emptyCategoryDisabled(inCategory.length);
         $('#store-category-li-tmpl').tmpl(inCategory, {
             actCat: inCatId
         }).appendTo('#store-category-ul');
@@ -316,17 +344,20 @@
     };
 
 
-    $page.drawPromotionCategory = function(msoId) {
+    $page.drawPromotionCategory = function(msoId, inCat) {
         // 用到
         nn.api('GET', cms.reapi('/api/mso/{msoId}/categories', {
             msoId: msoId
         }), null, function(categories) {
             var cntCategories = categories.length,
                 catId = categories[0].id;
+            if (inCat > 0) {
+                catId = inCat;
+            }
             if (cntCategories > 0 && catId != undefined && catId > 0) {
                 $page.listCategory(categories, catId);
                 $page.catLiClick(catId);
-                if( cntCategories > 11 ){
+                if (cntCategories > 11) {
                     $("#store-category-ul").height(96);
                 }
                 // $("#store-category-ul").show();
@@ -346,47 +377,76 @@
         $('#overlay-s').fadeOut("slow");
     };
 
-    $page.listCatChannel = function (inMsoId, inCatId, inPageSize) {
-        // 用到
-        nn.api('GET', cms.reapi('/api/category/{categoryId}/channels',{
-            categoryId: inCatId
-        }), null, function (channels) {
-            var pageInfo = [];
-            var cntChannelSource = channels.length;
-            $page.currentList = [];
-            $page.nomoList = [];
-            $page.onTopList = [];
+    $page.emptyChannel = function() {
+        $page.currentList = [];
+        $page.nomoList = [];
+        $page.onTopList = [];
 
-            $('.channel-list').empty();
-
-            if (cntChannelSource > 0) {
-
-                var tmpMsoName = tmpMsoName = cms.global.MSOINFO.name || "9x9";
-                $.each(channels, function(i, channel) {
-                    if ('' === channel.imageUrl) {
-                        channel.imageUrl = "images/ch_default.png";
-                    }
-                    channel.msoName = tmpMsoName;
-                    $page.currentList.push(channel.id);
-                });
-                nn.log("+++++ Channels:::" + channels.length);
-
-                $page.nomoList = $page.procNomoList(channels, $page.sortingType);
-                $page.onTopList = $page.procOnTopList(channels, $page.sortingType);
-                $page._drawChannelLis();
-            } else {
-                $page._drawChannelLis();
-                $('#overlay-s').fadeOut("slow");
-            }
-        });
+        $('.channel-list').empty();
+        $page._drawChannelLis();
     };
 
-    $page.catLiClick = function (inObj) {
+    $page.listCatChannel = function (inMsoId, inCatId, inPageSize) {
         // 用到
-        var msoId = 0;
+        if ($("#catLi_" + inCatId).hasClass("newCat")) {
+            $page.emptyChannel();
+            $('#overlay-s').fadeOut("slow");
+        } else {
+            nn.api('GET', cms.reapi('/api/category/{categoryId}/channels', {
+                categoryId: inCatId
+            }), null, function(channels) {
+                var pageInfo = [];
+                var cntChannelSource = channels.length;
+                $page.currentList = [];
+                $page.nomoList = [];
+                $page.onTopList = [];
+
+                $('.channel-list').empty();
+
+                if (cntChannelSource > 0) {
+
+                    var tmpMsoName = tmpMsoName = cms.global.MSOINFO.name || "9x9";
+                    $.each(channels, function(i, channel) {
+                        if ('' === channel.imageUrl) {
+                            channel.imageUrl = "images/ch_default.png";
+                        }
+                        channel.msoName = tmpMsoName;
+                        $page.currentList.push(channel.id);
+                    });
+                    nn.log("+++++ Channels:::" + channels.length);
+
+                    $page.nomoList = $page.procNomoList(channels, $page.sortingType);
+                    $page.onTopList = $page.procOnTopList(channels, $page.sortingType);
+                    $page._drawChannelLis();
+                } else {
+                    $page._drawChannelLis();
+                    $('#overlay-s').fadeOut("slow");
+                }
+            });
+        }
+    };
+
+    $page.catGetNonNew = function() {
+        var retValue = 0 ,catList=$("#store-category-ul .catLi"),tmpCat;
+
+        for (var i = 0,j=catList.length; i < j; i++) {
+            tmpCat = catList[i];
+            if(!$(tmpCat).hasClass("newCat")){
+                retValue = $(tmpCat).data("meta");
+                return retValue;
+            }
+            
+        };
+        return retValue;
+    }
+
+    $page.catLiClick = function(inObj) {
+        // 用到
+        var msoId = 0,
+            isNewCat = $("#catLi_" + inObj).hasClass("newCat");
         msoId = cms.global.MSO;
         $common.showProcessingOverlay();
-        $(".catLi ").removeClass("on");
+        $(".catLi").removeClass("on");
         $("#catLi_" + inObj).addClass("on");
         var tmpCategoryName = $("#catLi_" + inObj + " span a").text();
         $("#store-layer .cat_name").text(tmpCategoryName);
@@ -395,7 +455,6 @@
         $page.listCatChannel(msoId, inObj, $page.channelPageSize);
         $('#store-list').perfectScrollbar('update');
     };
-
 
 
     $page._setOnTop = function(inObj) {
@@ -411,10 +470,8 @@
                 if (inObj == channel.id) {
                     if (tmpArr[i].alwaysOnTop === true) {
                         tmpArr[i].alwaysOnTop = false;
-                        nn.log("沒有");
                     } else {
                         tmpArr[i].alwaysOnTop = true;
-                        nn.log("有");
                     }
                 }
             }
@@ -422,8 +479,6 @@
 
         $page.nomoList = $page.procNomoList(tmpArr, $page.sortingType);
         $page.onTopList = $page.procOnTopList(tmpArr, $page.sortingType);
-
-        nn.log("nomoList[" + $page.nomoList.length + "] :: onTopList[" + $page.onTopList.length + "]");
 
         $page.setSaveButton("on");
         $page._drawChannelLis();
@@ -486,7 +541,9 @@
             location.href = "./";
         } else {
 
-            $page.drawPromotionCategory(msoId);
+            $page.drawPromotionCategory(msoId, 0);
+
+            $("#store-category .info").show();
 
              
             $('#store-category-ul').sortable({
@@ -497,11 +554,25 @@
             });
 
 
+
             $('#func-nav .langkey').each(function () {
                 $(this).text(nn._([cms.global.PAGE_ID, 'func-nav', $(this).data('langkey')]));
             });
             $('#title-func .langkey').each(function () {
                 $(this).text(nn._([cms.global.PAGE_ID, 'title-func', $(this).data('langkey')]));
+            });
+            $('.intro .langkey').each(function () {
+                $(this).text(nn._([cms.global.PAGE_ID, 'title-func', $(this).data('langkey')]));
+            });
+            $('#portal-add-layer .langkey').each(function () {
+                $(this).text(nn._([cms.global.PAGE_ID, 'portal-add-layer', $(this).data('langkey')]));
+            });
+            $('#portal-add-layer .langkeyH').each(function() {
+                $(this).html(nn._([cms.global.PAGE_ID, 'portal-add-layer', $(this).data('langkey')]));
+            });
+            $('#portal-add-layer .langkeyVal').each(function() {
+                $(this).val(nn._([cms.global.PAGE_ID, 'channel-list', $(this).data('langkey')]));
+                $(this).data("tmpIn", $(this).val());
             });
             $('#store-layer .langkey').each(function () {
                 $(this).text(nn._([cms.global.PAGE_ID, 'store-layer', $(this).data('langkey')]));

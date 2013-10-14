@@ -44,10 +44,14 @@ $(function () {
         // 用到
         var thisLi = $(this),
             catId = parseInt(thisLi.attr("id").replace("catLi_", ""), 10);
-        if ($('body').hasClass('has-change')) {
+
+        if ($('body').hasClass('has-change') && $('body').hasClass('channel-change')) {
             nn.log("$$has-change .catLi::" + catId);
             // confirmExit();
             $('#confirm-prompt').data("actli", catId);
+            $('#confirm-prompt').data("actCat", "change");
+
+            $('#confirm-prompt .content').text(nn._([cms.global.PAGE_ID, 'overlay', "Unsaved changes will be lost, are you sure you want to leave?"]));
             $.blockUI({
                 message: $('#confirm-prompt')
             });
@@ -68,7 +72,7 @@ $(function () {
                 actType: "edit",
                 catId:  parseInt(thisLi.attr("id").replace("catLi_", ""), 10),
                 overLayTitle: nn._([cms.global.PAGE_ID, 'overlay', "Edit Category"]),
-                actButton: nn._([cms.global.PAGE_ID, 'overlay', "Edit Category"]),
+                actButton: nn._([cms.global.PAGE_ID, 'overlay', "Yes"]),
                 valEnName: $(thisLi).data("enname"),
                 valZhName: $(thisLi).data("zhname")
             };
@@ -95,15 +99,21 @@ $(function () {
             case "add":
                 // add promotion category
                 if ("" !== inEnName && "" !== inZhName) {
+                    var newId = new Date().getTime();
                     $('#store-category-li-tmpl').tmpl({
                         enName: inEnName,
                         zhName: inZhName,
-                        id: new Date().getTime()
+                        id: newId
                     }, {
                         isNew: "new"
                     }).appendTo('#store-category-ul');
+                    $page.emptyCategoryDisabled($("#store-category-ul .catLi").length);
 
                     $('#store-category-ul li').show();
+
+                    if (!$('body').hasClass('channel-change')) {
+                        $page.catLiClick(newId);
+                    }
 
                     $page.setSaveButton("on");
                 }
@@ -140,7 +150,7 @@ $(function () {
         // search layout
         var cntChannel = $("#channelCnt").text();
         if (cntChannel < $page.setCanChannel) {
-            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into your “<span>Set 2</span>”"], [$("#setName").val()]));
+            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into your “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("zhname")]));
             $("#portal-add-layer").fadeIn();
         }
     });
@@ -321,6 +331,7 @@ $(function () {
 
         if (cntLis > 0) {
             $common.showProcessingOverlay();
+            $('body').addClass('channel-change');
             var this_id = null;
             $.each(lis, function (idx, lisItem) {
 
@@ -449,9 +460,8 @@ $(function () {
             } else {
                 this_li.addClass("on");
             }
-
-        nn.log("channel-list .btn-top::"+this_id);
             $page._setOnTop(this_id);
+            $('body').addClass('channel-change');
             $('#overlay-s').fadeOut("slow");
         } else {
             $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set 4 programs on top']));
@@ -507,6 +517,7 @@ $(function () {
             catId = parseInt(thisLi.attr("id").replace("catLi_", ""), 10);
 
         $('#confirm-prompt').data("actli", catId);
+        $('#confirm-prompt').data("actCat", "delete");
 
         $('#confirm-prompt .content').text(nn._([cms.global.PAGE_ID, 'overlay', "Are you sure to remove this promotion Category?"]));
         $.blockUI({
@@ -521,20 +532,55 @@ $(function () {
     $('#confirm-prompt .btn-leave').click(function(event) {
         // 用到
         var catId = $('#confirm-prompt').data("actli"),
+            catAction = $('#confirm-prompt').data("actCat"),
             thisLi = $("#catLi_" + catId),
             isNew = thisLi.hasClass("newCat"),
-            isOn = thisLi.hasClass("on");
+            isOn = thisLi.hasClass("on"),
+            nonNewCat = 0;
+
+        $('#confirm-prompt').data("actli", "");
+        $('#confirm-prompt').data("actCat", "");
 
         // when it's a new promotion category leave it, don't push into delete list , because it didn't real exist
+        // $page.emptyChannel();
         if (catId > 0 && !isNew) {
-            $page.promoCatRemoveList.push(catId);
-            thisLi.remove();
-            $page.setSaveButton("on");
-
-            $.unblockUI();
+            // delete promotion category
+            if ("delete" === catAction) {
+                $page.promoCatRemoveList.push(catId);
+                thisLi.remove();
+                $page.emptyCategoryDisabled($("#store-category-ul .catLi").length);
+                $page.setSaveButton("on");
+                $.unblockUI();
+                if (isOn) {
+                    nonNewCat = $page.catGetNonNew();
+                    $page.emptyChannel();
+                    if (nonNewCat > 0) {
+                        $page.catLiClick(nonNewCat);
+                    }
+                }
+            } else {
+                // change category
+                $.unblockUI();
+                $page.drawPromotionCategory(cms.global.MSO, catId);
+                $('body').removeClass('has-change');
+            }
+        } else {
+            if ("delete" === catAction) {
+                thisLi.remove();
+                $page.emptyCategoryDisabled($("#store-category-ul .catLi").length);
+                $page.setSaveButton("on");
+                $.unblockUI();
+                if (isOn) {
+                    nonNewCat = $page.catGetNonNew();
+                    $page.emptyChannel();
+                    if (nonNewCat > 0) {
+                        $page.catLiClick(nonNewCat);
+                    }
+                }
+            }
         }
-        nn.log("cat id : [" + catId + "]" + "  ******  isNew  : [" + isNew + "]" + "  ******  isOn  : [" + isOn + "]");
         return false;
+
     });
 
 
@@ -546,7 +592,7 @@ $(function () {
     // 2. process promotion category channels
     $(document).on("click", "#set-save", function(event) {
         // 用到
-        if (!$("#set-save p.btns").hasClass("disable")) {
+        if (!$("#set-save p.btns").hasClass("disableBB")) {
             var msoId = cms.global.MSO,
                 catLiLists = $("#store-category-ul li.catLi"),
                 tmpSeq = 0,
@@ -554,6 +600,7 @@ $(function () {
                 theSeq = 0,
                 procList = [],
                 tmpItem = {},
+                newCatList = [], newCatCount = 0,
                 stSwitchOn = !$(".switch-on").hasClass("hide"),
                 stSwitchOff = !$(".switch-off").hasClass("hide"),
                 catMinus = $("#store-category-ul li.minus"),
@@ -579,8 +626,10 @@ $(function () {
                     tmpItem["enName"] = $(eValue).data("enname");
                     tmpItem["name"] = $(eValue).data("zhname");
                     tmpItem["id"] = $(eValue).data("meta");
+                    tmpItem["newId"] = $(eValue).data("meta");
                     if ($(eValue).hasClass("newCat")) {
                         tmpItem["id"] = 0;
+                        newCatCount ++ ;
                     }
                     procList.push(tmpItem);
                 }
@@ -596,12 +645,12 @@ $(function () {
 
 
         }
-
+        // currentCategoryId = parseInt($("#store-category-ul .catLi.on").attr("id").replace("catLi_", ""), 10);
         function procPromotionCat(procList) {
             var deferred = $.Deferred(),
                 tmpItem,
                 catDelLists = $page.promoCatRemoveList;
-
+            nn.log("1: now in addChannels");
             $.each(procList, function(eKey, eValue) {
                 if (eValue.id > 0) {
                     // promotion category update
@@ -614,6 +663,7 @@ $(function () {
                     }, null);
                 } else {
                     // promotion category add
+                    newCatList[eValue.seq] = eValue.newId;
                     nn.api('POST', cms.reapi('/api/mso/{msoId}/categories', {
                         msoId: eValue.msoId
                     }), {
@@ -621,10 +671,24 @@ $(function () {
                         seq: eValue.seq,
                         enName: eValue.enName,
                         zhName: eValue.zhName
-                    }, null);
+                    }, function(addChannel) {
+                        // todo new category on fucus
+                        // todo new category new id
+                        newCatCount--;
+                        var newId = addChannel.id, newCat = $("#catLi_" + newCatList[addChannel.seq]);
+
+                        // var aa = newCatList;
+
+                        // var aa_id = newCatList[addChannel.seq];
+                        newCat.attr("id", "catLi_" + newId).attr("data-meta", newId);
+                        if (newCatCount === 0) {
+                            currentCategoryId = parseInt($("#store-category-ul .catLi.on").attr("id").replace("catLi_", ""), 10);
+                            deferred.resolve();
+                        }
+                    });
                 }
             });
-
+            $("#store-category-ul .catLi").removeClass("newCat");
             // promotion category delete
             $.each(catDelLists, function(eKey, eValue) {
 
@@ -636,18 +700,27 @@ $(function () {
 
             });
             $page.promoCatRemoveList = [];
-            deferred.resolve();
+
+            if (newCatCount === 0) {
+                nn.log("newCatCount yes::"+newCatCount);
+                deferred.resolve();
+            }
+            else
+            {
+                nn.log("newCatCount no::"+newCatCount);
+            }
 
             return deferred.promise();
         }
 
         function procEnd() {
             var deferred = $.Deferred();
-            nn.log("5 : procEnd");
+            nn.log("4: now in removeChannels");
             $page.listCatChannel(msoId, currentCategoryId, $page.channelPageSize);
 
             $('#overlay-s').fadeOut("slow");
             $page.setSaveButton("off");
+            $('body').removeClass('channel-change')
             deferred.resolve();
 
             return deferred.promise();
@@ -656,7 +729,7 @@ $(function () {
 
         function addChannels() {
             var deferred = $.Deferred();
-            nn.log("3 : add channel");
+            nn.log("3: now in addChannels");
             if ($page.addList.length > 0) {
                 nn.api('POST', cms.reapi('/api/category/{categoryId}/channels', {
                     categoryId: currentCategoryId
@@ -676,7 +749,7 @@ $(function () {
 
         function removeChannels() {
             var deferred = $.Deferred();
-            nn.log("4 : remove channel");
+            nn.log("4: now in removeChannels");
             if ($page.removeList.length > 0) {
                 nn.api('DELETE', cms.reapi('/api/category/{categoryId}/channels', {
                     categoryId: currentCategoryId
@@ -698,7 +771,13 @@ $(function () {
         // check if old ontop list if 
         function setChannelsOnTop() {
             var deferred = $.Deferred();
-
+            nn.log("2: now in setChannelsOnTop["+newCatCount+"]");
+            var testing = 0;
+            // while (newCatCount > 0){
+            //     testing ++;
+            //     nn.log("2 - while:: "+ newCatCount);
+            // }
+            // currentCategoryId = parseInt($("#store-category-ul .catLi.on").attr("id").replace("catLi_", ""), 10);
             nn.api('GET', cms.reapi('/api/category/{categoryId}/channels', {
                 categoryId: currentCategoryId
             }), null, function(channels) {
@@ -706,52 +785,58 @@ $(function () {
                 var oldOnTop = $page.procOnTopList(channels, $page.sortingType),
                     oldOnTopList = [],
                     nowOnTopList = [],
-                    tmpSeq = 0, cntTotal = oldOnTop.length + $page.onTopList.length;
+                    tmpSeq = 0,
+                    cntTotal = oldOnTop.length + $page.onTopList.length;
 
 
-nn.log("1 : on top remove");
-                $.each(oldOnTop, function(eKey, eValue) {
+                nn.log("1 : on top remove");
+                if (cntTotal != 0) {
+                    $.each(oldOnTop, function(eKey, eValue) {
 
-                    nn.api('POST', cms.reapi('/api/category/{categoryId}/channels', {
-                        categoryId: currentCategoryId
-                    }), {
-                        channelId: eValue.id,
-                        alwaysOnTop: false
-                    }, function(msg){
-                        cntTotal --;
-                        if( cntTotal === 0 ){
-                            deferred.resolve();
-                            return deferred.promise();
-                        }
-                        nn.log("1::0 : "+msg);
+                        nn.api('POST', cms.reapi('/api/category/{categoryId}/channels', {
+                            categoryId: currentCategoryId
+                        }), {
+                            channelId: eValue.id,
+                            alwaysOnTop: false
+                        }, function(msg) {
+                            cntTotal--;
+                            nn.log("1::0 ::" + cntTotal + "::" + msg);
+                            if (cntTotal < 1) {
+                                deferred.resolve();
+                            } else {
+                                // nn.log("1::0 ::" + cntTotal + "::" +  msg);
+                            }
+                        });
+
+                        // oldOnTopList.push(eValue.id);
                     });
 
-                    // oldOnTopList.push(eValue.id);
-                });
-                
-nn.log("2 : on top add");
-                $.each($page.onTopList, function(eKey, eValue) {
-                    tmpSeq = eKey + 1;
-                    nn.api('POST', cms.reapi('/api/category/{categoryId}/channels', {
-                        categoryId: currentCategoryId
-                    }), {
-                        channelId: eValue.id,
-                        seq: tmpSeq,
-                        alwaysOnTop: true
-                    }, function(msg){
-                        cntTotal --;
-                        if( cntTotal === 0 ){
-                            deferred.resolve();
-                            return deferred.promise();
-                        }
-                        nn.log("2::0 : "+msg);
-                    });
-                });
+                    nn.log("2 : on top add");
+                    $.each($page.onTopList, function(eKey, eValue) {
+                        tmpSeq = eKey + 1;
+                        nn.api('POST', cms.reapi('/api/category/{categoryId}/channels', {
+                            categoryId: currentCategoryId
+                        }), {
+                            channelId: eValue.id,
+                            seq: tmpSeq,
+                            alwaysOnTop: true
+                        }, function(msg) {
+                            cntTotal--;
+                            nn.log("2::0 ::" + cntTotal + "::" + msg);
+                            if (cntTotal < 1) {
 
-                
+                                deferred.resolve();
+                            }
+
+                        });
+                    });
+                } else {
+                    deferred.resolve();
+                }
+
             });
 
-            // return deferred.promise();
+            return deferred.promise();
         }
 
     });
@@ -771,7 +856,6 @@ nn.log("2 : on top add");
     });
 
     $(document).on("click", ".btn-minus", function (e) {
-        alert("test");
         var thisDiv = $(this),
             upLi = $(this).parents("li"),
             channelId = parseInt(upLi.attr("id").replace("channel_", ""), 10),
@@ -789,6 +873,8 @@ nn.log("2 : on top add");
         if (-1 !== $.inArray(channelId, cms.global.USER_DATA["msoRemove"])) {
             inRemove = true;
         }
+
+        $('body').addClass('channel-change');
 
         if ($(this).hasClass("on")) {
             // add channel
@@ -837,7 +923,7 @@ nn.log("2 : on top add");
             $('#overlay-s').fadeOut("slow");
             $("#store-list .channel-list").empty();
         }
-        $("#set-save p.btns").removeClass("disable");
+        $page.setSaveButton("on");
     });
 
     // system catetory off to on 
