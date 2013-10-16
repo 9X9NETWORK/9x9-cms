@@ -1722,6 +1722,19 @@ body.mac #title-func ul li p span a {
     color: #999;
     background: url(../images/btn_gray.png) repeat-x 0 -160px;
 }
+.btn-gray.disabled .left {
+    background: url(../images/btn_gray.png) no-repeat 0 -192px;
+}
+.btn-gray.disabled .right {
+    background: url(../images/btn_gray.png) no-repeat 0 -224px;
+}
+.btn-gray.disabled .center {
+    color: #999;
+    background: url(../images/btn_gray.png) repeat-x 0 -256px;
+}
+.btn-gray.disabled a {
+    cursor: default !important;
+}
 .center a, .center a {
     text-decoration: none;
     padding: 2px 24px 2px 24px;
