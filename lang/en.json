@@ -67,7 +67,7 @@
             "Can not connect to Facebook correctly!": "Can not connect to Facebook correctly!",
             "Please try again and make sure you agree on all permissions.": "Please try again and make sure you agree on all permissions.",
             "Account disconnected!": "Account disconnected!",
-            "{If you want to enable auto sharing again, please:}": "If you want to enable auto sharing again, please:<br /><br />1. Connect to account<br />2. Enable auto sharing for each channel in Channel settings<br />3. Publish a new episode, 9x9.tv will automatically share it<br />",
+            "{If you want to enable auto sharing again, please:}": "If you want to enable auto sharing again, please:<br /><br />1. Connect to account<br />2. Enable auto sharing for each program in Program settings<br />3. Publish a new episode, 9x9.tv will automatically share it<br />",
             "Disconnecting account will also disable auto sharing for every program. Are you sure you want to disconnect?": "Disconnecting account will also disable auto sharing for every program. Are you sure you want to disconnect?"
         },
         "button": {
@@ -211,8 +211,8 @@
             "Updated time": "Updated time ",
             "Customized Order": "Customized Order",
             "Best within 20 characters": "Best within 20 characters",
-            "Channel Name": "Channel Name ",
-            "Program List": "Program List ",
+            "Channel Name": "Channel Name",
+            "Program List": "Program List",
             "Programs": "Programs",
             "Add programs": "Add programs",
             "Add programs sub": "",
@@ -336,7 +336,7 @@
             "You don't have any programs yet": "You don't have any programs yet",
             "Create a new program": "Create a new program",
             "Create your own <strong>personal and unique</strong> program.": "Create your own <strong>personal and unique</strong> program.",
-            "And online videos into episode and start to <strong>curate your own program.</strong>": "And online videos into episode and start to <strong>curate your own program.</strong>"
+            "Add online videos into episode and start to <strong>curate your own program.</strong>": "Add online videos into episode and start to <strong>curate your own program.</strong>"
         }
     },
     "cms-settings": {
@@ -653,7 +653,6 @@
             "Send a scheduled notification to user to get more information.": "Send a scheduled notification to user to get more information.",
             "Instant Notification": "Instant Notification",
             "Send an instant notification to user to get more information.": "Send an instant notification to user to get more information.",
-            "Establish a multiple choice event, eg. a campaign, a poll, a survey, etc.": "Establish a multiple choice event, eg. a campaign, a poll, a survey, etc.",
             "POI": "POI",
             "Interactive event : Hyper Link": "Interactive event : Hyper Link",
             "Interactive event : Scheduled Notification": "Interactive event : Scheduled Notification",
@@ -664,7 +663,6 @@
             "Input display text": "Input display text",
             "Button text": "Button text",
             "Input button text": "Input button text",
-            "Add button": "Add button",
             "Hyper link": "Hyper link",
             "Input 9x9 program or episode URL": "Input 9x9 program or episode URL",
             "Invalid 9x9 URL, please try again.": "Invalid 9x9 URL, please try again.",
