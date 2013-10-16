@@ -9,6 +9,18 @@
     $page.channelPageSize = 28;
 
 
+    // set save button on or off
+    $page.setSaveButton = function(inAction) {
+        if (inAction === "on") {
+            $('body').addClass('has-change');
+            $("#set-save p.btns").removeClass("disableBB");
+        } else {
+            $('body').removeClass('has-change');
+            $("#set-save p.btns").addClass("disableBB");
+        }
+    }
+
+
     $page.categoryLocks = function (listCategory, listLock) {
         var retValue = [];
 
@@ -279,9 +291,13 @@
             $('#title-func .langkey').each(function () {
                 $(this).text(nn._([cms.global.PAGE_ID, 'title-func', $(this).data('langkey')]));
             });
+            $('.intro .langkey').each(function () {
+                $(this).text(nn._([cms.global.PAGE_ID, 'title-func', $(this).data('langkey')]));
+            });
             $('#store-layer .langkey').each(function () {
                 $(this).text(nn._([cms.global.PAGE_ID, 'store-layer', $(this).data('langkey')]));
             });
+
             // $common.autoHeight();
             // $common.scrollbar("#store-constrain", "#store-list", "#store-slider");
             $('#store-list').perfectScrollbar({ marginTop: 25, marginBottom: 63 });

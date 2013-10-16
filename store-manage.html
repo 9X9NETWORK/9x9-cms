@@ -60,10 +60,10 @@
             <ul>
                 <li><a href="portal-manage.html" class="portal langkey">My Portal</a></li>
                 <li>
-                	<a href="store-manage.html" class="store langkey">Program Store</a>
-                	<ul class="sub-nav">
-                		<li><a href="#">Promotion Category</a></li>
-                        <li class="active"><a href="#">System Category</a></li>
+                    <a href="store-promotion.html" class="store langkey">Program Store</a>
+                    <ul class="sub-nav">
+                        <li><a href="store-promotion.html" class="langkey">Promotion Category</a></li>
+                        <li class="active"><a href="store-manage.html" class="langkey">System Category</a></li>
                     </ul>
                 </li>
                 <li><a href="brand-setting.html" class="brand langkey">Brand Settings</a></li>
@@ -76,14 +76,14 @@
         <div id="title-func" class="clearfix">
             <h2><span class="langkey">Program Store</span> &gt; <span class="categry-type langkey">System Category</span></h2>
             <ul>
-                <li id="set-save" class="last"><p class="btns disable"><span><a href="javascript:void(0)" class="langkey">Save</a></span></p></li>
+                <li id="set-save" class="last"><p class="btns disableBB"><span><a href="javascript:void(0)" class="langkey">Save</a></span></p></li>
             </ul>
         </div>
         <div class="intro clearfix">
-        	<p>
-            	<span class="langkey">Promotion category provides the best program impression in program store.</span>
-            	<a href="#" class="switch-on hide">ON</a>
-            	<a href="#" class="switch-off hide">OFF</a>
+            <p>
+                <span class="langkey">There are over 1000 FREE programs for your selection, you can activate system categories to enrich your program store.</span>
+                <a href="#" class="switch-on langkey hide">ON</a>
+                <a href="#" class="switch-off langkey hide">OFF</a>
             </p>
             <p class="msg-error langkey">You have turnned off system category, your viewers will not see these categories and programs in store.</p>
         </div>
@@ -250,12 +250,12 @@
 <!-- store-empty-category-li-tmpl Begin -->
 <script id="store-empty-category-li-tmpl" type="text/x-jquery-tmpl">
 <li class="catLi empty">
-	<span>
-		<a href="#">+ Add Category</a>
-	</span>
-	<div class="btn-remove"></div>
-	<div class="btn-edit"></div>
-	<div class="btn-minus"></div>
+    <span>
+        <a href="#">+ Add Category</a>
+    </span>
+    <div class="btn-remove"></div>
+    <div class="btn-edit"></div>
+    <div class="btn-minus"></div>
 </li>
 </script>
 <!-- store-empty-category-li-tmpl End -->
@@ -263,12 +263,12 @@
 <!-- store-category-li-tmpl Begin -->
 <script id="store-category-li-tmpl" type="text/x-jquery-tmpl">
 <li id="catLi_${id}" data-meta="${id}" class="catLi{{if $item.actCat == id }} on{{/if}}{{if msoMinus == 'on' }} minus{{/if}}">
-	<span>
-		<a href="javascript:void(0);">${name}</a>
-	</span>
-	<div class="btn-remove"></div>
-	<div class="btn-edit"></div>
-	<div class="btn-minus{{if msoMinus == 'on' }} on{{/if}}"></div>
+    <span>
+        <a href="javascript:void(0);">${name}</a>
+    </span>
+    <div class="btn-remove"></div>
+    <div class="btn-edit"></div>
+    <div class="btn-minus{{if msoMinus == 'on' }} on{{/if}}"></div>
 </li>
 </script>
 <!-- store-category-li-tmpl End -->
@@ -278,15 +278,15 @@
 {{if msoMinus === "on"}}
     <li id="channel_${id}" class="channelItem minus">
         <div class="thumb">
-			<div class="btn-top">
-				<div class="icon-holder"></div>
-				<div class="tip-white">
-					<p class="left"></p>
-					<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove from top'])}</p>
-					<p class="right"></p>
-				</div>
-				<div class="tip-top"></div>
-			</div>
+            <div class="btn-top">
+                <div class="icon-holder"></div>
+                <div class="tip-white">
+                    <p class="left"></p>
+                    <p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove from top'])}</p>
+                    <p class="right"></p>
+                </div>
+                <div class="tip-top"></div>
+            </div>
             <div class="btn-minus on">
                 <div class="icon-holder"></div>
                 <div class="tip-white">
@@ -296,15 +296,15 @@
                 </div>
                 <div class="tip-top"></div>
             </div>
-			<div class="btn-remove">
-				<div class="icon-holder"></div>
-				<div class="tip-white">
-					<p class="left"></p>
-					<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove program'])}</p>
-					<p class="right"></p>
-				</div>
-            	<div class="tip-top"></div>
-        	</div>
+            <div class="btn-remove">
+                <div class="icon-holder"></div>
+                <div class="tip-white">
+                    <p class="left"></p>
+                    <p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove program'])}</p>
+                    <p class="right"></p>
+                </div>
+                <div class="tip-top"></div>
+            </div>
             <a href="/view?mso=${msoName}&ch=${id}" target="_blank">
                 <img class="watermark" alt="" src="images/icon_playlist.png" />
             </a>
@@ -319,15 +319,15 @@
 {{else}}
     <li id="channel_${id}" class="channelItem">
         <div class="thumb">
-			<div class="btn-top">
-				<div class="icon-holder"></div>
-				<div class="tip-white">
-					<p class="left"></p>
-					<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}</p>
-					<p class="right"></p>
-				</div>
-				<div class="tip-top"></div>
-			</div>
+            <div class="btn-top">
+                <div class="icon-holder"></div>
+                <div class="tip-white">
+                    <p class="left"></p>
+                    <p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}</p>
+                    <p class="right"></p>
+                </div>
+                <div class="tip-top"></div>
+            </div>
             <div class="btn-minus">
                 <div class="icon-holder"></div>
                 <div class="tip-white">
@@ -337,15 +337,15 @@
                 </div>
                 <div class="tip-top"></div>
             </div>
-			<div class="btn-remove">
-				<div class="icon-holder"></div>
-				<div class="tip-white">
-					<p class="left"></p>
-					<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove program'])}</p>
-					<p class="right"></p>
-				</div>
-            	<div class="tip-top"></div>
-        	</div>
+            <div class="btn-remove">
+                <div class="icon-holder"></div>
+                <div class="tip-white">
+                    <p class="left"></p>
+                    <p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove program'])}</p>
+                    <p class="right"></p>
+                </div>
+                <div class="tip-top"></div>
+            </div>
             <a href="/view?mso=${msoName}&ch=${id}" target="_blank">
                 <img class="watermark" alt="" src="images/icon_playlist.png" />
             </a>
@@ -365,15 +365,15 @@
 <script id="store-empty-chanels-tmpl" type="text/x-jquery-tmpl">
 <li id="empty_channel" class="empty on">
     <div class="thumb">
-		<div class="btn-top">
-			<div class="icon-holder"></div>
-			<div class="tip-white">
-				<p class="left"></p>
-				<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}</p>
-				<p class="right"></p>
-			</div>
-			<div class="tip-top"></div>
-		</div>
+        <div class="btn-top">
+            <div class="icon-holder"></div>
+            <div class="tip-white">
+                <p class="left"></p>
+                <p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}</p>
+                <p class="right"></p>
+            </div>
+            <div class="tip-top"></div>
+        </div>
         <div class="btn-minus">
             <div class="icon-holder"></div>
             <div class="tip-white">
@@ -383,13 +383,13 @@
             </div>
             <div class="tip-top"></div>
         </div>
-		<div class="btn-remove">
-			<div class="icon-holder"></div>
-			<div class="tip-white">
-				<p class="left"></p>
-				<p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove program'])}</p>
-				<p class="right"></p>
-			</div>
+        <div class="btn-remove">
+            <div class="icon-holder"></div>
+            <div class="tip-white">
+                <p class="left"></p>
+                <p class="center">${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove program'])}</p>
+                <p class="right"></p>
+            </div>
             <div class="tip-top"></div>
         </div>
         <img src="images/icon_playlist.png" alt="" class="watermark" />
@@ -410,9 +410,9 @@
     <div class="change-category">
         <form method="post" action="">
             <p class="text"><span class="input-right"><span class="input-middle"><input type="text"  maxlength="16" value="" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'English Name'])}" class="text" /></span></span></p>
-			<p class="notice">Max length is 14 characters</p>
+            <p class="notice">Max length is 14 characters</p>
             <p class="text"><span class="input-right"><span class="input-middle"><input type="text"  maxlength="16" value="" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'Chinese Name'])}" class="text" /></span></span></p>
-			<p class="notice">Max length is 8 chinese characters</p>
+            <p class="notice">Max length is 8 chinese characters</p>
         </form>
     </div>
     <div class="overlay-btn">
