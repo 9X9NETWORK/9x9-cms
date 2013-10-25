@@ -49,9 +49,10 @@ $(function () {
             }
             thisDiv.removeClass("on");
             upLi.removeClass("minus");
-            thisDiv.find("p.center").text(nn._([cms.global.PAGE_ID, 'channel-list', 'Remove channel']));
-            $('body').addClass('has-change');
-            $("#set-save p.btns").removeClass("disable");
+            thisDiv.find("p.center").text(nn._([cms.global.PAGE_ID, 'channel-list', 'Remove program']));
+            // $('body').addClass('has-change');
+            // $("#set-save p.btns").removeClass("disable");
+            $page.setSaveButton("on");
         } else {
             // remove channle
             if (inCurrent === true && inAdd === false) {
@@ -59,11 +60,12 @@ $(function () {
             } else if (inCurrent === false && inAdd === true) {
                 cms.global.USER_DATA["msoAdd"].splice($.inArray(channelId, cms.global.USER_DATA["msoAdd"]), 1);
             }
-            $('body').addClass('has-change');
-            $("#set-save p.btns").removeClass("disable");
+            // $('body').addClass('has-change');
+            // $("#set-save p.btns").removeClass("disable");
+            $page.setSaveButton("on");
             thisDiv.addClass("on");
             upLi.addClass("minus");
-            thisDiv.find("p.center").text(nn._([cms.global.PAGE_ID, 'channel-list', 'Add channel']));
+            thisDiv.find("p.center").text(nn._([cms.global.PAGE_ID, 'channel-list', 'Add program']));
         }
     });
 
@@ -79,8 +81,8 @@ $(function () {
             cms.global.USER_DATA["pageInfo"] = [];
             cms.global.USER_DATA["msoSource"] = [];
             cms.global.USER_DATA["msoCurrent"] = [];
-            $('body').addClass('has-change');
-            $("#set-save p.btns").removeClass("disable");
+            // $('body').addClass('has-change');
+            // $("#set-save p.btns").removeClass("disable");
             $common.showProcessingOverlay();
             $('#store-layer').hide();
             $('.intro a.switch-off').removeClass("hide");
@@ -90,7 +92,8 @@ $(function () {
             $('#overlay-s').fadeOut("slow");
             $("#store-list .channel-list").empty();
         }
-        $("#set-save p.btns").removeClass("disable");
+        // $("#set-save p.btns").removeClass("disable");
+        $page.setSaveButton("on");
     });
 
     // system catetory off to on 
@@ -105,7 +108,8 @@ $(function () {
         $('.intro .msg-error').addClass("hide");
 
         $page.drawCategory(msoId, lang);
-        $("#set-save p.btns").removeClass("disable");
+        // $("#set-save p.btns").removeClass("disable");
+        $page.setSaveButton("on");
     });
 
     $('#store-list').scroll(function (event) {
@@ -118,7 +122,7 @@ $(function () {
     });
 
     $(document).on("click", "#set-save", function (event) {
-        if (!$("#set-save p.btns").hasClass("disable")) {
+        if (!$("#set-save p.btns").hasClass("disableBB")) {
             var msoId = cms.global.MSO,
                 stSwitchOn = !$(".switch-on").hasClass("hide"),
                 stSwitchOff = !$(".switch-off").hasClass("hide"),
@@ -182,8 +186,9 @@ $(function () {
 
             }
             $('#overlay-s').fadeOut("slow");
-            $('body').removeClass('has-change');
-            $("#set-save p.btns").addClass("disable");
+            // $('body').removeClass('has-change');
+            // $("#set-save p.btns").addClass("disable");
+            $page.setSaveButton("off");
         }
     });
     $(document).on("click", ".catLi, .catLi a", function (event) {
