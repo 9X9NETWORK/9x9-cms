@@ -207,7 +207,7 @@ $(function () {
                 $page.inLiClick = true;
                 $page._categoryBlockSlide("up");
             }
-             $page.catLiClick(thisMeta);
+            $page.catLiClick(thisMeta);
         }
         event.stopPropagation();
     });
