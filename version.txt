@@ -1,3 +1,78 @@
+版本: 5738
+作者: mars
+日期: 2013/11/04 09:49
+訊息:
+1. program format add part 2 - http: //www.9x9.tv/tv#/streaming/promo/26907/96685521
+2. bug fix - system category program list fix
+----
+異動 : /javascripts/v3/domready.portal.store.js
+異動 : /javascripts/v3/func.portal.store.js
+異動 : /javascripts/v3/func.common.js
+
+
+版本: 5727
+日期: 2013/10/30 16:00
+訊息:
+v 4.1.2
+1. css fix, remove folder stylesheetsv3
+2. add new feature - PCS search add new player url formate
+3. use jsLint chenck script
+
+v 4.1.1 
+yifan fix some bugs
+1. Fix poll event button text vertical alignment bug.
+2. Revise poi event plugin layout.
+3. Add jquery.poi.css.
+4. Add poll event buttons onHover handling.
+5. Correct poll event text restriction calculation.
+6. Correct btn-grey disabled style.
+7. Change default poll event button text to 'Button text'.
+8. Fix poll event button text empty check.
+9. Refine character count restriction.
+10. Add multi-language poll event text.
+11. Remove maxlength restriction in poll event.
+----
+
+
+版本: 5717
+日期: 2013/10/24 18:08
+訊息:
+clear not use file
+1. remove folder /.sass-cache/
+----
+移除 : /.sass-cache/
+
+版本: 5716
+日期: 2013/10/24 17:49
+訊息:
+clear not use file
+1. remove portal-set.html (not use)
+2. move config.js form v2 to v3
+3. rmove folder javascripts\v2\
+4. set all images in folder "images"
+5. remove folder /WEB-INF/ and /thumbnail/
+----
+新增 : /javascripts/v3/config.js
+新增 : /images/brand_default.png
+新增 : /images/brand_loading.gif
+異動 : /favicon.ico
+異動 : /brand-setting.html
+異動 : /channel-add.html
+異動 : /channel-poi.html
+異動 : /channnel-setting.html
+異動 : /cms-settings.html
+異動 : /epcurate-curation.html
+異動 : /epcurate-publish.html
+異動 : /episode-list.html
+異動 : /index.html
+異動 : /portal-manage.html
+異動 : /signin.html
+異動 : /store-manage.html
+異動 : /store-promotion.html
+移除 : /portal-set.html
+移除 : /WEB-INF/
+移除 : /thumbnail/
+
 版本: 5698
 日期: 2013/10/23 14:49
 訊息:
