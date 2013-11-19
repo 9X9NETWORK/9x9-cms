@@ -328,7 +328,8 @@
             "Remove from top": "Remove from top",
             "Remove program": "Remove program",
             "You can only set 4 programs on top": "You can only set 4 programs on top",
-            "Please fill in your channel name.": "Please fill in your channel name."
+            "Please fill in your channel name.": "Please fill in your channel name.",
+            "Program List : ? Programs": "Program List : {0} Programs"
         }
     },
     "portal-set": {

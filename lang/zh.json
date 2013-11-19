@@ -365,7 +365,8 @@
             "Remove from top": "取消置頂",
             "Remove program": "移除此節目",
             "You can only set 4 programs on top": "只能設定4個置頂節目",
-            "Please fill in your channel name.": "請輸入頻道名稱"
+            "Please fill in your channel name.": "請輸入頻道名稱",
+            "Program List : ? Programs": "節目列表 : {0} 個節目"
         }
     },
     "portal-set": {

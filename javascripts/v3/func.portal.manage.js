@@ -16,6 +16,38 @@
     $page.removeList = [];
     $page.onTopAddList = [];
     $page.onTopRemoveList = [];
+    $page.chSetLimit = 30;
+    $page.chSetProgramLimit = 27;
+
+    $page.ChannelSetRemoveList = [];
+
+    $page.catGetNonNew = function () {
+        var retValue = 0,
+            catList = $("#store-category-ul .catLi"),
+            tmpCat,
+            i,
+            j;
+
+        for (i = 0, j = catList.length; i < j; i += 1) {
+            tmpCat = catList[i];
+            if (!$(tmpCat).hasClass("newCat")) {
+                retValue = $(tmpCat).data("meta");
+                return retValue;
+            }
+
+        }
+        return retValue;
+    };
+
+    $page.isChannelSetAdd = function() {
+        var cuntChannelSet = $(".catLi").length,
+            limitChannelSet = parseInt(cms.global.MSOINFO.limitCh, 10);
+
+        if(isNaN(cms.global.MSOINFO.limitCh)){
+            limitChannelSet = $page.chSetLimit;
+        }
+        return limitChannelSet > cuntChannelSet
+    };
 
     $page._search_channel_clean = function () {
         $("#msg-search").hide();
@@ -333,6 +365,251 @@
         return a.seq - b.seq;
     };
 
+    $page.drawChannelPrograms = function (msoId, inSet) {
+        // 用到
+        nn.api('GET', cms.reapi('/api/mso/{msoId}/sets', {
+            msoId: msoId
+        }), null, function (sets) {
+            var cntSet = sets.length,
+                setId = 0;
+            if (cntSet > 0) {
+                setId = setId[0].id;
+            }
+            if (inSet > 0) {
+                setId = inSet;
+            }
+            if (cntSet > 0 && setId != undefined && setId > 0) {
+                $page.listCategory(categories, catId);
+                $page.catLiClick(catId);
+                if (cntCategories > 11) {
+                    $("#store-category-ul").height(96);
+                }
+                // $("#store-category-ul").show();
+                $("#store-category-ul li").show();
+                // $('#overlay-s').fadeOut("slow");
+
+            } else {
+                $page.listCategory(categories, catId);
+                $("#store-category-ul li").show();
+                $('#overlay-s').fadeOut("slow");
+                // location.href = "./";
+            }
+        });
+    };
+
+    $page.emptyChannel = function() {
+        $page.currentList = [];
+        $page.nomoList = [];
+        $page.onTopList = [];
+
+        $('.channel-list').empty();
+
+        $page._drawChannelLis();
+    };
+
+    $page.emptySet = function() {
+        $page.currentList = [];
+        $page.nomoList = [];
+        $page.onTopList = [];
+
+        $('.set_name').empty();
+        $('.channel-list').empty();
+        $('.info .form-title').empty();
+        $('.info .form-content ').empty();
+    };
+
+    $page.listSetProgram = function (inMsoId, inSetId) {
+        if ($("#catLi_" + inSetId).hasClass("newCat")) {
+            $page.sortingType = $("#catLi_" + inSetId).data("sortingtype");
+            $page.emptyChannel();
+            var cntChanels = $(".itemList").length;
+            $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [cntChanels]));
+            $("div.info .form-content").empty();
+            $('#channel-set-sorting-tmpl').tmpl([{
+                sortingType: $page.sortingType
+            }]).appendTo("div.info .form-content");
+            $('#overlay-s').fadeOut("slow");
+        } else {
+            if (inSetId > 0) {
+                // nn.log("abc::" + inCatId);
+                nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
+                    setId: inSetId
+                }), null, function(chanels) {
+                    var cntChanels = chanels.length;
+                    $('#channel-list').empty();
+                    if (cntChanels > 0) {
+                        var tmpMsoName = cms.global.MSOINFO.name || "9x9";
+                        $.each(chanels, function(i, channel) {
+                            if ('' === channel.imageUrl) {
+                                channel.imageUrl = "images/ch_default.png";
+                            }
+                            channel.msoName = tmpMsoName;
+                            $page.currentList.push(channel.id);
+                        });
+
+                        $page.nomoList = $page.procNomoList(chanels, $page.sortingType);
+                        $page.onTopList = $page.procOnTopList(chanels, $page.sortingType);
+                        $page._drawChannelLis();
+                    }
+
+                    var expSort = ".empty, .isSortable",
+                        setSortingType = $page.sortingType;
+
+                    if (expSort === 1) {
+                        expSort = ".empty";
+                    } else {
+                        $(".isSortable").css("cursor", "pointer");
+                    }
+                    $('#channel-list').sortable({
+                        cursor: 'move',
+                        revert: true,
+                        cancel: expSort,
+                        change: function(event, ui) {
+                            $('body').addClass('has-change');
+                        }
+                    });
+                    //$common.scrollbar("#portal-constrain", "#portal-list", "#portal-slider");
+                    $(".info").show();
+                    // $(".form-content").show();
+
+                    $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [cntChanels]));
+                    $("div.info .form-content").empty();
+                    $('#channel-set-sorting-tmpl').tmpl([{sortingType:$page.sortingType}]).appendTo("div.info .form-content");
+
+                    $('#portal-list').perfectScrollbar({
+                        marginTop: 25,
+                        marginBottom: 63
+                    });
+                    $('#overlay-s').fadeOut("slow");
+                });
+// ///////////////////////////////
+                // nn.api('GET', cms.reapi('/api/category/{categoryId}/channels', {
+                //     categoryId: inSetId
+                // }), null, function (channels) {
+                //     var cntChannelSource = channels.length;
+                //     $page.currentList = [];
+                //     $page.nomoList = [];
+                //     $page.onTopList = [];
+
+                //     $('.channel-list').empty();
+
+                //     if (cntChannelSource > 0) {
+
+                //         var tmpMsoName = cms.global.MSOINFO.name || "9x9";
+                //         $.each(channels, function (i, channel) {
+                //             if ('' === channel.imageUrl) {
+                //                 channel.imageUrl = "images/ch_default.png";
+                //             }
+                //             channel.msoName = tmpMsoName;
+                //             $page.currentList.push(channel.id);
+                //         });
+                //         nn.log("+++++ Channels:::" + channels.length);
+
+                //         $page.nomoList = $page.procNomoList(channels, $page.sortingType);
+                //         $page.onTopList = $page.procOnTopList(channels, $page.sortingType);
+                //         $page._drawChannelLis();
+                //     } else {
+                //         $page._drawChannelLis();
+                //         $('#overlay-s').fadeOut("slow");
+                //     }
+                // });
+            } else {
+                $page.currentList = [];
+                $page.nomoList = [];
+                $page.onTopList = [];
+                $('.channel-list').empty();
+                $page._drawChannelLis();
+                $('#overlay-s').fadeOut("slow");
+            }
+        }
+    };
+
+    $page.catLiClick = function (inObj) {
+        var msoId = 0;
+        msoId = cms.global.MSO;
+        $common.showProcessingOverlay();
+        $(".catLi").removeClass("on");
+        $("#catLi_" + inObj).addClass("on");
+        var tmpCategoryName = $("#catLi_" + inObj + " span a").text();
+        $("#title-func .set_name").text(tmpCategoryName);
+        $('#channel-list').empty();
+        $('#store-list').scrollTop(0);
+        $page.listSetProgram(msoId, inObj);
+        $('#store-list').perfectScrollbar('update');
+    };
+
+    $page.availableSetAdd = function (inCount) {
+        // 用到
+        if ($page.chSetLimit > inCount) {
+            $("#store-category-ul .addPromotionCategory").removeClass("disable");
+        } else {
+            $("#store-category-ul .addPromotionCategory").addClass("disable");
+        }
+    };
+
+    $page.listSet = function(inSet, inSetId) {
+        // 用到
+        $('#store-category-ul').empty();
+
+        $('#store-empty-category-li-tmpl').tmpl().appendTo('#store-category-ul');
+        $page.availableSetAdd(inSet.length);
+        $('#store-category-li-tmpl').tmpl(inSet, {
+            actCat: inSetId
+        }).appendTo('#store-category-ul');
+        //$(".func_name").text($("#store-category-ul li.on").text());
+    };
+
+    $page.getSortingType = function(inSets, inSetId) {
+        var retValue = 0,
+            tmpId = 0,
+            tmpSortingType = 0;
+        $.each(inSets, function(eKye, eValue) {
+            tmpId = eValue.id;
+            tmpSortingType = eValue.sortingType;
+            if (tmpId === inSetId) {
+                retValue = tmpSortingType;
+            }
+        });
+        return retValue;
+    };
+
+    $page.drawChannelSets = function (msoId, inSet) {
+        // 用到
+        nn.api('GET', cms.reapi('/api/mso/{msoId}/sets', {
+            msoId: msoId
+        }), null, function (sets) {
+            var cntSet = sets.length,
+                setId = 0;
+            if (cntSet > 0) {
+                setId = sets[0].id;
+            }
+            if (inSet > 0) {
+                setId = inSet;
+            }
+            if (cntSet > 0 && setId != undefined && setId > 0) {
+                $page.listSet(sets, setId);
+                $page.sortingType = $page.getSortingType(sets, setId);
+                // $page.catLiClick(setId);
+                // if (cntCategories > 11) {
+                //     $("#store-category-ul").height(96);
+                // }
+                $("#store-category-ul").show();
+                $("#store-category-ul li").show();
+
+                $page.catLiClick(setId);
+                // $('#overlay-s').fadeOut("slow");
+                
+            } else {
+                $page.listCategory(sets, setId);
+                $("#store-category-ul").show();
+                $("#store-category-ul li").show();
+                $('#overlay-s').fadeOut("slow");
+                // location.href = "./";
+            }
+        });
+    };
+   
+
     // NOTE: page entry point (keep at the bottom of this file)
     $page.init = function (options) {
         nn.log({
@@ -346,105 +623,115 @@
             $('#yes-no-prompt .content').text(nn._([cms.global.PAGE_ID, 'channel-list', "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set on top programs."]));
         }
         var setId = 0,
-            msoId = cms.global.MSO;
+            msoId = cms.global.MSO,
+            tmpLi = null;
 
         if (!isNaN(parseInt(cms.global.USER_URL.param('id'), 10))) {
             setId = parseInt(cms.global.USER_URL.param('id'), 10);
         }
 
-        nn.on(404, function (jqXHR, textStatus) {
-            var tmpTxt = $.trim(jqXHR.responseText);
-            if (tmpTxt === "Mso Not Found") {
-                location.href = "./";
-            }
-        });
-        nn.api('GET', cms.reapi('/api/mso/{msoId}/sets', {
-            msoId: msoId
-        }), null, function (sets) {
-            var cntSetsItem = sets.length;
-            if (cntSetsItem > 0) {
-                $page.setId = setId;
-                if (setId < 1) {
-                    $page.setId = sets[0].id;
-                }
-                setId = $page.setId;
-                var setItems = [];
-                $.each(sets, function (i, channel) {
-                    channel.isActive = 0;
-                    if (channel.id == setId) {
-                        channel.isActive = 1;
-                    }
-                    setItems.push(channel);
-                });
-                $('#func-nav .sub-nav').html('');
-                $('#portal-func-nav-sub-tmpl').tmpl(setItems).appendTo('#func-nav .sub-nav');
+        $page.drawChannelSets(msoId, setId);
 
-                nn.api('GET', cms.reapi('/api/sets/{setId}', {
-                    setId: setId
-                }), null, function (set) {
-                    $('#portal-manage').html('');
-                    // sets info
+        // nn.on(404, function (jqXHR, textStatus) {
+        //     var tmpTxt = $.trim(jqXHR.responseText);
+        //     if (tmpTxt === "Mso Not Found") {
+        //         location.href = "./";
+        //     }
+        // });
+        // nn.api('GET', cms.reapi('/api/mso/{msoId}/sets', {
+        //     msoId: msoId
+        // }), null, function (sets) {
+        //     var cntSetsItem = sets.length;
+        //     if (cntSetsItem > 0) {
+        //         $page.setId = setId;
+        //         if (setId < 1) {
+        //             $page.setId = sets[0].id;
+        //         }
+        //         setId = $page.setId;
+        //         var setItems = [];
+        //         $.each(sets, function (i, channel) {
+        //             channel.isActive = 0;
+        //             if (channel.id == setId) {
+        //                 channel.isActive = 1;
+        //             }
+        //             setItems.push(channel);
+        //         });
+        //         $('#func-nav .sub-nav').remove();
+        //         // $('#func-nav .sub-nav').html('');
+        //         // $('#portal-func-nav-sub-tmpl').tmpl(setItems).appendTo('#func-nav .sub-nav');
 
-                    $('#portal-set-form-tmpl').tmpl(set).appendTo('#portal-manage');
-                    $('#title-func .set_name').html(set.name);
+        //         // $('#store-category-ul').empty();
+        //         // $('#store-empty-category-li-tmpl').tmpl(null).appendTo('#store-category-ul');
+        //         // $('#store-category-li-tmpl').tmpl(setItems).appendTo('#store-category-ul');
+        //         // $("#store-category-ul").show();
+        //         // $("#store-category-ul li").show();
 
-                    $page.sortingType = set.sortingType;
-                    $page.currentList = [];
+        //         nn.api('GET', cms.reapi('/api/sets/{setId}', {
+        //             setId: setId
+        //         }), null, function (set) {
+        //             // $('#store-category').html('');
+        //             // sets info
 
-                    // sets channel list
-                    if (set.channelCnt > 0) {
-                        nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
-                            setId: set.id
-                        }), null, function (chanels) {
-                            var cntChanels = chanels.length;
-                            $('#channel-list').empty();
-                            if (cntChanels > 0) {
-                                var tmpMsoName = cms.global.MSOINFO.name || "9x9";
-                                $.each(chanels, function (i, channel) {
-                                    if ('' === channel.imageUrl) {
-                                        channel.imageUrl = "images/ch_default.png";
-                                    }
-                                    channel.msoName = tmpMsoName;
-                                    $page.currentList.push(channel.id);
-                                });
+        //             $('#portal-set-form-tmpl').tmpl(set).appendTo('#store-category');
+        //             // $('#title-func .set_name').html(set.name);
 
-                                $page.nomoList = $page.procNomoList(chanels, $page.sortingType);
-                                $page.onTopList = $page.procOnTopList(chanels, $page.sortingType);
-                                $page._drawChannelLis();
-                            }
+        //             $page.sortingType = set.sortingType;
+        //             $page.currentList = [];
 
-                            var expSort = ".empty, .isSortable";
-                            if (set.sortingType === 1) {
-                                expSort = ".empty";
-                            } else {
-                                $(".isSortable").css("cursor", "pointer");
-                            }
-                            $('#channel-list').sortable({
-                                cursor: 'move',
-                                revert: true,
-                                cancel: expSort,
-                                change: function (event, ui) {
-                                    $('body').addClass('has-change');
-                                }
-                            });
-                            //$common.scrollbar("#portal-constrain", "#portal-list", "#portal-slider");
-                            $('#portal-list').perfectScrollbar({ marginTop: 25, marginBottom: 63 });
-                            $('#overlay-s').fadeOut("slow");
-                        });
-                    } else {
-                        // no channels
-                        $("#cntChannelEmpty").show();
-                        $('#channel-list').html('');
-                        $('#portal-set-empty-chanels-tmpl').tmpl([{
-                            cntChanels: set.channelCnt
-                        }]).appendTo('#channel-list');
-                        $('#overlay-s').fadeOut("slow");
-                    }
-                });
-            } else {
-                location.href = "./";
-            }
-        });
+        //             // sets channel list
+        //             if (set.channelCnt > 0) {
+        //                 nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
+        //                     setId: set.id
+        //                 }), null, function (chanels) {
+        //                     var cntChanels = chanels.length;
+        //                     $('#channel-list').empty();
+        //                     if (cntChanels > 0) {
+        //                         var tmpMsoName = cms.global.MSOINFO.name || "9x9";
+        //                         $.each(chanels, function (i, channel) {
+        //                             if ('' === channel.imageUrl) {
+        //                                 channel.imageUrl = "images/ch_default.png";
+        //                             }
+        //                             channel.msoName = tmpMsoName;
+        //                             $page.currentList.push(channel.id);
+        //                         });
+
+        //                         $page.nomoList = $page.procNomoList(chanels, $page.sortingType);
+        //                         $page.onTopList = $page.procOnTopList(chanels, $page.sortingType);
+        //                         $page._drawChannelLis();
+        //                     }
+
+        //                     var expSort = ".empty, .isSortable";
+        //                     if (set.sortingType === 1) {
+        //                         expSort = ".empty";
+        //                     } else {
+        //                         $(".isSortable").css("cursor", "pointer");
+        //                     }
+        //                     $('#channel-list').sortable({
+        //                         cursor: 'move',
+        //                         revert: true,
+        //                         cancel: expSort,
+        //                         change: function (event, ui) {
+        //                             $('body').addClass('has-change');
+        //                         }
+        //                     });
+        //                     //$common.scrollbar("#portal-constrain", "#portal-list", "#portal-slider");
+        //                     $('#portal-list').perfectScrollbar({ marginTop: 25, marginBottom: 63 });
+        //                     $('#overlay-s').fadeOut("slow");
+        //                 });
+        //             } else {
+        //                 // no channels
+        //                 $("#cntChannelEmpty").show();
+        //                 $('#channel-list').html('');
+        //                 $('#portal-set-empty-chanels-tmpl').tmpl([{
+        //                     cntChanels: set.channelCnt
+        //                 }]).appendTo('#channel-list');
+        //                 $('#overlay-s').fadeOut("slow");
+        //             }
+        //         });
+        //     } else {
+        //         location.href = "./";
+        //     }
+        // });
 
         // portal manage
         $('#portal-add-layer .langkey').each(function () {
