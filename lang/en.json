@@ -288,6 +288,7 @@
         "title-func": {
             "My Portal": "My Portal",
             "Portal": "Portal",
+            "Promotion category provides the best program impression in program store.": "Promotion category provides the best program impression in program store.",
             "Preview": "Preview",
             "Save": "Save",
             "Channel Name": "Channel Name"
@@ -306,6 +307,11 @@
             "Please fill in the correct url.": "Please fill in the correct url.",
             "Please fill in the keywords to search.": "Please fill in the keywords to search.",
             "Processing...": "Processing..."
+        },
+        "overlay": {
+            "Are you sure to remove this channel set?": "Are you sure to remove this channel set?",
+            "Unsaved changes will be lost, are you sure you want to leave?": "Unsaved changes will be lost, are you sure you want to leave?",
+            "Processing...": "處理中..."
         },
         "portal-layer": {
             "You can add 27 programs into your channel.": "You can add 27 programs into your channel.",

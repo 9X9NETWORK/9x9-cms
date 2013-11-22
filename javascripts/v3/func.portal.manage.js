@@ -8,7 +8,7 @@
     $page.sortingType = 1;
     $page.onTopLimit = 4;
     $page.setId = 0;
-    $page.setCanChannel = 999999;
+    $page.setCanChannel = 0;
     $page.onTopList = [];
     $page.nomoList = [];
     $page.currentList = [];
@@ -16,8 +16,9 @@
     $page.removeList = [];
     $page.onTopAddList = [];
     $page.onTopRemoveList = [];
-    $page.chSetLimit = 30;
+    $page.chSetLimit = 3;
     $page.chSetProgramLimit = 27;
+    $page.chSetProgramLess = 0;
 
     $page.ChannelSetRemoveList = [];
 
@@ -39,11 +40,22 @@
         return retValue;
     };
 
-    $page.isChannelSetAdd = function() {
-        var cuntChannelSet = $(".catLi").length,
-            limitChannelSet = parseInt(cms.global.MSOINFO.limitCh, 10);
+    $page.isProgramAdd = function() {
+        var cuntProgram = $("#channel-list .itemList").length,
+            limitProgram = parseInt(cms.global.MSOINFO.maxChPerSet, 10);
 
-        if(isNaN(cms.global.MSOINFO.limitCh)){
+        if(isNaN(cms.global.MSOINFO.maxChPerSet)){
+            limitProgram = $page.chSetProgramLimit;
+        }
+        $page.setCanChannel = limitProgram - cuntProgram;
+        return limitProgram > cuntProgram
+    };
+
+    $page.isChannelSetAdd = function() {
+        var cuntChannelSet = $("#store-category-ul .catLi").length,
+            limitChannelSet = parseInt(cms.global.MSOINFO.maxSets, 10);
+
+        if(isNaN(cms.global.MSOINFO.maxSets)){
             limitChannelSet = $page.chSetLimit;
         }
         return limitChannelSet > cuntChannelSet
@@ -231,104 +243,6 @@
 
     };
 
-    $page._procSort = function (inObj) {
-
-        var tmpDiv,
-            channels = [],
-            nowTopList = [],
-            this_id = 0;
-
-        $("#channel-list li.itemList").each(function () {
-            this_id = $(this).attr("id").replace("set_", "");
-            if (this_id > 0) {
-                channels.push(this_id);
-            }
-            tmpDiv = $(this).find(".btn-top");
-
-            if ($(tmpDiv[0]).hasClass("on")) {
-                nowTopList.push(this_id);
-            }
-        });
-
-
-
-        if (channels.length > 0) {
-            nn.api('PUT', cms.reapi('/api/sets/{setId}/channels/sorting', {
-                setId: inObj
-            }), {
-                channels: channels.join(',')
-            }, function (set) {
-
-                if (2 === $page.sortingType) {
-                    nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
-                        setId: inObj
-                    }), null, function (chanels) {
-                        var cntChanels = chanels.length,
-                            dbTopList = [],
-                            procList = [],
-                            tmpId = 0,
-                            actChannelCount2 = 0;
-
-                        if (cntChanels > 0) {
-                            dbTopList = $page._getItemIdArray($page.procOnTopList(chanels, $page.sortingType));
-                        }
-
-                        $.each(nowTopList, function (i, chId) {
-                            tmpId = parseInt(chId, 10);
-                            if ($.inArray(tmpId, dbTopList) > -1) {
-                                dbTopList.splice($.inArray(tmpId, dbTopList), 1);
-                            } else {
-                                procList.push({
-                                    onTop: true,
-                                    chId: tmpId
-                                });
-                            }
-
-                        });
-
-                        $.each(dbTopList, function (i, chId) {
-                            tmpId = parseInt(chId, 10);
-                            if (tmpId > 0) {
-                                procList.push({
-                                    onTop: false,
-                                    chId: tmpId
-                                });
-                            }
-                        });
-                        actChannelCount2 = procList.length;
-
-                        if (actChannelCount2 > 0) {
-
-                            $.each(procList, function (i, channel) {
-                                nn.api("POST", cms.reapi('/api/sets/{setId}/channels', {
-                                    setId: inObj
-                                }), {
-                                    channelId: channel.chId,
-                                    alwaysOnTop: channel.onTop
-                                }, function (retValue) {
-                                    actChannelCount2 = actChannelCount2 - 1;
-                                    if (actChannelCount2 === 0) {
-
-                                        $('#overlay-s').fadeOut("slow");
-                                    }
-                                });
-                            });
-                        } else {
-                            $('#overlay-s').fadeOut("slow");
-                        }
-
-                    });
-
-                } else {
-                    $('#overlay-s').fadeOut("slow");
-                }
-
-            });
-        } else {
-            $('#overlay-s').fadeOut("slow");
-        }
-    };
-
     $page._drawChannelLis = function () {
 
         $('#channel-list').empty();
@@ -446,28 +360,63 @@
                             channel.msoName = tmpMsoName;
                             $page.currentList.push(channel.id);
                         });
-
-                        $page.nomoList = $page.procNomoList(chanels, $page.sortingType);
-                        $page.onTopList = $page.procOnTopList(chanels, $page.sortingType);
-                        $page._drawChannelLis();
                     }
+
+                    $page.nomoList = $page.procNomoList(chanels, $page.sortingType);
+                    $page.onTopList = $page.procOnTopList(chanels, $page.sortingType);
+                    $page._drawChannelLis();
 
                     var expSort = ".empty, .isSortable",
                         setSortingType = $page.sortingType;
 
-                    if (expSort === 1) {
+                    // if (setSortingType === 1) {
+                    //     expSort = ".empty";
+                    // } else {
+                    //     $(".isSortable").css("cursor", "pointer");
+                    // }
+                    // $('#channel-list').sortable({
+                    //     cursor: 'move',
+                    //     revert: true,
+                    //     cancel: expSort,
+                    //     change: function(event, ui) {
+                    //         $('body').addClass('has-change');
+                    //     }
+                    // });
+
+                    if (1 === setSortingType) {
+                        $page.nomoList = $page.onTopList.concat($page.nomoList);
+                        $page.onTopList = [];
                         expSort = ".empty";
+                        $(".btn-top").addClass("hide");
+                        $(".isSortable").css("cursor", "move");
+                        $('#channel-list').sortable({
+                            cursor: 'move',
+                            revert: true,
+                            cancel: expSort,
+                            change: function(event, ui) {
+                                $('body').addClass('has-change');
+                            }
+                        });
                     } else {
+
+                        $page.onTopList = $page.procOnTopList($page.nomoList, $page.sortingType);
+                        $page.nomoList = $page.procNomoList($page.nomoList, $page.sortingType);
+
+                        $page._drawChannelLis();
+                        $page._reListSeq();
+
+                        $(".btn-top").removeClass("hide");
+
                         $(".isSortable").css("cursor", "pointer");
+                        $('#channel-list').sortable({
+                            cursor: 'move',
+                            revert: true,
+                            cancel: expSort,
+                            change: function(event, ui) {
+                                $('body').addClass('has-change');
+                            }
+                        });
                     }
-                    $('#channel-list').sortable({
-                        cursor: 'move',
-                        revert: true,
-                        cancel: expSort,
-                        change: function(event, ui) {
-                            $('body').addClass('has-change');
-                        }
-                    });
                     //$common.scrollbar("#portal-constrain", "#portal-list", "#portal-slider");
                     $(".info").show();
                     // $(".form-content").show();
@@ -482,37 +431,6 @@
                     });
                     $('#overlay-s').fadeOut("slow");
                 });
-// ///////////////////////////////
-                // nn.api('GET', cms.reapi('/api/category/{categoryId}/channels', {
-                //     categoryId: inSetId
-                // }), null, function (channels) {
-                //     var cntChannelSource = channels.length;
-                //     $page.currentList = [];
-                //     $page.nomoList = [];
-                //     $page.onTopList = [];
-
-                //     $('.channel-list').empty();
-
-                //     if (cntChannelSource > 0) {
-
-                //         var tmpMsoName = cms.global.MSOINFO.name || "9x9";
-                //         $.each(channels, function (i, channel) {
-                //             if ('' === channel.imageUrl) {
-                //                 channel.imageUrl = "images/ch_default.png";
-                //             }
-                //             channel.msoName = tmpMsoName;
-                //             $page.currentList.push(channel.id);
-                //         });
-                //         nn.log("+++++ Channels:::" + channels.length);
-
-                //         $page.nomoList = $page.procNomoList(channels, $page.sortingType);
-                //         $page.onTopList = $page.procOnTopList(channels, $page.sortingType);
-                //         $page._drawChannelLis();
-                //     } else {
-                //         $page._drawChannelLis();
-                //         $('#overlay-s').fadeOut("slow");
-                //     }
-                // });
             } else {
                 $page.currentList = [];
                 $page.nomoList = [];
@@ -632,106 +550,6 @@
 
         $page.drawChannelSets(msoId, setId);
 
-        // nn.on(404, function (jqXHR, textStatus) {
-        //     var tmpTxt = $.trim(jqXHR.responseText);
-        //     if (tmpTxt === "Mso Not Found") {
-        //         location.href = "./";
-        //     }
-        // });
-        // nn.api('GET', cms.reapi('/api/mso/{msoId}/sets', {
-        //     msoId: msoId
-        // }), null, function (sets) {
-        //     var cntSetsItem = sets.length;
-        //     if (cntSetsItem > 0) {
-        //         $page.setId = setId;
-        //         if (setId < 1) {
-        //             $page.setId = sets[0].id;
-        //         }
-        //         setId = $page.setId;
-        //         var setItems = [];
-        //         $.each(sets, function (i, channel) {
-        //             channel.isActive = 0;
-        //             if (channel.id == setId) {
-        //                 channel.isActive = 1;
-        //             }
-        //             setItems.push(channel);
-        //         });
-        //         $('#func-nav .sub-nav').remove();
-        //         // $('#func-nav .sub-nav').html('');
-        //         // $('#portal-func-nav-sub-tmpl').tmpl(setItems).appendTo('#func-nav .sub-nav');
-
-        //         // $('#store-category-ul').empty();
-        //         // $('#store-empty-category-li-tmpl').tmpl(null).appendTo('#store-category-ul');
-        //         // $('#store-category-li-tmpl').tmpl(setItems).appendTo('#store-category-ul');
-        //         // $("#store-category-ul").show();
-        //         // $("#store-category-ul li").show();
-
-        //         nn.api('GET', cms.reapi('/api/sets/{setId}', {
-        //             setId: setId
-        //         }), null, function (set) {
-        //             // $('#store-category').html('');
-        //             // sets info
-
-        //             $('#portal-set-form-tmpl').tmpl(set).appendTo('#store-category');
-        //             // $('#title-func .set_name').html(set.name);
-
-        //             $page.sortingType = set.sortingType;
-        //             $page.currentList = [];
-
-        //             // sets channel list
-        //             if (set.channelCnt > 0) {
-        //                 nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
-        //                     setId: set.id
-        //                 }), null, function (chanels) {
-        //                     var cntChanels = chanels.length;
-        //                     $('#channel-list').empty();
-        //                     if (cntChanels > 0) {
-        //                         var tmpMsoName = cms.global.MSOINFO.name || "9x9";
-        //                         $.each(chanels, function (i, channel) {
-        //                             if ('' === channel.imageUrl) {
-        //                                 channel.imageUrl = "images/ch_default.png";
-        //                             }
-        //                             channel.msoName = tmpMsoName;
-        //                             $page.currentList.push(channel.id);
-        //                         });
-
-        //                         $page.nomoList = $page.procNomoList(chanels, $page.sortingType);
-        //                         $page.onTopList = $page.procOnTopList(chanels, $page.sortingType);
-        //                         $page._drawChannelLis();
-        //                     }
-
-        //                     var expSort = ".empty, .isSortable";
-        //                     if (set.sortingType === 1) {
-        //                         expSort = ".empty";
-        //                     } else {
-        //                         $(".isSortable").css("cursor", "pointer");
-        //                     }
-        //                     $('#channel-list').sortable({
-        //                         cursor: 'move',
-        //                         revert: true,
-        //                         cancel: expSort,
-        //                         change: function (event, ui) {
-        //                             $('body').addClass('has-change');
-        //                         }
-        //                     });
-        //                     //$common.scrollbar("#portal-constrain", "#portal-list", "#portal-slider");
-        //                     $('#portal-list').perfectScrollbar({ marginTop: 25, marginBottom: 63 });
-        //                     $('#overlay-s').fadeOut("slow");
-        //                 });
-        //             } else {
-        //                 // no channels
-        //                 $("#cntChannelEmpty").show();
-        //                 $('#channel-list').html('');
-        //                 $('#portal-set-empty-chanels-tmpl').tmpl([{
-        //                     cntChanels: set.channelCnt
-        //                 }]).appendTo('#channel-list');
-        //                 $('#overlay-s').fadeOut("slow");
-        //             }
-        //         });
-        //     } else {
-        //         location.href = "./";
-        //     }
-        // });
 
         // portal manage
         $('#portal-add-layer .langkey').each(function () {
@@ -751,6 +569,9 @@
             $(this).text(nn._([cms.global.PAGE_ID, 'func-nav', $(this).data('langkey')]));
         });
         $('#title-func .langkey').each(function () {
+            $(this).text(nn._([cms.global.PAGE_ID, 'title-func', $(this).data('langkey')]));
+        });
+        $('.intro .langkey').each(function () {
             $(this).text(nn._([cms.global.PAGE_ID, 'title-func', $(this).data('langkey')]));
         });
     };
