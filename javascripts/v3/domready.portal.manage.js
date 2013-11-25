@@ -99,7 +99,7 @@ $(function () {
         $.blockUI({
             message: $('#change-category-overlay')
         });
-        return false; 
+        return false;
     });
 
     // delete channel set - show prompt window
@@ -119,14 +119,13 @@ $(function () {
             message: $('#confirm-prompt')
         });
 
-        return false; 
+        return false;
     });
 
     // unsave delete / change channel set - confirm to delete / change
     $(document).on("click", "#confirm-prompt .btn-leave", function (event) {
         // 用到
         var catId = $('#confirm-prompt').data("actli"),
-            catAction = $('#confirm-prompt').data("actCat"),
             thisLi = $("#catLi_" + catId),
             isNew = thisLi.hasClass("newCat"),
             isOn = thisLi.hasClass("on"),
@@ -137,7 +136,6 @@ $(function () {
         $('#confirm-prompt').data("actli", "");
         $('#confirm-prompt').data("actCat", "");
 
-        
         if (isChange) {
             // unsave - change channel set
             $page.emptyChannel();
@@ -146,7 +144,6 @@ $(function () {
             $.unblockUI();
         } else if (isRemove) {
             // remove channel set
-            //// to do : when remove to do list
             if (!isNew) {
                 $page.ChannelSetRemoveList.push(catId);
             }
@@ -235,45 +232,31 @@ $(function () {
     });
 
     $(document).on("click", "#set-save", function (event) {
-        var setId = $page.setId;
-        $("#setName").val($.trim($("#setName").val()));
-        var inSetName = $("#setName").val();
-        var inSortingType = $("#sortingType").val();
-
-
         var msoId = cms.global.MSO,
             catLiLists = $("#store-category-ul li.catLi"),
-            tmpSeq = 0,
-            tmpHasChange = false,
             theSeq = 0,
             procList = [],
             tmpItem = {},
             newCatList = [],
-            stSwitchOn = !$(".switch-on").hasClass("hide"),
-            stSwitchOff = !$(".switch-off").hasClass("hide"),
-            catMinus = $("#store-category-ul li.minus"),
-            catMinusList = [],
-            tmpMsoAdd = cms.global.USER_DATA["msoAdd"],
-            tmpMsoRemove = cms.global.USER_DATA["msoRemove"],
             currentSetId = 0,
             tmpCat = $("#store-category-ul .catLi.on");
 
         currentSetId = parseInt(tmpCat.data("meta"), 10);
 
         // set Channel set
-        $.each(catLiLists, function(eKey, eValue) {
+        $.each(catLiLists, function (eKey, eValue) {
             theSeq = eKey + 1;
             $(eValue).data("seq", theSeq);
 
             tmpItem = {};
-            tmpItem["msoId"] = msoId;
-            tmpItem["id"] = $(eValue).data("meta");
-            tmpItem["seq"] = theSeq;
-            tmpItem["name"] = $(eValue).data("name");
-            tmpItem["sortingType"] = $(eValue).data("sortingtype");
+            tmpItem.msoId = msoId;
+            tmpItem.id = $(eValue).data("meta");
+            tmpItem.seq = theSeq;
+            tmpItem.name = $(eValue).data("name");
+            tmpItem.sortingType = $(eValue).data("sortingtype");
 
             if ($(eValue).hasClass("newCat")) {
-                tmpItem["id"] = 0;
+                tmpItem.id = 0;
                 newCatList.push(tmpItem);
             } else {
                 procList.push(tmpItem);
@@ -288,10 +271,10 @@ $(function () {
                 cntRemove = $page.ChannelSetRemoveList.length;
             // nn.log("2: channel set delete");
             if (cntRemove > 0) {
-                $.each($page.ChannelSetRemoveList, function(eKey, eValue) {
+                $.each($page.ChannelSetRemoveList, function (eKey, eValue) {
                     nn.api('DELETE', cms.reapi('/api/sets/{setId}', {
                         setId: eValue
-                    }), null, function(msg) {
+                    }), null, function (msg) {
                         // nn.log(msg);
                         cntRemove -= 1;
                         if (cntRemove === 0) {
@@ -314,16 +297,15 @@ $(function () {
             // nn.log("3: channel set add");
             if (cntAdd > 0) {
 
-                $.each(newCatList, function(eKey, eValue) {
+                $.each(newCatList, function (eKey, eValue) {
                     nn.api('POST', cms.reapi('/api/mso/{msoId}/sets', {
                         msoId: msoId
                     }), {
                         name: eValue.name,
                         sortingType: eValue.sortingType,
                         seq: eValue.seq
-                    }, function(set) {
+                    }, function (set) {
                         // nn.log(msg);
-                        var tmpIndex = set.seq - 1;
                         cntAdd -= 1;
                         $(catLiLists[eKey]).data("meta", set.Id);
                         $(catLiLists[eKey]).attr("id", set.Id);
@@ -351,14 +333,14 @@ $(function () {
             // nn.log("4: channel set Update--" + cntUpdate);
             if (cntUpdate > 0) {
 
-                $.each(procList, function(eKey, eValue) {
+                $.each(procList, function (eKey, eValue) {
                     nn.api('PUT', cms.reapi('/api/sets/{setId}', {
                         setId: eValue.id
                     }), {
                         name: eValue.name,
                         sortingType: eValue.sortingType,
                         seq: eValue.seq
-                    }, function(set) {
+                    }, function (set) {
                         // nn.log(msg);
                         cntUpdate -= 1;
                         nn.log("cntUpdate::::" + cntUpdate);
@@ -385,7 +367,7 @@ $(function () {
                 setId = currentSetId;
 
             if (setId > 0) {
-                $.each($page.removeList, function(i, channel) {
+                $.each($page.removeList, function (i, channel) {
                     if (channel > 0) {
                         actChannel.push({
                             chAction: "DELETE",
@@ -394,7 +376,7 @@ $(function () {
                     }
                 });
 
-                $.each($page.addList, function(i, channel) {
+                $.each($page.addList, function (i, channel) {
                     if (channel > 0) {
                         actChannel.push({
                             chAction: "POST",
@@ -409,13 +391,13 @@ $(function () {
                 actChannelCount = actChannel.length;
 
                 if (actChannelCount > 0) {
-                    $.each(actChannel, function(i, channel) {
+                    $.each(actChannel, function (i, channel) {
 
                         nn.api(channel.chAction, cms.reapi('/api/sets/{setId}/channels', {
                             setId: setId
                         }), {
                             channelId: channel.chId
-                        }, function(msg) {
+                        }, function (msg) {
                             actChannelCount = actChannelCount - 1;
                             if (actChannelCount === 0) {
                                 // update channelCnt
@@ -452,7 +434,7 @@ $(function () {
                 this_id = 0,
                 setId = currentSetId;
 
-            $("#channel-list li.itemList").each(function() {
+            $("#channel-list li.itemList").each(function () {
                 this_id = $(this).attr("id").replace("set_", "");
                 if (this_id > 0) {
                     channels.push(this_id);
@@ -470,15 +452,15 @@ $(function () {
                     setId: setId
                 }), {
                     channels: channels.join(',')
-                }, function(set) {
+                }, function (set) {
 
                     if (2 === $page.sortingType) {
                         nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
                             setId: setId
-                        }), null, function(chanels) {
+                        }), null, function (chanels) {
                             var cntChanels = chanels.length,
                                 dbTopList = [],
-                                procList = [],
+                                procListSort = [],
                                 tmpId = 0,
                                 actChannelCount2 = 0;
 
@@ -486,12 +468,12 @@ $(function () {
                                 dbTopList = $page._getItemIdArray($page.procOnTopList(chanels, $page.sortingType));
                             }
 
-                            $.each(nowTopList, function(i, chId) {
+                            $.each(nowTopList, function (i, chId) {
                                 tmpId = parseInt(chId, 10);
                                 if ($.inArray(tmpId, dbTopList) > -1) {
                                     dbTopList.splice($.inArray(tmpId, dbTopList), 1);
                                 } else {
-                                    procList.push({
+                                    procListSort.push({
                                         onTop: true,
                                         chId: tmpId
                                     });
@@ -499,25 +481,25 @@ $(function () {
 
                             });
 
-                            $.each(dbTopList, function(i, chId) {
+                            $.each(dbTopList, function (i, chId) {
                                 tmpId = parseInt(chId, 10);
                                 if (tmpId > 0) {
-                                    procList.push({
+                                    procListSort.push({
                                         onTop: false,
                                         chId: tmpId
                                     });
                                 }
                             });
-                            actChannelCount2 = procList.length;
+                            actChannelCount2 = procListSort.length;
 
                             if (actChannelCount2 > 0) {
-                                $.each(procList, function(i, channel) {
+                                $.each(procListSort, function (i, channel) {
                                     nn.api("POST", cms.reapi('/api/sets/{setId}/channels', {
                                         setId: setId
                                     }), {
                                         channelId: channel.chId,
                                         alwaysOnTop: channel.onTop
-                                    }, function(retValue) {
+                                    }, function (retValue) {
                                         actChannelCount2 -= 1;
                                         if (actChannelCount2 === 0) {
 
@@ -549,7 +531,7 @@ $(function () {
             var deferred = $.Deferred();
             // nn.log("procEnd");
             $('#overlay-s').fadeOut("slow");
-            $('body').removeClass('has-change')
+            $('body').removeClass('has-change');
             deferred.resolve();
             return deferred.promise();
         }
@@ -571,8 +553,6 @@ $(function () {
                 .then(channelSetPrograms)
                 .then(channelSetProgramsSort)
                 .then(procEnd);
-            return false;
-        }else{
             return false;
         }
     });
@@ -804,7 +784,7 @@ $(function () {
                     });
                     // $("#channelCnt").text(parseInt($("#channelCnt").text(), 10) + tmpList.length);
 
-                    $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [$("#channel-list .itemList").length+tmpList.length]));
+                    $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [$("#channel-list .itemList").length + tmpList.length]));
                     $page._drawChannelLis();
                     $("#portal-add-layer").fadeOut("slow");
                     $page._search_channel_clean();
@@ -832,7 +812,7 @@ $(function () {
         $page.setCanChannel = canAdd;
         // $("#sRusult").data("canAdd", canAdd);
         li_on = $("#search-channel-list li .on").length;
-        if (li_on >0) {
+        if (li_on > 0) {
             $("#searchAdd").show();
         } else {
             $("#searchAdd").hide();
@@ -840,7 +820,7 @@ $(function () {
     });
 
     // sorting type
-    $(document).on("click", "span.sType", function(event) {
+    $(document).on("click", "span.sType", function (event) {
 
         var tmpStrValue = "",
             tmpValue = 0,
@@ -869,7 +849,7 @@ $(function () {
                     cursor: 'move',
                     revert: true,
                     cancel: expSort,
-                    change: function(event, ui) {
+                    change: function (event, ui) {
                         $('body').addClass('has-change');
                     }
                 });
@@ -888,7 +868,7 @@ $(function () {
                     cursor: 'move',
                     revert: true,
                     cancel: expSort,
-                    change: function(event, ui) {
+                    change: function (event, ui) {
                         $('body').addClass('has-change');
                     }
                 });

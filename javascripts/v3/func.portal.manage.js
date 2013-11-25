@@ -40,25 +40,25 @@
         return retValue;
     };
 
-    $page.isProgramAdd = function() {
+    $page.isProgramAdd = function () {
         var cuntProgram = $("#channel-list .itemList").length,
             limitProgram = parseInt(cms.global.MSOINFO.maxChPerSet, 10);
 
-        if(isNaN(cms.global.MSOINFO.maxChPerSet)){
+        if (isNaN(cms.global.MSOINFO.maxChPerSet)) {
             limitProgram = $page.chSetProgramLimit;
         }
         $page.setCanChannel = limitProgram - cuntProgram;
-        return limitProgram > cuntProgram
+        return limitProgram > cuntProgram;
     };
 
-    $page.isChannelSetAdd = function() {
+    $page.isChannelSetAdd = function () {
         var cuntChannelSet = $("#store-category-ul .catLi").length,
             limitChannelSet = parseInt(cms.global.MSOINFO.maxSets, 10);
 
-        if(isNaN(cms.global.MSOINFO.maxSets)){
+        if (isNaN(cms.global.MSOINFO.maxSets)) {
             limitChannelSet = $page.chSetLimit;
         }
-        return limitChannelSet > cuntChannelSet
+        return limitChannelSet > cuntChannelSet;
     };
 
     $page._search_channel_clean = function () {
@@ -293,9 +293,9 @@
                 setId = inSet;
             }
             if (cntSet > 0 && setId != undefined && setId > 0) {
-                $page.listCategory(categories, catId);
-                $page.catLiClick(catId);
-                if (cntCategories > 11) {
+                // $page.listCategory(categories, catId);
+                $page.catLiClick(setId);
+                if (cntSet > 11) {
                     $("#store-category-ul").height(96);
                 }
                 // $("#store-category-ul").show();
@@ -303,7 +303,7 @@
                 // $('#overlay-s').fadeOut("slow");
 
             } else {
-                $page.listCategory(categories, catId);
+                // $page.listCategory(categories, catId);
                 $("#store-category-ul li").show();
                 $('#overlay-s').fadeOut("slow");
                 // location.href = "./";
@@ -311,7 +311,7 @@
         });
     };
 
-    $page.emptyChannel = function() {
+    $page.emptyChannel = function () {
         $page.currentList = [];
         $page.nomoList = [];
         $page.onTopList = [];
@@ -321,7 +321,7 @@
         $page._drawChannelLis();
     };
 
-    $page.emptySet = function() {
+    $page.emptySet = function () {
         $page.currentList = [];
         $page.nomoList = [];
         $page.onTopList = [];
@@ -333,10 +333,11 @@
     };
 
     $page.listSetProgram = function (inMsoId, inSetId) {
+        var cntChanels = 0;
         if ($("#catLi_" + inSetId).hasClass("newCat")) {
             $page.sortingType = $("#catLi_" + inSetId).data("sortingtype");
             $page.emptyChannel();
-            var cntChanels = $(".itemList").length;
+            cntChanels = $(".itemList").length;
             $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [cntChanels]));
             $("div.info .form-content").empty();
             $('#channel-set-sorting-tmpl').tmpl([{
@@ -348,12 +349,12 @@
                 // nn.log("abc::" + inCatId);
                 nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
                     setId: inSetId
-                }), null, function(chanels) {
-                    var cntChanels = chanels.length;
+                }), null, function (chanels) {
+                    cntChanels = chanels.length;
                     $('#channel-list').empty();
                     if (cntChanels > 0) {
                         var tmpMsoName = cms.global.MSOINFO.name || "9x9";
-                        $.each(chanels, function(i, channel) {
+                        $.each(chanels, function (i, channel) {
                             if ('' === channel.imageUrl) {
                                 channel.imageUrl = "images/ch_default.png";
                             }
@@ -378,7 +379,7 @@
                     //     cursor: 'move',
                     //     revert: true,
                     //     cancel: expSort,
-                    //     change: function(event, ui) {
+                    //     change: function (event, ui) {
                     //         $('body').addClass('has-change');
                     //     }
                     // });
@@ -393,7 +394,7 @@
                             cursor: 'move',
                             revert: true,
                             cancel: expSort,
-                            change: function(event, ui) {
+                            change: function (event, ui) {
                                 $('body').addClass('has-change');
                             }
                         });
@@ -412,7 +413,7 @@
                             cursor: 'move',
                             revert: true,
                             cancel: expSort,
-                            change: function(event, ui) {
+                            change: function (event, ui) {
                                 $('body').addClass('has-change');
                             }
                         });
@@ -423,8 +424,9 @@
 
                     $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [cntChanels]));
                     $("div.info .form-content").empty();
-                    $('#channel-set-sorting-tmpl').tmpl([{sortingType:$page.sortingType}]).appendTo("div.info .form-content");
-
+                    $('#channel-set-sorting-tmpl').tmpl([{
+                        sortingType: $page.sortingType
+                    }]).appendTo("div.info .form-content");
                     $('#portal-list').perfectScrollbar({
                         marginTop: 25,
                         marginBottom: 63
@@ -465,7 +467,7 @@
         }
     };
 
-    $page.listSet = function(inSet, inSetId) {
+    $page.listSet = function (inSet, inSetId) {
         // 用到
         $('#store-category-ul').empty();
 
@@ -477,11 +479,11 @@
         //$(".func_name").text($("#store-category-ul li.on").text());
     };
 
-    $page.getSortingType = function(inSets, inSetId) {
+    $page.getSortingType = function (inSets, inSetId) {
         var retValue = 0,
             tmpId = 0,
             tmpSortingType = 0;
-        $.each(inSets, function(eKye, eValue) {
+        $.each(inSets, function (eKye, eValue) {
             tmpId = eValue.id;
             tmpSortingType = eValue.sortingType;
             if (tmpId === inSetId) {
@@ -516,9 +518,8 @@
 
                 $page.catLiClick(setId);
                 // $('#overlay-s').fadeOut("slow");
-                
             } else {
-                $page.listCategory(sets, setId);
+                // $page.listCategory(sets, setId);
                 $("#store-category-ul").show();
                 $("#store-category-ul li").show();
                 $('#overlay-s').fadeOut("slow");
@@ -526,7 +527,6 @@
             }
         });
     };
-   
 
     // NOTE: page entry point (keep at the bottom of this file)
     $page.init = function (options) {
@@ -541,8 +541,7 @@
             $('#yes-no-prompt .content').text(nn._([cms.global.PAGE_ID, 'channel-list', "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set on top programs."]));
         }
         var setId = 0,
-            msoId = cms.global.MSO,
-            tmpLi = null;
+            msoId = cms.global.MSO;
 
         if (!isNaN(parseInt(cms.global.USER_URL.param('id'), 10))) {
             setId = parseInt(cms.global.USER_URL.param('id'), 10);
