@@ -324,7 +324,8 @@ $(function () {
         // add chanel
         var lis = $("#search-channel-list li .on"),
             cntLis = lis.length,
-            tmpList = [];
+            tmpList = [],
+            tmpMsoName = cms.global.MSOINFO.name || "9x9";
 
         if (cntLis > 0) {
             $common.showProcessingOverlay();
@@ -355,6 +356,7 @@ $(function () {
                     $.each(channels, function (idx, channel) {
 
                         channel.seq = tmpSeq;
+                        channel.msoName = tmpMsoName;
                         tmpSeq += 1;
                         $page.nomoList.push(channel);
                         $page.currentList.push(channel.id);

@@ -240,7 +240,7 @@ $(function () {
             newCatList = [],
             currentSetId = 0,
             tmpCat = $("#store-category-ul .catLi.on");
-
+        nn.log("000: save.....");
         currentSetId = parseInt(tmpCat.data("meta"), 10);
 
         // set Channel set
@@ -269,7 +269,7 @@ $(function () {
         function channelSetDelete() {
             var deferred = $.Deferred(),
                 cntRemove = $page.ChannelSetRemoveList.length;
-            // nn.log("2: channel set delete");
+            nn.log("2: channel set delete");
             if (cntRemove > 0) {
                 $.each($page.ChannelSetRemoveList, function (eKey, eValue) {
                     nn.api('DELETE', cms.reapi('/api/sets/{setId}', {
@@ -294,7 +294,7 @@ $(function () {
         function channelSetAdd() {
             var deferred = $.Deferred(),
                 cntAdd = newCatList.length;
-            // nn.log("3: channel set add");
+            nn.log("3: channel set add");
             if (cntAdd > 0) {
 
                 $.each(newCatList, function (eKey, eValue) {
@@ -330,7 +330,7 @@ $(function () {
         function channelSetUpdate() {
             var deferred = $.Deferred(),
                 cntUpdate = procList.length;
-            // nn.log("4: channel set Update--" + cntUpdate);
+            nn.log("4: channel set Update--" + cntUpdate);
             if (cntUpdate > 0) {
 
                 $.each(procList, function (eKey, eValue) {
@@ -366,6 +366,7 @@ $(function () {
                 actChannel = [],
                 setId = currentSetId;
 
+            nn.log("5: channelSetPrograms");
             if (setId > 0) {
                 $.each($page.removeList, function (i, channel) {
                     if (channel > 0) {
@@ -433,7 +434,7 @@ $(function () {
                 nowTopList = [],
                 this_id = 0,
                 setId = currentSetId;
-
+            nn.log("6: channelSetProgramsSort");
             $("#channel-list li.itemList").each(function () {
                 this_id = $(this).attr("id").replace("set_", "");
                 if (this_id > 0) {
@@ -529,7 +530,7 @@ $(function () {
         // channel set sort
         function procEnd() {
             var deferred = $.Deferred();
-            // nn.log("procEnd");
+            nn.log("7: procEnd");
             $('#overlay-s').fadeOut("slow");
             $('body').removeClass('has-change');
             deferred.resolve();
@@ -539,6 +540,7 @@ $(function () {
         // channel set update
         function procStart() {
             var deferred = $.Deferred();
+            nn.log("1: procStart");
             $common.showProcessingOverlay();
             deferred.resolve();
             return deferred.promise();
@@ -747,7 +749,8 @@ $(function () {
         // add chanel
         var lis = $("#search-channel-list li .on"),
             cntLis = lis.length,
-            tmpList = [];
+            tmpList = [],
+            tmpMsoName = cms.global.MSOINFO.name || "9x9";
 
         if (cntLis > 0) {
             $common.showProcessingOverlay();
@@ -777,13 +780,14 @@ $(function () {
                     $.each(channels, function (idx, channel) {
 
                         channel.seq = tmpSeq;
+                        channel.msoName = tmpMsoName;
                         tmpSeq += 1;
                         $page.nomoList.push(channel);
                         $page.currentList.push(channel.id);
 
                     });
                     // $("#channelCnt").text(parseInt($("#channelCnt").text(), 10) + tmpList.length);
-
+                    $("body").addClass("has-change");
                     $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [$("#channel-list .itemList").length + tmpList.length]));
                     $page._drawChannelLis();
                     $("#portal-add-layer").fadeOut("slow");
