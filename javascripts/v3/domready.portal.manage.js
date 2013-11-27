@@ -28,15 +28,12 @@ $(function () {
                 }, {
                     isNew: "new"
                 }).appendTo('#store-category-ul');
-                // $page.emptyCategoryDisabled($("#store-category-ul .catLi").length);
 
                 $('#store-category-ul li').show();
 
                 if (!$('body').hasClass('channel-change')) {
                     $page.catLiClick(newId);
                 }
-
-                // $page.setSaveButton("on");
             }
             break;
 
@@ -46,19 +43,15 @@ $(function () {
                 actLi.data("name", inSetName);
                 actLi.find("span a").text(inSetName);
                 actLi.addClass('has-change');
-                // $page.setSaveButton("on");
             }
             break;
         }
-        // add promotion category
-        // $('#change-category-overlay').fadeOut("slow");
-        // alert(actType);
         $.unblockUI();
         return false;
     });
 
     // channel set add/edit close button
-    $(document).on("click", "#change-category-overlay .btn-cancel, #change-category-overlay .btn-close", function (event) {
+    $(document).on("click", "#change-category-overlay .btn-cancel, #change-category-overlay .btn-close, #message-prompt .btn-ok", function (event) {
         $.unblockUI();
         return false;
     });
@@ -78,6 +71,12 @@ $(function () {
             $.blockUI({
                 message: $('#change-category-overlay')
             });
+        } else {
+
+            $('#message-prompt .content').text(nn._([cms.global.PAGE_ID, 'prompt', "You channel set Quota was used."]));
+            $.blockUI({
+                message: $('#message-prompt')
+            });
         }
         return false;
     });
@@ -85,7 +84,6 @@ $(function () {
     // edit channel set
     $(document).on("click", ".catLi .btn-edit", function (event) {
         // 用到
-        // var thisLi = $(this).parent().parent("li").data("meta");
         var thisLi = $(this).parent("li"),
             overLayInfo = {
                 actType: "edit",
@@ -160,6 +158,7 @@ $(function () {
             }
             $.unblockUI();
         }
+        $("body").addClass("has-change");
 
         $('#confirm-prompt').removeClass("btn2change").removeClass("btn2remove");
         return false;
@@ -183,7 +182,6 @@ $(function () {
             $.blockUI({
                 message: $('#confirm-prompt')
             });
-            // event.stopPropagation();
         } else {
             $page.sortingType = thisLi.data("sortingtype");
             $page.catLiClick(catId);
@@ -278,7 +276,7 @@ $(function () {
                         // nn.log(msg);
                         cntRemove -= 1;
                         if (cntRemove === 0) {
-                            // nn.log("delete處理完!!");
+                            $page.ChannelSetRemoveList = [];
                             deferred.resolve();
                         }
                     });
@@ -305,14 +303,18 @@ $(function () {
                         sortingType: eValue.sortingType,
                         seq: eValue.seq
                     }, function (set) {
-                        // nn.log(msg);
+                        var setLocate = set.seq - 1,
+                            tmpObj = catLiLists[setLocate];
                         cntAdd -= 1;
-                        $(catLiLists[eKey]).data("meta", set.Id);
-                        $(catLiLists[eKey]).attr("id", set.Id);
-                        $(catLiLists[eKey]).removeClass("newCat");
-
+                        $(tmpObj).attr("data-meta", set.id);
+                        $(tmpObj).attr("data-seq", set.seq);
+                        $(tmpObj).attr("id", "catLi_" + set.id);
+                        $(tmpObj).removeClass("newCat");
+                        if ($(tmpObj).hasClass("on")) {
+                            currentSetId = set.id;
+                        }
                         if (cntAdd === 0) {
-                            // nn.log("add 處理完!!");
+                            newCatList = [];
                             deferred.resolve();
                         }
                     });
@@ -322,7 +324,6 @@ $(function () {
                 deferred.resolve();
             }
             return deferred.promise();
-            // return deferred.promise();
         }
 
 
@@ -341,11 +342,10 @@ $(function () {
                         sortingType: eValue.sortingType,
                         seq: eValue.seq
                     }, function (set) {
-                        // nn.log(msg);
                         cntUpdate -= 1;
                         nn.log("cntUpdate::::" + cntUpdate);
                         if (cntUpdate === 0) {
-                            // nn.log("update 處理完!!");
+                            procList = [];
                             deferred.resolve();
                         }
                     });
@@ -356,7 +356,6 @@ $(function () {
             }
 
             return deferred.promise();
-            // return deferred.promise();
         }
 
         // channel set programs process
@@ -405,16 +404,13 @@ $(function () {
                                 nn.api('PUT', cms.reapi('/api/sets/{setId}', {
                                     setId: setId
                                 }), null, null);
-                                // $page._procSort(setId);
                                 deferred.resolve();
-                                // nn.log("actChannelCount in API : " + actChannelCount);
                             }
                         });
 
                     });
                 } else {
                     deferred.resolve();
-                    // $page._procSort(setId);
                 }
             } else {
                 $page.removeList = [];
@@ -580,6 +576,12 @@ $(function () {
         if ($page.isProgramAdd()) {
             $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into your “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("name")]));
             $("#portal-add-layer").fadeIn();
+        } else {
+
+            $('#message-prompt .content').text(nn._([cms.global.PAGE_ID, 'prompt', "You program Quota was used."]));
+            $.blockUI({
+                message: $('#message-prompt')
+            });
         }
     });
 
@@ -786,7 +788,6 @@ $(function () {
                         $page.currentList.push(channel.id);
 
                     });
-                    // $("#channelCnt").text(parseInt($("#channelCnt").text(), 10) + tmpList.length);
                     $("body").addClass("has-change");
                     $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [$("#channel-list .itemList").length + tmpList.length]));
                     $page._drawChannelLis();
@@ -800,7 +801,7 @@ $(function () {
     });
 
     $(document).on("click", "#search-channel-list .checkbox", function (event) {
-        var canAdd = $page.setCanChannel;//$("#sRusult").data("canAdd");
+        var canAdd = $page.setCanChannel;
         var li_on = 0;
         var this_li = $(this);
 
@@ -814,7 +815,6 @@ $(function () {
             }
         }
         $page.setCanChannel = canAdd;
-        // $("#sRusult").data("canAdd", canAdd);
         li_on = $("#search-channel-list li .on").length;
         if (li_on > 0) {
             $("#searchAdd").show();
@@ -886,7 +886,6 @@ $(function () {
         $("body").removeClass("has-change");
         var setId = $page.setId;
 
-        //$("#channel-list").sortable("destroy");
         $(".sType").removeClass("on");
         $(this).addClass("on");
         $("#sortingType").val($(this).attr("tvalue"));
@@ -1075,16 +1074,8 @@ $(function () {
         }
     }
     window.onbeforeunload = confirmExit;
-    /*
-    setTimeout(function () {
-        // set preview info
-        $("#set-preview").click();
-    }, 3000);
-    */
     // NOTE: Keep Window Resize Event at the bottom of this file
     $(window).resize(function () {
-        $('#portal-list').perfectScrollbar('update');
-        // $common.scrollbar("#portal-constrain", "#portal-list", "#portal-slider");
-        // $('#portal-slider .slider-vertical').slider('value', 100);
+        $('#store-list').perfectScrollbar('update');
     });
 });

@@ -288,7 +288,7 @@
         "title-func": {
             "My Portal": "My Portal",
             "Portal": "Portal",
-            "Promotion category provides the best program impression in program store.": "Promotion category provides the best program impression in program store.",
+            "Main channels are the first thing sighted by your audience, which offer the great opportunity for your fine programs to gain visibility and exposure.": "Main channels are the first thing sighted by your audience, which offer the great opportunity for your fine programs to gain visibility and exposure.",
             "Preview": "Preview",
             "Save": "Save",
             "Channel Name": "Channel Name"
@@ -311,7 +311,18 @@
         "overlay": {
             "Are you sure to remove this channel set?": "Are you sure to remove this channel set?",
             "Unsaved changes will be lost, are you sure you want to leave?": "Unsaved changes will be lost, are you sure you want to leave?",
-            "Processing...": "處理中..."
+            "Processing...": "處理中...",
+            "Add Channel Set": "Add Channel Set",
+            "Edit Channel Set": "Edit Channel Set",
+            "Cancel": "Cancel",
+            "Yes": "Yes",
+            "Channel Set Name": "Channel Set Name",
+            "Max length is 14 characters": "Max length is 14 characters",
+            "Max length is 8 chinese characters": "Max length is 8 chinese characters"
+        },
+        "prompt": {
+            "You channel set Quota was used.": "You channel set Quota was used.",
+            "You program Quota was used.": "You program Quota was used."
         },
         "portal-layer": {
             "You can add 27 programs into your channel.": "You can add 27 programs into your channel.",
@@ -326,6 +337,7 @@
             "Channel Name": "Channel Name",
             "Program List": "Program List ",
             "Programs": "Programs",
+            "Add programs": "Add programs",
             "Add programs": "Add",
             "Add programs sub": "&nbsp;&nbsp;&nbsp;programs",
             "Please input program URL": "Please input program URL",

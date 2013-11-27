@@ -259,8 +259,6 @@
                 return a.seq - b.seq;
             });
             $page.nomoList.sort(function (a, b) {
-                // return parseInt(a.updateDate, 10) < parseInt(b.updateDate, 10);
-                // return a.updateDate.toString() < b.updateDate.toString();
                 return b.updateDate - a.updateDate;
             });
         }
@@ -298,15 +296,11 @@
                 if (cntSet > 11) {
                     $("#store-category-ul").height(96);
                 }
-                // $("#store-category-ul").show();
                 $("#store-category-ul li").show();
-                // $('#overlay-s').fadeOut("slow");
 
             } else {
-                // $page.listCategory(categories, catId);
                 $("#store-category-ul li").show();
                 $('#overlay-s').fadeOut("slow");
-                // location.href = "./";
             }
         });
     };
@@ -370,20 +364,6 @@
                     var expSort = ".empty, .isSortable",
                         setSortingType = $page.sortingType;
 
-                    // if (setSortingType === 1) {
-                    //     expSort = ".empty";
-                    // } else {
-                    //     $(".isSortable").css("cursor", "pointer");
-                    // }
-                    // $('#channel-list').sortable({
-                    //     cursor: 'move',
-                    //     revert: true,
-                    //     cancel: expSort,
-                    //     change: function (event, ui) {
-                    //         $('body').addClass('has-change');
-                    //     }
-                    // });
-
                     if (1 === setSortingType) {
                         $page.nomoList = $page.onTopList.concat($page.nomoList);
                         $page.onTopList = [];
@@ -427,7 +407,7 @@
                     $('#channel-set-sorting-tmpl').tmpl([{
                         sortingType: $page.sortingType
                     }]).appendTo("div.info .form-content");
-                    $('#portal-list').perfectScrollbar({
+                    $('#store-list').perfectScrollbar({
                         marginTop: 25,
                         marginBottom: 63
                     });
@@ -549,7 +529,6 @@
 
         $page.drawChannelSets(msoId, setId);
 
-
         // portal manage
         $('#portal-add-layer .langkey').each(function () {
             $(this).text(nn._([cms.global.PAGE_ID, 'portal-add-layer', $(this).data('langkey')]));
@@ -573,6 +552,7 @@
         $('.intro .langkey').each(function () {
             $(this).text(nn._([cms.global.PAGE_ID, 'title-func', $(this).data('langkey')]));
         });
+        $('#store-list').perfectScrollbar({ marginTop: 25, marginBottom: 63 });
     };
 
     // NOTE: remember to change page-key to match file-name

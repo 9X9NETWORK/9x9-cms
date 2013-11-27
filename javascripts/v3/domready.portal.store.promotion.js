@@ -653,6 +653,7 @@ $(function () {
 
         function procEnd() {
             var deferred = $.Deferred();
+
             nn.log("4: now in removeChannels");
             $page.listCatChannel(msoId, currentCategoryId, $page.channelPageSize);
 
@@ -675,6 +676,7 @@ $(function () {
                     channels: $page.addList.join(',')
 
                 }, function (msg) {
+                    $page.addList = [];
                     deferred.resolve();
                 });
             } else {
@@ -695,6 +697,7 @@ $(function () {
                     channels: $page.removeList.join(',')
 
                 }, function (msg) {
+                    $page.removeList = [];
                     deferred.resolve();
                 });
 
