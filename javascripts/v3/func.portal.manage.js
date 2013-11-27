@@ -427,6 +427,8 @@
     $page.catLiClick = function (inObj) {
         var msoId = 0;
         msoId = cms.global.MSO;
+        $page.addList = [];
+        $page.removeList = [];
         $common.showProcessingOverlay();
         $(".catLi").removeClass("on");
         $("#catLi_" + inObj).addClass("on");
