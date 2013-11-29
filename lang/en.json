@@ -9,7 +9,7 @@
         "CMS": "<span class=\"cms-icon\">CMS</span><span class=\"sub-title\">Content Management System</span>",
         "CMSContent Management System": "<span class=\"cms-icon\">CMS</span><span class=\"sub-title\">Content Management System</span>",
         "My Programs": "My Programs",
-        "My Portal": "My Portal",
+        "My App": "My App",
         "CMS Settings": "<img src=\"images/icon_studio_setup.png\" alt=\"\" />CMS Settings",
         "Connection is inactive, click to restart it.": "Connection is inactive, click to restart it."
     },
@@ -163,7 +163,7 @@
             "9x9.tv - Brand Setting": "9x9.tv - Brand Setting"
         },
         "func-nav": {
-            "My Portal": "My Portal",
+            "Main Channels": "Main Channels",
             "Program Store": "Program Store",
             "Brand Settings": "Brand Settings"
         },
@@ -187,7 +187,7 @@
             "9x9.tv - Store Manage": "9x9.tv - Store Manage Promotion"
         },
         "func-nav": {
-            "My Portal": "My Portal",
+            "Main Channels": "Main Channels",
             "Program Store": "Program Store",
             "Brand Settings": "Brand Settings"
         },
@@ -232,7 +232,7 @@
             "9x9.tv - Store Manage": "9x9.tv - Store Manage"
         },
         "func-nav": {
-            "My Portal": "My Portal",
+            "Main Channels": "Main Channels",
             "Program Store": "Program Store",
             "Brand Settings": "Brand Settings"
         },
@@ -273,10 +273,10 @@
     },
     "portal-manage": {
         "html-title": {
-            "9x9.tv - My Portal": "9x9.tv - My Portal"
+            "9x9.tv - Main Channels": "9x9.tv - Main Channels"
         },
         "func-nav": {
-            "My Portal": "My Portal",
+            "Main Channels": "Main Channels",
             "Program Store": "Program Store",
             "Brand": "Brand"
         },
@@ -286,7 +286,7 @@
             "Edit": "Edit"
         },
         "title-func": {
-            "My Portal": "My Portal",
+            "Main Channels": "Main Channels",
             "Portal": "Portal",
             "Main channels are the first thing sighted by your audience, which offer the great opportunity for your fine programs to gain visibility and exposure.": "Main channels are the first thing sighted by your audience, which offer the great opportunity for your fine programs to gain visibility and exposure.",
             "Preview": "Preview",
@@ -352,12 +352,12 @@
     },
     "portal-set": {
         "html-title": {
-            "9x9.tv - My Portal": "9x9.tv - My Portal"
+            "9x9.tv - Main Channels": "9x9.tv - Main Channels"
         },
         "func-nav": {
             "Portal": "Portal",
             "Program Store": "Program Store",
-            "My Portal": "My Portal",
+            "Main Channels": "Main Channels",
             "Brand Settings": "Brand Settings"
         },
         "sets-list": {
@@ -366,7 +366,7 @@
             "Edit": "Edit"
         },
         "title-func": {
-            "My Portal": "My Portal",
+            "Main Channels": "Main Channels",
             "Portal": "Portal"
         }
     },

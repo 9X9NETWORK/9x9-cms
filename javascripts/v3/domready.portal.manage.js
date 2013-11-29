@@ -240,7 +240,6 @@ $(function () {
             tmpCat = $("#store-category-ul .catLi.on");
         nn.log("000: save.....");
         currentSetId = parseInt(tmpCat.data("meta"), 10);
-
         // set Channel set
         $.each(catLiLists, function (eKey, eValue) {
             theSeq = eKey + 1;
@@ -259,9 +258,7 @@ $(function () {
             } else {
                 procList.push(tmpItem);
             }
-
         });
-
 
         // channel set delete
         function channelSetDelete() {
@@ -287,7 +284,6 @@ $(function () {
             return deferred.promise();
         }
 
-
         // channel set add
         function channelSetAdd() {
             var deferred = $.Deferred(),
@@ -304,11 +300,13 @@ $(function () {
                         seq: eValue.seq
                     }, function (set) {
                         var setLocate = set.seq - 1,
-                            tmpObj = catLiLists[setLocate];
+                            tmpObj = catLiLists[setLocate],
+                            objId = "";
                         cntAdd -= 1;
-                        $(tmpObj).attr("data-meta", set.id);
-                        $(tmpObj).attr("data-seq", set.seq);
-                        $(tmpObj).attr("id", "catLi_" + set.id);
+                        objId = "catLi_" + set.id;
+                        $(tmpObj).attr("id", objId);
+                        $("#" + objId).data("meta", set.id);
+                        $("#" + objId).data("seq", set.seq);
                         $(tmpObj).removeClass("newCat");
                         if ($(tmpObj).hasClass("on")) {
                             currentSetId = set.id;
@@ -325,7 +323,6 @@ $(function () {
             }
             return deferred.promise();
         }
-
 
         // channel set update
         function channelSetUpdate() {
@@ -354,7 +351,6 @@ $(function () {
             } else {
                 deferred.resolve();
             }
-
             return deferred.promise();
         }
 
@@ -418,7 +414,6 @@ $(function () {
 
                 deferred.resolve();
             }
-
             return deferred.promise();
         }
 
@@ -442,7 +437,6 @@ $(function () {
                     nowTopList.push(this_id);
                 }
             });
-
 
             if (channels.length > 0) {
                 nn.api('PUT', cms.reapi('/api/sets/{setId}/channels/sorting', {
@@ -507,7 +501,6 @@ $(function () {
                             } else {
                                 deferred.resolve();
                             }
-
                         });
 
                     } else {
@@ -518,7 +511,6 @@ $(function () {
             } else {
                 deferred.resolve();
             }
-
             return deferred.promise();
             // return deferred.promise();
         }

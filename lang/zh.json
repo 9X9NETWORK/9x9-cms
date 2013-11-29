@@ -9,7 +9,7 @@
         "CMS": "<span class=\"cms-icon\">後台管理系統</span>",
         "CMSContent Management System": "<span class=\"cms-icon\">後台管理系統</span>",
         "My Programs": "我的節目",
-        "My Portal": "我的入口",
+        "My App": "App 管理",
         "CMS Settings": "<img src=\"images/icon_studio_setup.png\" alt=\"\" />管理系統設定",
         "Connection is inactive, click to restart it.": "連結授權已失效，請點此重啟連結。"
     },
@@ -163,7 +163,7 @@
             "9x9.tv - Brand Setting": "9x9.tv - 品牌設定"
         },
         "func-nav": {
-            "My Portal": "我的入口",
+            "Main Channels": "主頻道",
             "Program Store": "節目商店",
             "Brand Settings": "品牌設定"
         },
@@ -187,7 +187,7 @@
             "9x9.tv - Store Manage": "9x9.tv - 頻道商店 "
         },
         "func-nav": {
-            "My Portal": "我的入口",
+            "Main Channels": "主頻道",
             "Program Store": "節目商店",
             "Promotion Category": "推薦類別",
             "System Category": "系統類別",
@@ -263,7 +263,7 @@
             "9x9.tv - Store Manage": "9x9.tv - 節目商店 "
         },
         "func-nav": {
-            "My Portal": "我的入口",
+            "Main Channels": "主頻道",
             "Program Store": "節目商店",
             "Promotion Category": "推薦類別",
             "System Category": "系統類別",
@@ -310,10 +310,10 @@
     },
     "portal-manage": {
         "html-title": {
-            "9x9.tv - My Portal": "9x9.tv - 我的入口"
+            "9x9.tv - Main Channels": "9x9.tv - 主頻道"
         },
         "func-nav": {
-            "My Portal": "我的入口",
+            "Main Channels": "主頻道",
             "Program Store": "節目商店",
             "Brand Settings": "品牌"
         },
@@ -323,7 +323,7 @@
             "Edit": "編輯"
         },
         "title-func": {
-            "My Portal": "我的入口",
+            "Main Channels": "主頻道",
             "Portal": "我的入口",
             "Main channels are the first thing sighted by your audience, which offer the great opportunity for your fine programs to gain visibility and exposure.": "主頻道是用戶使用app時第一眼看到的內容，提供了最佳的節目曝光。",
             "Preview": "預覽",
@@ -389,12 +389,12 @@
     },
     "portal-set": {
         "html-title": {
-            "9x9.tv - My Portal": "9x9.tv - 我的入口"
+            "9x9.tv - Main Channels": "9x9.tv - 主頻道"
         },
         "func-nav": {
             "Portal": "我的入口",
             "Program Store": "節目商店",
-            "My Portal": "我的入口",
+            "Main Channels": "主頻道",
             "Brand Settings": "品牌設定"
         },
         "sets-list": {
@@ -403,7 +403,7 @@
             "Edit": "編輯"
         },
         "title-func": {
-            "My Portal": "我的入口",
+            "Main Channels": "主頻道",
             "Portal": "我的入口"
         }
     },
