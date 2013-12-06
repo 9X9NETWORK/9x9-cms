@@ -9,7 +9,7 @@
     $page.channelPageSize = 28;
 
     $page.promoCatRemoveList = [];
-    $page.promoCatLimit = 6;
+    $page.promoCatLimit = 999999;
 
     $page.sortingType = 2;
     $page.onTopLimit = 4;
