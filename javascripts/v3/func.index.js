@@ -5,6 +5,33 @@
     'use strict';
 
     var $common = cms.common;
+        $page.channel9x9 = 0;
+        $page.channelYouSync = 0;
+        $page.syncingProcessCount = 10,
+        $page.channelYouSyncAddUrl = "channel-add.html#ytsync";
+ 
+    $page.syncingProcess = function () {
+        var theSyncs = $("li.inSyncing"),
+            syncCount = theSyncs.length;
+
+
+        var d = new Date();
+        var n = d.toLocaleTimeString();
+
+        nn.log(n + "inSyncing count ::" + syncCount);
+
+
+        if (syncCount > 0) {
+            $page.syncingProcessCount = 0;
+        } else {
+            $page.syncingProcessCount += 1;
+        }
+
+        if ($page.syncingProcessCount <= 3) {
+            setTimeout($page.syncingProcess, 3000);
+        }
+    };
+
 
     $page.showCreateChannelTutorial = function () {
         $('#lightbox-create-channel').remove();
@@ -27,6 +54,8 @@
         var pageId = cms.global.PAGE_ID;
         if (cms.global.USER_DATA.id) {
             $common.showProcessingOverlay();
+            $page.channel9x9 = 0;
+            $page.channelYouSync = 0;
             nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
                 userId: cms.global.USER_DATA.id
             }), null, function (channels) {
@@ -68,6 +97,14 @@
                                 }
                             }
                         }
+                        channel.isYoutubeSync = false;
+                        // youtube sync channel check 
+                        if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                            $page.channelYouSync += 1;
+                            channel.isYoutubeSync = true;
+                        } else {
+                            $page.channel9x9 += 1;
+                        }
                         items.push(channel);
                     });
                     $('#channel-list').html('');
@@ -103,6 +140,7 @@
                         cleartypeNoBg: true
                     });
                     $('#func-nav ul li.btns').addClass("hide");
+                    $(".radio-list").addClass("hide");
                 }
                 if (cntChannel <= 0 || (1 === cntChannel && hasFavoriteChannel)) {
                     if (!$.cookie('cms-cct')) {

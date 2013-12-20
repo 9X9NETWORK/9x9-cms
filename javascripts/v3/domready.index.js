@@ -21,9 +21,114 @@ $(function () {
             $page.showCreateChannelTutorial();
         }
     });
+
     $(document).on('click', '.unblock, .btn-close, .btn-no', function () {
         $.unblockUI();
         $('#channel-list li').removeClass('deleting').removeData('deleteId');
+        return false;
+    });
+
+    $(document).on('click', '#create-youtube-program', function () {
+        var chYoutubeSyncCoutn = $("#channel-list .ctypeYoutubeSync").length,
+            cookieTerms = $.cookie('cms-ytubesync-term') || "no";
+
+            nn.log("cooke::"+$.cookie('cms-ytubesync-term') +"::");
+            nn.log("cooke var::"+cookieTerms +"::");
+
+        if ((undefined === cookieTerms || "agree" != cookieTerms) && chYoutubeSyncCoutn < 1) {
+            $('#terms-overlay').empty();
+            $('#terms-overlay-tmpl').tmpl().appendTo('#terms-overlay');
+            $('#terms-overlay .terms-container').perfectScrollbar();
+            $.blockUI({
+                message: $('#terms-overlay')
+            });
+        } else {
+            $.cookie('cms-ytubesync-term', "agree");
+            location.href = $page.channelYouSyncAddUrl;
+        }
+        return false;
+    });
+
+    $(document).on('click', '#agree-terms', function () {
+        // youtube sync add channel
+        $.cookie('cms-ytubesync-term', "agree");
+        location.href = $page.channelYouSyncAddUrl;
+    });
+
+    // program type filter
+    $(document).on('click', '.lbTypeItem', function () {
+        var thisObj = this,
+            selectType = $(thisObj).val(),
+            selectTypeTxt = ".ctype" + $(thisObj).val();
+
+        $(".lbTypeLists").removeClass("checked");
+        $(thisObj).parent().addClass("checked");
+
+        $(".chLi").addClass("hide").fadeOut(500);
+
+        if ("all" !== selectType) {
+            $(selectTypeTxt).removeClass("hide");
+            $("#channel-counter").text($(selectTypeTxt).length);
+        } else {
+            $(".chLi").removeClass("hide");
+            $("#channel-counter").text($(".chLi").length);
+
+        }
+    });
+
+    // you tube sync , sync direct
+    $(document).on('click', '.sync', function () {
+        // youtube sync add channel
+        var thisLi = this,
+            thisUl = $(thisLi).parent().parent(), 
+            thisCh = $(this).data("meta"),
+            thisChLi = $("#program_"+thisCh);
+
+        // nn.log($(thisUl).find("li a").length);
+        if (false === $(thisLi).hasClass("disable") && thisCh > 0) {
+            nn.log("we going process sync...." + thisCh + "**" + $(thisChLi).attr("id"));
+            $(thisChLi).addClass("inSyncing");
+            // nn.log("images url::" + $(thisChLi).find(".photo-list img.watermark").attr("src") );
+            
+            // set function butoon disable
+            $(thisUl).find("li a").addClass("disable");
+            // set th image to sync icon
+            $(thisChLi).find(".photo-list a").removeAttr("href");
+            $(thisChLi).find(".photo-list div.ch").addClass("hide");
+            $(thisChLi).find(".photo-list div.ep img").attr("src", "images/ep_default.png");
+            $(thisChLi).find(".photo-list img.watermark").attr("src", "images/icon_load_l.gif");
+
+            //  do sync command
+            nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
+                channelId: thisCh
+            }), null, function(msg) {
+                // nn.log("sync message --- " + msg);
+            });
+
+            if ($page.syncingProcessCount > 3) {
+                setTimeout($page.syncingProcess, 3000);
+            }
+        } else {
+            // nn.log("sync....don't push again you already click it ~");
+            return false;
+        }
+    });
+
+    $(document).on('click', '#create-9x9-program', function () {
+        location.href = "channel-add.html";
+    });
+
+    // overlay close button
+    $(document).on('click', '.overlay-button-close, #cancel-create-program, #disagree-terms', function () {
+        $.unblockUI();
+    });    
+
+    $(document).on('click', '.btn_create_new', function () {
+        $('#create-program-overlay').empty();
+        $('#create-program-overlay-tmpl').tmpl().appendTo('#create-program-overlay');
+        $.blockUI({
+            message: $('#create-program-overlay')
+        });
         return false;
     });
 
@@ -128,7 +233,6 @@ $(function () {
                             $('#channel-counter').text(cntChannel - 1);
                         }
                         $('#channel-list li.deleting').remove();
-                        $('#content-main-wrap').height($('#content-main-wrap').height() - 105); // 105: li height
                         $('#content-main-wrap').perfectScrollbar("update");
                         if (0 === $("#channel-list li.clearfix").length) {
                             $('#content-main-wrap .constrain').empty();
@@ -148,7 +252,9 @@ $(function () {
                                 cleartypeNoBg: true
                             });
                             $('#func-nav ul li.btns').addClass("hide");
+                            $(".radio-list").addClass("hide");
                         }
+
                     });
                 } else {
                     $('#overlay-s').fadeOut(0, function () {

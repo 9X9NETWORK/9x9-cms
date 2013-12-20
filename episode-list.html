@@ -167,8 +167,12 @@
 </h2>
 {{if contentType != cms.config.YOUR_FAVORITE && $item.cntEpisode > 0}}
     <ul>
-        <li><p class="curate btns"><span><a href="epcurate-curation.html?cid=${id}" class="curate">${nn._([cms.global.PAGE_ID, 'title-func', 'Curate a new episode'])}</a></span></p></li>
-        <li class="last"><p class="order btns"><span><a href="javascript:void(0);" rel="${id}" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder episodes'])}</a></span></p></li>
+        {{if true === cms.global.vIsYoutubeSync}}
+            <li style="line-hieght:34px">&nbsp;</li>
+        {{else}}
+            <li><p class="curate btns"><span><a href="epcurate-curation.html?cid=${id}" class="curate">${nn._([cms.global.PAGE_ID, 'title-func', 'Curate a new episode'])}</a></span></p></li>
+            <li class="last"><p class="order btns"><span><a href="javascript:void(0);" rel="${id}" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder episodes'])}</a></span></p></li>
+        {{/if}}
     </ul>
 {{/if}}
 {{if $item.cntEpisode > 0}}
@@ -177,7 +181,7 @@
             <p class="number">${nn._([cms.global.PAGE_ID, 'title-func', 'No.'])}</p>
         {{/if}}
         <p class="episode">${nn._([cms.global.PAGE_ID, 'title-func', 'Episode'])}</p>
-        {{if contentType != cms.config.YOUR_FAVORITE}}
+        {{if contentType != cms.config.YOUR_FAVORITE && true !== cms.global.vIsYoutubeSync}}
             <p class="scheduled-time">${nn._([cms.global.PAGE_ID, 'title-func', 'Scheduled time'])}</p>
         {{/if}}
         <p class="publish-time">${nn._([cms.global.PAGE_ID, 'title-func', 'Publish time'])}</p>
@@ -359,7 +363,7 @@
                     <span class="duration"><span class="time-right"><span class="time-middle">${cms.common.formatDuration(duration)}</span></span></span>
                 </div>
             </div>
-            <div class="check" data-meta="${id}">
+            <div class="check{{if true === cms.global.vIsYoutubeSync}} hide{{/if}}" data-meta="${id}">
                 <div class="btn" id="yuchk-btn-${id}"></div>
                 <div class="tip-white">
                     <p class="left"></p>
@@ -372,8 +376,10 @@
             <div class="btns">
                 <div class="btn-wrap enable">
                     <ul>
+                        {{if true !== cms.global.vIsYoutubeSync}}
                         <li><a href="epcurate-curation.html?id=${id}" class="edit"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Edit'])}</a></li>
                         <li><a href="/api/episodes/${id}" rel="${id}" class="del"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Delete'])}</a></li>
+                        {{/if}}
                         <li><a href="javascript:void(0);" class="url{{if null === publishDate}} disable{{/if}}"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Get URL'])}</a></li>
                     </ul>
                 </div>

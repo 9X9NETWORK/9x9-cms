@@ -18,10 +18,85 @@ $(function () {
             return false;
         }
     });
+
+    // var abcCount = 0;
+    // $(document).on(function(event) {
+
+    //     console.log(abcCount + "::" + event.data.name);
+    // }, 'input#name', function() {
+    //     abcCount++;
+
+    //     console.log(abcCount + "::" + $("input#name").val());
+
+    // });
+
+    $(document).on('click', '#youtube-sync-switch', function () {
+        if ($(this).hasClass("switch-on")) {
+        //     $(this).removeClass("switch-on");
+        //     $(this).addClass("switch-off");
+        //     $(this).text(nn._(["overlay", 'button', 'OFF']));
+        //     $("#autoSync").val("false");
+            $page.youtubeYyncOnOff(false);
+        } else {
+            // $(this).removeClass("switch-off");
+            // $(this).addClass("switch-on");
+            // $(this).text(nn._(["overlay", 'button', 'ON']));
+            // $("#autoSync").val("true");
+            $page.youtubeYyncOnOff(true);
+        }
+        return false;
+    });
+
+    $(document).on('change', '#ytUrl', function () {
+        var thisUrl = $(this).val().trim(),
+            ytUrlParse = $common.ytUrlParser(thisUrl),
+            ytObj = {};
+        // console.log( "this is a cou****" + ytUrlParse.ytType );
+        $("#ytSyncMsg").html("");
+        $("#ytSyncMsg").addClass("hide");
+        $("#intro").val("");
+        $("#name").val("");
+
+        if (ytUrlParse.ytType > 0) {
+            ytObj = {
+                url: ytUrlParse.ytUrlApi,
+                dataType: "json",
+                context: self,
+                success: function(res) {
+                    var ytTitle = "",
+                        ytDesc = "";
+
+                    if (ytUrlParse.ytType === 1) {
+                        ytTitle = (res).entry.title.$t
+                        ytDesc = (res).entry.summary.$t
+                    } else {
+                        ytTitle = (res).feed.title.$t
+                        ytDesc = (res).feed.subtitle.$t
+                    }
+
+                    $("#ytUrl").val(ytUrlParse.ytUrlFormat);
+                    $("#name").val(ytTitle);
+                    $("#intro").val(ytDesc);
+
+                },
+                error: function() {
+                    nn.log("我錯了!!");
+                }
+            }
+
+            $.ajax(ytObj);
+        } else {
+            $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
+            $("#ytSyncMsg").removeClass("hide");
+        }
+        // console.log( "this is a cou****" + $(this).val() );
+    });
+
     $(document).on('click', '.unblock, .btn-close, .btn-no', function () {
         $.unblockUI();
         return false;
     });
+
     $('#system-error .btn-ok, #system-error .btn-close').click(function () {
         $.unblockUI();
         if ($('body').hasClass('has-error')) {
@@ -423,6 +498,7 @@ $(function () {
     });
     $('#content-main').on('click', '#settingForm .btn-create.enable', function () {
         // insert mode
+
         if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable')) {
             $common.showSavingOverlay();
             nn.on(400, function (jqXHR, textStatus) {
@@ -433,9 +509,17 @@ $(function () {
             // note: channel-add.html hard code hidden field isPublic=true
             var qrystring = $('#settingForm').serialize(),
                 parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
+            nn.log("parameter:::::"+qrystring);
             nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
                 userId: cms.global.USER_DATA.id
             }), parameter, function (channel) {
+                if(channel.id > 0){
+                    nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
+                        channelId: channel.id
+                    }), null, function (msg) {
+                        nn.log("message --- " + msg);
+                    });
+                }
                 if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
                     var userIds = [],
                         accessTokens = [];
