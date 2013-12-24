@@ -24,6 +24,18 @@
         }
     };
 
+    $page.saveAfter = function () {
+        if (cms.global.vIsYoutubeSync === true) {
+            $('#ytsync-prompt .content').text(nn._(['overlay', 'prompt', "Synchronizing. This may take a few minutes."]));
+            $('#ytsync-prompt .btn-leave').text(nn._(['overlay', 'button', "Ok"]));
+            $.blockUI({
+                message: $('#ytsync-prompt')
+            });
+        } else {
+            location.href = 'index.html';
+        }
+    };
+
     $page.chkData = function (fm) {
         fm.name.value = $.trim(fm.name.value);
         fm.imageUrl.value = $.trim(fm.imageUrl.value);

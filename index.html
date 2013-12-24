@@ -241,7 +241,7 @@
         <div id="create-youtube-program" class="btn-large btn-create">
             <div class="left"></div>
             <div class="center">
-                <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'Youtube Sync<br />Program'])}}</p>
+                <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'YouTube Sync<br />Program'])}}</p>
                 <img src="images/icon_youtube.png" alt="">
             </div>
             <div class="right"></div>
@@ -334,7 +334,7 @@
 <p class="radio-list">
     <span>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</span>
     <label for="filter_all" class="lbTypeLists checked">
-        <input type="radio" name="filter" value="all" id="filter_all" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</label>
+        <input type="radio" name="filter" value="all" id="filter_all" class="lbTypeItem" checked> {{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</label>
     <label for="filter_9x9" class="lbTypeLists">
         <input type="radio" name="filter" value="9x9" id="filter_9x9" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', '9x9 programs'])}}</label>
     <label for="filter_youtube" class="lbTypeLists">
@@ -379,7 +379,7 @@
 <script id="channel-list-empty-tmpl" type="text/x-jquery-tmpl">
 <div id="com-9x9-cycle-list">
     <h3>{{html nn._([cms.global.PAGE_ID, 'channel-list', "You don't have any programs yet"])}}</h3>
-    <p class="btns"><span><a href="channel-add.html">${nn._([cms.global.PAGE_ID, 'channel-list', 'Create a new program'])}</a></span></p>
+    <p class="btns"><span><a class="btn_create_new">${nn._([cms.global.PAGE_ID, 'channel-list', 'Create a new program'])}</a></span></p>
     <div id="com-9x9-cycle">
         <p class="cycle-pager">
             <a href="javascript:void(0);" class="active">。</a>
@@ -388,12 +388,16 @@
         <div class="wrapper">
             <ul class="content">
                 <li>
-                    <div class="img"><a href="epcurate-curation.html?cid=${id}"><img src="images/banner_ch_01.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a ><img src="images/banner_ch_01.png" alt="" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Create your own <strong>personal and unique</strong> program.'])}}</span></p></div>
                 </li>
                 <li>
-                    <div class="img"><a href="epcurate-curation.html?cid=${id}"><img src="images/banner_ch_02.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a ><img src="images/banner_ch_02.png" alt="" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Add online videos into episode and start to <strong>curate your own program.</strong>'])}}</span></p></div>
+                </li>
+                <li>
+                    <div class="img"><a ><img width="781" height="274" alt="" src="images/banner_01.png"></a></div>
+                    <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sync with<strong>Youtube channel or playlist</strong> to get online videos.'])}}</span></p></div>
                 </li>
             </ul>
         </div>

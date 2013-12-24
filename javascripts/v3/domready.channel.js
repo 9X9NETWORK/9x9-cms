@@ -496,6 +496,13 @@ $(function () {
         }
         return false;
     });
+
+
+    $('#ytsync-prompt').on('click', '.btn-leave, .btn-close', function () {
+        $.unblockUI();
+        location.href = 'index.html';
+    });
+
     $('#content-main').on('click', '#settingForm .btn-create.enable', function () {
         // insert mode
 
@@ -509,7 +516,16 @@ $(function () {
             // note: channel-add.html hard code hidden field isPublic=true
             var qrystring = $('#settingForm').serialize(),
                 parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
-            nn.log("parameter:::::"+qrystring);
+
+            if (cms.global.vIsYoutubeSync === true) {
+                $("#name").removeAttr("disabled");
+                $("#intro").removeAttr("disabled");
+                qrystring = $('#settingForm').serialize();
+                parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
+                $("#name").attr("disabled", "disabled");
+                $("#intro").attr("disabled", "disabled");
+            }
+
             nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
                 userId: cms.global.USER_DATA.id
             }), parameter, function (channel) {
@@ -547,14 +563,14 @@ $(function () {
                                 $('#overlay-s').fadeOut(1000, function () {
                                     $('body').removeClass('has-change');
                                     $('#imageUrlOld').val(channel.imageUrl);
-                                    location.href = 'index.html';
+                                    $page.saveAfter();
                                 });
                             });
                         } else {
                             $('#overlay-s').fadeOut(1000, function () {
                                 $('body').removeClass('has-change');
                                 $('#imageUrlOld').val(channel.imageUrl);
-                                location.href = 'index.html';
+                                $page.saveAfter();
                             });
                         }
                     });
@@ -562,7 +578,8 @@ $(function () {
                     $('#overlay-s').fadeOut(1000, function () {
                         $('body').removeClass('has-change');
                         $('#imageUrlOld').val(channel.imageUrl);
-                        location.href = 'index.html';
+                        
+                        $page.saveAfter();
                     });
                 }
             });

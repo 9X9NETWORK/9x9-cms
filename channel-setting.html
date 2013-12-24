@@ -163,7 +163,7 @@
         <div class="fmfield">
             <p class="text{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}">
                 <span>
-                    <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="${sourceUrl}" class="text" placeholder="請輸入 youtube 網址" >
+                    <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="${sourceUrl}" class="text" disabled="disabled" >
                 </span>
             </p>
             <!-- <span class="notice">
@@ -177,7 +177,8 @@
     <div class="fminput clearfix">
         <label for="name"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Title'])}</label>
         <div class="fmfield">
-            <p class="text{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span><input type="text" name="name" id="name" maxlength="100" value="${name}" class="text" /></span></p>
+            <p class="text{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span>
+            <input type="text" name="name" id="name" maxlength="100" value="${name}" class="text" {{if cms.global.vIsYoutubeSync === true}}disabled="disabled"{{/if}}/></span></p>
             <span class="notice"><span id="name-charcounter">20</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 10 characters'])}</span>
         </div>
     </div>
@@ -204,7 +205,8 @@
     <div class="fminput clearfix">
         <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Description'])}</label>
         <div class="fmfield">
-            <p class="textarea{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span><span><textarea name="intro" id="intro" cols="80" class="textarea">${intro}</textarea></span></span></p>
+            <p class="textarea{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span><span>
+            <textarea name="intro" id="intro" cols="80" class="textarea" {{if cms.global.vIsYoutubeSync === true}}disabled="disabled"{{/if}}>${intro}</textarea></span></span></p>
             <span class="notice"><span id="intro-charcounter">70</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 52 characters'])}</span>
         </div>
     </div>
