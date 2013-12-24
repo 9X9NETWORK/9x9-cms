@@ -11,6 +11,9 @@
             strSurl = '',
             userUrlFile = cms.global.USER_URL.attr('file');
 
+        if(undefined === cms.config.API_BASE || '' === cms.config.API_BASE){
+            strBaseURL = 'http://www.9x9.tv/view?'
+        }
         if ('' === userUrlFile) {
             userUrlFile = 'index.html';
         }
