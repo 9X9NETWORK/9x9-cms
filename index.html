@@ -69,6 +69,7 @@
         </div>
         <div id="content-main-wrap">
             <div class="constrain">
+                <div id="channel-empty-msg"></div>
                 <ul id="channel-list">
                     <!-- template = #channel-list-tmpl-item -->
 
@@ -406,10 +407,15 @@
 </script>
 <!-- channel-list-empty-tmpl End -->
 
+<!-- channel-list-empty Begin -->
+<script id="channel-list-empty-msg-item" type="text/x-jquery-tmpl">
+<div style="text-align:center" class="hide group-tmpty-msg msg-${msg_name}"><h3>{{html nn._([cms.global.PAGE_ID, 'channel-list', msg_body])}}</h3></div>
+</script>
+<!-- channel-list-empty End -->
 
 <!-- channel-list-tmpl-item Begin -->
 <script id="channel-list-tmpl-item" type="text/x-jquery-tmpl">
-<li id="program_${id}" class="clearfix chLi {{if true === isYoutubeSync}}ctypeYoutubeSync{{else}}ctype9x9{{/if}}" data-meta="${id}">
+<li id="program_${id}" class="clearfix chLi {{if true === isYoutubeSync}}ctypeYoutubeSync{{else}}ctype9x9{{/if}} {{if true === readonly}}inSyncing{{/if}}" data-meta="${id}">
 <div class="container">
 <div class="container-right">
 <div class="container-bottom">
@@ -417,7 +423,7 @@
     <div class="wrap">
         <div class="photo-list">
             <div class="ep">
-                <a href="${cms.config.API_BASE}/view?ch=${id}&dddd" target="_blank"><img src="${moreImageUrl_2}" alt="" /></a>
+                <a href="${cms.config.API_BASE}/view?ch=${id}" target="_blank"><img src="${moreImageUrl_2}" alt="" /></a>
             </div>
             <div class="ch">
                 <div class="img">

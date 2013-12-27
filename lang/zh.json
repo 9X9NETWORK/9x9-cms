@@ -449,7 +449,9 @@
             "Create your own <strong>personal and unique</strong> program.": "創建屬於你<strong>個人且獨特</strong>的節目。",
             "Add online videos into episode and start to <strong>curate your own program.</strong>": "在一集劇集中策展多個單元，開始<strong>策展你的專屬節目</strong>",
             "Sync with<strong>Youtube channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
-            "Sync": "立即同步"
+            "Sync": "立即同步",
+            "You don't have any 9x9 programs yet.": "你尚無任何9x9節目",
+            "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目"
         },
         "overlay": {
             "Create a New Program": "建立一個新的節目",
@@ -553,7 +555,9 @@
             "Cancel": "取消",
             "Create": "完成",
             "Save": "儲存",
-            "Add Youtube channel or playlist URL": "輸入Youtube頻道或播放清單"
+            "Add Youtube channel or playlist URL": "輸入Youtube頻道或播放清單",
+            "Auto sync with YouTube": "YouTube自動同步",
+            "Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上九點、下午兩點與晚上八點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。"
         }
     },
     "channel-poi": {
@@ -638,7 +642,8 @@
             "Episode": "劇集",
             "Scheduled time": "排程時間",
             "Publish time": "發佈時間",
-            "Views": "觀看數"
+            "Views": "觀看數",
+            "Sync time": "同步時間"
         },
         "episode-list": {
             "You don't have any episodes yet": "您尚無任何劇集",

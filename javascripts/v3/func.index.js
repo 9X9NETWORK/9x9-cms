@@ -5,24 +5,59 @@
     'use strict';
 
     var $common = cms.common;
-        $page.channel9x9 = 0;
-        $page.channelYouSync = 0;
-        $page.syncingProcessCount = 10,
-        $page.channelYouSyncAddUrl = "channel-add.html#ytsync";
- 
+    $page.channel9x9 = 0;
+    $page.channelYouSync = 0;
+    $page.syncingProcessCount = 10,
+    $page.channelYouSyncAddUrl = "channel-add.html#ytsync";
+    $page.channelEmptyMsg = [{
+        'msg_name': '9x9',
+        'msg_body': "You don't have any 9x9 programs yet."
+    }, {
+        'msg_name': 'YoutubeSync',
+        'msg_body': "You don't have any YouTube sync programs yet."
+    }];
+
+    // YouTube sync syncing processing
     $page.syncingProcess = function () {
         var theSyncs = $("li.inSyncing"),
-            syncCount = theSyncs.length;
-
-
-        var d = new Date();
-        var n = d.toLocaleTimeString();
-
-        nn.log(n + "inSyncing count ::" + syncCount);
-
+            syncCount = theSyncs.length,
+            thisId = 0,
+            temp = [];
 
         if (syncCount > 0) {
             $page.syncingProcessCount = 0;
+
+            $.each(theSyncs, function(i, chLi) {
+                thisId = $(chLi).data('meta');
+
+
+                nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                    channelId: thisId
+                }), null, function(channel) {
+                    if (false === channel.readonly) {
+                        channel.moreImageUrl_1 = cms.config.CHANNEL_DEFAULT_IMAGE;
+                        channel.moreImageUrl_2 = cms.config.CHANNEL_DEFAULT_IMAGE2;
+                        channel.moreImageUrl_3 = cms.config.CHANNEL_DEFAULT_IMAGE2;
+                        if (channel.imageUrl && '' !== $.trim(channel.imageUrl) && channel.imageUrl !== cms.config.EPISODE_DEFAULT_IMAGE) {
+                            channel.moreImageUrl_1 = channel.imageUrl;
+                        }
+                        if (cms.config.CHANNEL_DEFAULT_IMAGE === channel.moreImageUrl_1) {
+                            channel.moreImageUrl_1 = 'images/ch_default.png';
+                        }
+                        if (channel.moreImageUrl && '' !== $.trim(channel.moreImageUrl)) {
+                            temp = channel.moreImageUrl.split('|');
+                            if (temp[0] && temp[0] !== cms.config.EPISODE_DEFAULT_IMAGE) {
+                                channel.moreImageUrl_2 = temp[0];
+                            }
+                        }
+                        channel.isYoutubeSync = true;
+
+                        $("#program_" + channel.id).replaceWith($('#channel-list-tmpl-item').tmpl(channel, {
+                            userId: cms.global.USER_DATA.id
+                        }));
+                    }
+                });
+            });
         } else {
             $page.syncingProcessCount += 1;
         }
@@ -32,6 +67,41 @@
         }
     };
 
+    // YouTube sync syncing UI disable
+    $page.syncingUIDisable = function (inCh) {
+        var thisChLi = $("#program_"+inCh);
+
+        $(thisChLi).addClass("inSyncing");
+
+        $(thisChLi).find(".photo-list div.ch").addClass("hide");
+        $(thisChLi).find(".photo-list div.ep img").attr("src", "images/ep_default.png");
+        $(thisChLi).find(".photo-list img.watermark").attr("src", "images/icon_load_l.gif").css("left","78px").css("top", "32px");
+
+        $(thisChLi).find("a").removeAttr("href");
+        $(thisChLi).find("ul li a").addClass("disable");
+    };
+
+    // YouTube sync syncing after on load
+    $page.syncingOnLoad = function () {
+        var theSyncs = $("li.inSyncing"),
+            syncCount = theSyncs.length,
+            thisId = 0,
+            temp = [];
+
+        if (syncCount > 0) {
+            $.each(theSyncs, function(i, chLi) {
+                thisId = $(chLi).data('meta');
+
+                $page.syncingUIDisable(thisId);
+
+                nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
+                    channelId: thisId
+                }), null, null);
+
+            });
+            setTimeout($page.syncingProcess, 3000);
+        }
+    };
 
     $page.showCreateChannelTutorial = function () {
         $('#lightbox-create-channel').remove();
@@ -108,6 +178,7 @@
                         items.push(channel);
                     });
                     $('#channel-list').html('');
+                    $('#channel-list-empty-msg-item').tmpl($page.channelEmptyMsg, null).appendTo('#channel-empty-msg');
                     $('#channel-list-tmpl-item').tmpl(items, {
                         userId: cms.global.USER_DATA.id
                     }).appendTo('#channel-list');
@@ -120,6 +191,10 @@
                         }
                     });
                     $('#channel-list').sortable('disable');
+
+                    // if has readonly
+                    $page.syncingOnLoad();
+                    
                 } else {
                     $("p.order").hide();
                     $(".curate").hide();

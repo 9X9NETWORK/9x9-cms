@@ -313,24 +313,20 @@
     {{if cms.global.vIsYoutubeSync === true}}
     <div class="fminput clearfix">
         <input type="hidden" id="autoSync" name="autoSync" value="false" />
-        <label>Auto sync with Youtube</label>
+        <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Auto sync with YouTube'])}}</label>
         <div class="fmfield">
-            <div class="connected brand">
+            <div class="connected brand youtube-sync">
                 <div class="share-item first">
                     <img alt="youtube" src="images/icon_youtube_sm.png">
                     <a id="youtube-sync-switch" href="#" class="switch-off">OFF</a> 
                     <a id="fb-reconnect" href="javascript:void(0);">
                         <img src="images/icon_question.png" alt="">
-                        <!-- <span class="tip">
-                            <img src="images/bg_tip_top.png" alt="">
-                            <span class="tip-right">
-                                <span class="tip-middle">Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking "Sync" in program list.</span>
-                            </span>
-                        </span> -->
                         <div id="msgAutoSync" class="overlay-h60 youtube-sync-tip">
                             <img src="images/bg_tip_top.png" alt="" class="up-arrow">
                             <div class="overlay-h60-left"></div>
-                            <div class="overlay-h60-center">Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking "Sync" in program list.</div>
+                            <div class="overlay-h60-center">
+                                {{html nn._([cms.global.PAGE_ID, 'setting-form', 'Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking "Sync" in program list.'])}}
+                            </div>
                             <div class="overlay-h60-right"></div>
                         </div>
                     </a>

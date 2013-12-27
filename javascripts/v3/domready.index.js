@@ -63,16 +63,20 @@ $(function () {
 
         $(".lbTypeLists").removeClass("checked");
         $(thisObj).parent().addClass("checked");
+        $("#title-func .order").removeClass("disable");
+        $(".group-tmpty-msg").addClass("hide");
 
         $(".chLi").addClass("hide").fadeOut(500);
-
         if ("all" !== selectType) {
             $(selectTypeTxt).removeClass("hide");
             $("#channel-counter").text($(selectTypeTxt).length);
+            $("#title-func .order").addClass("disable");
+            if ($(selectTypeTxt).length < 1) {
+                $(".msg-" + selectType).removeClass("hide");
+            }
         } else {
             $(".chLi").removeClass("hide");
             $("#channel-counter").text($(".chLi").length);
-
         }
     });
 
@@ -82,29 +86,31 @@ $(function () {
         var thisLi = this,
             thisUl = $(thisLi).parent().parent(), 
             thisCh = $(this).data("meta"),
-            thisChLi = $("#program_"+thisCh);
+            thisChLi = $("#program_"+thisCh),
+            thisChId = $(this).data("meta");
 
         // nn.log($(thisUl).find("li a").length);
-        if (false === $(thisLi).hasClass("disable") && thisCh > 0) {
-            nn.log("we going process sync...." + thisCh + "**" + $(thisChLi).attr("id"));
-            $(thisChLi).addClass("inSyncing");
-            // nn.log("images url::" + $(thisChLi).find(".photo-list img.watermark").attr("src") );
-            
-            // set function butoon disable
-            $(thisUl).find("li a").addClass("disable");
-            // set th image to sync icon
-            $(thisChLi).find(".photo-list a").removeAttr("href");
-            $(thisChLi).find(".photo-list div.ch").addClass("hide");
-            $(thisChLi).find(".photo-list div.ep img").attr("src", "images/ep_default.png");
-            $(thisChLi).find(".photo-list img.watermark").attr("src", "images/icon_load_l.gif");
+        if (false === $(thisLi).hasClass("disable") && thisChId > 0) {
+            nn.log("we going process sync...." + thisChId + "**" + $(thisChLi).attr("id"));
+
+            $page.syncingUIDisable(thisChId);
+
+            // $(thisUl).parent().parent().addClass("disable");
+
+            // $(thisChLi).addClass("inSyncing");
+                        
+            // // set function butoon disable
+            // $(thisUl).find("li a").addClass("disable");
+            // // set th image to sync icon
+            // $(thisChLi).find("a").removeAttr("href");
+            // $(thisChLi).find(".photo-list div.ch").addClass("hide");
+            // $(thisChLi).find(".photo-list div.ep img").attr("src", "images/ep_default.png");
+            // $(thisChLi).find(".photo-list img.watermark").attr("src", "images/icon_load_l.gif");
 
             //  do sync command
             nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
-                channelId: thisCh
-            }), null, function(msg) {
-                // nn.log("sync message --- " + msg);
-            });
-
+                channelId: thisChId
+            }), null, null);
             if ($page.syncingProcessCount > 3) {
                 setTimeout($page.syncingProcess, 3000);
             }
@@ -168,9 +174,11 @@ $(function () {
 
     // channel list sorting
     $('#title-func').on('click', 'p.order a.reorder', function () {
-        $(this).text(nn._([cms.global.PAGE_ID, 'title-func', 'Save order'])).removeClass('reorder').addClass('save');
-        $('#channel-list').sortable('enable');
-        $('body').removeClass('has-change');
+        if (!$("#title-func .order").hasClass("disable")) {
+            $(this).text(nn._([cms.global.PAGE_ID, 'title-func', 'Save order'])).removeClass('reorder').addClass('save');
+            $('#channel-list').sortable('enable');
+            $('body').removeClass('has-change');
+        }
         return false;
     });
     $('#title-func').on('click', 'p.order a.save', function () {
@@ -208,8 +216,11 @@ $(function () {
 
     // channel list delete
     $('#channel-list').on('click', '.enable a.del', function () {
-        $(this).parents('li').addClass('deleting').data('deleteId', $(this).attr('rel'));
-        $common.showDeletePromptOverlay('Are you sure you want to delete this program? All data will be removed permanently.');
+        nn.log("in program deleteinting........");
+        if (false === $(this).hasClass("disable")) {
+            $(this).parents('li').addClass('deleting').data('deleteId', $(this).attr('rel'));
+            $common.showDeletePromptOverlay('Are you sure you want to delete this program? All data will be removed permanently.');
+        }
         return false;
     });
 

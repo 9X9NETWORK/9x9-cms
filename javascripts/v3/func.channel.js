@@ -218,6 +218,10 @@
         $('#page-selected').text(nn._(['channel', 'setting-form', 'Select facebook pages']));
         $('.page-list').addClass('disable').removeClass('enable on');
         $('#pageId').val('');
+        // if youtube sync show the button
+        if(cms.global.vIsYoutubeSync){
+            $(".connected.youtube-sync").removeClass("hide");
+        }
 
     };
 
@@ -232,7 +236,7 @@
         }
         // if youtube sync show the button
         if(cms.global.vIsYoutubeSync){
-            $(".connected.brand").removeClass("hide");
+            $(".connected.youtube-sync").removeClass("hide");
         }
         if (true === isAutoCheckedTimeline) {
             $('#fbTimeline').prop('checked', true);

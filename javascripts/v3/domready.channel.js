@@ -30,6 +30,7 @@ $(function () {
 
     // });
 
+
     $(document).on('click', '#youtube-sync-switch', function () {
         if ($(this).hasClass("switch-on")) {
         //     $(this).removeClass("switch-on");
