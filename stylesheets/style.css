@@ -161,6 +161,10 @@ abbr, acronym {
     background-position: 0 -96px;
 }
 
+#content-wrap .btns.disable a.reorder {
+    cursor: default;
+}
+
 #content-wrap .btns.disable span {
     background-position: right -128px;
 }

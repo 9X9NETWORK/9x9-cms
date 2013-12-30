@@ -201,6 +201,12 @@
                             cms.global.EPISODES_PAGING = [];
                             cms.global.EPISODES_PAGING_INFO = [];
                             if (cntEpisode > 0) {
+                                // for imageUrl === '' 
+                                $.each(episodes, function (eKey, eValue) {
+                                    if('' === eValue.imageUrl){
+                                        episodes[eKey].imageUrl = 'images/ep_invalid.png';
+                                    }
+                                });
                                 // pagging
                                 if (cntEpisode > iPageSize) {
                                     cntPage = parseInt((cntEpisode / iPageSize), 10);

@@ -19,32 +19,26 @@ $(function () {
         }
     });
 
-    // var abcCount = 0;
-    // $(document).on(function(event) {
-
-    //     console.log(abcCount + "::" + event.data.name);
-    // }, 'input#name', function() {
-    //     abcCount++;
-
-    //     console.log(abcCount + "::" + $("input#name").val());
-
-    // });
-
-
     $(document).on('click', '#youtube-sync-switch', function () {
         if ($(this).hasClass("switch-on")) {
-        //     $(this).removeClass("switch-on");
-        //     $(this).addClass("switch-off");
-        //     $(this).text(nn._(["overlay", 'button', 'OFF']));
-        //     $("#autoSync").val("false");
             $page.youtubeYyncOnOff(false);
         } else {
-            // $(this).removeClass("switch-off");
-            // $(this).addClass("switch-on");
-            // $(this).text(nn._(["overlay", 'button', 'ON']));
-            // $("#autoSync").val("true");
-            $page.youtubeYyncOnOff(true);
+            var msgOverlay = $('#youtube-sync-alert-overlay');
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?']));
+            $(msgOverlay).find('#yes-sync').text(nn._(['overlay', 'button', 'Yes']));
+            $(msgOverlay).find('#no-sync').text(nn._(['overlay', 'button', 'No']));
+
+            $.blockUI({
+                message: msgOverlay
+            });
+            // $page.youtubeYyncOnOff(true);
         }
+        return false;
+    });
+
+    $(document).on('click', '#yes-sync', function () {
+        $page.youtubeYyncOnOff(true);
+        $.unblockUI();
         return false;
     });
 

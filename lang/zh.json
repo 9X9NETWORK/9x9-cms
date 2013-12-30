@@ -448,7 +448,7 @@
             "Create a new program": "創建節目",
             "Create your own <strong>personal and unique</strong> program.": "創建屬於你<strong>個人且獨特</strong>的節目。",
             "Add online videos into episode and start to <strong>curate your own program.</strong>": "在一集劇集中策展多個單元，開始<strong>策展你的專屬節目</strong>",
-            "Sync with<strong>Youtube channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
+            "Sync with <strong>YouTube channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
             "Sync": "立即同步",
             "You don't have any 9x9 programs yet.": "你尚無任何9x9節目",
             "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目"
@@ -514,7 +514,7 @@
         },
         "title-func": {
             "My Programs": "我的節目",
-            "Create a new 9x9 program": "創建 9x9 節目",
+            "Create a new 9x9 Program": "創建 9x9 節目",
             "Create a new YouTube Sync Program": "創建 YouTube 同步節目",
             "Settings": "節目設定",
             "Required field": "必填項目"
@@ -557,7 +557,8 @@
             "Save": "儲存",
             "Add Youtube channel or playlist URL": "輸入Youtube頻道或播放清單",
             "Auto sync with YouTube": "YouTube自動同步",
-            "Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上九點、下午兩點與晚上八點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。"
+            "Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上九點、下午兩點與晚上八點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
+            "This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?": "YouTube 同步功能開啟後，系統會在每天早上九點、下午兩點與晚上八點自動同步YouTube的資訊與影片，確定要進行同步?"
         }
     },
     "channel-poi": {
