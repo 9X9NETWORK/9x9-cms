@@ -175,6 +175,7 @@
                     if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
                         channel.isYoutubeSync = true;
                         cms.global.vIsYoutubeSync = true;
+                        $("#content-main").addClass("youtube-program");
                     }
                     $('#func-nav ul').html('');
                     $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');

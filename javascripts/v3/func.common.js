@@ -17,7 +17,7 @@
             },
             tmpListId = inURL.param('list') || inURL.param('p'),
             tmpSegment = inURL.segment(),
-            tmpSeqmentLoc = tmpSegment.indexOf("user") + 1;
+            tmpSeqmentLoc = tmpSegment.indexOf("user") + 1 || tmpSegment.indexOf("channel") + 1;
 
         if (undefined !== tmpListId && tmpListId.length > 6) {
             retValue.ytType = 2;
