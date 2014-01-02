@@ -158,16 +158,20 @@ abbr, acronym {
 }
 
 #content-wrap .btns.disable {
-    background: url(../images/bg_btn_left_disable.png) no-repeat 0 0;
+    background-position: 0 -96px;
+}
+
+#content-wrap .btns.disable a.reorder {
+    cursor: default;
 }
 
 #content-wrap .btns.disable span {
-    background: url(../images/bg_btn_right_disable.png) no-repeat right 0;
+    background-position: right -128px;
 }
 
 #content-wrap .btns.disable span a,
 #content-wrap .btns.disable span input {
-    background: url(../images/bg_btn_middle_disable.png) repeat 0 0;
+    background-position: 0 -160px;
     color: #999;
 }
 

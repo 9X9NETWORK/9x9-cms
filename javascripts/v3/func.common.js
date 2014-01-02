@@ -3,6 +3,38 @@
 
 (function ($common) {
     'use strict';
+
+
+    $common.ytUrlParser = function (inUrl) {
+        // ytType = 0 : unknow, 1: user, 2: playlist
+        var inURL = $.url(inUrl),
+            ytUrlPattern = ["http://www.youtube.com/user/", "http://www.youtube.com/view_play_list?p="],
+            retValue = {
+                ytType: 0,
+                ytId: "",
+                ytUrlFormat: "",
+                ytUrlApi: ""
+            },
+            tmpListId = inURL.param('list') || inURL.param('p'),
+            tmpSegment = inURL.segment(),
+            tmpSeqmentLoc = tmpSegment.indexOf("user") + 1;
+
+        if (undefined !== tmpListId && tmpListId.length > 6) {
+            retValue.ytType = 2;
+            retValue.ytId = tmpListId;
+            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
+            retValue.ytUrlApi = "http://gdata.youtube.com/feeds/api/playlists/" + retValue.ytId + "?v=2&alt=json&start-index=1&max-results=50&orderby=position";
+
+        } else if (tmpSeqmentLoc > 0 && tmpSegment.length > tmpSeqmentLoc) {
+            retValue.ytType = 1;
+            retValue.ytId = tmpSegment[tmpSeqmentLoc];
+            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
+            retValue.ytUrlApi = "https://gdata.youtube.com/feeds/api/users/" + retValue.ytId + "?v=2&alt=json";
+        }
+
+        return retValue;
+    };
+
     // player url parser 
     // dependency by purl
     // return ch id

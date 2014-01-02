@@ -6,6 +6,36 @@
 
     var $common = cms.common;
 
+    
+    cms.global.vIsYoutubeSync = false;
+
+     $page.youtubeYyncOnOff = function (isOn) {
+        var thisObj = $("#youtube-sync-switch");
+        if (true === isOn) {
+            thisObj.removeClass("switch-off");
+            thisObj.addClass("switch-on");
+            thisObj.text(nn._(["overlay", 'button', 'ON']));
+            $("#autoSync").val("true");
+        } else {
+            thisObj.removeClass("switch-on");
+            thisObj.addClass("switch-off");
+            thisObj.text(nn._(["overlay", 'button', 'OFF']));
+            $("#autoSync").val("false");
+        }
+    };
+
+    $page.saveAfter = function () {
+        if (cms.global.vIsYoutubeSync === true) {
+            $('#ytsync-prompt .content').text(nn._(['overlay', 'prompt', "Synchronizing. This may take a few minutes."]));
+            $('#ytsync-prompt .btn-leave').text(nn._(['overlay', 'button', "Ok"]));
+            $.blockUI({
+                message: $('#ytsync-prompt')
+            });
+        } else {
+            location.href = 'index.html';
+        }
+    };
+
     $page.chkData = function (fm) {
         fm.name.value = $.trim(fm.name.value);
         fm.imageUrl.value = $.trim(fm.imageUrl.value);
@@ -188,6 +218,11 @@
         $('#page-selected').text(nn._(['channel', 'setting-form', 'Select facebook pages']));
         $('.page-list').addClass('disable').removeClass('enable on');
         $('#pageId').val('');
+        // if youtube sync show the button
+        if(cms.global.vIsYoutubeSync){
+            $(".connected.youtube-sync").removeClass("hide");
+        }
+
     };
 
     $page.renderAutoShareUI = function (facebook, isAutoCheckedTimeline) {
@@ -198,6 +233,10 @@
         } else {
             $('#settingForm .connected').removeClass('hide');
             $('#settingForm .reconnected').addClass('hide');
+        }
+        // if youtube sync show the button
+        if(cms.global.vIsYoutubeSync){
+            $(".connected.youtube-sync").removeClass("hide");
         }
         if (true === isAutoCheckedTimeline) {
             $('#fbTimeline').prop('checked', true);
@@ -306,6 +345,7 @@
             }, 'debug');
 
             var id = cms.global.USER_URL.param('id');
+            cms.global.vIsYoutubeSync = false;
             if (id > 0 && !isNaN(id) && cms.global.USER_DATA.id) {
                 nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
                     userId: cms.global.USER_DATA.id
@@ -327,11 +367,17 @@
                             $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
                             return;
                         }
+                        // youtube sync channel check 
+                        if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                            cms.global.vIsYoutubeSync = true;
+                        }
                         $common.showProcessingOverlay();
                         $('#func-nav ul').html('');
                         $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
                         $('#content-main').html('');
                         $('#content-main-tmpl').tmpl(channel).appendTo('#content-main');
+
+                        $page.youtubeYyncOnOff(channel.autoSync);
 
                         // sharing url
                         nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
@@ -464,6 +510,11 @@
                 subject: 'CMS.PAGE.INITIALIZED: channel-add',
                 options: options
             }, 'debug');
+
+            if(location.hash === "#ytsync"){
+                cms.global.vIsYoutubeSync = true;
+            }
+
 
             $common.showProcessingOverlay();
             $('#content-main').html('');

@@ -168,6 +168,14 @@
                 nn.api('GET', cms.reapi('/api/channels/{channelId}', {
                     channelId: id
                 }), null, function (channel) {
+                    // autoSync this field only in this api will beused , in other api this field will alway be "false"
+                    channel.isYoutubeSync = false;
+                    cms.global.vIsYoutubeSync = false;
+                    // youtube sync channel check 
+                    if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                        channel.isYoutubeSync = true;
+                        cms.global.vIsYoutubeSync = true;
+                    }
                     $('#func-nav ul').html('');
                     $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
                     if (channel.contentType !== cms.config.YOUR_FAVORITE) {
@@ -193,6 +201,12 @@
                             cms.global.EPISODES_PAGING = [];
                             cms.global.EPISODES_PAGING_INFO = [];
                             if (cntEpisode > 0) {
+                                // for imageUrl === '' 
+                                $.each(episodes, function (eKey, eValue) {
+                                    if('' === eValue.imageUrl){
+                                        episodes[eKey].imageUrl = 'images/ep_invalid.png';
+                                    }
+                                });
                                 // pagging
                                 if (cntEpisode > iPageSize) {
                                     cntPage = parseInt((cntEpisode / iPageSize), 10);
