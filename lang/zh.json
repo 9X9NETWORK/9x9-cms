@@ -44,7 +44,8 @@
             "Are you sure you want to delete this title?": "確定刪除此字卡？",
             "Are you sure you want to delete this POI with interactive event?": "確定刪除此互動時間與事件？",
             "Unsaved changes will be lost, are you sure you want to leave?": "未儲存資料將遺失，確定離開？",
-            "Unsaved changes will be lost, are you sure you want to cancel editing?": "未儲存資料將遺失，確定結束編輯？"
+            "Unsaved changes will be lost, are you sure you want to cancel editing?": "未儲存資料將遺失，確定結束編輯？",
+            "Synchronizing. This may take a few minutes.": "節目同步中，這可能需要幾分鐘的時間。"
         },
         "notice": {
             "Password reset success!": "密碼重新設定成功！",
@@ -76,7 +77,11 @@
             "No": "否",
             "Back": "上一步",
             "Disconnect": "取消連結",
-            "Restart connection": "重啟連結"
+            "Restart connection": "重啟連結",
+            "Cancel": "取消",
+            "ON": "開",
+            "OFF": "關"
+
         }
     },
     "upload": {
@@ -418,7 +423,11 @@
             "My Programs": "我的節目",
             "Reorder programs": "排序節目",
             "Save order": "儲存排序",
-            "Create a new program": "創建節目"
+            "Create a new program": "創建節目",
+            "Filtered by:": "分類條件:",
+            "All": "全部",
+            "9x9 programs": "9x9節目",
+            "Youtube sync programs": "Youtube同步節目"
         },
         "channel-list": {
             "Get URL": "網址",
@@ -438,7 +447,20 @@
             "You don't have any programs yet": "你尚無任何節目",
             "Create a new program": "創建節目",
             "Create your own <strong>personal and unique</strong> program.": "創建屬於你<strong>個人且獨特</strong>的節目。",
-            "Add online videos into episode and start to <strong>curate your own program.</strong>": "在一集劇集中策展多個單元，開始<strong>策展你的專屬節目</strong>"
+            "Add online videos into episode and start to <strong>curate your own program.</strong>": "在一集劇集中策展多個單元，開始<strong>策展你的專屬節目</strong>",
+            "Sync with <strong>YouTube channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
+            "Sync": "立即同步",
+            "You don't have any 9x9 programs yet.": "你尚無任何9x9節目",
+            "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目"
+        },
+        "overlay": {
+            "Create a New Program": "建立一個新的節目",
+            "Choose a type": "選一個類型",
+            "Youtube Sync<br />Program": "YouTube節目",
+            "9x9<br />Program": "9x9節目",
+            "Terms of use": "使用條款",
+            "Agree": "同意",
+            "Disagree": "不同意"
         }
     },
     "cms-settings": {
@@ -491,7 +513,9 @@
             "Settings": "節目設定"
         },
         "title-func": {
-            "My Programs &gt; Create a new program": "我的節目 &gt; 創建節目",
+            "My Programs": "我的節目",
+            "Create a new 9x9 Program": "創建 9x9 節目",
+            "Create a new YouTube Sync Program": "創建 YouTube 同步節目",
             "Settings": "節目設定",
             "Required field": "必填項目"
         },
@@ -530,7 +554,11 @@
             "Please fill in all required fields.": "請輸入必填項目。",
             "Cancel": "取消",
             "Create": "完成",
-            "Save": "儲存"
+            "Save": "儲存",
+            "Add Youtube channel or playlist URL": "輸入Youtube頻道或播放清單",
+            "Auto sync with YouTube": "YouTube自動同步",
+            "Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上九點、下午兩點與晚上八點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
+            "This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?": "YouTube 同步功能開啟後，系統會在每天早上九點、下午兩點與晚上八點自動同步YouTube的資訊與影片，確定要進行同步?"
         }
     },
     "channel-poi": {
@@ -615,7 +643,8 @@
             "Episode": "劇集",
             "Scheduled time": "排程時間",
             "Publish time": "發佈時間",
-            "Views": "觀看數"
+            "Views": "觀看數",
+            "Sync time": "同步時間"
         },
         "episode-list": {
             "You don't have any episodes yet": "您尚無任何劇集",

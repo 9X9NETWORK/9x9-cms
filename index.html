@@ -6,6 +6,7 @@
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="expires" content="0" />
 <link rel="stylesheet" href="stylesheets/perfect-scrollbar.css" />
+<link rel="stylesheet" href="stylesheets/overlay.css" />
 <link rel="stylesheet" href="stylesheets/style.css?v=1278" />
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=1278" />
 <link rel="stylesheet" href="stylesheets/channel.css?v=1278" />
@@ -68,6 +69,7 @@
         </div>
         <div id="content-main-wrap">
             <div class="constrain">
+                <div id="channel-empty-msg"></div>
                 <ul id="channel-list">
                     <!-- template = #channel-list-tmpl-item -->
 
@@ -208,15 +210,113 @@
 </div>
 <!-- Unsave Prompt Layer End -->
 
+
+
+<!-- Create a new program overlay -->
+<div id="create-program-overlay" class="overlay overlay-h316 create-program-overlay"></div>
+
+<div id="terms-overlay" class="overlay-h501 terms-overlay"></div>
+
+
+
+
 <div id="tmpHtml2" style="display: none"></div>
 <div id="tmpHtml" style="display: none"></div>
+
+<!-- Create a new program overlay -->
+<script id="create-program-overlay-tmpl" type="text/x-jquery-tmpl">
+    <div class="overlay-h316-left"></div>
+    <div class="overlay-h316-center">
+        <p class="overlay-button-close"></p>
+        <h2 class="overlay-title langkey">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Create a New Program'])}}</h2>
+        <h3 class="overlay-subtitle">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Choose a type'])}}</h3>
+        <div id="create-9x9-program" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">    
+                <p>{{html nn._([cms.global.PAGE_ID, 'overlay', '9x9<br />Program'])}}</p>
+                <img src="images/icon_9x9.png" alt="">               
+            </div>
+            <div class="right"></div>
+        </div>
+        {{if cms.global.MSO > 0}}
+        <div id="create-youtube-program" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">
+                <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'YouTube Sync<br />Program'])}}</p>
+                <img src="images/icon_youtube.png" alt="">
+            </div>
+            <div class="right"></div>
+        </div>
+        {{/if}}
+        <div class="overlay-button-holder">
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p id="cancel-create-program" class="center btn-close">{{html nn._(['overlay', 'button', 'Cancel'])}}</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-h316-right"></div>
+</script>
+
+<!-- Terms of use overlay -->
+<script id="terms-overlay-tmpl" type="text/x-jquery-tmpl">
+<div class="overlay-h501-left"></div>
+<div class="overlay-h501-center">
+    <p class="overlay-button-close"></p>
+    <h2 class="overlay-title">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Terms of use'])}}</h2>
+    <div class="overlay-inner-h362">
+        <div class="overlay-inner-h362-left"></div>
+        <div class="overlay-inner-h362-center">
+            <div class="terms-container">
+                <p>
+                    1. As a 9x9.tv account holder you may submit Content to the Service,including videos and user comments. You may also curate Content available on 9x9.tv or other 9x9.tv approved Content source such as YouTube. <strong>You understand that 9x9.tv does not guarantee any confidentiality with respect to any Content you submit.</strong>
+                </p>
+                <p>
+                    2. <strong>You shall be solely responsible for your own Content and the consequences of submitting and publishing your Content on the Service. You affirm, represent, and warrant that you own or have the necessary licenses, rights, consents, and permissions to publish Content you submit; and you license to 9x9.tv all patent, trademark, trade secret, copyright or other proprietary rights in and to such Content for publication on the Service pursuant to these Terms of Use.</strong>
+                </p>
+
+                <p>
+                    3. For clarity, you retain all of your ownership rights in your Content. However, by submitting Content to 9x9.tv, <strong>you hereby grant 9x9.tv a worldwide, non-exclusive, royalty-free, sublicenseable and transferable license to use, reproduce, distribute, prepare derivative works of, display, and perform the Content in connection with the Service and 9x9.tv's (and its successors' and affiliates') business, including without limitation for promoting and redistributing part or all of the Service (and derivative works thereof) in any media formats and through any media channels.</strong> You also hereby grant each user of the Service a non-exclusive license to access your Content through the Service, and to use, reproduce, distribute, display and perform such Content as permitted through the functionality of the Service and under these Terms of Use. The above licenses granted by you in video Content you submit to the Service terminate within a commercially reasonable time after you remove or delete your videos from the Service. You understand and agree, however, that 9x9.tv may retain, but not display, distribute, or perform, server copies of your videos that have been removed or deleted.
+                </p>
+
+                <p>
+                    4. <strong>You further agree that Content you submit to the Service will not contain third party copyrighted material, or material that is subject to other third party proprietary rights, unless you have permission from the rightful owner of the material or you are otherwise legally entitled to post the material and to grant 9x9.tv all of the license rights granted herein.</strong>
+                </p>
+
+                <p>
+                    5. You further agree that you will not submit to the Service any Content or other material that is contrary to applicable local, national, and international laws and regulations.
+                </p>
+
+                <p>
+                    6. 9x9.tv does not endorse any Content submitted to the Service by any user or other licensor, or any opinion, recommendation, or advice expressed therein, and 9x9.tv expressly disclaims any and all liability in connection with Content. <strong>9x9.tv does not permit copyright infringing activities and infringement of intellectual property rights on the Service, and 9x9.tv will remove all Content if properly notified that such Content infringes on another's intellectual property rights. 9x9.tv reserves the right to remove Content without prior notice.</strong>
+                </p>
+            </div>                        
+        </div>
+        <div class="overlay-inner-h362-right"></div>
+    </div>
+    <div class="overlay-button-holder">
+        <div class="btn-gray">
+            <p class="left"></p>
+            <p id="disagree-terms" class="center">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Disagree'])}}</p>
+            <p class="right"></p>
+        </div>
+        <div class="btn-gray">
+            <p class="left"></p>
+            <p id="agree-terms" class="center">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Agree'])}}</p>
+            <p class="right"></p>
+        </div>
+    </div>
+</div>
+<div class="overlay-h501-right"></div>
+</script>
 
 <script id="lightbox-create-channel-tmpl" type="text/x-jquery-tmpl">
 <div id="lightbox-create-channel" class="lightbox-content">
     <h3 class="index-collect-title">${nn._(['overlay', 'channel-tutorial', 'Collect and Curate!'])}</h3>
     <p class="desc">${nn._(['overlay', 'channel-tutorial', 'CMS is the management center for your 9x9.tv list-form programs!'])}</p>
     <p class="create">
-        <a href="channel-add.html">create
+        <a >create
             <img src="images/icon_add.png" alt="" />
             <span>{{html nn._(['overlay', 'channel-tutorial', 'Create a<br />new program'])}}</span>
         </a>
@@ -228,9 +328,20 @@
 <script id="title-func-tmpl" type="text/x-jquery-tmpl">
 <h2>${nn._([cms.global.PAGE_ID, 'title-func', 'My Programs'])} (<span id="channel-counter">${$item.cntChannel}</span>)</h2>
 <ul>
-    <li><p class="curate btns"><span><a href="channel-add.html">${nn._([cms.global.PAGE_ID, 'title-func', 'Create a new program'])}</a></span></p></li>
+    <li><p class="curate btns"><span><a class="btn_create_new" >${nn._([cms.global.PAGE_ID, 'title-func', 'Create a new program'])}</a></span></p></li>
     <li class="last"><p class="order btns"><span><a href="javascript:void(0);" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder programs'])}</a></span></p></li>
 </ul>
+{{if cms.global.MSO > 0}}
+<p class="radio-list">
+    <span>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</span>
+    <label for="filter_all" class="lbTypeLists checked">
+        <input type="radio" name="filter" value="all" id="filter_all" class="lbTypeItem" checked> {{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</label>
+    <label for="filter_9x9" class="lbTypeLists">
+        <input type="radio" name="filter" value="9x9" id="filter_9x9" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', '9x9 programs'])}}</label>
+    <label for="filter_youtube" class="lbTypeLists">
+        <input type="radio" name="filter" value="YoutubeSync" id="filter_youtube" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Youtube sync programs'])}}</label>
+</p>
+{{/if}}
 </script>
 
 <script id="get-url-part-tmpl" type="text/x-jquery-tmpl">
@@ -269,7 +380,7 @@
 <script id="channel-list-empty-tmpl" type="text/x-jquery-tmpl">
 <div id="com-9x9-cycle-list">
     <h3>{{html nn._([cms.global.PAGE_ID, 'channel-list', "You don't have any programs yet"])}}</h3>
-    <p class="btns"><span><a href="channel-add.html">${nn._([cms.global.PAGE_ID, 'channel-list', 'Create a new program'])}</a></span></p>
+    <p class="btns"><span><a class="btn_create_new">${nn._([cms.global.PAGE_ID, 'channel-list', 'Create a new program'])}</a></span></p>
     <div id="com-9x9-cycle">
         <p class="cycle-pager">
             <a href="javascript:void(0);" class="active">。</a>
@@ -278,12 +389,16 @@
         <div class="wrapper">
             <ul class="content">
                 <li>
-                    <div class="img"><a href="epcurate-curation.html?cid=${id}"><img src="images/banner_ch_01.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a ><img src="images/banner_ch_01.png" alt="" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Create your own <strong>personal and unique</strong> program.'])}}</span></p></div>
                 </li>
                 <li>
-                    <div class="img"><a href="epcurate-curation.html?cid=${id}"><img src="images/banner_ch_02.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a ><img src="images/banner_ch_02.png" alt="" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Add online videos into episode and start to <strong>curate your own program.</strong>'])}}</span></p></div>
+                </li>
+                <li>
+                    <div class="img"><a ><img width="781" height="274" alt="" src="images/banner_01.png"></a></div>
+                    <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sync with <strong>YouTube channel or playlist</strong> to get online videos.'])}}</span></p></div>
                 </li>
             </ul>
         </div>
@@ -292,10 +407,15 @@
 </script>
 <!-- channel-list-empty-tmpl End -->
 
+<!-- channel-list-empty Begin -->
+<script id="channel-list-empty-msg-item" type="text/x-jquery-tmpl">
+<div style="text-align:center" class="hide group-tmpty-msg msg-${msg_name}"><h3>{{html nn._([cms.global.PAGE_ID, 'channel-list', msg_body])}}</h3></div>
+</script>
+<!-- channel-list-empty End -->
 
 <!-- channel-list-tmpl-item Begin -->
 <script id="channel-list-tmpl-item" type="text/x-jquery-tmpl">
-<li class="clearfix" data-meta="${id}">
+<li id="program_${id}" class="clearfix chLi {{if true === isYoutubeSync}}ctypeYoutubeSync{{else}}ctype9x9{{/if}} {{if true === readonly}}inSyncing{{/if}}" data-meta="${id}">
 <div class="container">
 <div class="container-right">
 <div class="container-bottom">
@@ -303,7 +423,7 @@
     <div class="wrap">
         <div class="photo-list">
             <div class="ep">
-                <a href="${cms.config.API_BASE}/view?ch=${id}&dddd" target="_blank"><img src="${moreImageUrl_2}" alt="" /></a>
+                <a href="${cms.config.API_BASE}/view?ch=${id}" target="_blank"><img src="${moreImageUrl_2}" alt="" /></a>
             </div>
             <div class="ch">
                 <div class="img">
@@ -347,18 +467,25 @@
                 </div>
                 <div class="tip-bottom"></div>
             </div>
-            <p class="time">${nn._([cms.global.PAGE_ID, 'channel-list', 'Update:'])} ${cms.common.formatTimestamp(updateDate)}</p>
+            <p class="time">
+                ${nn._([cms.global.PAGE_ID, 'channel-list', 'Update:'])} ${cms.common.formatTimestamp(updateDate)}
+                {{if true === isYoutubeSync}}<img src="images/icon_youtube_sm.png">{{/if}}
+            </p>
             <div class="func-btns">
                 <div class="btn-wrap enable">
                     <ul>
+                        {{if true === isYoutubeSync}}
+                        <li><a class="sync" href="javascript:void(0);" data-meta="${id}">Sync<span class="tip"><img alt="" src="images/bg_tip_bottom.png"><span class="tip-left"><span class="tip-right"><span class="tip-middle">{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sync'])}}</span></span></span></span></a></li>
+                        {{else}}
                         <li><a href="epcurate-curation.html?cid=${id}" class="add">Add<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Curate a new episode'])}</span></span></span></span></a></li>
+                        {{/if}}
                         {{if !cms.global.IS_REMARK}}
                         <li><a href="channel-poi.html?id=${id}" class="channel-poi">Program POI<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Program POI'])}</span></span></span></span></a></li>
                         {{/if}}
                         <li><a href="episode-list.html?id=${id}" class="detail">Detail<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Episode list'])}</span></span></span></span></a></li>
                         <li><a href="channel-setting.html?id=${id}" class="setting">Setting<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Program settings'])}</span></span></span></span></a></li>
                         <li><a href="/api/users/${$item.userId}/channels/${id}" rel="${id}" class="del">Del<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Delete this program'])}</span></span></span></span></a></li>
-                        <li><a href="javascript:void(0);" class="url{{if 1 > cntEpisode}} disable{{/if}}">${nn._([cms.global.PAGE_ID, 'channel-list', 'Get URL'])}<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Get URL'])}</span></span></span></span></a></li>
+                        <li><a href="javascript:void(0);" class="url{{if 1 > cntEpisode && true !== isYoutubeSync}} disable{{/if}}">${nn._([cms.global.PAGE_ID, 'channel-list', 'Get URL'])}<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Get URL'])}</span></span></span></span></a></li>
                     </ul>
                 </div>
             </div>

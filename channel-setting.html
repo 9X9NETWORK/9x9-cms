@@ -6,6 +6,7 @@
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="expires" content="0" />
 <link rel="stylesheet" href="stylesheets/perfect-scrollbar.css" />
+<link rel="stylesheet" href="stylesheets/overlay.css" />
 <link rel="stylesheet" href="stylesheets/style.css?v=1278" />
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=1278" />
 <link rel="stylesheet" href="stylesheets/uniform.css?v=1278" />
@@ -138,6 +139,30 @@
 </div>
 <!-- Facebook Connect Failed2 Layer End -->
 
+<!-- Youtube sync alert overlay -->
+<div id="youtube-sync-alert-overlay" class="overlay-h172 youtube-sync-alert">
+    <div class="overlay-h172-left"></div>
+    <div class="overlay-h172-center">
+        <p class="btn-close"></p>
+        <img src="images/icon_warning_lg.png" alt="">
+        <p class="vMsg">This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?</p>
+        <div class="overlay-button-holder">
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p id="no-sync" class="center btn-close">No</p>
+                <p class="right"></p>
+            </div>
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p id="yes-sync" class="center ">Yes</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-h172-right"></div>
+</div>
+<!-- Youtube sync alert overlay End-->
+
 <script id="func-nav-tmpl" type="text/x-jquery-tmpl">
 <li><a href="episode-list.html?id=${id}" class="episode">${nn._([cms.global.PAGE_ID, 'func-nav', 'Episode list'])}</a></li>
 {{if !cms.global.IS_REMARK}}
@@ -155,10 +180,29 @@
 <div id="content-main-wrap" class="footer-on">
 <div class="constrain">
 <form name="settingForm" id="settingForm" method="get" action="" data-height="400">
+    {{if cms.global.vIsYoutubeSync === true}}
+    <div class="fminput clearfix">
+        <label for="name">
+            <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Add Youtube channel or playlist URL'])}</label>
+        <div class="fmfield">
+            <p class="text{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}">
+                <span>
+                    <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="${sourceUrl}" class="text" disabled="disabled" >
+                </span>
+            </p>
+            <!-- <span class="notice">
+                <span id="name-charcounter">0</span>　Best within 10 characters</span> -->
+            <div class="clear">
+                <p id="ytSyncMsg" class="validation-failed hide"></p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
     <div class="fminput clearfix">
         <label for="name"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Title'])}</label>
         <div class="fmfield">
-            <p class="text"><span><input type="text" name="name" id="name" maxlength="100" value="${name}" class="text" /></span></p>
+            <p class="text{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span>
+            <input type="text" name="name" id="name" maxlength="100" value="${name}" class="text" {{if cms.global.vIsYoutubeSync === true}}disabled="disabled"{{/if}}/></span></p>
             <span class="notice"><span id="name-charcounter">20</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 10 characters'])}</span>
         </div>
     </div>
@@ -173,9 +217,11 @@
                 </div>
                 <img src="images/loading.gif" alt="" class="loading" />
             </div>
+            {{if true !== cms.global.vIsYoutubeSync}}
             <p id="uploadThumbnail">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
             <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 300x300 or higher resolution image'])}</p>
             <p class="notice upload-notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload jpeg, png, or gif files.'])}</p>
+            {{/if}}
             <input type="hidden" name="imageUrl" id="imageUrl" value="${imageUrl}" />
             <input type="hidden" name="imageUrlOld" id="imageUrlOld" value="${imageUrl}" />
         </div>
@@ -183,7 +229,8 @@
     <div class="fminput clearfix">
         <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Description'])}</label>
         <div class="fmfield">
-            <p class="textarea"><span><span><textarea name="intro" id="intro" cols="80" class="textarea">${intro}</textarea></span></span></p>
+            <p class="textarea{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span><span>
+            <textarea name="intro" id="intro" cols="80" class="textarea" {{if cms.global.vIsYoutubeSync === true}}disabled="disabled"{{/if}}>${intro}</textarea></span></span></p>
             <span class="notice"><span id="intro-charcounter">70</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 52 characters'])}</span>
         </div>
     </div>
@@ -287,6 +334,31 @@
             </div>
         </div>
     </div>
+    {{if cms.global.vIsYoutubeSync === true}}
+    <div class="fminput clearfix">
+        <input type="hidden" id="autoSync" name="autoSync" value="false" />
+        <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Auto sync with YouTube'])}}</label>
+        <div class="fmfield">
+            <div class="connected brand youtube-sync">
+                <div class="share-item first">
+                    <img alt="youtube" src="images/icon_youtube_sm.png">
+                    <a id="youtube-sync-switch" href="#" class="switch-off">OFF</a> 
+                    <a id="fb-reconnect" href="javascript:void(0);">
+                        <img src="images/icon_question.png" alt="">
+                        <div id="msgAutoSync" class="overlay-h60 youtube-sync-tip">
+                            <img src="images/bg_tip_top.png" alt="" class="up-arrow">
+                            <div class="overlay-h60-left"></div>
+                            <div class="overlay-h60-center">
+                                {{html nn._([cms.global.PAGE_ID, 'setting-form', 'Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking "Sync" in program list.'])}}
+                            </div>
+                            <div class="overlay-h60-right"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
     <div class="form-btn">
         <div class="form-btn-wrap">
             <p class="notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please fill in all required fields.'])}</p>
