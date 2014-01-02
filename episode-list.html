@@ -169,7 +169,7 @@
     <ul>
         {{if true === cms.global.vIsYoutubeSync}}
             <li style="line-hieght:34px">&nbsp;</li>
-            <li class="last"><p class="sync-time">${nn._([cms.global.PAGE_ID, 'title-func', 'Sync time'])} : ${cms.common.formatTimestamp(updateDate)}</p></li>
+            <li class="last"><p class="sync-time">{{if null !== syncDate}}${nn._([cms.global.PAGE_ID, 'title-func', 'Sync time'])} : ${cms.common.formatTimestamp(syncDate)}{{else}}&nbsp;{{/if}}</p></li>
         {{else}}
             <li><p class="curate btns"><span><a href="epcurate-curation.html?cid=${id}" class="curate">${nn._([cms.global.PAGE_ID, 'title-func', 'Curate a new episode'])}</a></span></p></li>
             <li class="last"><p class="order btns"><span><a href="javascript:void(0);" rel="${id}" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder episodes'])}</a></span></p></li>
