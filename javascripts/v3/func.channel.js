@@ -379,6 +379,24 @@
 
                         $page.youtubeYyncOnOff(channel.autoSync);
 
+                        if (cms.global.vIsYoutubeSync === true) {
+                            var ytUrlParse = $common.ytUrlParser(channel.sourceUrl),
+                                ytObj = {};
+                            if (ytUrlParse.ytType > 0) {
+                                ytObj = {
+                                    url: ytUrlParse.ytUrlApi,
+                                    dataType: "json",
+                                    context: self,
+                                    success: function(res) {
+                                        if (ytUrlParse.ytType === 1) {
+                                            $("#ytUrl").val((res).entry.link[0].href);
+                                        }
+                                    }
+                                }
+                                $.ajax(ytObj);
+                            }
+                        }
+
                         // sharing url
                         nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
                             channelId: id
