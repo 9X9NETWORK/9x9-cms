@@ -494,7 +494,10 @@
             "Please fill in all required fields.": "Please fill in all required fields.",
             "Cancel": "Cancel",
             "Create": "Create",
-            "Save": "Save"
+            "Save": "Save",
+            "Episode sort by": "Episode sort by",
+            "YouTube playlist or YouTube channel order": "YouTube YouTube playlist or YouTube channel order",
+            "YouTube playlist or YouTube channel reverse order": "YouTube playlist or YouTube channel reverse order"
         }
     },
     "channel-poi": {
