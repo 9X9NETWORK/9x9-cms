@@ -30,7 +30,8 @@ $(function () {
 
     $(document).on('click', '#create-youtube-program', function () {
         var chYoutubeSyncCoutn = $("#channel-list .ctypeYoutubeSync").length,
-            cookieTerms = $.cookie('cms-ytubesync-term') || "no";
+            cookieTerms = $.cookie('cms-ytubesync-term') || "no",
+            strTermsFile = "lang/"+cms.global.USER_DATA.lang +'_YoutubeSyncTerms.html';
 
             nn.log("cooke::"+$.cookie('cms-ytubesync-term') +"::");
             nn.log("cooke var::"+cookieTerms +"::");
@@ -38,9 +39,11 @@ $(function () {
         if ((undefined === cookieTerms || "agree" != cookieTerms) && chYoutubeSyncCoutn < 1) {
             $('#terms-overlay').empty();
             $('#terms-overlay-tmpl').tmpl().appendTo('#terms-overlay');
-            $('#terms-overlay .terms-container').perfectScrollbar();
-            $.blockUI({
-                message: $('#terms-overlay')
+            $('#terms-overlay .terms-container').load(strTermsFile, function() {
+                $('#terms-overlay .terms-container').perfectScrollbar();
+                $.blockUI({
+                    message: $('#terms-overlay')
+                });
             });
         } else {
             $.cookie('cms-ytubesync-term', "agree");
