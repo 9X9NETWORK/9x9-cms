@@ -227,7 +227,7 @@
         <div class="fmfield">
             <p class="text{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span>
             <input type="text" name="name" id="name" maxlength="100" value="" class="text" {{if cms.global.vIsYoutubeSync === true}}disabled="disabled"{{/if}} /></span></p>
-            <span class="notice"><span id="name-charcounter">20</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 10 characters'])}</span>
+            <span class="notice {{if cms.global.vIsYoutubeSync === true}}hide{{/if}}"><span id="name-charcounter">20</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 10 characters'])}</span>
         </div>
     </div>
     <div class="fminput clearfix{{if cms.global.vIsYoutubeSync === true}} hide{{/if}}">
@@ -242,7 +242,7 @@
                 <img src="images/loading.gif" alt="" class="loading" />
             </div>
             <p id="uploadThumbnail">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
-            <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 300x300 or higher resolution image'])}</p>
+            <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640x480 or higher resolution image'])}</p>
             <p class="notice upload-notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload jpeg, png, or gif files.'])}</p>
             <input type="hidden" name="imageUrl" id="imageUrl" value="" />
             <input type="hidden" name="imageUrlOld" id="imageUrlOld" value="" />
@@ -253,7 +253,7 @@
         <div class="fmfield">
             <p class="textarea{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span><span>
             <textarea name="intro" id="intro" cols="80" class="textarea" {{if cms.global.vIsYoutubeSync === true}}disabled="disabled"{{/if}}></textarea></span></span></p>
-            <span class="notice"><span id="intro-charcounter">70</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 52 characters'])}</span>
+            <span class="notice {{if cms.global.vIsYoutubeSync === true}}hide{{/if}}"><span id="intro-charcounter">70</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 52 characters'])}</span>
         </div>
     </div>
     <div class="fminput clearfix">
