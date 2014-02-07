@@ -268,10 +268,8 @@
                     strMinus = "on";
                 }
 
-                if ('' === tmpArr.imageUrl) {
-                    tmpArr.imageUrl = "images/ch_default.png";
-                }
-                else{
+                tmpArr.imageUrl = "images/ch_default.png";
+                if (tmpArr.imageUrl) {
                     tmpArr.imageUrl = tmpArr.imageUrl.split('|')[0];
                 }
 
