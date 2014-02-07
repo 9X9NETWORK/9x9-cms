@@ -268,10 +268,10 @@
                     strMinus = "on";
                 }
 
-                tmpArr.imageUrl = "images/ch_default.png";
-                if (tmpArr.imageUrl) {
-                    tmpArr.imageUrl = tmpArr.imageUrl.split('|')[0];
+                if (!tmpArr.imageUrl) {
+                    tmpArr.imageUrl = "images/ch_default.png";
                 }
+                tmpArr.imageUrl = tmpArr.imageUrl.split('|')[0];
 
                 tmpArr.msoMinus = strMinus;
                 tmpArr.msoName = tmpMsoName;
