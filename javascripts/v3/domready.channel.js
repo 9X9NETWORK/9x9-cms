@@ -442,7 +442,7 @@ $(function () {
                     });
                 }
             });
-            nn.log("sync invilid "+ parameter.autoSync);
+
             nn.api('PUT', cms.reapi('/api/channels/{channelId}', {
                 channelId: cms.global.USER_URL.param('id')
             }), parameter, function (channel) {
