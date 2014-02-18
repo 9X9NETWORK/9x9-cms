@@ -65,9 +65,26 @@
 
         if ($page.syncingProcessCount <= 3) {
             setTimeout($page.syncingProcess, 3000);
+        } else{
+            $page.syncInvaild();
         }
     };
 
+    // YouTube sync failed popup message
+    $page.failedYoutubeSyncPopUpMsg = function (inCount) {
+        var tmpStr = "";
+        if(inCount > 1){
+            tmpStr = "You have ? invalid YouTube sync programs.";
+        } else {
+            tmpStr = "You have ? invalid YouTube sync program.";
+        }
+        $.unblockUI();
+        $('#system-notice .content').text(nn._([cms.global.PAGE_ID, 'overlay', tmpStr], [inCount]));
+        $.blockUI({
+            message: $('#system-notice')
+        });
+        setTimeout($.unblockUI, 4000);
+    };
     // YouTube sync failed UI disable
     $page.failedYoutubeSyncUIDisable = function (inCh) {
         var thisChLi = $("#program_" + inCh);
@@ -76,14 +93,32 @@
 
         $(thisChLi).find(".photo-list div.ch").addClass("hide");
         $(thisChLi).find(".photo-list div.ep img").attr("src", "images/ep_default.png");
-        $(thisChLi).find(".photo-list img.watermark").attr("src", "images/icon_warning_lg.png").css("left", "78px").css("top", "32px");
+        $(thisChLi)
+            .find(".photo-list img.watermark")
+            .attr("src", "images/icon_warning_lg.png")
+            .attr("title", nn._([cms.global.PAGE_ID, 'channel-list', "Invalid original YouTube playlist"]))
+            .css("left", "78px").css("top", "32px");
 
         $(thisChLi).find("a").removeAttr("href");
         $(thisChLi).find("ul li a").addClass("disable");
         $(thisChLi).find("ul li a.del").removeClass("disable");
-        // $(thisChLi).find("ul li a.sync").removeClass("disable");
+        if("yes" === cms.global.USER_URL.param('releasethesync')){
+            $(thisChLi).find("ul li a.sync").removeClass("disable");
+        }
     };
 
+
+    // YouTube sync sync failed after on load
+    $page.syncInvaild = function () {
+        var theSyncs = $("li.isFailedYoutubeSync"),
+            syncCount = theSyncs.length,
+            tmpFaild = $("#channel-list").data("syncfaild");
+
+        if (syncCount > 0 && tmpFaild != syncCount) {
+            $("#channel-list").data("syncfaild", syncCount);
+            $page.failedYoutubeSyncPopUpMsg(syncCount);
+        }
+    };
 
     // YouTube sync sync failed after on load
     $page.syncFailedOnLoad = function () {
@@ -98,6 +133,8 @@
 
                 $page.failedYoutubeSyncUIDisable(thisId);
             });
+
+            $page.syncInvaild();
         }
     };
 
