@@ -401,6 +401,17 @@
             "Create a new program": "Create a new program",
             "Create your own <strong>personal and unique</strong> program.": "Create your own <strong>personal and unique</strong> program.",
             "Add online videos into episode and start to <strong>curate your own program.</strong>": "Add online videos into episode and start to <strong>curate your own program.</strong>"
+        },
+        "overlay": {
+            "Create a New Program": "Create a New Program",
+            "Choose a type": "Choose a type",
+            "YouTube Sync<br />Program": "YouTube Sync<br />Program",
+            "9x9<br />Program": "9x9<br />Program",
+            "Terms of use": "Terms of use",
+            "Agree": "Agree",
+            "Disagree": "Disagree",
+            "You have ? invalid YouTube sync program.": "You have {0} invalid YouTube sync program.",
+            "You have ? invalid YouTube sync programs.": "You have {0} invalid YouTube sync programs."
         }
     },
     "cms-settings": {

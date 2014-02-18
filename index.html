@@ -210,6 +210,20 @@
 </div>
 <!-- Unsave Prompt Layer End -->
 
+<!-- System Notice Layer Begin -->
+<div id="system-notice" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">Password reset success!</p>
+            <div class="overlay-btn">
+                <p class="btns btn-ok"><span><a href="#">OK</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- System Notice Layer End -->
+
 
 
 <!-- Create a new program overlay -->
@@ -394,7 +408,7 @@
 
 <!-- channel-list-tmpl-item Begin -->
 <script id="channel-list-tmpl-item" type="text/x-jquery-tmpl">
-<li id="program_${id}" class="clearfix chLi {{if true === isYoutubeSync}}ctypeYoutubeSync{{else}}ctype9x9{{/if}} {{if true === readonly}}inSyncing{{/if}}" data-meta="${id}">
+<li id="program_${id}" class="clearfix chLi {{if true === isYoutubeSync}}ctypeYoutubeSync{{else}}ctype9x9{{/if}} {{if 'failed' === autoSync}}isFailedYoutubeSync{{else}}{{if true === readonly}}inSyncing{{/if}}{{/if}}" data-meta="${id}">
 <div class="container">
 <div class="container-right">
 <div class="container-bottom">

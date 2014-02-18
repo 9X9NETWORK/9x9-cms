@@ -22,7 +22,7 @@ $(function () {
         }
     });
 
-    $(document).on('click', '.unblock, .btn-close, .btn-no', function () {
+    $(document).on('click', '.unblock, .btn-close, .btn-no, .btn-ok', function () {
         $.unblockUI();
         $('#channel-list li').removeClass('deleting').removeData('deleteId');
         return false;

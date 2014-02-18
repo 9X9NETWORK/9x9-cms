@@ -11,16 +11,16 @@
 
      $page.youtubeYyncOnOff = function (isOn) {
         var thisObj = $("#youtube-sync-switch");
-        if (true === isOn) {
+        if ("on" === isOn) {
             thisObj.removeClass("switch-off");
             thisObj.addClass("switch-on");
             thisObj.text(nn._(["overlay", 'button', 'ON']));
-            $("#autoSync").val("true");
+            $("#autoSync").val("on");
         } else {
             thisObj.removeClass("switch-on");
             thisObj.addClass("switch-off");
             thisObj.text(nn._(["overlay", 'button', 'OFF']));
-            $("#autoSync").val("false");
+            $("#autoSync").val("off");
         }
     };
 

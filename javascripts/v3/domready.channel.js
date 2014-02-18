@@ -21,7 +21,7 @@ $(function () {
 
     $(document).on('click', '#youtube-sync-switch', function () {
         if ($(this).hasClass("switch-on")) {
-            $page.youtubeYyncOnOff(false);
+            $page.youtubeYyncOnOff("off");
         } else {
             var msgOverlay = $('#youtube-sync-alert-overlay');
             $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?']));
@@ -37,7 +37,7 @@ $(function () {
     });
 
     $(document).on('click', '#yes-sync', function () {
-        $page.youtubeYyncOnOff(true);
+        $page.youtubeYyncOnOff("on");
         $.unblockUI();
         return false;
     });
@@ -442,6 +442,7 @@ $(function () {
                     });
                 }
             });
+
             nn.api('PUT', cms.reapi('/api/channels/{channelId}', {
                 channelId: cms.global.USER_URL.param('id')
             }), parameter, function (channel) {
