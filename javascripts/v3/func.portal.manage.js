@@ -380,10 +380,6 @@
                         });
                     } else {
 
-                        $page.onTopList = $page.procOnTopList($page.nomoList, $page.sortingType);
-                        $page.nomoList = $page.procNomoList($page.nomoList, $page.sortingType);
-
-                        $page._drawChannelLis();
                         $page._reListSeq();
 
                         $(".btn-top").removeClass("hide");
