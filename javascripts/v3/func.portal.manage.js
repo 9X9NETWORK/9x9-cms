@@ -340,7 +340,6 @@
             $('#overlay-s').fadeOut("slow");
         } else {
             if (inSetId > 0) {
-                // nn.log("abc::" + inCatId);
                 nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
                     setId: inSetId
                 }), null, function (chanels) {
@@ -498,6 +497,7 @@
                 // $('#overlay-s').fadeOut("slow");
             } else {
                 // $page.listCategory(sets, setId);
+                $page.listSet(sets, setId);
                 $("#store-category-ul").show();
                 $("#store-category-ul li").show();
                 $('#overlay-s').fadeOut("slow");
