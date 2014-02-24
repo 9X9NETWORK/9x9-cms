@@ -1,5 +1,5 @@
 /*jslint browser: true, nomen: true, unparam: true */
-/*global $, nn, cms */
+/*global $, nn, cms, $page*/
 
 (function ($page) {
     'use strict';
@@ -7,7 +7,7 @@
     var $common = cms.common;
     $page.channel9x9 = 0;
     $page.channelYouSync = 0;
-    $page.syncingProcessCount = 10,
+    $page.syncingProcessCount = 10;
     $page.channelYouSyncAddUrl = "channel-add.html#ytsync";
     $page.channelEmptyMsg = [{
         'msg_name': '9x9',
@@ -27,14 +27,15 @@
         if (syncCount > 0) {
             $page.syncingProcessCount = 0;
 
-            $.each(theSyncs, function(i, chLi) {
+            $.each(theSyncs, function (i, chLi) {
                 thisId = $(chLi).data('meta');
-
 
                 nn.api('GET', cms.reapi('/api/channels/{channelId}', {
                     channelId: thisId
-                }), null, function(channel) {
-                    if (false === channel.readonly) {
+                }), null, function (channel) {
+                    if ('failed' === channel.autoSync) {
+                        $page.failedYoutubeSyncUIDisable(channel.id);
+                    } else if (false === channel.readonly) {
                         channel.moreImageUrl_1 = cms.config.CHANNEL_DEFAULT_IMAGE;
                         channel.moreImageUrl_2 = cms.config.CHANNEL_DEFAULT_IMAGE2;
                         channel.moreImageUrl_3 = cms.config.CHANNEL_DEFAULT_IMAGE2;
@@ -64,18 +65,88 @@
 
         if ($page.syncingProcessCount <= 3) {
             setTimeout($page.syncingProcess, 3000);
+        } else{
+            $page.syncInvaild();
+        }
+    };
+
+    // YouTube sync failed popup message
+    $page.failedYoutubeSyncPopUpMsg = function (inCount) {
+        var tmpStr = "";
+        if(inCount > 1){
+            tmpStr = "You have ? invalid YouTube sync programs.";
+        } else {
+            tmpStr = "You have ? invalid YouTube sync program.";
+        }
+        $.unblockUI();
+        $('#system-notice .content').text(nn._([cms.global.PAGE_ID, 'overlay', tmpStr], [inCount]));
+        $.blockUI({
+            message: $('#system-notice')
+        });
+        setTimeout($.unblockUI, 4000);
+    };
+    // YouTube sync failed UI disable
+    $page.failedYoutubeSyncUIDisable = function (inCh) {
+        var thisChLi = $("#program_" + inCh);
+        $(thisChLi).removeClass("inSyncing");
+        $(thisChLi).addClass("isFailedYoutubeSync");
+
+        $(thisChLi).find(".photo-list div.ch").addClass("hide");
+        $(thisChLi).find(".photo-list div.ep img").attr("src", "images/ep_default.png");
+        $(thisChLi)
+            .find(".photo-list img.watermark")
+            .attr("src", "images/icon_warning_lg.png")
+            .attr("title", nn._([cms.global.PAGE_ID, 'channel-list', "Invalid original YouTube playlist"]))
+            .css("left", "78px").css("top", "32px");
+
+        $(thisChLi).find("a").removeAttr("href");
+        $(thisChLi).find("ul li a").addClass("disable");
+        $(thisChLi).find("ul li a.del").removeClass("disable");
+        if("yes" === cms.global.USER_URL.param('releasethesync')){
+            $(thisChLi).find("ul li a.sync").removeClass("disable");
+        }
+    };
+
+
+    // YouTube sync sync failed after on load
+    $page.syncInvaild = function () {
+        var theSyncs = $("li.isFailedYoutubeSync"),
+            syncCount = theSyncs.length,
+            tmpFaild = $("#channel-list").data("syncfaild");
+
+        if (syncCount > 0 && tmpFaild != syncCount) {
+            $("#channel-list").data("syncfaild", syncCount);
+            $page.failedYoutubeSyncPopUpMsg(syncCount);
+        }
+    };
+
+    // YouTube sync sync failed after on load
+    $page.syncFailedOnLoad = function () {
+        var theSyncs = $("li.isFailedYoutubeSync"),
+            syncCount = theSyncs.length,
+            thisId = 0,
+            temp = [];
+
+        if (syncCount > 0) {
+            $.each(theSyncs, function(i, chLi) {
+                thisId = $(chLi).data('meta');
+
+                $page.failedYoutubeSyncUIDisable(thisId);
+            });
+
+            $page.syncInvaild();
         }
     };
 
     // YouTube sync syncing UI disable
     $page.syncingUIDisable = function (inCh) {
-        var thisChLi = $("#program_"+inCh);
+        var thisChLi = $("#program_" + inCh);
 
         $(thisChLi).addClass("inSyncing");
 
         $(thisChLi).find(".photo-list div.ch").addClass("hide");
         $(thisChLi).find(".photo-list div.ep img").attr("src", "images/ep_default.png");
-        $(thisChLi).find(".photo-list img.watermark").attr("src", "images/icon_load_l.gif").css("left","78px").css("top", "32px");
+        $(thisChLi).find(".photo-list img.watermark").attr("src", "images/icon_load_l.gif").css("left", "78px").css("top", "32px");
 
         $(thisChLi).find("a").removeAttr("href");
         $(thisChLi).find("ul li a").addClass("disable");
@@ -89,7 +160,7 @@
             temp = [];
 
         if (syncCount > 0) {
-            $.each(theSyncs, function(i, chLi) {
+            $.each(theSyncs, function (i, chLi) {
                 thisId = $(chLi).data('meta');
 
                 $page.syncingUIDisable(thisId);
@@ -101,6 +172,8 @@
             });
             setTimeout($page.syncingProcess, 3000);
         }
+
+        $page.syncFailedOnLoad();
     };
 
     $page.showCreateChannelTutorial = function () {
@@ -169,7 +242,7 @@
                         }
                         channel.isYoutubeSync = false;
                         // youtube sync channel check 
-                        if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                        if (null !== channel.sourceUrl && channel.sourceUrl.length > 10) {
                             $page.channelYouSync += 1;
                             channel.isYoutubeSync = true;
                         } else {
@@ -194,7 +267,7 @@
 
                     // if has readonly
                     $page.syncingOnLoad();
-                    
+
                 } else {
                     $("p.order").hide();
                     $(".curate").hide();

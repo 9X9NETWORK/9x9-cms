@@ -451,7 +451,8 @@
             "Sync with <strong>YouTube channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
             "Sync": "立即同步",
             "You don't have any 9x9 programs yet.": "你尚無任何9x9節目",
-            "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目"
+            "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目",
+            "Invalid original YouTube playlist": "已失效的YouTube播放清單"
         },
         "overlay": {
             "Create a New Program": "建立一個新的節目",
@@ -460,7 +461,9 @@
             "9x9<br />Program": "9x9節目",
             "Terms of use": "使用條款",
             "Agree": "同意",
-            "Disagree": "不同意"
+            "Disagree": "不同意",
+            "You have ? invalid YouTube sync program.": "您有 {0} 個已失效的YouTube同步節目",
+            "You have ? invalid YouTube sync programs.": "您有 {0} 個已失效的YouTube同步節目"
         }
     },
     "cms-settings": {
