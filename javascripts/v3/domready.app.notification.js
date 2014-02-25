@@ -9,13 +9,13 @@ $(function () {
         $common = cms.common;
 
 
-
     $('.unblock, .btn-close, .btn-no, .setup-notice .btn-ok').click(function () {
         $.unblockUI();
         $('body').data('leaveUrl', "");
         $("#unsave-prompt .btn-leave").removeClass("switch-on-off");
         return false;
     });
+
 
     $(document).on('click', '#content-nav a, .select-list li a, .studio-nav-wrap a, #profile-dropdown a', function (e) {
         if ($('body').hasClass('has-change')) {
@@ -56,9 +56,5 @@ $(function () {
 
         $('#content-main-wrap').perfectScrollbar('update');
 
-        if ($storeList.scrollTop() + $storeList.outerHeight() >= $storeList[0].scrollHeight && cms.global.USER_DATA["pageInfo"].pageCurrent < cms.global.USER_DATA["pageInfo"].pageTotal) {
-            $storeList.find('.load').fadeIn('slow');
-            $page.getMoreChannels();
-        }
     });
 });
