@@ -158,6 +158,30 @@
             "Only letters, numbers or low line are allowed.": " letters, numbers or low line are allowed."
         }
     },
+    "app-notification": {
+        "html-title": {
+            "9x9.tv - App Notifiction": "9x9.tv - App Notifiction"
+        },
+        "func-nav": {
+            "Main Channels": "Main Channels",
+            "Program Store": "Program Store",
+            "Brand Settings": "Brand Settings"
+        },
+        "title-func": {
+            "Portal": "Portal",
+            "Brand Settings": "Brand Settings",
+            "Save": "Save"
+        },
+        "notification": {
+            "Name:": "Name:",
+            "Brand Logo:": "Brand Logo:",
+            "Best within 16 characters": "Best within 16 characters",
+            "Please fill in your brand name.": "Please fill in your brand name.",
+            "Better results with 260x200 or higher resolution image.": "Better results with 260x200 or higher resolution image, file size can't over 500KB",
+            "Please upload png file.": "Please upload png file.",
+            "your upload file is large than 500KB, please reupload file.": "your upload file is large than 500KB, please reupload file."
+        }
+    },
     "brand-setting": {
         "html-title": {
             "9x9.tv - Brand Setting": "9x9.tv - Brand Setting"
