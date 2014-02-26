@@ -74,9 +74,8 @@
     <div id="content-main">
         <div id="title-func" class="clearfix">
             <h2 >
-              <span id="channel-name langkey">Notification</span>
-               &gt;
-              <span id="channel-sub-name" class="langkey">History</span>
+              <span id="channel-name" class="langkey">Notification</span>
+              <span id="channel-sub-name"></span>
             </h2>
         </div>
         <!-- main Action Layer Begin -->
@@ -164,8 +163,8 @@
 
 <!-- notify-intro-image-tmpl Begin -->
 <script id="notify-comm-tmpl" type="text/x-jquery-tmpl">
-    <a href="#" class="normal-btn disable">+ Create a app notification</a>
-    <div class="normal-margin">You dont have been authorized to send notifications to the iOS app Android app users.</div>
+    <a id="newNotify" href="#" class="normal-btn disable">+ ${nn._([cms.global.PAGE_ID, 'notification', 'Create a app notification'])}</a>
+    <div class="normal-margin">${extMsg}</div>
 </script>
 <!-- notify-intro-image-tmpl End -->
 
@@ -177,124 +176,25 @@
 </script>
 <!-- notify-intro-image-tmpl End -->
 
+
+<!-- notify-list-wrap Begin -->
+<script id="notify-list-item-tmpl" type="text/x-jquery-tmpl">
+    <li id="notify_${id}">
+        <time class="notify-time">${cms.common.formatTimestamp(updateDate)}</time> 
+        <span class="notify-content">${message}</span>
+    </li>
+</script>
+<!-- notify-list-wrap End -->
+
 <!-- notify-list-wrap Begin -->
 <script id="notify-list-wrap-tmpl" type="text/x-jquery-tmpl">
     <div class="notify-list-wrap">
         <h2 class="notify-list-title">
-        Notification history list（<span class="notify-number">20</span> notifications displayed at the most in history list）
+        ${nn._([cms.global.PAGE_ID, 'notification', 'Notification history list (20 notifications displayed at the most in history list)'])}
         </h2>
 
         <div class="list-outline">
-
-            <ul id="list-test" class="notify-list normal-list">
-                <li>
-                    <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-                <li>
-                     <time class="notify-time">2013/12/9  13:00</time> 
-                    <span class="notify-content">喇新聞最新八卦！
-                    </span>
-                </li>
-
-
-            </ul>
+            <ul id="list-history" class="notify-list normal-list"></ul>
         </div>
 
     </div>
@@ -309,29 +209,26 @@
             <legend class="form-title">Create an app notification</legend>
 
             <div class="form-group required-field">
-                <div class="form-label">Notification message</div>
+                <div class="form-label">${nn._([cms.global.PAGE_ID, 'notification', 'Notification message'])}</div>
                 <div class="form-elements">
-                   <textarea placeholder="Input notificaion message..."></textarea>                                              
+                   <textarea id="NotifyMessage" placeholder="${nn._([cms.global.PAGE_ID, 'notification', 'Input notificaion message...'])}"></textarea>                                              
                 </div> 
-                <span class="notice"> Tip : Input message within 17 Chinese characters or 34 English letters.
+                <span class="notice">${nn._([cms.global.PAGE_ID, 'notification', 'Tip : Input message within 17 Chinese characters or 34 English letters.'])}
                 </span>
-               
-
-
 
             </div>
             <div class="form-group required-field">
-                <div class="form-label">Click the notification to go to</div>
+                <div class="form-label">${nn._([cms.global.PAGE_ID, 'notification', 'Click the notification to go to'])}</div>
                 <div class="form-elements">
 
                     <input type="radio" autocomplete="off" id="run-app1" name="run-app">
-                    <label for="run-app1" class="radio-btn">Run app</label>
+                    <label for="run-app1" class="radio-btn">${nn._([cms.global.PAGE_ID, 'notification', 'Run app'])}</label>
                     
                     <input type="radio" checked="checked" autocomplete="off" id="run-app2" name="run-app">
-                    <label for="run-app2" class="radio-btn">Playback for a program or episode</label>
+                    <label for="run-app2" class="radio-btn">${nn._([cms.global.PAGE_ID, 'notification', 'Playback for a program or episode'])}</label>
                     <br>
 
-                    <input type="text" placeholder="Input 9x9 program or episode URL...">                                                
+                    <input id="NotifyContent" type="text" placeholder="${nn._([cms.global.PAGE_ID, 'notification', 'Input 9x9 program or episode URL...'])}">                                                
                 </div> 
                 
             </div>
@@ -339,13 +236,11 @@
             </fieldset>
 
             <div class="form-submit-wrap">
-                <a class="normal-btn" href="#">Cancel</a>
-                <a class="normal-btn" href="#">Send</a>
+                <a class="normal-btn vCancel" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'Cancel'])}</a>
+                <a class="normal-btn vSend" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'Send'])}</a>
                 
             </div>
 
-
-               
         </form>
     </div>
 </script>

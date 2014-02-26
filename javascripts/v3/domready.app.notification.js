@@ -8,6 +8,24 @@ $(function () {
     var $page = cms['app-notification'],
         $common = cms.common;
 
+    $(document).on('click', '.notify-form .vCancel', function (e) {
+        $page.initNotify();
+        return false;
+    });
+
+    $(document).on('click', '.notify-form .vSend', function (e) {
+
+        $page.NotifySave();
+        return false;
+    });
+
+
+    $(document).on('click', '#newNotify', function (e) {
+        $common.showProcessingOverlay();
+        $page.newNotify();
+        return false;
+    });
+
 
     $('.unblock, .btn-close, .btn-no, .setup-notice .btn-ok').click(function () {
         $.unblockUI();

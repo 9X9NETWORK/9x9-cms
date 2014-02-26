@@ -176,12 +176,12 @@
             "Notification": "通知"
         },
         "title-func": {
-            "Portal": "Portal",
-            "Brand Settings": "Brand Settings",
-            "Save": "Save"
+            "Notification": "通知",
+            "Create a app notification": "創建App通知",
+            "History": "已發送通知"
+
         },
          "notification": {
-            "History": "已發送通知",
             "Create a app notification": "創建App通知",
             "You don't have been authorized to send notifications to the iOS app Android app users.": "您還沒有獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
             "You have been authorized to send notifications to the iOS app users.": "您已經獲得授權，可以發送通知給 iOS app 用戶。",
@@ -189,6 +189,7 @@
             "You have been authorized to send notifications to the iOS app and Android app users.": "您已經獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
             "Input notification message...": "輸入通知內容...",
             "Tip : Input message within 17 Chinese characters or 34 English letters.": "建議字數為17個中文或34英文字母",
+            "Notification message": "通知內容",
             "Click the notification to go to": "點擊通知後的行為",
             "Run app": "開啟App",
             "Playback for a program or episode": "播放特定節目或劇集",
@@ -200,7 +201,11 @@
             "Unsaved changes will be lost, are you sure want to leave?": "未儲存資料將遺失，確定離開？",
             "No": "否",
             "Yes": "是",
-            "Notification history list (20 notifications displayed at the most in history list)": "已發送通知列表(顯示最近20筆):"
+            "Cancel": "取消",
+            "Send": "發送",
+            "Notification history list (20 notifications displayed at the most in history list)": "已發送通知列表(顯示最近20筆):",
+            "Input notificaion message...": "輸入通知的訊息...",
+            "Input 9x9 program or episode URL...": "輸入 9x9 節目或劇集..."
         }
     },
     "brand-setting": {
