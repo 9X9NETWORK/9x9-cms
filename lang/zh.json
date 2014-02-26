@@ -170,8 +170,6 @@
         "func-nav": {
             "Main Channels": "主頻道",
             "Program Store": "節目商店",
-            "Promotion Category": "推薦類別",
-            "System Category": "系統類別",
             "Brand Settings": "品牌設定",
             "Notification": "通知"
         },
@@ -215,7 +213,9 @@
         "func-nav": {
             "Main Channels": "主頻道",
             "Program Store": "節目商店",
-            "Brand Settings": "品牌設定"
+            "Brand Settings": "品牌設定",
+            "Notification": "通知"
+
         },
         "title-func": {
             "Portal": "我的入口",
@@ -241,7 +241,8 @@
             "Program Store": "節目商店",
             "Promotion Category": "推薦類別",
             "System Category": "系統類別",
-            "Brand Settings": "品牌設定"
+            "Brand Settings": "品牌設定",
+            "Notification": "通知"
         },
         "title-func": {
             "Program Store": "節目商店",
@@ -366,7 +367,8 @@
         "func-nav": {
             "Main Channels": "主頻道",
             "Program Store": "節目商店",
-            "Brand Settings": "品牌"
+            "Brand Settings": "品牌",
+            "Notification": "通知"
         },
         "sets-list": {
             "Programs": "節目",
