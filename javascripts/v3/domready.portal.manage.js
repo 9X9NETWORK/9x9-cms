@@ -921,11 +921,11 @@ $(function () {
 
     $(document).on("click", "#channel-list .btn-remove", function (event) {
         // protal manage remove channel from channel set
-        var this_li = $(this);
-        var up_li = this_li.parents("li");
-        var this_id = parseInt(up_li.attr("id").replace("set_", ""), 10);
-
-        var inCurrent = false,
+        var this_li = $(this),
+            up_li = this_li.parents("li"),
+            this_id = parseInt(up_li.attr("id").replace("set_", ""), 10),
+            tmpListCount = 0,
+            inCurrent = false,
             inAdd = false;
 
         $('body').addClass('has-change');
@@ -941,7 +941,7 @@ $(function () {
             $page.removeList.push(this_id);
             $page.currentList.splice($.inArray(this_id, $page.currentList), 1);
 
-        } else if (inCurrent === false && inAdd === true) {
+        } else if (inAdd === true) {
             $page.addList.splice($.inArray(this_id, $page.addList), 1);
         }
         $page._removeChannelFromList(this_id);
@@ -949,9 +949,12 @@ $(function () {
         $page.onTopAddList.splice($.inArray(this_id, $page.onTopAddList), 1);
         $page.onTopRemoveList.splice($.inArray(this_id, $page.onTopRemoveList), 1);
 
-        $("#channelCnt").text($("#channelCnt").text() - 1);
         up_li.remove();
-        if ($("#channelCnt").text() == 0) {
+
+        tmpListCount = $("#channel-list .itemList").length;
+        $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [tmpListCount]));
+
+        if (tmpListCount === 0) {
             $("#cntChannelEmpty").show();
         }
         $("#empty_channel").removeClass("disable");
