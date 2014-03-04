@@ -514,12 +514,8 @@ $(function () {
                 parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
 
             if (cms.global.vIsYoutubeSync === true) {
-                $("#name").removeAttr("disabled");
-                $("#intro").removeAttr("disabled");
                 qrystring = $('#settingForm').serialize();
                 parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
-                $("#name").attr("disabled", "disabled");
-                $("#intro").attr("disabled", "disabled");
             }
 
             nn.api('POST', cms.reapi('/api/users/{userId}/channels', {

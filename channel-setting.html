@@ -185,7 +185,7 @@
         <label for="name">
             <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Add Youtube channel or playlist URL'])}</label>
         <div class="fmfield">
-            <p class="text{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}">
+            <p class="text">
                 <span>
                     <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="${sourceUrl}" class="text" disabled="disabled" >
                 </span>
@@ -201,9 +201,9 @@
     <div class="fminput clearfix">
         <label for="name"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Title'])}</label>
         <div class="fmfield">
-            <p class="text{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span>
-            <input type="text" name="name" id="name" maxlength="100" value="${name}" class="text" {{if cms.global.vIsYoutubeSync === true}}disabled="disabled"{{/if}}/></span></p>
-            <span class="notice {{if cms.global.vIsYoutubeSync === true}}hide{{/if}}"><span id="name-charcounter">20</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 10 characters'])}</span>
+            <p class="text"><span>
+            <input type="text" name="name" id="name" maxlength="100" value="${name}" class="text" /></span></p>
+            <span class="notice "><span id="name-charcounter">20</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 10 characters'])}</span>
         </div>
     </div>
     <div class="fminput clearfix">
@@ -217,11 +217,9 @@
                 </div>
                 <img src="images/loading.gif" alt="" class="loading" />
             </div>
-            {{if true !== cms.global.vIsYoutubeSync}}
             <p id="uploadThumbnail">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
             <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640x480 or higher resolution image'])}</p>
             <p class="notice upload-notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload jpeg, png, or gif files.'])}</p>
-            {{/if}}
             <input type="hidden" name="imageUrl" id="imageUrl" value="${imageUrl}" />
             <input type="hidden" name="imageUrlOld" id="imageUrlOld" value="${imageUrl}" />
         </div>
@@ -229,9 +227,9 @@
     <div class="fminput clearfix">
         <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Description'])}</label>
         <div class="fmfield">
-            <p class="textarea{{if cms.global.vIsYoutubeSync === true}} disabled{{/if}}"><span><span>
-            <textarea name="intro" id="intro" cols="80" class="textarea" {{if cms.global.vIsYoutubeSync === true}}disabled="disabled"{{/if}}>${intro}</textarea></span></span></p>
-            <span class="notice {{if cms.global.vIsYoutubeSync === true}}hide{{/if}}"><span id="intro-charcounter">70</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 52 characters'])}</span>
+            <p class="textarea"><span><span>
+            <textarea name="intro" id="intro" cols="80" class="textarea" >${intro}</textarea></span></span></p>
+            <span class="notice "><span id="intro-charcounter">70</span>　${nn._([cms.global.PAGE_ID, 'setting-form', 'Best within 52 characters'])}</span>
         </div>
     </div>
     <div class="fminput clearfix">
