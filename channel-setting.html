@@ -190,8 +190,6 @@
                     <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="${sourceUrl}" class="text" disabled="disabled" >
                 </span>
             </p>
-            <!-- <span class="notice">
-                <span id="name-charcounter">0</span>　Best within 10 characters</span> -->
             <div class="clear">
                 <p id="ytSyncMsg" class="validation-failed hide"></p>
             </div>
@@ -207,7 +205,7 @@
         </div>
     </div>
     <div class="fminput clearfix">
-        <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Program logo'])}</label>
+        <label><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Program logo'])}</label>
         <div class="fmfield upload-img">
             <div class="thumbnail">
                 <div class="img-wrap">
