@@ -5,26 +5,34 @@
     'use strict';
 
     var $common = cms.common;
-// /api/mso/{msoId}/push_notifications
 
     $page.NotifySave = function () {
-        var isNotifyiOS = cms.global.MSOINFO.apnsEnabled || false,
-            isNotifyAndroid = cms.global.MSOINFO.gcmEnabled || false,
-            isNotifyAvailable = false;
-
         var inMessage = $("#NotifyMessage").val().trim(),
             tmpContent = $common.playerUrlParser($("#NotifyContent").val().trim()),
             inContent = "",
-            inDate = "NOW";
+            inDate = "NOW",
+            errMsg = "";
 
-        if (true === tmpContent.isAllow && undefined !== tmpContent.chId) {
-            inContent = cms.global.MSOINFO.name + ":" + tmpContent.chId;
-            if (undefined !== tmpContent.epId) {
-                inContent += ":" + tmpContent.epId;
-            }
+        if (inMessage === "") {
+            errMsg = 'Please fill in all required fields.';
         }
 
-        if ("" !== inMessage) {
+         if ('checked' === $("#run-app2").attr("checked")) {
+            if (true === tmpContent.isAllow && undefined !== tmpContent.chId) {
+                inContent = cms.global.MSOINFO.name + ":" + tmpContent.chId;
+                if (undefined !== tmpContent.epId) {
+                    inContent += ":" + tmpContent.epId;
+                }
+            } else {
+                if ($("#NotifyContent").val().trim() === '') {
+                    errMsg = 'Please fill in all required fields.';
+                } else {
+                    errMsg = 'Invalid URL, please try again.';
+                }
+
+            }
+        }
+        if ("" === errMsg) {
             nn.api('POST', cms.reapi('/api/mso/{msoId}/push_notifications', {
                 msoId: cms.global.MSO
             }), {
@@ -35,11 +43,10 @@
             }, function(ret) {
                 $page.initNotify();
             });
-        }else{
+        } else {
             // 輸入錯誤
-            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'notification', 'Please fill in all required fields.']));
+            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'notification', errMsg]));
         }
-
     };
 
     $page.newNotify = function () {
@@ -52,8 +59,7 @@
         $('#content-main-wrap .constrain').html('');
         // $('#notify-comm-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
         $('#notify-form-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
-$('#overlay-s').fadeOut("slow");
-        // nn.log(cms.global.MSOINFO.name);
+        $('#overlay-s').fadeOut("slow");
     };
 
     $page.getNotifyAvailable = function () {

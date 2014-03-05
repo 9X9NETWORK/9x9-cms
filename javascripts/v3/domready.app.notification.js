@@ -8,6 +8,19 @@ $(function () {
     var $page = cms['app-notification'],
         $common = cms.common;
 
+    $(document).on('click', '#run-app1, #run-app2', function (e) {
+
+        var rValue = $(this).attr("id");
+
+        if ("run-app1" === rValue) {
+            $("#NotifyContent").val("");
+            $("#NotifyContent").hide();
+        } else {
+            $("#NotifyContent").show();
+        }
+
+    });
+
     $(document).on('click', '.notify-form .vCancel', function (e) {
         $page.initNotify();
         return false;

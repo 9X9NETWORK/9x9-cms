@@ -221,14 +221,14 @@
                 <div class="form-label">${nn._([cms.global.PAGE_ID, 'notification', 'Click the notification to go to'])}</div>
                 <div class="form-elements">
 
-                    <input type="radio" autocomplete="off" id="run-app1" name="run-app">
+                    <input type="radio" autocomplete="off" id="run-app1" name="run-app" checked="checked">
                     <label for="run-app1" class="radio-btn">${nn._([cms.global.PAGE_ID, 'notification', 'Run app'])}</label>
                     
-                    <input type="radio" checked="checked" autocomplete="off" id="run-app2" name="run-app">
+                    <input type="radio" autocomplete="off" id="run-app2" name="run-app">
                     <label for="run-app2" class="radio-btn">${nn._([cms.global.PAGE_ID, 'notification', 'Playback for a program or episode'])}</label>
                     <br>
 
-                    <input id="NotifyContent" type="text" placeholder="${nn._([cms.global.PAGE_ID, 'notification', 'Input 9x9 program or episode URL...'])}">                                                
+                    <input id="NotifyContent" type="text" placeholder="${nn._([cms.global.PAGE_ID, 'notification', 'Input 9x9 program or episode URL...'])}" style="display: none;">                                                
                 </div> 
                 
             </div>
