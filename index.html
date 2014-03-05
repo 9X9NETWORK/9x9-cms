@@ -461,8 +461,8 @@
                 <div class="tip-bottom"></div>
             </div>
             <p class="time">
-                ${nn._([cms.global.PAGE_ID, 'channel-list', 'Update:'])} 
-                {{if true === isYoutubeSync}}${cms.common.formatTimestamp(syncDate)} <img src="images/icon_youtube_sm.png">{{else}}${cms.common.formatTimestamp(updateDate)}{{/if}}
+                ${nn._([cms.global.PAGE_ID, 'channel-list', 'Update:'])} ${cms.common.formatTimestamp(updateDate)}
+                {{if true === isYoutubeSync}}<img src="images/icon_youtube_sm.png">{{/if}}
             </p>
             <div class="func-btns">
                 <div class="btn-wrap enable">
