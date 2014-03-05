@@ -37,6 +37,7 @@
             });
         }else{
             // 輸入錯誤
+            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'notification', 'Please fill in all required fields.']));
         }
 
     };
