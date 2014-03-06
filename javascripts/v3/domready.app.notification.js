@@ -22,7 +22,12 @@ $(function () {
     });
 
     $(document).on('click', '.notify-form .vCancel', function (e) {
-        $page.initNotify();
+        if ($('body').hasClass('has-change')) {
+            $common.showUnsaveOverlay();
+        }else{
+            location.replace("app-notification.html#OK");
+            $page.initNotify();
+        }
         return false;
     });
 
@@ -34,8 +39,11 @@ $(function () {
 
 
     $(document).on('click', '#newNotify', function (e) {
-        $common.showProcessingOverlay();
-        $page.newNotify();
+        if (!$(this).hasClass("disable")) {
+            location.replace("app-notification.html#add");
+            $common.showProcessingOverlay();
+            $page.newNotify();
+        }
         return false;
     });
 
@@ -47,6 +55,11 @@ $(function () {
         return false;
     });
 
+
+    $(document).on('change', '#NotifyMessage, #run-app1, #run-app2', function (e) {
+        $('body').addClass('has-change');
+
+    });
 
     $(document).on('click', '#content-nav a, .select-list li a, .studio-nav-wrap a, #profile-dropdown a', function (e) {
         if ($('body').hasClass('has-change')) {
@@ -67,7 +80,19 @@ $(function () {
         }
         return false;
     });
+
     // leave and unsave
+    $(document).on('click', '#unsave-prompt .btn-leave', function() {
+        $('body').removeClass('has-change');
+
+        if ($('body').data('leaveUrl')) {
+            location.href = $('body').data('leaveUrl');
+        } else {
+            location.href = 'app-notification.html';
+        }
+        $.unblockUI();
+        return false;
+    });
 
     function confirmExit() {
         if ($('body').hasClass('has-change')) {
