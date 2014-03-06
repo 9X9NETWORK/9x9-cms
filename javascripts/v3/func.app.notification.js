@@ -66,8 +66,8 @@
     };
 
     $page.getNotifyAvailable = function () {
-        var isNotifyiOS = cms.global.MSOINFO.isNotifyiOS || false,
-            isNotifyAndroid = cms.global.MSOINFO.isNotifyAndroid || false,
+        var isNotifyiOS = cms.global.MSOINFO.apnsEnabled || false,
+            isNotifyAndroid = cms.global.MSOINFO.gcmEnabled || false,
             retVal = "You don't have been authorized to send notifications to the iOS app Android app users.";
 
         if (isNotifyiOS === true && isNotifyAndroid === true) {
@@ -81,9 +81,13 @@
     }
 
     $page.getNotifyHistory = function () {
+        var strDisableFix = "";
+        if (!$page.isNotifyAvailable) {
+            strDisableFix = 'disable';
+        }
 
         $('#content-main-wrap .constrain').html('');
-        $('#notify-comm-tmpl').tmpl([{extMsg: $page.getNotifyAvailable()}]).appendTo('#content-main-wrap .constrain');
+        $('#notify-comm-tmpl').tmpl([{extMsg: $page.getNotifyAvailable(), disableFix: strDisableFix}]).appendTo('#content-main-wrap .constrain');
 
         nn.api('GET', cms.reapi('/api/mso/{msoId}/push_notifications', {
             msoId: cms.global.MSO
@@ -106,8 +110,14 @@
 
 
     $page.getEmptyUI = function (newEnable) {
+        var strDisableFix = "";
+
+        if (!$page.isNotifyAvailable) {
+            strDisableFix = 'disable';
+        }
+
         $('#content-main-wrap .constrain').html('');
-        $('#notify-comm-tmpl').tmpl([{extMsg: $page.getNotifyAvailable()}]).appendTo('#content-main-wrap .constrain');
+        $('#notify-comm-tmpl').tmpl([{extMsg: $page.getNotifyAvailable(), disableFix: strDisableFix}]).appendTo('#content-main-wrap .constrain');
         $('#notify-intro-image-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
 
         if (true === newEnable) {
@@ -140,13 +150,14 @@
 
         var msoId = cms.global.MSO,
             inURL = $.url(location.href),
-            isNotifyiOS = cms.global.MSOINFO.isNotifyiOS || false,
-            isNotifyAndroid = cms.global.MSOINFO.isNotifyAndroid || false;
+            isNotifyiOS = cms.global.MSOINFO.apnsEnabled || false,
+            isNotifyAndroid = cms.global.MSOINFO.gcmEnabled || false;
 
         $common.showProcessingOverlay();
         if (isNotifyiOS === true || isNotifyAndroid === true) {
             $page.isNotifyAvailable = true;
         }
+
         if (msoId < 1) {
             location.href = "./";
         } else {
