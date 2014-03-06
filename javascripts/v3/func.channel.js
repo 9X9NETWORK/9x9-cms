@@ -68,6 +68,10 @@
             $('.form-btn .notice').removeClass('hide');
             return false;
         }
+        if ('' === fm.imageUrl.value) {
+            $('.form-btn .notice').removeClass('hide');
+            return false;
+        }
         return true;
     };
 
