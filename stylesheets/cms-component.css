@@ -6,8 +6,18 @@
   border: none;
   padding: 4px 8px;
 }
+/* line 21, ../sass/cms-component.sass */
+.form-group input.disable[type="text"], .form-group textarea.disable {
+  background-image: -webkit-gradient(linear, to top, to bottom, color-stop(0%, #e6e6e6), color-stop(51%, #e9e9e9), color-stop(81%, #ebebeb), color-stop(100%, #e2e2e2));
+  background-image: -webkit-linear-gradient(to top, #e6e6e6, #e9e9e9 51%, #ebebeb 81%, #e2e2e2);
+  background-image: -moz-linear-gradient(to top, #e6e6e6, #e9e9e9 51%, #ebebeb 81%, #e2e2e2);
+  background-image: -o-linear-gradient(to top, #e6e6e6, #e9e9e9 51%, #ebebeb 81%, #e2e2e2);
+  background-image: linear-gradient(to top, #e6e6e6, #e9e9e9 51%, #ebebeb 81%, #e2e2e2);
+  box-shadow: 0 1px 0 rgba(252, 252, 252, 0.35), inset 0 1px 1px rgba(0, 0, 0, 0.15), inset 0 -1px 1px rgba(0, 0, 0, 0.1), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: default;
+}
 
-/* line 23, ../sass/cms-component.sass */
+/* line 27, ../sass/cms-component.sass */
 .normal-btn {
   font-size: 15px;
   color: #555555;
@@ -25,7 +35,7 @@
   text-decoration: none;
   padding: 4px 10px;
 }
-/* line 33, ../sass/cms-component.sass */
+/* line 37, ../sass/cms-component.sass */
 .normal-btn:hover, .normal-btn.on {
   color: #999999;
   background-color: #d2d2d2;
@@ -38,14 +48,25 @@
   background-image: -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
 }
+/* line 42, ../sass/cms-component.sass */
+.normal-btn.disable {
+  background-color: rgba(210, 210, 210, 0.8);
+  -webkit-box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  -moz-box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  border: solid 1px rgba(0, 0, 0, 0.15);
+  color: #999999;
+  cursor: default;
+  background-image: none;
+}
 
-/* line 39, ../sass/cms-component.sass */
+/* line 51, ../sass/cms-component.sass */
 .normal-margin {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
 
-/* line 44, ../sass/cms-component.sass */
+/* line 56, ../sass/cms-component.sass */
 .normal-list > li {
   display: block;
   border-bottom: solid 1px rgba(255, 255, 255, 0.7);
@@ -56,64 +77,64 @@
   padding-bottom: 0.5em;
 }
 
-/* line 55, ../sass/cms-component.sass */
+/* line 67, ../sass/cms-component.sass */
 fieldset {
   border: 0;
   margin: 0;
   padding: 0;
 }
 
-/* line 59, ../sass/cms-component.sass */
+/* line 71, ../sass/cms-component.sass */
 textarea {
   resize: none;
 }
 
-/* line 61, ../sass/cms-component.sass */
+/* line 73, ../sass/cms-component.sass */
 input, textarea {
   font-family: sans-serif;
 }
-/* line 63, ../sass/cms-component.sass */
+/* line 75, ../sass/cms-component.sass */
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #999999;
 }
-/* line 65, ../sass/cms-component.sass */
+/* line 77, ../sass/cms-component.sass */
 input:-moz-placeholder, textarea:-moz-placeholder {
   color: #999999;
 }
-/* line 67, ../sass/cms-component.sass */
+/* line 79, ../sass/cms-component.sass */
 input::-moz-placeholder, textarea::-moz-placeholder {
   color: #999999;
 }
-/* line 69, ../sass/cms-component.sass */
+/* line 81, ../sass/cms-component.sass */
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #999999;
 }
 
-/* line 76, ../sass/cms-component.sass */
+/* line 88, ../sass/cms-component.sass */
 .form-title {
   display: none;
 }
 
-/* line 79, ../sass/cms-component.sass */
+/* line 91, ../sass/cms-component.sass */
 .form-group {
   margin-bottom: 1.5rem;
   padding-left: 1.5rem;
 }
-/* line 84, ../sass/cms-component.sass */
+/* line 96, ../sass/cms-component.sass */
 .form-group.required-field {
   color: #555555;
   line-height: normal;
   position: relative;
   left: auto;
 }
-/* line 89, ../sass/cms-component.sass */
+/* line 101, ../sass/cms-component.sass */
 .form-group.required-field::before {
   content: "*";
   color: #ed1a1b;
   position: absolute;
   left: 0.65rem;
 }
-/* line 94, ../sass/cms-component.sass */
+/* line 106, ../sass/cms-component.sass */
 .form-group .form-label {
   float: left;
   width: 10rem;
@@ -121,12 +142,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   font-weight: bolder;
   font-size: 0.85rem;
 }
-/* line 100, ../sass/cms-component.sass */
+/* line 112, ../sass/cms-component.sass */
 .form-group .form-elements {
   margin-left: 11rem;
   display: block;
 }
-/* line 103, ../sass/cms-component.sass */
+/* line 115, ../sass/cms-component.sass */
 .form-group .notice {
   position: absolute;
   font-size: 0.8rem;
@@ -134,25 +155,25 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   top: 0;
   right: 0;
 }
-/* line 109, ../sass/cms-component.sass */
+/* line 121, ../sass/cms-component.sass */
 .form-group textarea {
   min-height: 5rem;
 }
-/* line 116, ../sass/cms-component.sass */
+/* line 128, ../sass/cms-component.sass */
 .form-group input[type="radio"] {
   display: none;
 }
-/* line 119, ../sass/cms-component.sass */
+/* line 131, ../sass/cms-component.sass */
 .form-group input[type="radio"] + label {
   margin-right: 1.5rem;
 }
-/* line 122, ../sass/cms-component.sass */
+/* line 134, ../sass/cms-component.sass */
 .form-group .radio-btn {
   display: inline-block;
   margin-bottom: 0.5rem;
   cursor: pointer;
 }
-/* line 127, ../sass/cms-component.sass */
+/* line 139, ../sass/cms-component.sass */
 .form-group .radio-btn:before {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -167,26 +188,37 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-radius: 100%;
   content: "";
 }
-/* line 139, ../sass/cms-component.sass */
+/* line 151, ../sass/cms-component.sass */
 .form-group .radio-btn:before input[type="radio"]:checked + .radio-btn {
   color: white;
   font-weight: bold;
 }
-/* line 143, ../sass/cms-component.sass */
+/* line 155, ../sass/cms-component.sass */
 .form-group input[type="radio"]:checked + .radio-btn:before {
   background-color: #333333;
 }
-/* line 145, ../sass/cms-component.sass */
+/* line 157, ../sass/cms-component.sass */
 .form-group input[type="radio"].on + .radio-btn:before {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6), 0 0 1rem rgba(255, 255, 255, 0.7), 0 0 0.5rem rgba(255, 255, 255, 0.9);
   border-color: white;
 }
+/* line 160, ../sass/cms-component.sass */
+.form-group .radio-btn.disable {
+  color: #999999;
+  cursor: default;
+}
+/* line 163, ../sass/cms-component.sass */
+.form-group .radio-btn.disable:before {
+  background-color: #e9e9e9 !important;
+  border: 0.19rem solid #e9e9e9;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
 
-/* line 149, ../sass/cms-component.sass */
+/* line 168, ../sass/cms-component.sass */
 .form-submit-wrap {
   text-align: right;
 }
-/* line 151, ../sass/cms-component.sass */
+/* line 170, ../sass/cms-component.sass */
 .form-submit-wrap .normal-btn {
   margin-left: 1rem;
   min-width: 4rem;
