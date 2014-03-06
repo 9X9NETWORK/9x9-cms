@@ -179,7 +179,7 @@
             "History": "已發送通知"
 
         },
-         "Input notificaion message...": {
+         "notification": {
             "Create a app notification": "創建App通知",
             "You don't have been authorized to send notifications to the iOS app Android app users.": "您還沒有獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
             "You have been authorized to send notifications to the iOS app users.": "您已經獲得授權，可以發送通知給 iOS app 用戶。",
