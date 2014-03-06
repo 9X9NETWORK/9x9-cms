@@ -1,0 +1,18 @@
+/* line 3, ../sass/cms-notification.sass */
+.notify-list-title {
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+/* line 7, ../sass/cms-notification.sass */
+.notify-list {
+  font-size: 0.85rem;
+  display: block;
+  overflow: hidden;
+}
+
+/* line 14, ../sass/cms-notification.sass */
+.form-group input[type="text"], .form-group textarea {
+  width: calc(100% - 18em);
+  font-size: 0.85rem;
+}

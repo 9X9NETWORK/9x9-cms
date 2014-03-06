@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="en" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="stylesheet" href="stylesheets/perfect-scrollbar.css" />
+<link rel="stylesheet" href="stylesheets/style.css?v=1278" />
+<link rel="stylesheet" href="stylesheets/lightbox.css?v=1278" />
+<link rel="stylesheet" href="stylesheets/uniform.css?v=1278" />
+<link rel="stylesheet" href="stylesheets/episode.css?v=1278" />
+<link rel="stylesheet" href="stylesheets/portal.css?v=1278" />
+
+    <link rel="stylesheet" href="stylesheets/jquery.datepick.css" />
+    <link rel="stylesheet" href="stylesheets/cms-component.css" />
+    <link rel="stylesheet" href="stylesheets/cms-notification.css" />
+<title>9x9.tv - App Notifiction</title>
+</head>
+<body>
+<div id="fb-root"></div>
+
+<!-- Header Layer Begin -->
+<div id="header">
+    <a href="http://www.9x9.tv/" target="_blank" id="logo"></a>
+    <ul id="nav">
+        <li id="home"><span><a href="http://www.9x9.tv/" target="_blank">9x9.tv Official Web</a></span></li>
+        <li id="tv"><span><a href="http://www.9x9.tv/tv" target="_blank">Watch 9x9.tv on the Web</a></span></li>
+        <li id="profile">
+            <p id="btn-profile"></p>
+            <p id="selected-profile">Guest</p>
+            <ul id="profile-dropdown" class="dropdown">
+                <li><a id="profile-logout" href="signin.html">Log out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- Header Layer End -->
+
+<!-- Navigation Layer Begin -->
+<div id="studio-nav">
+    <div class="studio-nav-wrap">
+        <h3><a href="index.html"><span class="cms-icon">CMS</span><span class="sub-title">Content Management System</span></a></h3>
+        <ul>
+            <li><span><a href="index.html">My Programs</a></span></li>
+            <li class="on"><span><a href="portal-manage.html">My App</a></span></li>
+        </ul>
+        <div class="studio-setup">
+            <p class="btn-left"><span class="btn-right"><span class="btn-middle"><a href="cms-settings.html"><img src="images/icon_studio_setup.png" alt="" />CMS Settings</a></span></span></p>
+            <div class="reconnect-notice hide">
+                <img src="images/icon_notification.png" alt="" />
+                <p class="notice-left"><span class="notice-right"><span class="notice-middle langkey">Connection is inactive, click to restart it.</span></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navigation Layer End -->
+
+<!-- Content Layer Begin -->
+<div id="content-wrap">
+    <!-- Content Nav Layer Begin -->
+    <div id="content-nav">
+        <div id="func-nav">
+            <ul>
+                <li><a href="portal-manage.html" class="portal langkey">Main Channels</a></li>
+                <li><a href="store-promotion.html" class="store langkey">Program Store</a></li>
+                <li><a href="brand-setting.html" class="brand langkey">Brand Settings</a></li>
+                <li class="active"><a href="app-notification.html" class="notification langkey">Notification</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- Content Nav Layer End -->
+    <div id="main-wrap-slider" class="slider-wrap"><div class="slider-vertical"></div></div>
+    <div id="content-main">
+        <div id="title-func" class="clearfix">
+            <h2 >
+              <span id="channel-name" class="langkey">Notification</span>
+              <span id="channel-sub-name"></span>
+            </h2>
+        </div>
+        <!-- main Action Layer Begin -->
+        <div id="content-main-wrap" class="fixed">
+            <div class="constrain">                        
+
+            </div>            
+        </div>
+        <!-- main Action Layer End -->
+    </div>
+</div>
+<!-- Content Layer End -->
+
+<!-- Footer Layer Begin -->
+<p id="footer-control"></p>
+<div id="footer">
+    <span>© 2013 9x9.tv. All rights reserved.</span>
+    <ul id="footer-list">
+        <li id="language-change">
+            <p class="select-txt"><a href="javascript:void(0);" id="language">English</a></p>
+            <p class="select-btn"></p>
+            <ul class="select-list">
+                <li class="on"><a href="javascript:void(0);" id="language-en" data-meta="en">English</a></li>
+                <li><a href="javascript:void(0);" id="language-zh" data-meta="zh">中文</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- Footer Layer End -->
+
+<!-- Loading Layer Begin -->
+<div id="overlay-s">
+    <p class="overlay-content">
+        <span class="overlay-right">
+            <span class="overlay-middle"><img src="images/icon_load_l.gif" alt="" />Saving...</span>
+        </span>
+    </p>
+</div>
+<!-- Loading Layer End -->
+
+<!-- System Error Layer Begin -->
+<div id="system-error" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">You are not authorized to edit this episode.</p>
+            <div class="overlay-btn">
+                <p class="btns btn-ok"><span><a href="#">OK</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- System Error Layer End -->
+
+
+<!-- Unsave Prompt Layer Begin -->
+<div id="unsave-prompt" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">Unsaved changes will be lost, are you sure you want to leave?</p>
+            <div class="overlay-btn">
+                <p class="btns btn-no"><span><a href="#">No</a></span></p>
+                <p class="btns btn-leave"><span><a href="#">Yes</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Unsave Prompt Layer End -->
+
+<!-- confirm Prompt Layer Begin -->
+<div id="confirm-prompt" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">Unsaved changes will be lost, are you sure you want to leave?</p>
+            <div class="overlay-btn">
+                <p class="btns btn-no"><span><a href="#">No</a></span></p>
+                <p class="btns btn-leave"><span><a href="#">Yes</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm Prompt Layer End -->
+
+<!-- notify-intro-image-tmpl Begin -->
+<script id="notify-comm-tmpl" type="text/x-jquery-tmpl">
+    <a id="newNotify" href="#" class="normal-btn ${disableFix}">+ ${nn._([cms.global.PAGE_ID, 'notification', 'Create a app notification'])}</a>
+    <div class="normal-margin">${extMsg}</div>
+</script>
+<!-- notify-intro-image-tmpl End -->
+
+<!-- notify-intro-image-tmpl Begin -->
+<script id="notify-intro-image-tmpl" type="text/x-jquery-tmpl">
+    <div class="notify-intro-image">         
+        <img src="images/notifiction_figure_${cms.global.USER_DATA.lang}.png">
+    </div>
+</script>
+<!-- notify-intro-image-tmpl End -->
+
+
+<!-- notify-list-wrap Begin -->
+<script id="notify-list-item-tmpl" type="text/x-jquery-tmpl">
+    <li id="notify_${id}">
+        <time class="notify-time">${cms.common.formatTimestamp(updateDate)}</time> 
+        <span class="notify-content">${message}</span>
+    </li>
+</script>
+<!-- notify-list-wrap End -->
+
+<!-- notify-list-wrap Begin -->
+<script id="notify-list-wrap-tmpl" type="text/x-jquery-tmpl">
+    <div class="notify-list-wrap">
+        <h2 class="notify-list-title">
+        ${nn._([cms.global.PAGE_ID, 'notification', 'Notification history list (20 notifications displayed at the most in history list)'])}
+        </h2>
+
+        <div class="list-outline">
+            <ul id="list-history" class="notify-list normal-list"></ul>
+        </div>
+
+    </div>
+</script>
+<!-- notify-list-wrap-tmpl End -->
+
+<!-- notify-form-tmpl Begin -->
+<script id="notify-form-tmpl" type="text/x-jquery-tmpl">
+    <div class="notify-form">
+        <form>
+            <fieldset>
+            <legend class="form-title">Create an app notification</legend>
+
+            <div class="form-group required-field">
+                <div class="form-label">${nn._([cms.global.PAGE_ID, 'notification', 'Notification message'])}</div>
+                <div class="form-elements">
+                   <textarea id="NotifyMessage" placeholder="${nn._([cms.global.PAGE_ID, 'notification', 'Input notification message...'])}"></textarea>                                              
+                </div> 
+                <span class="notice">${nn._([cms.global.PAGE_ID, 'notification', 'Tip : Input message within 17 Chinese characters or 34 English letters.'])}
+                </span>
+
+            </div>
+            <div class="form-group required-field">
+                <div class="form-label">${nn._([cms.global.PAGE_ID, 'notification', 'Click the notification to go to'])}</div>
+                <div class="form-elements">
+
+                    <input type="radio" autocomplete="off" id="run-app1" name="run-app" checked="checked">
+                    <label for="run-app1" class="radio-btn">${nn._([cms.global.PAGE_ID, 'notification', 'Run app'])}</label>
+                    
+                    <input type="radio" autocomplete="off" id="run-app2" name="run-app">
+                    <label for="run-app2" class="radio-btn">${nn._([cms.global.PAGE_ID, 'notification', 'Playback for a program or episode'])}</label>
+                    <br>
+
+                    <input id="NotifyContent" type="text" placeholder="${nn._([cms.global.PAGE_ID, 'notification', 'Input 9x9 program or episode URL...'])}" style="display: none;">                                                
+                </div> 
+                
+            </div>
+                
+            </fieldset>
+
+            <div class="form-submit-wrap">
+                <a class="normal-btn vCancel" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'Cancel'])}</a>
+                <a class="normal-btn vSend" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'Send'])}</a>
+                
+            </div>
+
+        </form>
+    </div>
+</script>
+<!-- notify-form-tmpl End -->
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="javascripts/libs/nn-sdk.js?v=1278"></script>
+<script src="javascripts/libs/jquery.mousewheel.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.ellipsis.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.blockUI.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.charcounter.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.tmpl.min.js?v=1278"></script>
+<script src="javascripts/libs/jquery.cookie.min.js?v=1278"></script>
+<script src="javascripts/libs/json2.min.js?v=1278"></script>
+<script src="javascripts/libs/purl.min.js?v=1278"></script>
+<script src="javascripts/libs/perfect-scrollbar.js"></script>
+
+    <script src="javascripts/libs/jquery.uniform.min.js"></script>
+    <script src="javascripts/libs/jquery.datepick.min.js"></script>
+
+    <script src="javascripts/v3/config.js?v=1278"></script>
+    <script src="javascripts/v3/func.common.js?v=1278"></script>
+    <script src="javascripts/v3/func.app.notification.js?v=1278"></script>
+    <script src="javascripts/v3/domready.common.js?v=1278"></script>
+    <script src="javascripts/v3/domready.app.notification.js?v=1278"></script>
+</body>
+</html>
