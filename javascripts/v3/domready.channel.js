@@ -59,19 +59,35 @@ $(function () {
                 context: self,
                 success: function(res) {
                     var ytTitle = "",
-                        ytDesc = "";
+                        ytDesc = "",
+                        ytImg = "images/ch_default.png",
+                        ytImgCount = 0;
 
                     if (ytUrlParse.ytType === 1) {
-                        ytTitle = (res).entry.title.$t
-                        ytDesc = (res).entry.summary.$t
+                        ytTitle = (res).entry.title.$t;
+                        ytDesc = (res).entry.summary.$t;
+
+                        if(undefined !== (res).entry.media$thumbnail.url){
+                            ytImg = (res).entry.media$thumbnail.url;
+                        }
                     } else {
-                        ytTitle = (res).feed.title.$t
-                        ytDesc = (res).feed.subtitle.$t
+                        ytTitle = (res).feed.title.$t;
+                        ytDesc = (res).feed.subtitle.$t;
+                        ytImgCount = (res).feed.media$group.media$thumbnail.length;
+
+                        if(ytImgCount >1){
+                            ytImg = (res).feed.media$group.media$thumbnail[1].url;
+                        }else if(ytImgCount > 0){
+                            ytImg = (res).feed.media$group.media$thumbnail[0].url;
+                        }
                     }
 
                     $("#ytUrl").val(ytUrlParse.ytUrlFormat);
                     $("#name").val(ytTitle);
                     $("#intro").val(ytDesc);
+                    if("images/ch_default.png" !== ytImg){
+                        $("#thumbnail-imageUrl").attr("src", ytImg);
+                    }
 
                 },
                 error: function() {
