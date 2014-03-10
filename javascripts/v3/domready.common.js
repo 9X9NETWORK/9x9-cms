@@ -44,6 +44,17 @@ $(function () {
                             msoId: cms.global.MSO
                         }), null, function (msoInfo) {
                             cms.global.MSOINFO = msoInfo;
+                            cms.global.MSOINFO.isNotify = false;
+                            if(true === msoInfo.apnsEnabled || true === msoInfo.gcmEnabled){
+                                cms.global.MSOINFO.isNotify = true;
+                            }else{
+                                if('app-notification.html' === tmpUrl.attr('file')){
+                                    location.href = "store-manage.html";
+                                    return false;
+                                }
+                                $("#menuNotify").attr("href", "#").attr("onClick", "return false;").addClass("disable");
+                            }
+
                         });
                     }
                 }

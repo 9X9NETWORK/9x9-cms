@@ -11,8 +11,25 @@
   overflow: hidden;
 }
 
-/* line 14, ../sass/cms-notification.sass */
+/* line 11, ../sass/cms-notification.sass */
+.notify-content {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: inline-block;
+}
+
+/* line 18, ../sass/cms-notification.sass */
 .form-group input[type="text"], .form-group textarea {
   width: calc(100% - 18em);
   font-size: 0.85rem;
+}
+
+/* line 25, ../sass/cms-notification.sass */
+#func-nav ul li a.disable {
+  color: #dddddd !important;
+  background-position: 0 -999px !important;
 }
