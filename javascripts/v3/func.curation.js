@@ -194,12 +194,12 @@
             param = '',
             cid = '',
             eid = '',
-            normalUrl = 'http://www.9x9.tv/view?',
+            normalUrl = 'http://www.flipr.tv/view?',
             pathAllow = ['/', '/view', '/playback'],
             hostAllow = [
-                'www.9x9.tv',
-                'beagle.9x9.tv',
-                'v3alpha.9x9.tv',
+                'www.flipr.tv',
+                'beagle.flipr.tv',
+                'v3alpha.flipr.tv',
                 'dev.teltel.com',
                 'demo.doubleservice.com',
                 'localhost'

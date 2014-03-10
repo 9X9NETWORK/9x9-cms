@@ -1,7 +1,7 @@
 {
     "header": {
-        "9x9.tv Official Web": "9x9.tv Official Web",
-        "Watch 9x9.tv on the Web": "Watch 9x9.tv on the Web",
+        "FLIPr.tv Official Web": "FLIPr.tv Official Web",
+        "Watch FLIPr.tv on the Web": "Watch FLIPr.tv on the Web",
         "Partner Sign-in": "Partner Sign-in",
         "Log out": "Log out"
     },
@@ -14,7 +14,7 @@
         "Connection is inactive, click to restart it.": "Connection is inactive, click to restart it."
     },
     "footer": {
-        "© 2013 9x9.tv. All rights reserved.": "© 2013 9x9.tv. All rights reserved.",
+        "© 2013 FLIPr.tv. All rights reserved.": "© 2013 FLIPr.tv. All rights reserved.",
         "English": "English",
         "中文": "中文"
     },
@@ -55,7 +55,7 @@
         },
         "channel-tutorial": {
             "Collect and Curate!": "Collect and Curate!",
-            "CMS is the management center for your 9x9.tv list-form programs!": "CMS is the management center for your 9x9.tv list-form programs!",
+            "CMS is the management center for your FLIPr.tv list-form programs!": "CMS is the management center for your FLIPr.tv list-form programs!",
             "Create a<br />new program": "Create a<br />new program",
             "Not right now, thanks!": "Not right now, thanks!"
         },
@@ -67,7 +67,7 @@
             "Can not connect to Facebook correctly!": "Can not connect to Facebook correctly!",
             "Please try again and make sure you agree on all permissions.": "Please try again and make sure you agree on all permissions.",
             "Account disconnected!": "Account disconnected!",
-            "{If you want to enable auto sharing again, please:}": "If you want to enable auto sharing again, please:<br /><br />1. Connect to account<br />2. Enable auto sharing for each program in Program settings<br />3. Publish a new episode, 9x9.tv will automatically share it<br />",
+            "{If you want to enable auto sharing again, please:}": "If you want to enable auto sharing again, please:<br /><br />1. Connect to account<br />2. Enable auto sharing for each program in Program settings<br />3. Publish a new episode, FLIPr.tv will automatically share it<br />",
             "Disconnecting account will also disable auto sharing for every program. Are you sure you want to disconnect?": "Disconnecting account will also disable auto sharing for every program. Are you sure you want to disconnect?"
         },
         "button": {
@@ -102,11 +102,11 @@
     },
     "signin": {
         "html-title": {
-            "9x9.tv - Sign In": "9x9.tv - Sign In"
+            "FLIPr.tv - Sign In": "FLIPr.tv - Sign In"
         },
         "login-holder": {
             "Collect and Curate!": "Collect and Curate!",
-            "CMS is the management center for your 9x9.tv list-form programs!": "CMS is the management center for your 9x9.tv list-form programs!",
+            "CMS is the management center for your FLIPr.tv list-form programs!": "CMS is the management center for your FLIPr.tv list-form programs!",
             "Sign In": "Sign In",
             "Sign in with Facebook": "Sign in with Facebook",
             "Sign In with your E-mail and password": "Sign In with your E-mail and password",
@@ -121,7 +121,7 @@
             "Two passwords don't match, please retype.": "Two passwords don't match, please retype.",
             "I have read and accepted the User Agreement and Privacy Policy": "I have read and accepted the <a target='_blank' href='/en/terms.html'>User Agreement</a> and <a target='_blank' href='/en/policy.html'>Privacy Policy</a>",
             "User Name": "User Name",
-            "Create a unique user name in 9x9 which composed of 6-16 English letters ,numbers or low line.": "Create a unique user name in 9x9 which composed of 6-16 English letters ,numbers or low line.",
+            "Create a unique user name in FLIPr which composed of 6-16 English letters ,numbers or low line.": "Create a unique user name in FLIPr which composed of 6-16 English letters ,numbers or low line.",
             "Only letters, numbers or low line are allowed.": "Only letters, numbers or low line are allowed.",
             "Please input 6-16 characters in username.": "Please input 6-16 characters in username.",
             "Cancel": "Cancel",
@@ -160,7 +160,7 @@
     },
     "app-notification": {
         "html-title": {
-            "9x9.tv - App Notifiction": "9x9.tv - App Notifiction"
+            "FLIPr.tv - App Notifiction": "FLIPr.tv - App Notifiction"
         },
         "func-nav": {
             "Main Channels": "Main Channels",
@@ -184,7 +184,7 @@
     },
     "brand-setting": {
         "html-title": {
-            "9x9.tv - Brand Setting": "9x9.tv - Brand Setting"
+            "FLIPr.tv - Brand Setting": "FLIPr.tv - Brand Setting"
         },
         "func-nav": {
             "Main Channels": "Main Channels",
@@ -208,7 +208,7 @@
     },
     "store-promotion": {
         "html-title": {
-            "9x9.tv - Store Manage": "9x9.tv - Store Manage Promotion"
+            "FLIPr.tv - Store Manage": "FLIPr.tv - Store Manage Promotion"
         },
         "func-nav": {
             "Main Channels": "Main Channels",
@@ -253,7 +253,7 @@
     },
     "store-manage": {
         "html-title": {
-            "9x9.tv - Store Manage": "9x9.tv - Store Manage"
+            "FLIPr.tv - Store Manage": "FLIPr.tv - Store Manage"
         },
         "func-nav": {
             "Main Channels": "Main Channels",
@@ -297,7 +297,7 @@
     },
     "portal-manage": {
         "html-title": {
-            "9x9.tv - Main Channels": "9x9.tv - Main Channels"
+            "FLIPr.tv - Main Channels": "FLIPr.tv - Main Channels"
         },
         "func-nav": {
             "Main Channels": "Main Channels",
@@ -376,7 +376,7 @@
     },
     "portal-set": {
         "html-title": {
-            "9x9.tv - Main Channels": "9x9.tv - Main Channels"
+            "FLIPr.tv - Main Channels": "FLIPr.tv - Main Channels"
         },
         "func-nav": {
             "Portal": "Portal",
@@ -396,7 +396,7 @@
     },
     "index": {
         "html-title": {
-            "9x9.tv - My Programs": "9x9.tv - My Programs"
+            "FLIPr.tv - My Programs": "FLIPr.tv - My Programs"
         },
         "func-nav": {
             "Create a new program": "Create a new program"
@@ -430,7 +430,7 @@
             "Create a New Program": "Create a New Program",
             "Choose a type": "Choose a type",
             "YouTube Sync<br />Program": "YouTube Sync<br />Program",
-            "9x9<br />Program": "9x9<br />Program",
+            "FLIPr<br />Program": "FLIPr<br />Program",
             "Terms of use": "Terms of use",
             "Agree": "Agree",
             "Disagree": "Disagree",
@@ -440,7 +440,7 @@
     },
     "cms-settings": {
         "html-title": {
-            "9x9.tv - CMS Settings": "9x9.tv - CMS Settings"
+            "FLIPr.tv - CMS Settings": "FLIPr.tv - CMS Settings"
         },
         "title-func": {
             "CMS Settings": "CMS Settings"
@@ -449,7 +449,7 @@
             "If you signed in with Facebook, you can't change your name and password.": "If you signed in with Facebook, you can't change your name and password.",
             "Email": "Email",
             "Username": "Username",
-            "Username in 9x9 which is composed of 6-16 English letters, numbers or low line.": "Username in 9x9 which is composed of 6-16 English letters, numbers or low line.",
+            "Username in FLIPr which is composed of 6-16 English letters, numbers or low line.": "Username in FLIPr which is composed of 6-16 English letters, numbers or low line.",
             "Password": "Password",
             "Change password": "Change password",
             "Facebook": "Facebook",
@@ -479,8 +479,8 @@
     },
     "channel": {
         "html-title": {
-            "9x9.tv - Create a new program": "9x9.tv - Create a new program",
-            "9x9.tv - Program settings": "9x9.tv - Program settings"
+            "FLIPr.tv - Create a new program": "FLIPr.tv - Create a new program",
+            "FLIPr.tv - Program settings": "FLIPr.tv - Program settings"
         },
         "func-nav": {
             "Episode list": "Episode list",
@@ -489,7 +489,7 @@
         },
         "title-func": {
             "My Programs": "My Programs",
-            "Create a new 9x9 Program": "Create a new 9x9 Program",
+            "Create a new FLIPr Program": "Create a new FLIPr Program",
             "Create a new YouTube Sync Program": "Create a new YouTube Sync Program",
             "Settings": "Settings",
             "Required field": "Required field"
@@ -537,7 +537,7 @@
     },
     "channel-poi": {
         "html-title": {
-            "9x9.tv - Program POI": "9x9.tv - Program POI"
+            "FLIPr.tv - Program POI": "FLIPr.tv - Program POI"
         },
         "func-nav": {
             "Episode list": "Episode list",
@@ -600,7 +600,7 @@
     },
     "episode-list": {
         "html-title": {
-            "9x9.tv - Episode list": "9x9.tv - Episode list"
+            "FLIPr.tv - Episode list": "FLIPr.tv - Episode list"
         },
         "func-nav": {
             "Episode list": "Episode list",
@@ -632,7 +632,7 @@
             "<strong>Curate online videos</strong> into each single episode.": "<strong>Curate online videos</strong> into each single episode.",
             "Tell your story by <strong>arranging the video sequence.</strong>": "Tell your story by <strong>arranging the video sequence.</strong>",
             "<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.": "<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.",
-            "<strong>Schedule your episodes,</strong> and 9x9 will publish the episodes automatically.": "<strong>Schedule your episodes,</strong> and 9x9 will publish the episodes automatically.",
+            "<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.": "<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.",
             "Video check": "Video check",
             "No video has problem": "No video has problem",
             "Find ? video has problem.": "Find {0} video has problem.",
@@ -640,7 +640,7 @@
     },
     "epcurate-publish": {
         "html-title": {
-            "9x9.tv - Episode Curation - Publish": "9x9.tv - Episode Curation - Publish"
+            "FLIPr.tv - Episode Curation - Publish": "FLIPr.tv - Episode Curation - Publish"
         },
         "epcurate-nav": {
             "Leave": "Leave",
@@ -676,7 +676,7 @@
     },
     "epcurate-curation": {
         "html-title": {
-            "9x9.tv - Episode Curation - Curation": "9x9.tv - Episode Curation - Curation"
+            "FLIPr.tv - Episode Curation - Curation": "FLIPr.tv - Episode Curation - Curation"
         },
         "epcurate-nav": {
             "Leave": "Leave",
@@ -752,7 +752,7 @@
             "Choose a type": "Choose a type",
             "Hyper Link": "Hyper Link",
             "Poll": "Poll",
-            "User can go to watch another 9x9.tv program or episode.": "User can go to watch another 9x9.tv program or episode.",
+            "User can go to watch another FLIPr.tv program or episode.": "User can go to watch another FLIPr.tv program or episode.",
             "Scheduled Notification": "Scheduled Notification",
             "Send a scheduled notification to user to get more information.": "Send a scheduled notification to user to get more information.",
             "Instant Notification": "Instant Notification",
@@ -769,8 +769,8 @@
             "Button text": "Button text",
             "Input button text": "Input button text",
             "Hyper link": "Hyper link",
-            "Input 9x9 program or episode URL": "Input 9x9 program or episode URL",
-            "Invalid 9x9 URL, please try again.": "Invalid 9x9 URL, please try again.",
+            "Input FLIPr program or episode URL": "Input FLIPr program or episode URL",
+            "Invalid FLIPr URL, please try again.": "Invalid FLIPr URL, please try again.",
             "Mobile Notification and Time": "Mobile Notification and Time",
             "iOS": "iOS",
             "iOS-button": {

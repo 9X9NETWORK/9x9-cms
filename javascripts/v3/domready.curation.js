@@ -381,7 +381,7 @@ $(function () {
                             ytId: ytData.id,
                             fileUrl: normalList[idx],
                             imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
-                            duration: ytData.duration,      // keep trimmed duration from 9x9 API
+                            duration: ytData.duration,      // keep trimmed duration from FLIPr API
                             ytDuration: ytData.duration,    // keep original duration from YouTube
                             startTime: 0,
                             endTime: ytData.duration,
@@ -2180,7 +2180,7 @@ $(function () {
                 programList.push(programItem);
             });
             nn.on([400, 401, 403, 404], function (jqXHR, textStatus) {
-                // nothing to do ON PURPOSE to turn off error handle from YouTube to 9x9 API
+                // nothing to do ON PURPOSE to turn off error handle from YouTube to FLIPr API
                 nn.log({
                     jqXHR: jqXHR,
                     textStatus: textStatus
