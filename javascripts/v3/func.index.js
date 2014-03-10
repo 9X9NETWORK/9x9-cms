@@ -11,7 +11,7 @@
     $page.channelYouSyncAddUrl = "channel-add.html#ytsync";
     $page.channelEmptyMsg = [{
         'msg_name': '9x9',
-        'msg_body': "You don't have any 9x9 programs yet."
+        'msg_body': "You don't have any FLIPr programs yet."
     }, {
         'msg_name': 'YoutubeSync',
         'msg_body': "You don't have any YouTube sync programs yet."

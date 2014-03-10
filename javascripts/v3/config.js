@@ -13,7 +13,7 @@ var cms = {};
     cms.config = {
         // for UI Coding: prototype
         // for DS.com: development, demonstration
-        // for 9x9.tv: testing, production
+        // for FLIPr.tv: testing, production
         CMS_ENV: 'production',
         IS_DEBUG: true,
         RESERVED_CORE: ['config', 'global', 'reapi', 'namespace'],
@@ -227,7 +227,7 @@ var cms = {};
             'user_relationship_details',
             'user_subscriptions'
         ],
-        POI_ACTION_URL: 'http://www.9x9.tv/poiAction?poiId=',
+        POI_ACTION_URL: 'http://www.flipr.tv/poiAction?poiId=',
         POI_TYPE_MAP: {
             0: '',
             1: 'event-hyper',
@@ -352,11 +352,11 @@ var cms = {};
     }
 
     switch (location.host) {
-    case 'dev6.9x9.tv':
-    case 'beagle.9x9.tv':
+    case 'dev6.flipr.tv':
+    case 'beagle.flipr.tv':
         cms.global.IS_REMARK = false;
         break;
-    case 'www.9x9.tv':
+    case 'www.flipr.tv':
         cms.global.IS_REMARK = true;
         break;
     default :
