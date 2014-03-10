@@ -1,7 +1,7 @@
 {
     "header": {
-        "9x9.tv Official Web": "9x9.tv官方網站",
-        "Watch 9x9.tv on the Web": "9x9.tv app",
+        "FLIPr.tv Official Web": "FLIPr.tv官方網站",
+        "Watch FLIPr.tv on the Web": "FLIPr.tv app",
         "Partner Sign-in": "合作夥伴登入",
         "Log out": "登出"
     },
@@ -14,7 +14,7 @@
         "Connection is inactive, click to restart it.": "連結授權已失效，請點此重啟連結。"
     },
     "footer": {
-        "© 2013 9x9.tv. All rights reserved.": "© 2013 9x9.tv. All rights reserved.",
+        "© 2013 FLIPr.tv. All rights reserved.": "© 2013 FLIPr.tv. All rights reserved.",
         "English": "English",
         "中文": "中文"
     },
@@ -56,7 +56,7 @@
         },
         "channel-tutorial": {
             "Collect and Curate!": "蒐集影片 策展節目！",
-            "CMS is the management center for your 9x9.tv list-form programs!": "後台管理系統是您策展9x9.tv節目的管理中心！",
+            "CMS is the management center for your FLIPr.tv list-form programs!": "後台管理系統是您策展FLIPr.tv節目的管理中心！",
             "Create a<br />new program": "創建<br />新節目",
             "Not right now, thanks!": "現在不要，謝謝！"
         },
@@ -68,7 +68,7 @@
             "Can not connect to Facebook correctly!": "無法正確連結至Facebook！",
             "Please try again and make sure you agree on all permissions.": "請再試一次，並確保您已同意所有授權項目。",
             "Account disconnected!": "帳號連結已取消！",
-            "{If you want to enable auto sharing again, please:}": "若您想要重新開啟自動分享功能，請：<br /><br />1. 連結帳號<br />2. 至節目設定頁面，為每個節目設定自動分享功能<br />3. 發佈新節目，9x9.tv將自動完成分享<br />",
+            "{If you want to enable auto sharing again, please:}": "若您想要重新開啟自動分享功能，請：<br /><br />1. 連結帳號<br />2. 至節目設定頁面，為每個節目設定自動分享功能<br />3. 發佈新節目，FLIPr.tv將自動完成分享<br />",
             "Disconnecting account will also disable auto sharing for every program. Are you sure you want to disconnect?": "取消帳號連結將會同時取消所有節目的自動分享設定，確定取消連結？"
         },
         "button": {
@@ -107,11 +107,11 @@
     },
     "signin": {
         "html-title": {
-            "9x9.tv - Sign In": "9x9.tv - 登入"
+            "FLIPr.tv - Sign In": "FLIPr.tv - 登入"
         },
         "login-holder": {
             "Collect and Curate!": "蒐集影片 策展節目！",
-            "CMS is the management center for your 9x9.tv list-form programs!": "後台管理系統是您策展9x9.tv節目的管理中心！",
+            "CMS is the management center for your FLIPr.tv list-form programs!": "後台管理系統是您策展FLIPr.tv節目的管理中心！",
             "Sign In": "登入",
             "Sign in with Facebook": "使用Facebook登入",
             "Sign In with your E-mail and password": "輸入信箱與密碼登入",
@@ -126,7 +126,7 @@
             "Two passwords don't match, please retype.": "輸入密碼不一致，請重新輸入。",
             "I have read and accepted the User Agreement and Privacy Policy": "我已讀完並同意遵守<a target='_blank' href='/zh/policy.html'>隱私權政策</a>與<a target='_blank' href='/zh/terms.html'>使用條款</a>",
             "User Name": "用戶名稱",
-            "Create a unique user name in 9x9 which composed of 6-16 English letters ,numbers or low line.": "用戶名稱請輸入6-16個字元，只能使用中英文、數字和底線。",
+            "Create a unique user name in FLIPr which composed of 6-16 English letters ,numbers or low line.": "用戶名稱請輸入6-16個字元，只能使用中英文、數字和底線。",
             "Only letters, numbers or low line are allowed.": "用戶名稱只能使用中英文、數字或底線。",
             "Please input 6-16 characters in username.": "請在用戶名稱輸入6-16範圍的字元。",
             "Cancel": "取消",
@@ -165,7 +165,7 @@
     },
     "app-notification": {
         "html-title": {
-            "9x9.tv - App Notifiction": "9x9.tv - 推播訊息"
+            "FLIPr.tv - App Notifiction": "FLIPr.tv - 推播訊息"
         },
         "func-nav": {
             "Main Channels": "主頻道",
@@ -191,7 +191,7 @@
             "Click the notification to go to": "點擊通知後的行為",
             "Run app": "開啟App",
             "Playback for a program or episode": "播放特定節目或劇集",
-            "Input 9x9 program or episode URL...": "輸入9x9節目或劇集連結...",
+            "Input FLIPr program or episode URL...": "輸入FLIPr節目或劇集連結...",
             "Cancel": "取消",
             "Send": "發送",
             "Please fill in all required fields.": "請輸入必填項目",
@@ -203,12 +203,12 @@
             "Send": "發送",
             "Notification history list (20 notifications displayed at the most in history list)": "已發送通知列表(顯示最近20筆):",
             "Input notification message...": "輸入通知內容...",
-            "Input 9x9 program or episode URL...": "輸入 9x9 節目或劇集網址..."
+            "Input FLIPr program or episode URL...": "輸入 FLIPr 節目或劇集網址..."
         }
     },
     "brand-setting": {
         "html-title": {
-            "9x9.tv - Brand Setting": "9x9.tv - 品牌設定"
+            "FLIPr.tv - Brand Setting": "FLIPr.tv - 品牌設定"
         },
         "func-nav": {
             "Main Channels": "主頻道",
@@ -234,7 +234,7 @@
     },
     "store-promotion": {
         "html-title": {
-            "9x9.tv - Store Manage": "9x9.tv - 頻道商店 "
+            "FLIPr.tv - Store Manage": "FLIPr.tv - 頻道商店 "
         },
         "func-nav": {
             "Main Channels": "主頻道",
@@ -311,7 +311,7 @@
     },
     "store-manage": {
         "html-title": {
-            "9x9.tv - Store Manage": "9x9.tv - 節目商店 "
+            "FLIPr.tv - Store Manage": "FLIPr.tv - 節目商店 "
         },
         "func-nav": {
             "Main Channels": "主頻道",
@@ -362,7 +362,7 @@
     },
     "portal-manage": {
         "html-title": {
-            "9x9.tv - Main Channels": "9x9.tv - 主頻道"
+            "FLIPr.tv - Main Channels": "FLIPr.tv - 主頻道"
         },
         "func-nav": {
             "Main Channels": "主頻道",
@@ -442,7 +442,7 @@
     },
     "portal-set": {
         "html-title": {
-            "9x9.tv - Main Channels": "9x9.tv - 主頻道"
+            "FLIPr.tv - Main Channels": "FLIPr.tv - 主頻道"
         },
         "func-nav": {
             "Portal": "我的入口",
@@ -462,7 +462,7 @@
     },
     "index": {
         "html-title": {
-            "9x9.tv - My Programs": "9x9.tv - 我的節目"
+            "FLIPr.tv - My Programs": "FLIPr.tv - 我的節目"
         },
         "func-nav": {
             "Create a new program": "創建節目"
@@ -474,7 +474,7 @@
             "Create a new program": "創建節目",
             "Filtered by:": "分類條件:",
             "All": "全部",
-            "9x9 programs": "9x9節目",
+            "FLIPr programs": "FLIPr節目",
             "Youtube sync programs": "Youtube同步節目"
         },
         "channel-list": {
@@ -498,7 +498,7 @@
             "Add online videos into episode and start to <strong>curate your own program.</strong>": "在一集劇集中策展多個單元，開始<strong>策展你的專屬節目</strong>",
             "Sync with <strong>YouTube channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
             "Sync": "立即同步",
-            "You don't have any 9x9 programs yet.": "你尚無任何9x9節目",
+            "You don't have any FLIPr programs yet.": "你尚無任何FLIPr節目",
             "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目",
             "Invalid original YouTube playlist": "已失效的YouTube播放清單"
         },
@@ -506,7 +506,7 @@
             "Create a New Program": "建立一個新的節目",
             "Choose a type": "選一個類型",
             "YouTube Sync<br />Program": "YouTube同步節目",
-            "9x9<br />Program": "9x9節目",
+            "FLIPr<br />Program": "FLIPr節目",
             "Terms of use": "使用條款",
             "Agree": "同意",
             "Disagree": "不同意",
@@ -516,7 +516,7 @@
     },
     "cms-settings": {
         "html-title": {
-            "9x9.tv - CMS Settings": "9x9.tv - 管理系統設定"
+            "FLIPr.tv - CMS Settings": "FLIPr.tv - 管理系統設定"
         },
         "title-func": {
             "CMS Settings": "管理系統設定"
@@ -525,7 +525,7 @@
             "If you signed in with Facebook, you can't change your name and password.": "Facebook登入用戶不可更改用戶名稱與密碼",
             "Email": "信箱",
             "Username": "用戶名稱",
-            "Username in 9x9 which is composed of 6-16 English letters, numbers or low line.": "用戶名稱請輸入6-16個字元，只能使用中英文、數字和底線。",
+            "Username in FLIPr which is composed of 6-16 English letters, numbers or low line.": "用戶名稱請輸入6-16個字元，只能使用中英文、數字和底線。",
             "Password": "密碼",
             "Change password": "更改密碼",
             "Facebook": "Facebook",
@@ -555,8 +555,8 @@
     },
     "channel": {
         "html-title": {
-            "9x9.tv - Create a new program": "9x9.tv - 創建節目",
-            "9x9.tv - Program settings": "9x9.tv - 節目設定"
+            "FLIPr.tv - Create a new program": "FLIPr.tv - 創建節目",
+            "FLIPr.tv - Program settings": "FLIPr.tv - 節目設定"
         },
         "func-nav": {
             "Episode list": "劇集列表",
@@ -565,7 +565,7 @@
         },
         "title-func": {
             "My Programs": "我的節目",
-            "Create a new 9x9 Program": "創建 9x9 節目",
+            "Create a new FLIPr Program": "創建 FLIPr 節目",
             "Create a new YouTube Sync Program": "創建 YouTube 同步節目",
             "Settings": "節目設定",
             "Required field": "必填項目"
@@ -617,7 +617,7 @@
     },
     "channel-poi": {
         "html-title": {
-            "9x9.tv - Program POI": "9x9.tv - 節目互動時間點"
+            "FLIPr.tv - Program POI": "FLIPr.tv - 節目互動時間點"
         },
         "func-nav": {
             "Episode list": "劇集列表",
@@ -680,7 +680,7 @@
     },
     "episode-list": {
         "html-title": {
-            "9x9.tv - Episode list": "9x9.tv - 劇集列表"
+            "FLIPr.tv - Episode list": "FLIPr.tv - 劇集列表"
         },
         "func-nav": {
             "Episode list": "劇集列表",
@@ -713,7 +713,7 @@
             "<strong>Curate online videos</strong> into each single episode.": "在一集劇集中<strong>輕鬆策展多個影片</strong>。",
             "Tell your story by <strong>arranging the video sequence.</strong>": "<strong>編排影片播放順序</strong>，說一個獨一無二的故事。",
             "<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.": "<strong>剪輯影片與加入字卡</strong>，讓您的劇集更引人入勝。",
-            "<strong>Schedule your episodes,</strong> and 9x9 will publish the episodes automatically.": "<strong>設定劇集自動排程發佈</strong>，讓粉絲定時享受最新劇集。",
+            "<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.": "<strong>設定劇集自動排程發佈</strong>，讓粉絲定時享受最新劇集。",
             "Video check": "失效影片檢查",
             "No video has problem": "無問題影片",
             "Find ? video has problem.": "找到 {0} 個問題影片",
@@ -722,7 +722,7 @@
     },
     "epcurate-publish": {
         "html-title": {
-            "9x9.tv - Episode Curation - Publish": "9x9.tv - 劇集策展 - 發佈設定"
+            "FLIPr.tv - Episode Curation - Publish": "FLIPr.tv - 劇集策展 - 發佈設定"
         },
         "epcurate-nav": {
             "Leave": "離開",
@@ -758,7 +758,7 @@
     },
     "epcurate-curation": {
         "html-title": {
-            "9x9.tv - Episode Curation - Curation": "9x9.tv - 劇集策展 - 策展編輯"
+            "FLIPr.tv - Episode Curation - Curation": "FLIPr.tv - 劇集策展 - 策展編輯"
         },
         "epcurate-nav": {
             "Leave": "離開",
@@ -834,7 +834,7 @@
             "Choose a type": "選擇事件類型",
             "Hyper Link": "超連結節目",
             "Poll": "投票",
-            "User can go to watch another 9x9.tv program or episode.": "使用者可前往觀賞另一個9x9.tv節目或劇集。",
+            "User can go to watch another FLIPr.tv program or episode.": "使用者可前往觀賞另一個FLIPr.tv節目或劇集。",
             "Scheduled Notification": "排程通知",
             "Send a scheduled notification to user to get more information.": "設定排程通知，使用者可於特定時間獲得更多資訊。",
             "Instant Notification": "即時通知",
@@ -852,8 +852,8 @@
             "Add button": "新增按鈕",
             "Input button text": "輸入按鈕文字",
             "Hyper link": "連結網址",
-            "Input 9x9 program or episode URL": "輸入9x9節目或劇集網址",
-            "Invalid 9x9 URL, please try again.": "9x9網址設定有誤，請重試。",
+            "Input FLIPr program or episode URL": "輸入FLIPr節目或劇集網址",
+            "Invalid FLIPr URL, please try again.": "FLIPr網址設定有誤，請重試。",
             "Mobile Notification and Time": "行動裝置通知與時間",
             "iOS": "iOS",
             "iOS-button": {
