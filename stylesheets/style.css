@@ -1210,6 +1210,12 @@ body.mac #title-func ul li p span a {
     cursor: default;
 }
 
+#func-nav ul li a.disable {
+    color: #dddddd !important;
+    background-position: 0 -999px !important;
+    cursor: default;
+}
+
 /* main-container */
 #main-container {
     position: relative;
