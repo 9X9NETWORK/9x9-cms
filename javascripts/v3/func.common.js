@@ -4,6 +4,26 @@
 (function ($common) {
     'use strict';
 
+    $common.shareUrlBaseParser = function (inUrl, inMsoName) {
+        var inURL = $.url(inUrl),
+            arrHost = inURL.attr("host").split('.'),
+            tmpPreFix = "",
+            retValue = "http://";
+
+        if (cms.global.MSO > 0) {
+            // if mso > 0 share url will fix
+            tmpPreFix = inMsoName;
+            if ('www' === arrHost[0]) {
+                arrHost.splice(0, 1, tmpPreFix); // 置換
+            } else {
+                arrHost.splice(0, 0, tmpPreFix); // 加入
+            }
+        }
+
+        retValue += arrHost.join('.');
+
+        return retValue;
+    };
 
     $common.ytUrlParser = function (inUrl) {
         // ytType = 0 : unknow, 1: user, 2: playlist
