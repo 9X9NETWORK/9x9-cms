@@ -92,7 +92,7 @@
                 hasProgram = true;
                 strProgram = arrHost[tmpLocP].substr(1);
 
-                if (arrHost[tmpLocE].length > 1) {
+                if (arrHostCount > tmpLocE && arrHost[tmpLocE].length > 1) {
                     // yt episode as default
                     hasEpisod = true;
                     strEpisod = arrHost[tmpLocE];
