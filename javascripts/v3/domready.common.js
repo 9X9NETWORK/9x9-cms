@@ -21,7 +21,7 @@ $(function () {
             tmpPriv = 0,
             isStoreLangKey = true,
             msoName = user.msoName || "flipr";
-        if (undefined === user.id || !user || !user.id) {
+        if (null === user || "null" === user || !user || !user.id) {
             if ('signin.html' !== tmpUrl.attr('file')) {
                 location.href = 'signin.html';
             } else {
