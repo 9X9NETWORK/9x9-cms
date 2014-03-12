@@ -20,7 +20,7 @@ $(function () {
         var tmpUrl = $.url(location.href.replace('@', '%40')),
             tmpPriv = 0,
             isStoreLangKey = true,
-            msoName = user.msoName || "flipr";
+            msoName = "flipr";
         if (null === user || "null" === user || !user || !user.id) {
             if ('signin.html' !== tmpUrl.attr('file')) {
                 location.href = 'signin.html';
@@ -59,6 +59,7 @@ $(function () {
                     }
                 }
 
+                msoName = user.msoName || "flipr";
                 cms.global.SHARE_URL_BASE = $common.shareUrlBaseParser(location.href, msoName);
 
                 if (cms.global.MSO > 0) {
