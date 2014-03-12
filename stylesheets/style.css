@@ -1211,10 +1211,26 @@ body.mac #title-func ul li p span a {
 }
 
 #func-nav ul li a.disable {
-    color: #dddddd !important;
-    background-position: 0 -999px !important;
+    color: #dddddd ;
+    background-position: 0 -999px;
     cursor: default;
 }
+
+#func-nav ul li a.notification{
+    background-position: 0 -300px;
+
+}
+#func-nav ul li a.notification:hover{
+    background-position: 0 -325px;
+
+}
+#func-nav ul li a.notification.disable{
+    background-position: 0 -350px;
+
+}
+
+
+
 
 /* main-container */
 #main-container {
