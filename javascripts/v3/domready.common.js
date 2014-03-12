@@ -19,7 +19,8 @@ $(function () {
     nn.api('GET', cms.reapi('/api/login'), function (user) {
         var tmpUrl = $.url(location.href.replace('@', '%40')),
             tmpPriv = 0,
-            isStoreLangKey = true;
+            isStoreLangKey = true,
+            msoName = user.msoName || "flipr";
         if (!user || !user.id) {
             if ('signin.html' !== tmpUrl.attr('file')) {
                 location.href = 'signin.html';
@@ -58,6 +59,9 @@ $(function () {
                         });
                     }
                 }
+
+                cms.global.SHARE_URL_BASE = $common.shareUrlBaseParser(location.href, msoName);
+
                 if (cms.global.MSO > 0) {
                     $('#studio-nav #my-portal').removeClass('hide');
                 } else {

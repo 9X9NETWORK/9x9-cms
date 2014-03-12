@@ -299,6 +299,7 @@
 
                 $('#content-main-wrap').perfectScrollbar("update");
                 $('#overlay-s').fadeOut();
+                nn.log("mso id::::"+ cms.global.MSO);
             });
         } else {
             location.href = '../';

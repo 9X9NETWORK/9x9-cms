@@ -4,6 +4,26 @@
 (function ($common) {
     'use strict';
 
+    $common.shareUrlBaseParser = function (inUrl, inMsoName) {
+        var inURL = $.url(inUrl),
+            arrHost = inURL.attr("host").split('.'),
+            tmpPreFix = "",
+            retValue = "http://";
+
+        if (cms.global.MSO > 0) {
+            // if mso > 0 share url will fix
+            tmpPreFix = inMsoName;
+            if ('www' === arrHost[0]) {
+                arrHost.splice(0, 1, tmpPreFix); // 置換
+            } else {
+                arrHost.splice(0, 0, tmpPreFix); // 加入
+            }
+        }
+
+        retValue += arrHost.join('.');
+
+        return retValue;
+    };
 
     $common.ytUrlParser = function (inUrl) {
         // ytType = 0 : unknow, 1: user, 2: playlist
@@ -38,7 +58,60 @@
     // player url parser 
     // dependency by purl
     // return ch id
+    // 20140312 change to parser v5 player url , no support v4 / v3
+    // url pattem 
     $common.playerUrlParser = function (inUrl) {
+        // http://www.flipr.tv/view/p30917/e479326
+        // http://cts.flipr.tv/view/p30917/e479326
+        // http://dev6.flipr.tv/view/p30917/e479326
+        // http://cts.dev6.flipr.tv/view/p30917/e479326
+        // http://beagle.flipr.tv/view/p30917/e479326
+        // http://cts.beagle.flipr.tv/view/p30917/e479326
+        var inURL = $.url(inUrl),
+            arrHost = inURL.attr("host").split('.').concat(inURL.attr("directory").split('/')),
+            locTV = 0,
+            locView = 0,
+            isAllow = false,
+            hasProgram = false,
+            hasEpisod = false,
+            arrHostCount = arrHost.length,
+            tmpLocP = 0,
+            tmpLocE = 0,
+            strProgram = "",
+            strEpisod = "";
+
+        locTV = arrHost.indexOf("tv");
+        locView = arrHost.indexOf("view");
+
+        tmpLocP = locView + 1;
+        tmpLocE = locView + 2;
+
+        if (arrHostCount > tmpLocP) {
+            if ('p' === arrHost[tmpLocP].substr(0, 1) && arrHost[tmpLocP].length > 1) {
+                isAllow = true;
+                hasProgram = true;
+                strProgram = arrHost[tmpLocP].substr(1);
+
+                if (arrHost[tmpLocE].length > 1) {
+                    // yt episode as default
+                    hasEpisod = true;
+                    strEpisod = arrHost[tmpLocE];
+                    if ('e' === strEpisod.substr(0, 1)) {
+                        // flipr episode
+                        strEpisod = arrHost[tmpLocE].substr(1);
+                    }
+                }
+            }
+        }
+
+        return {
+            chId: strProgram,
+            isAllow: isAllow,
+            epId: strEpisod
+        };
+    };
+
+    $common.playerUrlParserOld = function (inUrl) {
         // default formate :: http://dev6.9x9.tv/view?mso=cts&ch=28082
         var inURL = $.url(inUrl),
             allPaths = ["/view", "/playback", "playback", "streaming"],
