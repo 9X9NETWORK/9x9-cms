@@ -27,9 +27,3 @@
   width: calc(100% - 18em);
   font-size: 0.85rem;
 }
-
-/* line 25, ../sass/cms-notification.sass */
-#func-nav ul li a.disable {
-  color: #dddddd !important;
-  background-position: 0 -999px !important;
-}
