@@ -39,23 +39,26 @@ $(function () {
                 cms.global.MSO = 0;
                 if (tmpPriv > 221 && user.msoId > 0) {
                     cms.global.MSO = user.msoId;
-                    if (-1 !== $.inArray(tmpUrl.attr('file'), ['store-manage.html', 'store-promotion.html', 'portal-manage.html', 'portal-set.html', 'app-notification.html'])) {
+                    if (-1 !== $.inArray(tmpUrl.attr('file'), ['store-manage.html', 'store-promotion.html', 'portal-manage.html', 'brand-setting.html', 'app-notification.html'])) {
                         // set mso info
                         nn.api('GET', cms.reapi('/api/mso/{msoId}', {
                             msoId: cms.global.MSO
-                        }), null, function (msoInfo) {
-                            cms.global.MSOINFO = msoInfo;
-                            cms.global.MSOINFO.isNotify = false;
-                            if(true === msoInfo.apnsEnabled || true === msoInfo.gcmEnabled){
-                                cms.global.MSOINFO.isNotify = true;
-                            }else{
-                                if('app-notification.html' === tmpUrl.attr('file')){
-                                    location.href = "store-manage.html";
-                                    return false;
+                        }), null, function(msoInfo) {
+                            if (undefined === msoInfo.id) {
+                                location.href = "signin.html";
+                            } else {
+                                cms.global.MSOINFO = msoInfo;
+                                cms.global.MSOINFO.isNotify = false;
+                                if (true === msoInfo.apnsEnabled || true === msoInfo.gcmEnabled) {
+                                    cms.global.MSOINFO.isNotify = true;
+                                } else {
+                                    if ('app-notification.html' === tmpUrl.attr('file')) {
+                                        location.href = "portal-manage.html";
+                                        return false;
+                                    }
+                                    $("#menuNotify").attr("href", "#").attr("onClick", "return false;").addClass("disable");
                                 }
-                                $("#menuNotify").attr("href", "#").attr("onClick", "return false;").addClass("disable");
                             }
-
                         });
                     }
                 }

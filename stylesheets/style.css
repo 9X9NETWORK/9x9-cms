@@ -1220,7 +1220,9 @@ body.mac #title-func ul li p span a {
     background-position: 0 -300px;
 
 }
-#func-nav ul li a.notification:hover{
+
+#func-nav ul li.active a.notification,
+#func-nav ul li        a.notification:hover {
     background-position: 0 -325px;
 
 }
