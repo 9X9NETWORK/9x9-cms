@@ -87,6 +87,7 @@ $(function () {
                     $("#intro").val(ytDesc);
                     if("images/ch_default.png" !== ytImg){
                         $("#thumbnail-imageUrl").attr("src", ytImg);
+                        $('#imageUrl').val(ytImg);
                     }
 
                 },
