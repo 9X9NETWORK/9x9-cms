@@ -96,10 +96,6 @@
                     // yt episode as default
                     hasEpisod = true;
                     strEpisod = arrHost[tmpLocE];
-                    if ('e' === strEpisod.substr(0, 1)) {
-                        // flipr episode
-                        strEpisod = arrHost[tmpLocE].substr(1);
-                    }
                 }
             }
         }
