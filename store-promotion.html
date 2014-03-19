@@ -311,7 +311,13 @@
                 <div class="icon-holder"></div>
                 <div class="tip-white">
                     <p class="left"></p>
-                    <p class="center">{{if alwaysOnTop == true}}${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove from top'])}{{else}}${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}{{/if}}</p>
+                    <p class="center">
+                    	{{if alwaysOnTop == true}}
+                    		${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove from top'])}
+                    	{{else}}
+                    		${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}
+                    	{{/if}}
+                    </p>
                     <p class="right"></p>
                 </div>
                 <div class="tip-top"></div>
