@@ -169,6 +169,31 @@
         return [arrChannels, arrChannelOnTop, arrChannelNonOnTop];
     };
 
+    $page._setHot = function (inObj) {
+        var tmpArr = [];
+        if (1 === $page.sortingType) {
+            tmpArr = $page.nomoList;
+        } else {
+            tmpArr = $page.onTopList.concat($page.nomoList);
+        }
+
+        $.each(tmpArr, function (i, channel) {
+            if (undefined !== channel) {
+                if (inObj == channel.id) {
+                    if (tmpArr[i].featured === true) {
+                        tmpArr[i].featured = false;
+                    } else {
+                        tmpArr[i].featured = true;
+                    }
+                }
+            }
+        });
+
+        $page.nomoList = $page.procNomoList(tmpArr, $page.sortingType);
+        $page.onTopList = $page.procOnTopList(tmpArr, $page.sortingType);
+        $page._drawChannelLis();
+    };
+
     $page._setOnTop = function (inObj) {
         var tmpArr = [];
         if (1 === $page.sortingType) {

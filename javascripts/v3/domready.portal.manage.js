@@ -423,6 +423,7 @@ $(function () {
                 tmpDiv,
                 channels = [],
                 nowTopList = [],
+                nowHotList = [],
                 this_id = 0,
                 setId = currentSetId;
             nn.log("6: channelSetProgramsSort");
@@ -431,10 +432,15 @@ $(function () {
                 if (this_id > 0) {
                     channels.push(this_id);
                 }
-                tmpDiv = $(this).find(".btn-top");
 
+                tmpDiv = $(this).find(".btn-top");
                 if ($(tmpDiv[0]).hasClass("on")) {
-                    nowTopList.push(this_id);
+                    nowTopList.push(parseInt(this_id, 10));
+                }
+
+                tmpDiv = $(this).find(".btn-hot");
+                if ($(tmpDiv[0]).hasClass("on")) {
+                    nowHotList.push(parseInt(this_id, 10));
                 }
             });
 
@@ -444,69 +450,66 @@ $(function () {
                 }), {
                     channels: channels.join(',')
                 }, function (set) {
+                    // $page.sortingType when === 1 :: only process setHot 
+                    // $page.sortingType when === 2 :: process SetHot & setOntop
 
-                    if (2 === $page.sortingType) {
-                        nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
-                            setId: setId
-                        }), null, function (chanels) {
-                            var cntChanels = chanels.length,
-                                dbTopList = [],
-                                procListSort = [],
-                                tmpId = 0,
-                                actChannelCount2 = 0;
+                    nn.api('GET', cms.reapi('/api/sets/{setId}/channels', {
+                        setId: setId
+                    }), null, function (chanels) {
+                        var cntChanels = chanels.length,
+                            dbTopList = [],
+                            procListSort = [],
+                            tmpId = 0,
+                            actChannelCount2 = 0,
+                            isTop = false,
+                            isHot = false,
+                            tmpObj = {};
 
-                            if (cntChanels > 0) {
-                                dbTopList = $page._getItemIdArray($page.procOnTopList(chanels, $page.sortingType));
+                        $.each(chanels, function (eKey, eValue) {
+                            isTop = false;
+                            isHot = false;
+                            tmpObj = {};
+                            tmpId = parseInt(eValue.id, 10);
+
+                            if (nowHotList.indexOf(tmpId) > -1) {
+                                isHot = true;
+                            }
+                            if (nowTopList.indexOf(tmpId) > -1) {
+                                isTop = true;
                             }
 
-                            $.each(nowTopList, function (i, chId) {
-                                tmpId = parseInt(chId, 10);
-                                if ($.inArray(tmpId, dbTopList) > -1) {
-                                    dbTopList.splice($.inArray(tmpId, dbTopList), 1);
-                                } else {
-                                    procListSort.push({
-                                        onTop: true,
-                                        chId: tmpId
-                                    });
-                                }
+                            if (eValue.featured !== isHot) {
+                                tmpObj.channelId = tmpId;
+                                tmpObj.featured = isHot;
+                            }
 
-                            });
+                            if (2 === $page.sortingType && eValue.alwaysOnTop !== isTop) {
+                                tmpObj.channelId = tmpId;
+                                tmpObj.alwaysOnTop = isTop;
+                            }
 
-                            $.each(dbTopList, function (i, chId) {
-                                tmpId = parseInt(chId, 10);
-                                if (tmpId > 0) {
-                                    procListSort.push({
-                                        onTop: false,
-                                        chId: tmpId
-                                    });
-                                }
-                            });
-                            actChannelCount2 = procListSort.length;
-
-                            if (actChannelCount2 > 0) {
-                                $.each(procListSort, function (i, channel) {
-                                    nn.api("POST", cms.reapi('/api/sets/{setId}/channels', {
-                                        setId: setId
-                                    }), {
-                                        channelId: channel.chId,
-                                        alwaysOnTop: channel.onTop
-                                    }, function (retValue) {
-                                        actChannelCount2 -= 1;
-                                        if (actChannelCount2 === 0) {
-
-                                            deferred.resolve();
-                                        }
-                                    });
-                                });
-                            } else {
-                                deferred.resolve();
+                            // set modify to procList
+                            if(tmpObj.channelId>0){
+                                procListSort.push(tmpObj);
                             }
                         });
 
-                    } else {
-                        deferred.resolve();
-                    }
-
+                        actChannelCount2 = procListSort.length;
+                        if (actChannelCount2 > 0) {
+                            $.each(procListSort, function (eKey, eValue) {
+                                nn.api("POST", cms.reapi('/api/sets/{setId}/channels', {
+                                    setId: setId
+                                }), eValue, function(retValue) {
+                                    actChannelCount2 -= 1;
+                                    if (actChannelCount2 === 0) {
+                                        deferred.resolve();
+                                    }
+                                });
+                            });
+                        } else {
+                            deferred.resolve();
+                        }            
+                    });
                 });
             } else {
                 deferred.resolve();
@@ -896,9 +899,35 @@ $(function () {
         });
     });
 
+    $(document).on("click", ".btn-hot", function (event) {
+        // protal manage remove channel from channel set
+        var btnOn = $("#channel-list div.btn-hot.on");
+        var this_li = $(this);
+        var up_li = this_li.parents("li");
+        var this_id = parseInt(up_li.attr("id").replace("set_", ""), 10);
+
+        if (btnOn.length < $page.onTopLimit || this_li.hasClass("on")) {
+            $common.showProcessingOverlay();
+            if (this_li.hasClass("on")) {
+                nn.log("has on");
+                this_li.removeClass("on");
+            } else {
+                                nn.log("沒有 on");
+                nn.log($("#set_"+this_id + " div.btn-hot").addClass("on"));
+                // this_li.addClass("on");
+            }
+
+            $page._setHot(this_id);
+            $("body").addClass("has-change");
+            $('#overlay-s').fadeOut("slow");
+        } else {
+            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set 4 programs on top']));
+        }
+    });
+
     $(document).on("click", ".btn-top", function (event) {
         // protal manage remove channel from channel set
-        var btnOn = $("#channel-list div.on");
+        var btnOn = $("#channel-list div.btn-top.on");
         var this_li = $(this);
         var up_li = this_li.parents("li");
         var this_id = parseInt(up_li.attr("id").replace("set_", ""), 10);
