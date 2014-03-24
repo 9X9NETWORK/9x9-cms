@@ -901,42 +901,53 @@ $(function () {
 
     $(document).on("click", ".btn-hot", function (event) {
         // protal manage remove channel from channel set
-        var btnOn = $("#channel-list div.btn-hot.on");
-        var this_li = $(this);
-        var up_li = this_li.parents("li");
-        var this_id = parseInt(up_li.attr("id").replace("set_", ""), 10);
+        var btnOn = $("#channel-list div.btn-hot.on"),
+            this_li = $(this),
+            up_li = this_li.parents("li"),
+            this_id = parseInt(up_li.attr("id").replace("set_", ""), 10),
+            OnTopDiv = $(up_li).find("div.btn-top"),
+            isOnTop = OnTopDiv.hasClass("on");
 
-        if (btnOn.length < $page.onTopLimit || this_li.hasClass("on")) {
+        if (btnOn.length < $page.onHotLimit || this_li.hasClass("on")) {
             $common.showProcessingOverlay();
             if (this_li.hasClass("on")) {
                 nn.log("has on");
                 this_li.removeClass("on");
             } else {
-                                nn.log("沒有 on");
-                nn.log($("#set_"+this_id + " div.btn-hot").addClass("on"));
-                // this_li.addClass("on");
+                if (isOnTop) {
+                    OnTopDiv.removeClass("on");
+                    $page._setOnTop(this_id);
+                }
+                this_li.addClass("on");
             }
 
             $page._setHot(this_id);
             $("body").addClass("has-change");
             $('#overlay-s').fadeOut("slow");
         } else {
-            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set 4 programs on top']));
+            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set ? programs on TOP'], [$page.onHotLimit]));
         }
     });
 
     $(document).on("click", ".btn-top", function (event) {
         // protal manage remove channel from channel set
-        var btnOn = $("#channel-list div.btn-top.on");
-        var this_li = $(this);
-        var up_li = this_li.parents("li");
-        var this_id = parseInt(up_li.attr("id").replace("set_", ""), 10);
+        var btnOn = $("#channel-list div.btn-top.on"),
+            this_li = $(this),
+            up_li = this_li.parents("li"),
+            this_id = parseInt(up_li.attr("id").replace("set_", ""), 10),
+            OnHotDiv = $(up_li).find("div.btn-hot"),
+            isOnHot = OnHotDiv.hasClass("on");
+
 
         if (btnOn.length < $page.onTopLimit || this_li.hasClass("on")) {
             $common.showProcessingOverlay();
             if (this_li.hasClass("on")) {
                 this_li.removeClass("on");
             } else {
+                if (isOnHot) {
+                    OnHotDiv.removeClass("on");
+                    $page._setHot(this_id);
+                }
                 this_li.addClass("on");
             }
 
@@ -944,7 +955,7 @@ $(function () {
             $("body").addClass("has-change");
             $('#overlay-s').fadeOut("slow");
         } else {
-            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set 4 programs on top']));
+            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set ? programs on BEST'], [$page.onTopLimit]));
         }
     });
 

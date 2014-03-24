@@ -420,7 +420,7 @@
         },
         "channel-list": {
             "Sorted by": "預設排序",
-            "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set on top programs.": "您將變更節目排序至\"更新時間\"，系統將依節目\"更新時間\"自動排序，除置頂節目外，其餘您將無法手動進行變更順序。",
+            "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.": "您將變更節目排序至\"更新時間\"，系統將依節目\"更新時間\"自動排序，除推薦節目外，其餘您將無法手動進行變更順序。",
             "Updated time": "依更新時間 ",
             "Customized Order": "依指定排序",
             "Best within 20 characters": "建議長度不超過20個字元",
@@ -432,10 +432,13 @@
             "Add programs sub": "",
             "Please input program URL": "請輸入節目網址",
             "Please input program name or curator name": "請輸入節目名稱或 Curator 名稱",
-            "Set on top": "置頂",
-            "Remove from top": "取消置頂",
+            "Set this BEST": "設為推薦",
+            "Remove from BEST": "取消推薦",
+            "Set this HOT": "設為熱門",
+            "Remove from HOT": "取消熱門",
             "Remove program": "移除此節目",
-            "You can only set 4 programs on top": "只能設定4個置頂節目",
+            "You can only set ? programs on BEST": "只能設定 {0} 推薦節目",
+            "You can only set ? programs on TOP": "只能設定 {0} 熱門節目",
             "Please fill in your channel name.": "請輸入頻道名稱",
             "Program List : ? Programs": "節目列表 : {0} 個節目"
         }

@@ -6,7 +6,8 @@
 
     var $common = cms.common;
     $page.sortingType = 1;
-    $page.onTopLimit = 4;
+    $page.onTopLimit = 3;
+    $page.onHotLimit = 3;
     $page.setId = 0;
     $page.setCanChannel = 0;
     $page.onTopList = [];
