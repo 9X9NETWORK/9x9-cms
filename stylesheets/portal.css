@@ -570,6 +570,35 @@ span.sType {
     background-position: 0 -22px;
     z-index: 3;
 }
+
+.btn-hot {
+    display: none;
+    position: absolute;
+    background: url(../images/btn_hot.png) no-repeat;
+    left: 22px;
+    top: -1px;
+    height: 22px;
+    z-index: 6;
+    text-align: center;
+    background-position: 0 0;
+    cursor: pointer;
+}
+.btn-hot.on {
+    display: block;
+    background-position: 0 -2px;
+    cursor: pointer;
+}
+.btn-hot.on:hover {
+    display: block;
+    background-position: 0 0;
+    z-index: 3;
+}
+.btn-hot:hover {
+    display: block;
+    background-position: 0 -2px;
+    z-index: 3;
+}
+
 .btn-remove {
     display: none;
     position: absolute;
@@ -624,16 +653,26 @@ span.sType {
     display: block;
     background-position: -23px -149px;
 }
-.channel-list .thumb:hover .watermark, #portal-layer .channel-list .thumb:hover .btn-remove, #portal-layer .channel-list .thumb:hover .btn-top, #store-layer .channel-list .thumb:hover .btn-minus {
+.channel-list .thumb:hover .watermark,
+#portal-layer .channel-list .thumb:hover .btn-remove,
+#portal-layer .channel-list .thumb:hover .btn-top,
+#portal-layer .channel-list .thumb:hover .btn-hot,
+#store-layer .channel-list .thumb:hover .btn-minus {
     display: block;
 }
 
 /* Tip */
-.btn-top:hover .tip-white, .btn-minus:hover .tip-white, .btn-remove:hover .tip-white {
+.btn-top:hover .tip-white,
+.btn-hot:hover .tip-white,
+.btn-minus:hover .tip-white,
+.btn-remove:hover .tip-white {
     display: block;
     top: -33px;
 }
-.btn-top:hover .tip-top, .btn-minus:hover .tip-top, .btn-minus:hover .tip-top {
+.btn-top:hover .tip-top,
+.btn-hot:hover .tip-top,
+.btn-minus:hover .tip-top,
+.btn-minus:hover .tip-top {
     display: block;
     margin: -24px 0 0 1px;
 }
@@ -1360,10 +1399,16 @@ a.switch-off {
 }
 
 /* Promotion Category */
-#store-layer .channel-list .thumb:hover .btn-minus, #store-category ul li:hover .btn-minus, #store-category ul li.empty:hover .btn-remove, #store-category ul li.empty:hover .btn-edit, .intro a, #store-category ul li {
+#store-layer .channel-list .thumb:hover .btn-minus,#store-category ul li:hover .btn-minus, #store-category ul li.empty:hover .btn-remove, #store-category ul li.empty:hover .btn-edit, .intro a, #store-category ul li {
 	display: none;
 }
-#store-layer .channel-list .thumb:hover .btn-remove, #store-category ul li:hover .btn-edit, #store-category ul li:hover .btn-remove, #store-layer .channel-list .thumb:hover .btn-top, .channel-list li.empty, #store-category ul li.empty {
+#store-layer .channel-list .thumb:hover .btn-remove,
+#store-category ul li:hover .btn-edit,
+#store-category ul li:hover .btn-remove,
+#store-layer .channel-list .thumb:hover .btn-top,
+#store-layer .channel-list .thumb:hover .btn-hot,
+.channel-list li.empty,
+#store-category ul li.empty {
     display: block;
 }
 #store-category ul li:hover span {
@@ -1387,7 +1432,13 @@ a.switch-off {
 #content-wrap.system a.switch-on, #content-wrap.system .channel-list .thumb:hover .btn-minus, #content-wrap.system #store-category ul li:hover .btn-minus, #content-wrap.system .intro a, #content-wrap.system #store-category ul li, #content-wrap.system #store-category .info {
 	display: block;
 }
-#content-wrap.system .channel-list .thumb:hover .btn-remove,#content-wrap.system #store-category ul li:hover .btn-edit,#content-wrap.system #store-category ul li:hover .btn-remove, #content-wrap.system .channel-list .thumb:hover .btn-top, #content-wrap.system .channel-list li.empty, #content-wrap.system #store-category ul li.empty  {
+#content-wrap.system .channel-list .thumb:hover .btn-remove,
+#content-wrap.system #store-category ul li:hover .btn-edit,
+#content-wrap.system #store-category ul li:hover .btn-remove,
+#content-wrap.system .channel-list .thumb:hover .btn-top,
+#content-wrap.system .channel-list .thumb:hover .btn-hot,
+#content-wrap.system .channel-list li.empty,
+#content-wrap.system #store-category ul li.empty  {
 	display: none;
 }
 #content-wrap.system #store-category ul li:hover span {

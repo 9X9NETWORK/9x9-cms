@@ -151,7 +151,7 @@
     <div class="overlay-container">
         <div class="overlay-wrap">
             <a href="#" class="btn-close">Close</a>
-            <p class="content">You will change the order of program list to "update time", it will sort by update time of programs automatically so you can't change the order manually except set on top programs.</p>
+            <p class="content">You will change the order of program list to "update time", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.</p>
             <div class="overlay-btn">
                 <p class="btns btn-no"><span><a href="#">No</a></span></p>
                 <p class="btns btn-yes"><span><a href="#">Yes</a></span></p>
@@ -348,7 +348,7 @@ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Sorted by'])} :
             <div class="icon-holder"></div>
             <div class="tip-white">
                 <p class="left"></p>
-                <p class="center">Set on top</p>
+                <p class="center">Set this BEST</p>
                 <p class="right"></p>
             </div>
             <div class="tip-top"></div>
@@ -382,9 +382,24 @@ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Sorted by'])} :
                     <p class="left"></p>
                     <p class="center">
                     	{{if alwaysOnTop == true}}
-                    		${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove from top'])}
+                    		${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove from BEST'])}
                     	{{else}}
-                    		${nn._([cms.global.PAGE_ID, 'channel-list', 'Set on top'])}
+                    		${nn._([cms.global.PAGE_ID, 'channel-list', 'Set this BEST'])}
+                    	{{/if}}
+                    </p>
+                    <p class="right"></p>
+                </div>
+                <div class="tip-top"></div>
+            </div>
+            <div class="btn-hot{{if featured == true}} on{{/if}}">
+                <div class="icon-holder"></div>
+                <div class="tip-white">
+                    <p class="left"></p>
+                    <p class="center">
+                    	{{if featured == true}}
+                    		${nn._([cms.global.PAGE_ID, 'channel-list', 'Remove from HOT'])}
+                    	{{else}}
+                    		${nn._([cms.global.PAGE_ID, 'channel-list', 'Set this HOT'])}
                     	{{/if}}
                     </p>
                     <p class="right"></p>
