@@ -243,7 +243,12 @@
             "Add programs sub": "　Program",
             "Please input program URL": "Please input program URL",
             "Please input program name or curator name": "Please input program name or curator name",
-            "Set on top": "Set on top",
+            "Set this BEST": "Set this BEST",
+            "Remove from BEST": "Remove from BEST",
+            "Set this HOT": "Set this HOT",
+            "Remove from HOT": "Remove from HOT",
+            "You can only set ? programs on BEST": "You can only set {0} programs on BEST",
+            "You can only set ? programs on HOT": "You can only set {0} programs on HOT",
             "Remove from top": "Remove from top",
             "Remove program": "Remove program",
             "Add program": "Add program",
@@ -372,7 +377,7 @@
             "Remove from HOT": "Remove from HOT",
             "Remove program": "Remove program",
             "You can only set ? programs on BEST": "You can only set {0} programs on BEST",
-            "You can only set ? programs on TOP": "You can only set {0} programs on TOP",
+            "You can only set ? programs on HOT": "You can only set {0} programs on HOT",
             "Please fill in your channel name.": "Please fill in your channel name.",
             "Program List : ? Programs": "Program List : {0} Programs"
         }

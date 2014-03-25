@@ -925,7 +925,7 @@ $(function () {
             $("body").addClass("has-change");
             $('#overlay-s').fadeOut("slow");
         } else {
-            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set ? programs on TOP'], [$page.onHotLimit]));
+            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set ? programs on HOT'], [$page.onHotLimit]));
         }
     });
 
