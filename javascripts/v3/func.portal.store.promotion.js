@@ -12,7 +12,8 @@
     $page.promoCatLimit = 999999;
 
     $page.sortingType = 2;
-    $page.onTopLimit = 4;
+    $page.onTopLimit = 3;
+    $page.onHotLimit = 3;
     $page.setId = 0;
     $page.setCanChannel = 999999;
     $page.onTopList = [];
@@ -78,6 +79,7 @@
 
     $page.procPartList = function (inList, partType) {
         // 用到
+        // onTop / onHot
         var retValue = [],
             tmpOnTop = [],
             tmpNomo = [];
@@ -108,6 +110,18 @@
         } else {
             retValue = $page.procPartList(inList, "");
         }
+        return retValue;
+    };
+
+    // filter allways on top channel list
+    $page.procOnHotList = function (inList) {
+        // 用到
+        var retValue = [];
+                $.each(inList, function (i, channel) {
+            if (channel.featured === true) {
+                retValue.push(channel);
+            } 
+        });
         return retValue;
     };
 
@@ -178,15 +192,12 @@
     $page._categoryBlockSlide = function (inAction) {
         if ("down" === inAction) {
             $("#store-category ul").slideDown(400);
-            // nn.log("#store-category.height(down)::" + $("#store-category-ul").height());
 
             $('#store-constrain').animate({
                 top: '+=80'
             }, {
                 complete: function () {
                     var ulHeight = $("#store-category").height();
-                    // ulHeight += 8;
-                    nn.log("#store-category.height(down)::" + ulHeight);
                     $('#store-constrain').animate({
                         top: ulHeight
                     });
@@ -195,7 +206,6 @@
             });
         } else {
             $("#store-category ul").slideUp(400);
-            // nn.log("#store-category.height(down)::" + $("#store-category-ul").height());
 
             $('#store-constrain').animate({
                 top: '-=80'
@@ -206,8 +216,6 @@
                     //     top: ulHeight
                     // }, 100);
                     var ulHeight = $("#store-category").height();
-                    nn.log("#store-category.height(up)::" + ulHeight);
-                    // ulHeight += 12;
                     $('#store-constrain').animate({
                         top: ulHeight
                     });
@@ -399,7 +407,6 @@
             $('#overlay-s').fadeOut("slow");
         } else {
             if (inCatId > 0) {
-                // nn.log("abc::" + inCatId);
                 nn.api('GET', cms.reapi('/api/category/{categoryId}/channels', {
                     categoryId: inCatId
                 }), null, function (channels) {
@@ -420,7 +427,6 @@
                             channel.msoName = tmpMsoName;
                             $page.currentList.push(channel.id);
                         });
-                        nn.log("+++++ Channels:::" + channels.length);
 
                         $page.nomoList = $page.procNomoList(channels, $page.sortingType);
                         $page.onTopList = $page.procOnTopList(channels, $page.sortingType);
@@ -474,6 +480,26 @@
         $('#store-list').perfectScrollbar('update');
     };
 
+    $page._setHot = function (inObj) {
+        var tmpArr = [];
+
+        tmpArr = $page.onTopList.concat($page.nomoList);
+        $.each(tmpArr, function (i, channel) {
+            if (undefined !== channel) {
+                if (inObj == channel.id) {
+                    if (tmpArr[i].featured === true) {
+                        tmpArr[i].featured = false;
+                    } else {
+                        tmpArr[i].featured = true;
+                    }
+                }
+            }
+        });
+
+        $page.nomoList = $page.procNomoList(tmpArr, $page.sortingType);
+        $page.onTopList = $page.procOnTopList(tmpArr, $page.sortingType);
+        $page._drawChannelLis();
+    };
 
     $page._setOnTop = function (inObj) {
         var tmpArr = [];
@@ -542,8 +568,6 @@
         cms.global.USER_DATA["msoSource"] = msoSource;
         cms.global.USER_DATA["msoCurrent"] = msoCurrent;
 
-        nn.log("page id[" + cms.global.PAGE_ID + "]");
-        // /api/mso/{msoId}/store
         msoId = cms.global.MSO;
 
         // $("#content-wrap").addClass("system"); // system category need add this class, promotion without it.

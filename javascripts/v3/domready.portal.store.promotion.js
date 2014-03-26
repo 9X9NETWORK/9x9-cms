@@ -43,7 +43,6 @@ $(function () {
             catId = parseInt(thisLi.attr("id").replace("catLi_", ""), 10);
 
         if ($('body').hasClass('has-change') && $('body').hasClass('channel-change')) {
-            nn.log("$$has-change .catLi::" + catId);
             // confirmExit();
             $('#confirm-prompt').data("actli", catId);
             $('#confirm-prompt').data("actCat", "change");
@@ -55,7 +54,6 @@ $(function () {
 
         } else {
             $page.catLiClick(catId);
-            nn.log("#store-category-ul .catLi::" + catId);
 
         }
         return false;
@@ -433,11 +431,40 @@ $(function () {
     });
 //// add channel search - end
 
+    $(document).on("click", ".btn-hot", function (event) {
+        // protal manage remove channel from channel set
+        var btnOn = $("#store-list .channel-list div.btn-hot.on"),
+            this_li = $(this),
+            up_li = this_li.parents("li"),
+            this_id = parseInt(up_li.attr("id").replace("channel_", ""), 10),
+            OnTopDiv = $(up_li).find("div.btn-top"),
+            isOnTop = OnTopDiv.hasClass("on");
+
+        if (btnOn.length < $page.onHotLimit || this_li.hasClass("on")) {
+            $common.showProcessingOverlay();
+            if (this_li.hasClass("on")) {
+                this_li.removeClass("on");
+            } else {
+                if (isOnTop) {
+                    OnTopDiv.removeClass("on");
+                    $page._setOnTop(this_id);
+                }
+                this_li.addClass("on");
+            }
+
+            $page._setHot(this_id);
+            $("body").addClass("has-change");
+            $('#overlay-s').fadeOut("slow");
+        } else {
+            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set ? programs on HOT'], [$page.onHotLimit]));
+        }
+    });
+
     // channel set on top
     $(document).on("click", ".channel-list .btn-top", function (event) {
         // 用到
 
-        var btnOn = $("#store-list .channel-list div.on");
+        var btnOn = $("#store-list .channel-list div.btn-top.on");
         var this_li = $(this);
         var up_li = this_li.parents("li");
         var this_id = parseInt(up_li.attr("id").replace("channel_", ""), 10);
@@ -453,7 +480,7 @@ $(function () {
             $('body').addClass('channel-change');
             $('#overlay-s').fadeOut("slow");
         } else {
-            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set 4 programs on top']));
+            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'channel-list', 'You can only set ? programs on BEST'], [$page.onTopLimit]));
         }
     });
 
@@ -624,7 +651,7 @@ $(function () {
                 nn.api('DELETE', cms.reapi('/api/category/{categoryId}', {
                     categoryId: eValue
                 }), null, function (category) {
-                    nn.log(category);
+                    // nn.log(category);
                 });
 
             });
@@ -702,51 +729,108 @@ $(function () {
                 nn.api('GET', cms.reapi('/api/category/{categoryId}/channels', {
                     categoryId: currentCategoryId
                 }), null, function (channels) {
-                    var oldOnTop = $page.procOnTopList(channels, $page.sortingType),
-                        cntTotal = oldOnTop.length + $page.onTopList.length;
+                    var oldOnTop = [],
+                        oldOnHot = [],
+                        nowTopList = [],
+                        nowHotList = [],
+                        procList = [],
+                        cntTotal = 0,
+                        this_id = 0,
+                        tmpDiv, tmpSeq, tmpSeqOld;
 
-                    tmpSeq = 0;
-                    nn.log("1 : on top remove");
-                    if (cntTotal != 0) {
-                        $.each(oldOnTop, function (eKey, eValue) {
+                    // get old list
+                    $.each(channels, function(eKey, eValue) {
+                        this_id = parseInt(eValue.id, 10);
 
-                            nn.api('POST', cms.reapi('/api/category/{categoryId}/channels', {
-                                categoryId: currentCategoryId
-                            }), {
-                                channelId: eValue.id,
-                                alwaysOnTop: false
-                            }, function (msg) {
-                                cntTotal -= 1;
-                                nn.log("1::0 ::" + cntTotal + "::" + msg);
-                                if (cntTotal < 1) {
-                                    deferred.resolve();
-                                }
-                            });
-                        });
+                        if (eValue.alwaysOnTop) {
+                            oldOnTop.push(this_id);
+                        }
+                        if (eValue.featured) {
+                            oldOnHot.push(this_id);
+                        }
+                    });
 
-                        nn.log("2 : on top add");
-                        $.each($page.onTopList, function (eKey, eValue) {
+                    // get now list
+                    $.each($("ul.channel-list li.channelItem"), function (eKey, eValue) {
+                        this_id = $(eValue).attr("id").replace("channel_", "");
+                        if (this_id > 0) {
+                            channels.push(this_id);
+                        }
+
+                        tmpDiv = $(eValue).find(".btn-top");
+                        if ($(tmpDiv[0]).hasClass("on")) {
+                            nowTopList.push(parseInt(this_id, 10));
+                        }
+
+                        tmpDiv = $(eValue).find(".btn-hot");
+                        if ($(tmpDiv[0]).hasClass("on")) {
+                            nowHotList.push(parseInt(this_id, 10));
+                        }
+                    });
+
+                    // process Top to procList
+                    $.each(nowTopList, function(eKey, eValue) {
                             tmpSeq = eKey + 1;
-                            nn.api('POST', cms.reapi('/api/category/{categoryId}/channels', {
-                                categoryId: currentCategoryId
-                            }), {
-                                channelId: eValue.id,
+                            tmpSeqOld = oldOnTop.indexOf(eValue);
+                            procList.push({
+                                channelId: eValue,
                                 seq: tmpSeq,
                                 alwaysOnTop: true
-                            }, function (msg) {
-                                cntTotal -= 1;
-                                nn.log("2::0 ::" + cntTotal + "::" + msg);
-                                if (cntTotal < 1) {
+                            });
+                            if (tmpSeqOld > -1) {
+                                oldOnTop.splice(tmpSeqOld, 1);
+                                if (eKey === tmpSeqOld) {
+                                    procList.pop();
+                                }
+                            }
+                    });
 
+                    $.each(oldOnTop, function(eKey, eValue) {
+                            procList.push({
+                                channelId: eValue,
+                                alwaysOnTop: false
+                            });
+                    });
+
+                    // process Hot to procList
+                    $.each(nowHotList, function(eKey, eValue) {
+                        tmpSeq = eKey + 1;
+                        tmpSeqOld = oldOnHot.indexOf(eValue);
+
+                        if (tmpSeqOld > -1) {
+                            oldOnHot.splice(tmpSeqOld, 1);
+
+                        } else {
+                            procList.push({
+                                channelId: eValue,
+                                featured: true
+                            });
+                        }
+                    });
+
+                    $.each(oldOnHot, function(eKey, eValue) {
+                        procList.push({
+                            channelId: eValue,
+                            featured: false
+                        });
+                    });
+
+                    cntTotal = procList.length;
+
+                    if (cntTotal > 0) {
+                        $.each(procList, function (eKey, eValue) {
+                            nn.api('POST', cms.reapi('/api/category/{categoryId}/channels', {
+                                categoryId: currentCategoryId
+                            }), eValue, function (msg) {
+                                cntTotal -= 1;
+                                if (cntTotal < 1) {
                                     deferred.resolve();
                                 }
-
                             });
                         });
                     } else {
                         deferred.resolve();
                     }
-
                 });
             } else {
                 deferred.resolve();
