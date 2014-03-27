@@ -351,6 +351,10 @@ var cms = {};
         break;
     }
 
+    if (location.host === "localhost") {
+        cms.config.API_BASE = 'http://dev6.flipr.tv';
+    }
+
     switch (location.host) {
     case 'dev6.flipr.tv':
     case 'beagle.flipr.tv':
