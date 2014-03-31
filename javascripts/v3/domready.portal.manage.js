@@ -46,6 +46,11 @@ $(function () {
             }
             break;
         }
+
+        if(actLi.hasClass("on")){
+            $("#title-func .set_name").text(inSetName);
+        }
+
         $.unblockUI();
         return false;
     });
