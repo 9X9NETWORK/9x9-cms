@@ -21,7 +21,7 @@ $(function () {
             tmpPriv = 0,
             isStoreLangKey = true,
             msoName = "flipr",
-            loginUrl = "https://" + tmpUrl.attr('host') + tmpUrl.attr('relative'),
+            loginUrl = "https://" + tmpUrl.attr('host') + '/cms/signin.html',
             homeUrl = "http://" + tmpUrl.attr('host') + '/cms/index.html';
 
         if('signin.html' === tmpUrl.attr('file') && 'http' === tmpUrl.attr('protocol')){
