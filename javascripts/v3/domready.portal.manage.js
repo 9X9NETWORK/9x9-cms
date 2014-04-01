@@ -46,6 +46,11 @@ $(function () {
             }
             break;
         }
+
+        if(actLi.hasClass("on")){
+            $("#title-func .set_name").text(inSetName);
+        }
+
         $.unblockUI();
         return false;
     });
@@ -60,8 +65,8 @@ $(function () {
     $(document).on("click", ".addChannelSet", function (event) {
         var overLayInfo = {
             actType: "add",
-            overLayTitle: nn._([cms.global.PAGE_ID, 'overlay', "Add Channel Set"]),
-            actButton: nn._([cms.global.PAGE_ID, 'overlay', "Add Channel Set"]),
+            overLayTitle: nn._([cms.global.PAGE_ID, 'overlay', "Add Channel"]),
+            actButton: nn._([cms.global.PAGE_ID, 'overlay', "Add Channel"]),
             setName: ""
         };
         if ($page.isChannelSetAdd()) {
