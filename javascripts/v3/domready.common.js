@@ -24,7 +24,7 @@ $(function () {
             loginUrl = "https://" + tmpUrl.attr('host') + tmpUrl.attr('relative'),
             homeUrl = "http://" + tmpUrl.attr('host') + '/cms/index.html';
 
-        if('signin.html' === tmpUrl.attr('file') && 'http' !== tmpUrl.attr('protocol')){
+        if('signin.html' === tmpUrl.attr('file') && 'http' === tmpUrl.attr('protocol')){
             location.href = loginUrl;
         }
 
