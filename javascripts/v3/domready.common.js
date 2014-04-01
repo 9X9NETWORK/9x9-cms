@@ -26,6 +26,8 @@ $(function () {
 
         if('signin.html' === tmpUrl.attr('file') && 'http' === tmpUrl.attr('protocol')){
             location.href = loginUrl;
+        }else if('https' === tmpUrl.attr('protocol') && 'signin.html' !== tmpUrl.attr('file')){
+            location.href = "http://" + tmpUrl.attr('host') + tmpUrl.attr('directory');
         }
 
         if (null === user || "null" === user || !user || !user.id) {
