@@ -20,10 +20,17 @@ $(function () {
         var tmpUrl = $.url(location.href.replace('@', '%40')),
             tmpPriv = 0,
             isStoreLangKey = true,
-            msoName = "flipr";
+            msoName = "flipr",
+            loginUrl = "https://" + tmpUrl.attr('host') + tmpUrl.attr('relative'),
+            homeUrl = "http://" + tmpUrl.attr('host') + '/cms/index.html';
+
+        if('signin.html' === tmpUrl.attr('file') && 'http' !== tmpUrl.attr('protocol')){
+            location.href = loginUrl;
+        }
+
         if (null === user || "null" === user || !user || !user.id) {
             if ('signin.html' !== tmpUrl.attr('file')) {
-                location.href = 'signin.html';
+                location.href = loginUrl;
             } else {
                 $common.setupLanguagePage();
             }
@@ -32,7 +39,7 @@ $(function () {
                 if (cms.config.CMS_ENV === 'prototype') {
                     $common.setupLanguagePage();
                 } else {
-                    location.href = 'index.html';
+                    location.href = homeUrl;
                 }
             } else {
                 tmpPriv = parseInt(user.priv, 10) / 1000 + 111;
