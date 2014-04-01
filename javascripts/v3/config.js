@@ -391,6 +391,6 @@ var cms = {};
             alert(textStatus + ': ' + jqXHR.responseText);
         }
     });
-    nn.load('http://code.jquery.com/jquery-migrate-1.2.1' + ((cms.config.IS_DEBUG) ? '' : '.min') + '.js');
+    nn.load('//code.jquery.com/jquery-migrate-1.2.1' + ((cms.config.IS_DEBUG) ? '' : '.min') + '.js');
 
 }(cms));
