@@ -295,7 +295,7 @@
 <script id="store-category-li-tmpl" type="text/x-jquery-tmpl">
 <li id="catLi_${id}" data-meta="${id}" data-seq="${seq}" data-zhname="${zhName}" data-enname="${enName}" class="catLi{{if $item.actCat == id }} on{{/if}}{{if $item.isNew === "new" }} newCat{{/if}}">
     <span>
-        <a href="javascript:void(0);">${zhName}</a>
+        <a href="javascript:void(0);">{{if cms.global.USER_DATA.lang === 'en'}}${enName}{{else}}${zhName}{{/if}}</a>
     </span>
     <div class="btn-remove"></div>
     <div class="btn-edit"></div>
