@@ -1505,3 +1505,8 @@ a.switch-off {
         top: 0;
     }
 }
+
+/* notification */
+.wRed{
+    color: red;
+}
