@@ -49,7 +49,7 @@
             });
         } else {
             // 輸入錯誤
-            $(".notifyMsg").text(errMsg);
+            $(".notifyMsg").text(nn._([cms.global.PAGE_ID, 'notification', errMsg]));
         }
     };
 
