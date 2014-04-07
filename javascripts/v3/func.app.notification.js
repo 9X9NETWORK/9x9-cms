@@ -138,6 +138,22 @@
         }
     };
 
+    cms.global.notifyInit = function () {
+        var isNotifyiOS = cms.global.MSOINFO.apnsEnabled || false,
+            isNotifyAndroid = cms.global.MSOINFO.gcmEnabled || false;
+
+        $common.showProcessingOverlay();
+        if (isNotifyiOS === true || isNotifyAndroid === true) {
+            $page.isNotifyAvailable = true;
+        }
+
+        if ("#add" === location.hash) {
+            $page.newNotify();
+        } else {
+            $page.initNotify();
+        }
+    };
+
     // NOTE: page entry point (keep at the bottom of this file)
     $page.init = function (options) {
 
@@ -150,25 +166,11 @@
         }, 'debug');
 
         var msoId = cms.global.MSO,
-            inURL = $.url(location.href),
-            isNotifyiOS = cms.global.MSOINFO.apnsEnabled || false,
-            isNotifyAndroid = cms.global.MSOINFO.gcmEnabled || false;
-
-        $common.showProcessingOverlay();
-        if (isNotifyiOS === true || isNotifyAndroid === true) {
-            $page.isNotifyAvailable = true;
-        }
+            inURL = $.url(location.href);
 
         if (msoId < 1) {
             location.href = "./";
         } else {
-
-            if ("#add" === location.hash) {
-                $page.newNotify();
-            } else {
-                $page.initNotify();
-            }
-
             $('#func-nav .langkey').each(function() {
                 $(this).text(nn._([cms.global.PAGE_ID, 'func-nav', $(this).data('langkey')]));
             });
@@ -183,8 +185,6 @@
                 marginTop: 25,
                 marginBottom: 63
             });
-
-
         }
 
     };
