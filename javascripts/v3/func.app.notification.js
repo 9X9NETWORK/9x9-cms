@@ -14,6 +14,7 @@
             inDate = "NOW",
             errMsg = "";
 
+        $(".notifyMsg").text("");
         if (inMessage === "") {
             errMsg = 'Please fill in all required fields.';
         }
@@ -48,7 +49,7 @@
             });
         } else {
             // 輸入錯誤
-            $common.showSystemErrorOverlay(nn._([cms.global.PAGE_ID, 'notification', errMsg]));
+            $(".notifyMsg").text(errMsg);
         }
     };
 

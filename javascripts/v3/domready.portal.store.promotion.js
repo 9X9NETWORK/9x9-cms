@@ -88,7 +88,12 @@ $(function () {
             inEnName = $("#proCatEnName").val(),
             inZhName = $("#proCatZhName").val(),
             catId = $(this).data("catid"),
-            actLi = $("#catLi_" + catId);
+            actLi = $("#catLi_" + catId),
+            tmpName = inZhName;
+
+        if (cms.global.USER_DATA.lang === 'en') {
+            tmpName = inEnName;
+        }
         switch (actType) {
         case "add":
             // add promotion category
@@ -120,7 +125,8 @@ $(function () {
                 actLi.data("enname", inEnName);
                 actLi.data("zhname", inZhName);
 
-                actLi.find("span a").text(inZhName);
+                actLi.find("span a").text(tmpName);
+                $("span.cat_name").text(tmpName);
                 actLi.addClass('has-change');
 
                 $page.setSaveButton("on");
