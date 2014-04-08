@@ -57,9 +57,6 @@ $(function () {
                             cms.global.MSOINFO.isNotify = false;
                             if (true === msoInfo.apnsEnabled || true === msoInfo.gcmEnabled) {
                                 cms.global.MSOINFO.isNotify = true;
-                                if ('app-notification.html' === tmpUrl.attr('file')) {
-                                    cms.global.notifyInit();
-                                }
                             } else {
                                 if ('app-notification.html' === tmpUrl.attr('file')) {
                                     location.href = "portal-manage.html";
