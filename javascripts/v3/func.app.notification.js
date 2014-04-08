@@ -139,18 +139,21 @@
     };
 
     cms.global.notifyInit = function () {
-        var isNotifyiOS = cms.global.MSOINFO.apnsEnabled || false,
-            isNotifyAndroid = cms.global.MSOINFO.gcmEnabled || false;
-
-        $common.showProcessingOverlay();
-        if (isNotifyiOS === true || isNotifyAndroid === true) {
-            $page.isNotifyAvailable = true;
-        }
-
-        if ("#add" === location.hash) {
-            $page.newNotify();
+        if (null === cms.global.MSOINFO || null === cms.global.MSOINFO.gcmEnabled) {
+            setTimeout(cms.global.notifyInit, 500);
         } else {
-            $page.initNotify();
+            var isNotifyiOS = cms.global.MSOINFO.apnsEnabled || false,
+                isNotifyAndroid = cms.global.MSOINFO.gcmEnabled || false;
+
+            if (isNotifyiOS === true || isNotifyAndroid === true) {
+                $page.isNotifyAvailable = true;
+            }
+
+            if ("#add" === location.hash) {
+                $page.newNotify();
+            } else {
+                $page.initNotify();
+            }
         }
     };
 
@@ -171,6 +174,8 @@
         if (msoId < 1) {
             location.href = "./";
         } else {
+            cms.global.notifyInit();
+
             $('#func-nav .langkey').each(function() {
                 $(this).text(nn._([cms.global.PAGE_ID, 'func-nav', $(this).data('langkey')]));
             });
