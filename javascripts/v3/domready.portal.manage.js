@@ -687,7 +687,8 @@ $(function () {
                     var cntChannel = channels.length,
                         items = [];
 
-                    items = $page.prepareChannels(channels);
+                    items = $page.prepareChannelsFilter(channels);
+                    items = $page.prepareChannels(items);
                     cntChannel = items.length;
                     if (cntChannel > 0) {
                         $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannel]));
