@@ -199,19 +199,11 @@
 <div class="tip-white-l">
     <div class="left"></div>
     <div class="center">
-        <div class="title">${nn._([cms.global.PAGE_ID, 'episode-list', "Brand"])}</div>
-        <div class="select-gray" id="">
-            <div class="select-content-gray">
-                <p class="select-btn"></p>
-                <p class="select-txt-gray">${brand}</p>
-                <ul class="select-dropdown">{{html $item.li_items}}</ul>
-            </div>
-        </div>
         <div class="title">${nn._([cms.global.PAGE_ID, 'episode-list', "URL"])}</div>
         <div class="input-gray">
             <p class="left"></p>
             <p class="center">
-                <input id="" class="textfield srul-text" value="http://www.FLIPr.tv/view?mso=${brand}&ch=xxxx&ep=xxxx" onclick="this.select()" />
+                <input id="" data-mso_name="${brand}" class="textfield srul-text" value="http://www.FLIPr.tv/view?mso=${brand}&ch=xxxx&ep=xxxx" onclick="this.select()" />
             </p>
             <p class="right"></p>
         </div>

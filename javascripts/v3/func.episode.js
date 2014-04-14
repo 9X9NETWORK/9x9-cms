@@ -296,19 +296,25 @@
 
                             // sharing url
                             nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
-                                channelId: id
-                            }), null, function (cBrands) {
-                                var tmpBrand = [{
-                                    brand: cBrands[0].brand
-                                }];
-                                $('#get-url-part-tmpl').tmpl(cBrands, {
-                                    li_sel: cBrands[0].brand
-                                }).appendTo('#tmpHtml2');
+                                    channelId: id
+                                }), null, function (cBrands) {
+                                var iBrandCount = cBrands.length,
+                                    iLoop = 0,
+                                    tmpBrand = [{
+                                        brand: ""
+                                    }];
+
+                                for (iLoop = 0; iLoop < iBrandCount; iLoop++) {
+                                    if (cms.global.USER_DATA.msoName === cBrands[iLoop].brand) {
+                                        tmpBrand[0].brand = cms.global.USER_DATA.msoName;
+                                        break;
+                                    }
+                                };
+
                                 $('#tmpHtml').html('');
-                                $('#get-url-tmpl').tmpl(tmpBrand, {
-                                    li_items: $('#tmpHtml2').html()
-                                }).appendTo('#tmpHtml');
-                                $('div.get-url').each(function () {
+                                $('#get-url-tmpl').tmpl(tmpBrand).appendTo('#tmpHtml');
+
+                                $('div.get-url').each(function() {
                                     $(this).children().remove();
                                     $(this).append($('#tmpHtml').html());
                                 });
