@@ -9,6 +9,41 @@
     
     cms.global.vIsYoutubeSync = false;
 
+     $page.storePoolOnOff = function (isOn) {
+        var thisObj = $("#add-store-switch"),
+            strMsg = "No",
+            strSwitch = "switch-off",
+            strValue = "3";
+
+        thisObj.removeClass("switch-off").removeClass("switch-on");
+
+        switch (isOn) {
+            case "init":
+                if (0 === parseInt($("#StorePool").val(), 10)) {
+                    strMsg = "Yes";
+                    strSwitch = "switch-on";
+                    strValue = "0";
+                }
+                break;
+
+            case "on":
+                strMsg = "Yes";
+                strSwitch = "switch-on";
+                strValue = "0";
+                break;
+
+            case "off":
+                strMsg = "No";
+                strSwitch = "switch-off";
+                strValue = "3";
+                break;
+        }
+
+        thisObj.addClass(strSwitch);
+        thisObj.text(nn._(["overlay", 'button', strMsg]));
+        $("#StorePool").val(strValue);
+    };
+
      $page.youtubeYyncOnOff = function (isOn) {
         var thisObj = $("#youtube-sync-switch");
         if ("on" === isOn) {
@@ -226,6 +261,9 @@
         if(cms.global.vIsYoutubeSync){
             $(".connected.youtube-sync").removeClass("hide");
         }
+        if(true === cms.global.USER_PRIV.isAutoOn){
+        	$(".connected.add-store").removeClass("hide");
+        }
 
     };
 
@@ -382,6 +420,7 @@
                         $('#content-main-tmpl').tmpl(channel).appendTo('#content-main');
 
                         $page.youtubeYyncOnOff(channel.autoSync);
+                        $page.storePoolOnOff("init");
 
                         if (cms.global.vIsYoutubeSync === true) {
                             var ytUrlParse = $common.ytUrlParser(channel.sourceUrl),

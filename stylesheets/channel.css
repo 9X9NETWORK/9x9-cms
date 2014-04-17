@@ -1443,6 +1443,7 @@ body.mac #title-func h2 {
     text-decoration: none;
     color: #555;
     line-height: 17px;
+    z-index: 688;
 }
 .youtube-sync-tip .overlay-h60-center {
     width: 292px;

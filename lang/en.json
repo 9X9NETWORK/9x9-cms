@@ -544,7 +544,9 @@
             "Save": "Save",
             "Episode sort by": "Episode sort by",
             "YouTube playlist or YouTube channel order": "YouTube playlist or YouTube channel order",
-            "YouTube playlist or YouTube channel reverse order": "YouTube playlist or YouTube channel reverse order"
+            "YouTube playlist or YouTube channel reverse order": "YouTube playlist or YouTube channel reverse order",
+            "Add to program store": "Add to program store",
+            "You can find the programs which has been added to program store of \"Main Channels\" and \"Category\" at My App.": "You can find the programs which has been added to program store of \"Main Channels\" and \"Category\" at My App."
         }
     },
     "channel-poi": {

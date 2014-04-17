@@ -623,7 +623,9 @@
             "This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?": "YouTube 同步功能開啟後，系統會在每天早上九點、下午兩點與晚上八點自動同步YouTube的資訊與影片，確定要進行同步?",
             "Episode sort by": "劇集排序依照",
             "YouTube playlist or YouTube channel order": "YouTube 播放清單或頻道順序排列",
-            "YouTube playlist or YouTube channel reverse order": "YouTube 播放清單或頻道反序排列"
+            "YouTube playlist or YouTube channel reverse order": "YouTube 播放清單或頻道反序排列",
+            "Add to program store": "新增到節目商店",
+            "You can find the programs which has been added to program store of \"Main Channels\" and \"Category\" at My App.": "新增到「節目商店」的節目，將能在「App管理」的「主頻道」與「類別」中被找到。"
         }
     },
     "channel-poi": {

@@ -19,6 +19,15 @@ $(function () {
         }
     });
 
+    $(document).on('click', '#add-store-switch', function () {
+        if ($(this).hasClass("switch-on")) {
+            $page.storePoolOnOff("off");
+        } else {
+            $page.storePoolOnOff("on");
+        }
+        return false;
+    });
+
     $(document).on('click', '#youtube-sync-switch', function () {
         if ($(this).hasClass("switch-on")) {
             $page.youtubeYyncOnOff("off");
