@@ -286,7 +286,7 @@ body.mac #title-func h2 {
 	height: 126px;
 	position: absolute;
 	left: 215px;
-	right: 230px;
+	right: 250px;
 }
 
 #channel-list li .info h3 {
@@ -327,7 +327,7 @@ body.mac #title-func h2 {
 #channel-list li .func-wrap {
     float: right;
     position: relative;
-    width: 216px;
+    width: 236px;
     height: 124px;
     margin: 5px 0 0 0;
 }

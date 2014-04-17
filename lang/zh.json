@@ -507,7 +507,11 @@
             "Sync": "立即同步",
             "You don't have any FLIPr programs yet.": "你尚無任何FLIPr節目",
             "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目",
-            "Invalid original YouTube playlist": "已失效的YouTube播放清單"
+            "Invalid original YouTube playlist": "已失效的YouTube播放清單",
+            "YouTube sync program": "YouTube 同步節目",
+            "Sort by YouTube order": "依 YouTube 順序排列",
+            "Sort by YouTube reverse order": "依 YouTube 反序排列",
+            "On program store": "已添加到節目商店"
         },
         "overlay": {
             "Create a New Program": "建立一個新的節目",
