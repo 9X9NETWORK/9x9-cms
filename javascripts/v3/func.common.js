@@ -4,6 +4,42 @@
 (function ($common) {
     'use strict';
 
+    $common.privParser = function (inPriv) {
+        var countPriv = inPriv.length,
+            strCMS = "",
+            strPCS = "",
+            strAutoOn = "",
+            retValue = {
+                isCMS: false,
+                isPCS: false,
+                isAutoOn: false
+            };
+
+        if (countPriv > 5) {
+            strCMS = inPriv.substr(0, 3);
+            strPCS = inPriv.substr(3, 3);
+        }
+
+        if (countPriv > 5) {
+            strAutoOn = inPriv.substr(6, 1);
+
+        }
+
+        if ("111" === strCMS) {
+            retValue.isCMS = true;
+        }
+
+        if ("111" === strPCS) {
+            retValue.isPCS = true;
+        }
+
+        if ("1" === strAutoOn) {
+            retValue.isAutoOn = true;
+        }
+
+        return retValue;
+    };
+
     $common.shareUrlBaseParser = function (inUrl, inMsoName) {
         var inURL = $.url(inUrl),
             arrHost = inURL.attr("host").split('.'),

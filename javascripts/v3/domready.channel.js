@@ -19,12 +19,21 @@ $(function () {
         }
     });
 
+    $(document).on('click', '#add-store-switch', function () {
+        if ($(this).hasClass("switch-on")) {
+            $page.storePoolOnOff("off");
+        } else {
+            $page.storePoolOnOff("on");
+        }
+        return false;
+    });
+
     $(document).on('click', '#youtube-sync-switch', function () {
         if ($(this).hasClass("switch-on")) {
             $page.youtubeYyncOnOff("off");
         } else {
             var msgOverlay = $('#youtube-sync-alert-overlay');
-            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?']));
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
             $(msgOverlay).find('#yes-sync').text(nn._(['overlay', 'button', 'Yes']));
             $(msgOverlay).find('#no-sync').text(nn._(['overlay', 'button', 'No']));
 

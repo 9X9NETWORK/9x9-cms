@@ -18,7 +18,7 @@ $(function () {
 
     nn.api('GET', cms.reapi('/api/login'), function (user) {
         var tmpUrl = $.url(location.href.replace('@', '%40')),
-            tmpPriv = 0,
+            tmpPriv = {},
             isStoreLangKey = true,
             msoName = "flipr",
             loginUrl = "https://" + tmpUrl.attr('host') + '/cms/signin.html',
@@ -44,9 +44,10 @@ $(function () {
                     location.href = homeUrl;
                 }
             } else {
-                tmpPriv = parseInt(user.priv, 10) / 1000 + 111;
+                tmpPriv = $common.privParser(user.priv);
+                cms.global.USER_PRIV = tmpPriv;
                 cms.global.MSO = 0;
-                if (tmpPriv > 221 && user.msoId > 0) {
+                if (tmpPriv.isPCS && user.msoId > 0) {
                     cms.global.MSO = user.msoId;
                     if (-1 !== $.inArray(tmpUrl.attr('file'), ['store-manage.html', 'store-promotion.html', 'portal-manage.html', 'brand-setting.html', 'app-notification.html'])) {
                         // set mso info

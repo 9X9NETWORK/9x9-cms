@@ -507,7 +507,11 @@
             "Sync": "立即同步",
             "You don't have any FLIPr programs yet.": "你尚無任何FLIPr節目",
             "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目",
-            "Invalid original YouTube playlist": "已失效的YouTube播放清單"
+            "Invalid original YouTube playlist": "已失效的YouTube播放清單",
+            "YouTube sync program": "YouTube 同步節目",
+            "Sort by YouTube order": "依 YouTube 順序排列",
+            "Sort by YouTube reverse order": "依 YouTube 反序排列",
+            "On program store": "已添加到節目商店"
         },
         "overlay": {
             "Create a New Program": "建立一個新的節目",
@@ -615,11 +619,13 @@
             "Save": "儲存",
             "Add Youtube channel or playlist URL": "輸入Youtube頻道或播放清單",
             "Auto sync with YouTube": "YouTube自動同步",
-            "Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上九點、下午兩點與晚上八點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
-            "This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?": "YouTube 同步功能開啟後，系統會在每天早上九點、下午兩點與晚上八點自動同步YouTube的資訊與影片，確定要進行同步?",
+            "Program will automatically synchronize with YouTube at 0 AM, 8 AM, 12 PM, 6 PM and 9 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上0點、8點、中午12點、晚上6點、9點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
+            "This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 6 PM and 9 PM every day. Are you sure to auto sync?": "YouTube 同步功能開啟後，系統會在每天早上0點、8點、中午12點、晚上6點、9點，自動同步YouTube的資訊與影片，確定要進行同步?",
             "Episode sort by": "劇集排序依照",
             "YouTube playlist or YouTube channel order": "YouTube 播放清單或頻道順序排列",
-            "YouTube playlist or YouTube channel reverse order": "YouTube 播放清單或頻道反序排列"
+            "YouTube playlist or YouTube channel reverse order": "YouTube 播放清單或頻道反序排列",
+            "Add to program store": "新增到節目商店",
+            "You can find the programs which has been added to program store of \"Main Channels\" and \"Category\" at My App.": "新增到「節目商店」的節目，將能在「App管理」的「主頻道」與「類別」中被找到。"
         }
     },
     "channel-poi": {
