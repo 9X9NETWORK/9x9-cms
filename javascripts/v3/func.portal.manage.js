@@ -122,6 +122,21 @@
         return retValue;
     };
 
+    $page.prepareChannelsFilter = function (inList) {
+        var retValue = [],
+            countList = inList.length,
+            allowStatus = 0,
+            tmpObj = {};
+
+        for (var i = 0; i < countList; i++) {
+            tmpObj = inList[i];
+            if (allowStatus === tmpObj.status) {
+                retValue.push(tmpObj);
+            }
+        };
+        return retValue;
+    };
+
     $page.prepareChannels = function (inList) {
         var retValue = [], temp = [], tmpId = 0, tmpMsoName = cms.global.MSOINFO.name || "9x9";
 

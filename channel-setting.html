@@ -144,7 +144,7 @@
     <div class="overlay-h172-center">
         <p class="btn-close"></p>
         <img src="images/icon_warning_lg.png" alt="">
-        <p class="vMsg">This program will automatically synchronize information and videos from YouTube at 9 AM, 2 PM and 8 PM every day. Are you sure to auto sync?</p>
+        <p class="vMsg">This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 6 PM and 9 PM every day. Are you sure to auto sync?</p>
         <div class="overlay-button-holder">
             <div class="btn-gray">
                 <p class="left"></p>
@@ -359,7 +359,32 @@
                             <img src="images/bg_tip_top.png" alt="" class="up-arrow">
                             <div class="overlay-h60-left"></div>
                             <div class="overlay-h60-center">
-                                {{html nn._([cms.global.PAGE_ID, 'setting-form', 'Program will automatically synchronize with YouTube at 9 AM, 2 PM and 8 PM every day. Manually do so by clicking "Sync" in program list.'])}}
+                                {{html nn._([cms.global.PAGE_ID, 'setting-form', 'Program will automatically synchronize with YouTube at 0 AM, 8 AM, 12 PM, 6 PM and 9 PM every day. Manually do so by clicking "Sync" in program list.'])}}
+                            </div>
+                            <div class="overlay-h60-right"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+    {{if cms.global.USER_PRIV.isAutoOn === true}}
+    <div class="fminput clearfix">
+        <input type="hidden" id="StorePool" name="status" value="${status}" />
+        <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Add to program store'])}}</label>
+        <div class="fmfield">
+            <div class="connected add-store">
+                <div class="share-item first">
+                    <img alt="youtube" src="images/icon_program_store.png">
+                    <a id="add-store-switch" href="#" class="switch-off">No</a> 
+                    <a id="fb-reconnect" href="javascript:void(0);">
+                        <img src="images/icon_question.png" alt="">
+                        <div id="msgAutoSync" class="overlay-h60 youtube-sync-tip">
+                            <img src="images/bg_tip_top.png" alt="" class="up-arrow">
+                            <div class="overlay-h60-left"></div>
+                            <div class="overlay-h60-center">
+                                {{html nn._([cms.global.PAGE_ID, 'setting-form', 'You can find the programs which has been added to program store of "Main Channels" and "Category" at My App.'])}}
                             </div>
                             <div class="overlay-h60-right"></div>
                         </div>
