@@ -24,9 +24,14 @@ $(function () {
             loginUrl = "https://" + tmpUrl.attr('host') + '/cms/signin.html',
             homeUrl = "http://" + tmpUrl.attr('host') + '/cms/index.html';
 
-        if('signin.html' === tmpUrl.attr('file') && 'http' === tmpUrl.attr('protocol')){
+        if (tmpUrl.attr('host') === "localhost") {
+            loginUrl = "http://" + tmpUrl.attr('host') + '/signin.html',
+            homeUrl = "http://" + tmpUrl.attr('host') + '/index.html';
+        }
+
+        if ('signin.html' === tmpUrl.attr('file') && 'http' === tmpUrl.attr('protocol') && tmpUrl.attr('host') !== "localhost") {
             location.href = loginUrl;
-        }else if('https' === tmpUrl.attr('protocol') && 'signin.html' !== tmpUrl.attr('file')){
+        } else if ('https' === tmpUrl.attr('protocol') && 'signin.html' !== tmpUrl.attr('file')) {
             location.href = "http://" + tmpUrl.attr('host') + tmpUrl.attr('directory');
         }
 
