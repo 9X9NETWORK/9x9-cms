@@ -46,6 +46,20 @@
         $("#input-portal-ch").val($("#input-portal-ch").data("tmpIn"));
     };
 
+    $page.prepareChannelsFilter = function (inList) {
+        var retValue = [],
+            countList = inList.length,
+            allowStatus = 0,
+            tmpObj = {};
+
+        for (var i = 0; i < countList; i++) {
+            tmpObj = inList[i];
+            if (allowStatus === tmpObj.status) {
+                retValue.push(tmpObj);
+            }
+        };
+        return retValue;
+    };
 
     $page.prepareChannels = function (inList) {
         var retValue = [],
