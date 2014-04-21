@@ -574,7 +574,7 @@ $(function () {
     $(document).on("click", "#empty_channel", function (event) {
         // search layout
         if ($page.isProgramAdd()) {
-            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into your “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("name")]));
+            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("name")]));
             $("#portal-add-layer").data("isInit", "yes");
             //$("#portal-add-layer").fadeIn();
             $("#portal_search_channel").click();
