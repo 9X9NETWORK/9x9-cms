@@ -679,6 +679,9 @@ $(function () {
         } else {
             $("#portal-add-layer").fadeOut();
             $common.showProcessingOverlay();
+            
+            $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Results:"]));
+
             switch (searchType) {
             case "init":
                 nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
@@ -686,6 +689,8 @@ $(function () {
                 }), null, function (channels) {
                     var cntChannel = channels.length,
                         items = [];
+
+                    $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "My programs:"]));
 
                     items = $page.prepareChannelsFilter(channels);
                     items = $page.prepareChannels(items);
