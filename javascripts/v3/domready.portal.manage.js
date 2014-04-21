@@ -574,7 +574,7 @@ $(function () {
     $(document).on("click", "#empty_channel", function (event) {
         // search layout
         if ($page.isProgramAdd()) {
-            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into your “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("name")]));
+            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("name")]));
             $("#portal-add-layer").data("isInit", "yes");
             //$("#portal-add-layer").fadeIn();
             $("#portal_search_channel").click();
@@ -658,9 +658,9 @@ $(function () {
         $("#msg-search").text("");
         $("#msg-search").hide();
         
-        if("yes" === $("#portal-add-layer").data("isInit")){
-        	$("#portal-add-layer").data("isInit", "");
-        	searchType = "init";
+        if ("yes" === $("#portal-add-layer").data("isInit")) {
+            $("#portal-add-layer").data("isInit", "");
+            searchType = "init";
         }
         
 
@@ -679,6 +679,9 @@ $(function () {
         } else {
             $("#portal-add-layer").fadeOut();
             $common.showProcessingOverlay();
+            
+            $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Results:"]));
+
             switch (searchType) {
             case "init":
                 nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
@@ -686,6 +689,8 @@ $(function () {
                 }), null, function (channels) {
                     var cntChannel = channels.length,
                         items = [];
+
+                    $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "My programs:"]));
 
                     items = $page.prepareChannelsFilter(channels);
                     items = $page.prepareChannels(items);
