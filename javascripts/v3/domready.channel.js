@@ -82,9 +82,12 @@ $(function () {
                     } else {
                         ytTitle = (res).feed.title.$t;
                         ytDesc = (res).feed.subtitle.$t;
-                        ytImgCount = (res).feed.media$group.media$thumbnail.length;
 
-                        if(ytImgCount >1){
+                        if ((res).feed.media$group.media$thumbnail) {
+                            ytImgCount = (res).feed.media$group.media$thumbnail.length;
+                        }
+
+                        if (ytImgCount > 1) {
                             ytImg = (res).feed.media$group.media$thumbnail[1].url;
                         }else if(ytImgCount > 0){
                             ytImg = (res).feed.media$group.media$thumbnail[0].url;

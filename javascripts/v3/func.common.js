@@ -16,8 +16,8 @@
             };
 
         if (countPriv > 5) {
-            strCMS = inPriv.substr(0, 3);
-            strPCS = inPriv.substr(3, 3);
+            strCMS = inPriv.substr(3, 3);
+            strPCS = inPriv.substr(0, 3);
         }
 
         if (countPriv > 5) {
