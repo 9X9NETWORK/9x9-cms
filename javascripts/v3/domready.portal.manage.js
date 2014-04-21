@@ -658,9 +658,9 @@ $(function () {
         $("#msg-search").text("");
         $("#msg-search").hide();
         
-        if("yes" === $("#portal-add-layer").data("isInit")){
-        	$("#portal-add-layer").data("isInit", "");
-        	searchType = "init";
+        if ("yes" === $("#portal-add-layer").data("isInit")) {
+            $("#portal-add-layer").data("isInit", "");
+            searchType = "init";
         }
         
 

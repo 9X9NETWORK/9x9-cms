@@ -144,8 +144,10 @@ $(function () {
         // search layout
         var cntChannel = $("#channelCnt").text();
         if (cntChannel < $page.setCanChannel) {
-            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into your “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("zhname")]));
-            $("#portal-add-layer").fadeIn();
+            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("zhname")]));
+            $("#portal-add-layer").data("isInit", "yes");
+            // $("#portal-add-layer").fadeIn();
+            $("#portal_search_channel").click();
         }
     });
 
@@ -218,7 +220,12 @@ $(function () {
         $("#msg-search").text("");
         $("#msg-search").hide();
 
-        if ($("#input-portal-ch").data("tmpIn") == strInput) {
+        if ("yes" === $("#portal-add-layer").data("isInit")) {
+            $("#portal-add-layer").data("isInit", "");
+            searchType = "init";
+        }
+
+        if ("init" !== searchType && $("#input-portal-ch").data("tmpIn") == strInput) {
             switch (searchType) {
             case "url":
                 msgErr = "Please fill in the program url to search.";
@@ -233,7 +240,39 @@ $(function () {
         } else {
             $("#portal-add-layer").fadeOut();
             $common.showProcessingOverlay();
+
+            $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Results:"]));
+
             switch (searchType) {
+            case "init":
+                nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
+                    userId: cms.global.USER_DATA.id
+                }), null, function (channels) {
+                    var cntChannel = channels.length,
+                        items = [];
+
+                    $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "My programs:"]));
+
+                    items = $page.prepareChannelsFilter(channels);
+                    items = $page.prepareChannels(items);
+                    cntChannel = items.length;
+                    if (cntChannel > 0) {
+                        $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannel]));
+                    } else {
+                        $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Your search - [xxx] didn't match any programs."], [strInput]));
+                    }
+
+                    $('#portal-search-item-tmpl').tmpl(items).appendTo('#search-channel-list');
+
+                    var pageChannel = Math.floor($(".list-holder").width() / 117) * 2;
+                    if (cntChannel > pageChannel) {
+                        $("#searchNext").show();
+                    }
+                    $("#portal-add-layer").fadeIn();
+                    $('#overlay-s').fadeOut("slow");
+
+                });
+                break;
             case "url":
                 var objUrl = $common.playerUrlParser(strInput);
 
