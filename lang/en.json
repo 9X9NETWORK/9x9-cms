@@ -233,7 +233,7 @@
         "portal-add-layer": {
           "Find [<span>?</span>] programs.": "Find [<span>{0}</span>] programs.",
           "Your search - [xxx] didn't match any programs.": "Your search - [<span>{0}</span>] didn't match any programs.",
-          "Add programs into your “<span>Set 2</span>”": "Add programs into \"<span>{0}</span>\" promotion category"
+          "Add programs into “<span>Set 2</span>”": "Add programs into \"<span>{0}</span>\" promotion category"
         },
         "channel-list": {
             "Program List : ? Programs": "Program List : {0} Programs",

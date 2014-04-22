@@ -144,7 +144,7 @@ $(function () {
         // search layout
         var cntChannel = $("#channelCnt").text();
         if (cntChannel < $page.setCanChannel) {
-            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into “<span>Set 2</span>”"], [$("#store-category-ul .catLi.on").data("zhname")]));
+            $("#search-title").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Add programs into “<span>Set 2</span>”"], [$("#store-category .cat_name").text()]));
             $("#portal-add-layer").data("isInit", "yes");
             // $("#portal-add-layer").fadeIn();
             $("#portal_search_channel").click();
