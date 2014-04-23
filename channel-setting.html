@@ -300,6 +300,7 @@
         </div>
     </div>
     {{/if}}
+    {{if cms.global.IS_REMARK !== true}}
     <div class="fminput clearfix">
         <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Select brand to auto share'])}}</label>
         <div class="fmfield">
@@ -344,6 +345,7 @@
             </div>
         </div>
     </div>
+    {{/if}}
     {{if cms.global.vIsYoutubeSync === true}}
     <div class="fminput clearfix">
         <input type="hidden" id="autoSync" name="autoSync" value="off" />
