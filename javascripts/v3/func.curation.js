@@ -1120,7 +1120,8 @@
 
     $page.buildPoiInfoTmpl = function (element) {
         // poi-info-tmpl
-        if (element && element.tmplItem() && element.tmplItem().data && element.tmplItem().data.poiList) {
+        // remark poi tab
+        if (cms.global.IS_REMARK !== true && element && element.tmplItem() && element.tmplItem().data && element.tmplItem().data.poiList) {
             var videoInfoData = element.tmplItem().data,
                 startTimeInt = videoInfoData.startTime,
                 endTimeInt = (videoInfoData.endTime > 0) ? videoInfoData.endTime : videoInfoData.duration,
@@ -1849,10 +1850,9 @@
                         $('#overlay-s').fadeOut();
                     }
                 });
-
+                // remark poi tab , .then(getPoiPoints)
                 getYoutubes(programItem)
                 .then(getTitleCard)
-                .then(getPoiPoints)
                 .then(function(programItem, youtubes, title_card, poi_points){
                     // $.when(localePromise).then(function() {
                     committedCnt += 1;
