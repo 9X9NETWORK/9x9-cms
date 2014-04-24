@@ -626,8 +626,8 @@
             "Episode sort by": "劇集排序依照",
             "YouTube playlist or YouTube channel order": "YouTube 播放清單或頻道順序排列",
             "YouTube playlist or YouTube channel reverse order": "YouTube 播放清單或頻道反序排列",
-            "Add to program store": "新增到節目商店",
-            "You can find the programs which has been added to program store of \"Main Channels\" and \"Category\" at My App.": "新增到「節目商店」的節目，將能在「App管理」的「主頻道」與「類別」中被找到。"
+            "Add to My App": "上架到App",
+            "You can search the programs which has been added to \"Main Channels\" and \"Program store\" of My App.": "上架到App的節目，將能在「App管理」的「主頻道」與「類別」中被找到。"
         }
     },
     "channel-poi": {
