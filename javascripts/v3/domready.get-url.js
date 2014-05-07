@@ -19,6 +19,9 @@ $(function () {
             $('.url').removeClass("selected");
             obj_get_url = $(this).parents('li').find('.get-url');
             $(this).addClass("selected");
+
+            $('.get-url').hide();
+
             if (userUrlFile === 'index.html') {
                 strMetaCh = obj_get_url.data('metach');
                 strMetaIn = obj_get_url.data('metain');
@@ -27,28 +30,32 @@ $(function () {
                     nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
                         channelId: strMetaCh
                     }), null, function (cBrands) {
-                        var tmpBrand = [{
-                                brand: cBrands[0].brand
+                        var iBrandCount = cBrands.length,
+                            iLoop = 0,
+                            tmpBrand = [{
+                                brand: ""
                             }];
-                        $('#tmpHtml2').empty();
-                        $('#get-url-part-tmpl').tmpl(cBrands, {
-                            li_sel: cBrands[0].brand
-                        }).appendTo('#tmpHtml2');
+
+                        for (iLoop = 0; iLoop < iBrandCount; iLoop++) {
+                            if (cms.global.USER_DATA.msoName === cBrands[iLoop].brand) {
+                                tmpBrand[0].brand = cms.global.USER_DATA.msoName;
+                                break;
+                            }
+
+                        };
+
                         $('#tmpHtml').empty();
-                        $('#get-url-tmpl').tmpl(tmpBrand, {
-                            li_items: $('#tmpHtml2').html()
-                        }).appendTo('#tmpHtml');
+                        $('#get-url-tmpl').tmpl(tmpBrand).appendTo('#tmpHtml');
 
                         obj_get_url.children().remove();
                         obj_get_url.append($('#tmpHtml').html());
-                        obj_get_url.find('input.srul-text').val($geturl.iniSharingList(obj_get_url));
+                        obj_get_url.find('input.srul-text').val($geturl.iniSharingList(obj_get_url, tmpBrand[0].brand));
                         obj_get_url.data('metain', 1);
                     });
                 }
+            } else {
+                obj_get_url.find('input.srul-text').val($geturl.iniSharingList(obj_get_url, obj_get_url.find('input.srul-text').data("mso_name")));
             }
-
-            $('.get-url').hide();
-            obj_get_url.find('input.srul-text').val($geturl.iniSharingList(obj_get_url));
             $(this).parents('li').find('.tip').addClass("hide");
             obj_get_url.fadeIn(400);
         }

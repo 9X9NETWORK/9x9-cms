@@ -181,11 +181,11 @@ div.constrain {
     position: relative;
 }
 
-#ep-list ul,
-#ep-list ul.un-pub,
-#ep-list ul li.title,
-#ep-list ul li .container,
-#ep-list ul li .container-bottom {
+#ep-list > ul,
+#ep-list > ul.un-pub,
+#ep-list > ul li.title,
+#ep-list > ul li .container,
+#ep-list > ul li .container-bottom {
     background: url(../images/bg_divider.png) repeat-x 0 bottom;
 }
 
@@ -1098,39 +1098,6 @@ div.constrain {
     right: 8px;
 }
 
-/* Get URL */
-#ep-list .get-url {
-    position: absolute;
-    top: -19px;
-    left: 410px;
-    display: none;
-    z-index: 5;
-    font-size: 13px;
-    text-align: left;
-}
-
-.youtube-program #ep-list .get-url {
-    left: 270px;
-}
-
-#ep-list.favorite .get-url {
-    left: 263px;
-}
-
-.episode-list .get-url .tip-arrow-left {
-    position: absolute;
-    bottom: 20px;
-    left: -7px;
-	display: block;
-}
-
-.episode-list .get-url .tip-bottom {
-    position: absolute;
-    bottom: 3px;
-    left: 2px;
-	display: block;
-}
-
 /* Invalid Video */
 #ep-list ul li .episode .check {
 	position: absolute;
@@ -1182,6 +1149,16 @@ div.constrain {
 }
 
 
+.btns .tooltip-wrap{
+
+    font-size: 13px;
+    text-align: left;
+    bottom: 5px;
+    z-index: 5;
+    left: calc(100% + 10px);
+}
+
+
 /* 1358 */
 @media only screen and (min-width: 1358px) {
 #channel-name {
@@ -1189,3 +1166,5 @@ div.constrain {
     margin-right: 5px;
 	max-width: 82%;
 }
+
+

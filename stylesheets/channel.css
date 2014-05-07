@@ -1379,29 +1379,6 @@ body.mac #title-func h2 {
     margin-right: 15px;
 }
 
-
-/* Get URL */
-#channel-list .get-url {
-    position: absolute;
-    top: -11px;
-    left: 0;
-    display: none;
-    z-index: 99;
-    font-size: 13px;
-    text-align: left;
-}
-
-#channel-list .get-url .tip-bottom {
-    width: 22px;
-    height: 9px;
-    margin: -31px 0 0 1px;
-    position: absolute;
-    background: url(../images/bg_tip_bottom.png) no-repeat center bottom;
-    bottom: 3px;
-    right: 12px;
-	display: block;
-}
-
 /* Terms of use */
 .terms-container {
     height: 100%;

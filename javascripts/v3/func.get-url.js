@@ -24,7 +24,7 @@
         tmpPreFix = inMsoName;
 
         if ("9x9" === inMsoName || "flipr" === inMsoName) {
-            tmpPreFix = "www";
+            tmpPreFix = "9x9";
             is9x9Url = true;
         }
 
@@ -46,7 +46,7 @@
         return retValue;
     };
 
-    $geturl.iniSharingList = function (inObj) {
+    $geturl.iniSharingList = function (inObj, inBrand) {
         var strCid = '',
             strEid = '',
             strBrand = '',
@@ -59,7 +59,13 @@
         if ('' === userUrlFile) {
             userUrlFile = 'index.html';
         }
-        strBrand = inObj.find('.select-txt-gray').text();
+
+        if (null === inBrand || "" === inBrand || undefined == inBrand) {
+            strBrand = "9x9";
+        } else {
+            strBrand = inBrand;
+
+        }
 
         strBaseURL = $geturl.shareUrlBaseParser(cms.global.SHARE_URL_BASE, strBrand) + "/view";
 
