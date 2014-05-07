@@ -295,21 +295,6 @@ div.constrain {
 #episode-list li.ui-sortable-helper .container-left {
     background: none;
 }
-/*remove url in get-url 2014/04/29*/
-
-#episode-list .get-url .select-gray,#channel-list .get-url .select-gray{
-    display: none;
-}
-#episode-list .get-url .input-gray{
-   /* margin: 20px 0 0 5px;*/
-}
-
-#episode-list .get-url .title:first-of-type,#channel-list .get-url .title:first-of-type{
-    display: none;
-}
-##episode-list .get-url .title:last-of-type{
-    /*margin: 20px 0 0 5px;*/
-}
 
 #ep-list ul li .container {
     overflow: hidden;
@@ -1111,39 +1096,6 @@ div.constrain {
     position: absolute;
     top: 6px;
     right: 8px;
-}
-
-/* Get URL */
-#ep-list .get-url {
-    position: absolute;
-    top: -19px;
-    left: 410px;
-    display: none;
-    z-index: 5;
-    font-size: 13px;
-    text-align: left;
-}
-
-.youtube-program #ep-list .get-url {
-    left: 270px;
-}
-
-#ep-list.favorite .get-url {
-    left: 263px;
-}
-
-.episode-list .get-url .tip-arrow-left {
-    position: absolute;
-    bottom: 20px;
-    left: -7px;
-	display: block;
-}
-
-.episode-list .get-url .tip-bottom {
-    position: absolute;
-    bottom: 3px;
-    left: 2px;
-	display: block;
 }
 
 /* Invalid Video */

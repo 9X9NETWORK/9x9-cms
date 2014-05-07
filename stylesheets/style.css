@@ -1678,39 +1678,6 @@ body.mac #title-func ul li p span a {
     padding: 0 0 0 6px;
 }
 
-/* Get URL */
-.get-url .tip-white-l .center {
-    width: 186px;
-}
-
-.get-url .tip-white-l .title {
-    width: 45px;
-	margin: 5px 0 0 5px;
-}
-
-.get-url .input-gray {
-    float: left;
-    margin: 5px 0 0 0;
-}
-
-.get-url .input-gray .center {
-    width: 122px;
-    text-align: left;
-}
-
-.get-url .input-gray .center .textfield {
-    width: 110px;
-    text-align: left;
-}
-
-.get-url .select-gray {
-    margin: 5px 0 0 0;
-}
-
-.get-url .input-gray .center {
-    height: 25px;
-}
-
 /* Btn Gray */
 .btn-gray {
     cursor: pointer;
