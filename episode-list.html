@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="stylesheets/style.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/episode.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/cms-component.css?v=411104" />
 <title>FLIPr.tv - Episode list</title>
 </head>
 <body>
@@ -196,21 +197,12 @@
 
 <!-- get-url-tmpl Begin -->
 <script id="get-url-tmpl" type="text/x-jquery-tmpl">
-<div class="tip-white-l">
-    <div class="left"></div>
-    <div class="center">
-        <div class="title">${nn._([cms.global.PAGE_ID, 'episode-list', "URL"])}</div>
-        <div class="input-gray">
-            <p class="left"></p>
-            <p class="center">
-                <input id="" data-mso_name="${brand}" class="textfield srul-text" value="http://www.FLIPr.tv/view?mso=${brand}&ch=xxxx&ep=xxxx" onclick="this.select()" />
-            </p>
-            <p class="right"></p>
-        </div>
-    </div>
-    <div class="right"></div>
-</div>
-<div class="tip-arrow-left"></div>
+<ul class="tooltip-content-list">
+    <li>
+        <label class="title">${nn._([cms.global.PAGE_ID, 'episode-list', "URL"])}</label>
+        <input data-mso_name="${brand}" class="input-gray srul-text" value="http://www.FLIPr.tv/view?mso={msoId}&ch=xxxx&ep=xxxx" onclick="this.select()" />
+    </li>
+</ul>
 </script>
 <!-- get-url-tmpl End -->
 
@@ -309,34 +301,6 @@
 <div class="container-bottom">
 <div class="container-left">
     <div class="wrap">
-        <div id="get-url-${id}" class="get-url" data-metach="${$.url().param('id')}" data-metaep="${id}">
-            <div class="tip-white-l">
-                <div class="left"></div>
-                <div class="center">
-                    <div class="title">Brand</div>
-                    <div class="select-gray" id="">
-                        <div class="select-content-gray">
-                            <p class="select-btn"></p>
-                            <p class="select-txt-gray">FLIPr.tv</p>
-                            <ul class="select-dropdown">
-                                <li class="on" data-meta="FLIPr.tv">FLIPr.tv</li>
-                                <li data-meta="CTS">CTS</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="title">URL</div>
-                    <div class="input-gray">
-                        <p class="left"></p>
-                        <p class="center">
-                            <input class="textfield srul-text" value="http://www.FLIPr.tv/view?mso={msoId}&ch=xxxx&ep=xxxx" onclick="this.select()" />
-                        </p>
-                        <p class="right"></p>
-                    </div>
-                </div>
-                <div class="right"></div>
-            </div>
-            <div class="tip-arrow-left"></div>
-        </div>
         <div class="number">${seq}</div>
         <div class="episode">
             <div class="img">
@@ -372,6 +336,14 @@
                         <li><a href="/api/episodes/${id}" rel="${id}" class="del"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Delete'])}</a></li>
                         {{/if}}
                         <li><a href="javascript:void(0);" class="url{{if null === publishDate}} disable{{/if}}"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Get URL'])}</a></li>
+                    </ul>
+                </div>
+                <div id="get-url-${id}" class="get-url tooltip-wrap" data-metach="${$.url().param('id')}" data-metaep="${id}">
+                    <ul class="tooltip-content-list">
+                        <li>
+                            <label class="title">URL</label>
+                            <input class="input-gray srul-text" value="http://www.FLIPr.tv/" onclick="this.select()" />
+                        </li>
                     </ul>
                 </div>
             </div>
