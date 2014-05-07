@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/channel.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/com-9x9-cycle.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/cms-component.css?v=411104" />
 <title>FLIPr.tv - My Programs</title>
 </head>
 <body>
@@ -342,22 +343,12 @@
 
 <!-- get-url-tmpl Begin -->
 <script id="get-url-tmpl" type="text/x-jquery-tmpl">
-<div class="tip-white-l">
-    <div class="left"></div>
-    <div class="center">
-
-        <div class="title">${nn._([cms.global.PAGE_ID, 'channel-list', "URL"])}</div>
-        <div class="input-gray">
-            <p class="left"></p>
-            <p class="center">
-                <input id="" class="textfield srul-text" value="http://www.FLIPr.tv/view?brand=${brand}&ch=xxxx&ep=xxxx" onclick="this.select()" />
-            </p>
-            <p class="right"></p>
-        </div>
-    </div>
-    <div class="right"></div>
-</div>
-<div class="tip-bottom"></div>
+<ul class="tooltip-content-list">
+    <li>
+        <label class="title">${nn._([cms.global.PAGE_ID, 'channel-list', "URL"])}</label>
+        <input class="input-gray srul-text" onclick="this.select()" value="http://www.FLIPr.tv">
+    </li>
+</ul>
 </script>
 <!-- get-url-tmpl End -->
 
@@ -423,23 +414,6 @@
             <p><span>${cntSubscribe}</span>${nn._([cms.global.PAGE_ID, 'channel-list', 'Followers'])}</p>
         </div>
         <div class="func-wrap">
-            <div id="get-url-${id}" class="get-url" data-metain="0" data-metaep="0" data-metach="${id}">
-                <div class="tip-white-l">
-                    <div class="left"></div>
-                    <div class="center">
-                        <div class="title">URL</div>
-                        <div class="input-gray">
-                            <p class="left"></p>
-                            <p class="center">
-                                <input id="" class="textfield" value="http://www.FLIPr.tv/view?brand={msoId}&ch=xxxx&ep=xxxx" onclick="this.select()" />
-                            </p>
-                            <p class="right"></p>
-                        </div>
-                    </div>
-                    <div class="right"></div>
-                </div>
-                <div class="tip-bottom"></div>
-            </div>
             <p class="time">
                 ${nn._([cms.global.PAGE_ID, 'channel-list', 'Update:'])} ${cms.common.formatTimestamp(updateDate)}
                 {{if true === isYoutubeSync}}<img src="images/icon_youtube_sm.png">{{/if}}
@@ -459,6 +433,14 @@
                         <li><a href="channel-setting.html?id=${id}" class="setting">Setting<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Program settings'])}</span></span></span></span></a></li>
                         <li><a href="/api/users/${$item.userId}/channels/${id}" rel="${id}" class="del">Del<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Delete this program'])}</span></span></span></span></a></li>
                         <li><a href="javascript:void(0);" class="url{{if 1 > cntEpisode && true !== isYoutubeSync}} disable{{/if}}">${nn._([cms.global.PAGE_ID, 'channel-list', 'Get URL'])}<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Get URL'])}</span></span></span></span></a></li>
+                    </ul>
+                </div>
+                <div id="get-url-${id}" class="get-url tooltip-wrap show-top" data-metain="0" data-metaep="0" data-metach="${id}">
+                    <ul class="tooltip-content-list">
+                        <li>
+                            <label class="title">URL</label>
+                            <input class="input-gray srul-text" onclick="this.select()" value="http://www.FLIPr.tv">
+                        </li>
                     </ul>
                 </div>
             </div>
