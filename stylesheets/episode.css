@@ -181,11 +181,11 @@ div.constrain {
     position: relative;
 }
 
-#ep-list ul,
-#ep-list ul.un-pub,
-#ep-list ul li.title,
-#ep-list ul li .container,
-#ep-list ul li .container-bottom {
+#ep-list > ul,
+#ep-list > ul.un-pub,
+#ep-list > ul li.title,
+#ep-list > ul li .container,
+#ep-list > ul li .container-bottom {
     background: url(../images/bg_divider.png) repeat-x 0 bottom;
 }
 
@@ -294,6 +294,21 @@ div.constrain {
 #episode-list li.ui-sortable-helper .container-bottom,
 #episode-list li.ui-sortable-helper .container-left {
     background: none;
+}
+/*remove url in get-url 2014/04/29*/
+
+#episode-list .get-url .select-gray,#channel-list .get-url .select-gray{
+    display: none;
+}
+#episode-list .get-url .input-gray{
+   /* margin: 20px 0 0 5px;*/
+}
+
+#episode-list .get-url .title:first-of-type,#channel-list .get-url .title:first-of-type{
+    display: none;
+}
+##episode-list .get-url .title:last-of-type{
+    /*margin: 20px 0 0 5px;*/
 }
 
 #ep-list ul li .container {
@@ -1182,6 +1197,16 @@ div.constrain {
 }
 
 
+.btns .tooltip-wrap{
+
+    font-size: 13px;
+    text-align: left;
+    bottom: 5px;
+    z-index: 5;
+    left: calc(100% + 10px);
+}
+
+
 /* 1358 */
 @media only screen and (min-width: 1358px) {
 #channel-name {
@@ -1189,3 +1214,5 @@ div.constrain {
     margin-right: 5px;
 	max-width: 82%;
 }
+
+
