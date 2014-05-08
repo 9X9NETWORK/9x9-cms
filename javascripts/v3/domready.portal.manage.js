@@ -684,9 +684,11 @@ $(function () {
 
             switch (searchType) {
             case "init":
-                nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
+                nn.api('GET', cms.reapi('/api/users/{userId}/playableChannels', {
                     userId: cms.global.USER_DATA.id
-                }), null, function (channels) {
+                }), {
+                    mso: cms.global.MSOINFO.name
+                }, function (channels) {
                     var cntChannel = channels.length,
                         items = [];
 
