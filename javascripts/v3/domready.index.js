@@ -28,15 +28,35 @@ $(function () {
         return false;
     });
 
+    $(document).on('click', '#create-live-program', function () {
+        var chYoutubeLiveCount = $("#channel-list .ctypeYoutubeLive").length,
+            cookieTerms = $.cookie('cms-ytubelive-term') || "no",
+            strTermsFile = "lang/"+cms.global.USER_DATA.lang +'_YoutubeSyncTerms.html';
+
+        if ((undefined === cookieTerms || "agree" != cookieTerms) && chYoutubeLiveCount < 1) {
+            $('#terms-overlay').data("ctype", "live");
+            $('#terms-overlay').empty();
+            $('#terms-overlay-tmpl').tmpl().appendTo('#terms-overlay');
+            $('#terms-overlay .terms-container').load(strTermsFile, function() {
+                $('#terms-overlay .terms-container').perfectScrollbar();
+                $.blockUI({
+                    message: $('#terms-overlay')
+                });
+            });
+        } else {
+            $.cookie('cms-ytubelive-term', "agree");
+            location.href = $page.channelYouLiveAddUrl;
+        }
+        return false;
+    });
+
     $(document).on('click', '#create-youtube-program', function () {
         var chYoutubeSyncCoutn = $("#channel-list .ctypeYoutubeSync").length,
             cookieTerms = $.cookie('cms-ytubesync-term') || "no",
             strTermsFile = "lang/"+cms.global.USER_DATA.lang +'_YoutubeSyncTerms.html';
 
-            nn.log("cooke::"+$.cookie('cms-ytubesync-term') +"::");
-            nn.log("cooke var::"+cookieTerms +"::");
-
         if ((undefined === cookieTerms || "agree" != cookieTerms) && chYoutubeSyncCoutn < 1) {
+            $('#terms-overlay').data("ctype", "sync");
             $('#terms-overlay').empty();
             $('#terms-overlay-tmpl').tmpl().appendTo('#terms-overlay');
             $('#terms-overlay .terms-container').load(strTermsFile, function() {
@@ -53,9 +73,16 @@ $(function () {
     });
 
     $(document).on('click', '#agree-terms', function () {
-        // youtube sync add channel
-        $.cookie('cms-ytubesync-term', "agree");
-        location.href = $page.channelYouSyncAddUrl;
+        var ctype = $('#terms-overlay').data("ctype") || "sync";
+        if("live" === ctype){
+            // youtube live add channel
+            $.cookie('cms-ytubelive-term', "agree");
+            location.href = $page.channelYouLiveAddUrl;
+        }else{
+            // youtube sync add channel
+            $.cookie('cms-ytubesync-term', "agree");
+            location.href = $page.channelYouSyncAddUrl;
+        }
     });
 
     // program type filter
