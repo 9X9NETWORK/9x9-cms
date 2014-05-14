@@ -136,7 +136,7 @@
     background: url(../images/overlay_bg_m_c.png) repeat-x;
     height: 292px;
     position: relative;
-    width: 430px;
+    width: 630px;
     float: left;
     padding: 24px 0 0px;
 }
@@ -214,7 +214,7 @@
 }
 
 .create-program-overlay {
-    margin: -158px 0 0 -226px;
+    margin: -158px 0 0 -326px;
     position: fixed;
     left: 50%;
     top: 50%;
