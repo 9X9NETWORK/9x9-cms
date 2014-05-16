@@ -8,6 +8,8 @@
 
     
     cms.global.vIsYoutubeSync = false;
+    cms.global.vIsYoutubeLive = false;
+    cms.global.vYoutubeLiveIn = {};
 
      $page.storePoolOnOff = function (isOn) {
         var thisObj = $("#add-store-switch"),
@@ -44,7 +46,42 @@
         $("#StorePool").val(strValue);
     };
 
-     $page.youtubeYyncOnOff = function (isOn) {
+    $page.ytLiveCreate = function(channelId) {
+        var epName = "YouTube Live auto Episode",
+        inObj = cms.global.vYoutubeLiveIn;
+        nn.api('POST', cms.reapi('/api/channels/{channelId}/episodes', {
+            channelId: channelId
+        }), {
+            duration: 0,
+            isPublic: true,
+            name: epName,
+            publishDate: "NOW",
+            imageUrl: inObj.imageUrl
+        }, function (epObj) {
+            nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
+                episodeId: epObj.id
+            }), {
+                duration: 0,
+                channelId: channelId,
+                contentType: 1,
+                startTime: 0,
+                subSeq: 1,
+                fileUrl: inObj.fileUrl,
+                imageUrl: inObj.imageUrl,
+                name: inObj.name,
+                intro: inObj.intro,
+                uploader: inObj.uploader,
+                uploadDate: inObj.uploadDate,
+                ytId: inObj.ytId
+            }, function (pObj) {
+                // nn.log("YouTube Live created!!");
+                $('body').removeClass('has-change');
+                $page.saveAfter();
+            });
+        });
+    };
+
+    $page.youtubeYyncOnOff = function (isOn) {
         var thisObj = $("#youtube-sync-switch");
         if ("on" === isOn) {
             thisObj.removeClass("switch-off");
@@ -78,6 +115,11 @@
         fm.lang.value = $.trim(fm.lang.value);
         fm.sphere.value = $.trim(fm.sphere.value);
         fm.categoryId.value = $.trim(fm.categoryId.value);
+        nn.log("檢查開始");
+        if(true === cms.global.vIsYoutubeLive && "processing" !== $("#ytUrlLive").data("status")){
+            $('.form-btn .notice').removeClass('hide');
+            return false;
+        }
         if (!fm.categoryId.value) {
             fm.categoryId.value = '';
         }
@@ -574,6 +616,8 @@
 
             if(location.hash === "#ytsync"){
                 cms.global.vIsYoutubeSync = true;
+            }else if(location.hash === "#ytlive"){
+                cms.global.vIsYoutubeLive = true;
             }
 
 

@@ -51,11 +51,121 @@ $(function () {
         return false;
     });
 
+    $(document).on('change', '#ytUrlLive', function () {
+        var thisUrl = $(this).val().trim(),
+            ytUrlParse = $common.ytUrlLiveParser(thisUrl),
+            ytObj = {};
+
+        $("#ytSyncMsg").html("");
+        $("#ytSyncMsg").addClass("hide");
+        $("#intro").val("");
+        $("#name").val("");
+        $("#ytUrlLive").data("status", "");
+
+        if (ytUrlParse.ytType > 0) {
+            ytObj = {
+                url: ytUrlParse.ytUrlApi,
+                dataType: "json",
+                context: self,
+                success: function(res) {
+                    var ytTitle = "",
+                        ytDesc = "",
+                        ytImg = "images/ch_default.png",
+                        ytImgCount = 0,
+                        ytLiveDuration = (res).data.duration,
+                        ytLiveStatus = (res).data.status.value,
+                        ytObjSub = {};
+
+                    if (0 == ytLiveDuration && "processing" === ytLiveStatus) {
+                        // live video
+                        if (ytUrlParse.ytType === 1) {
+                            ytTitle = (res).data.title;
+                            ytDesc = (res).data.description;
+
+                            if (undefined !== (res).data.thumbnail.hqDefault) {
+                                ytImg = (res).data.thumbnail.hqDefault;
+                            } else {
+                                ytImg = (res).data.thumbnail.sqDefault;
+                            }
+                        } else {
+                            ytTitle = (res).feed.title.$t;
+                            ytDesc = (res).feed.subtitle.$t;
+
+                            if ((res).feed.media$group.media$thumbnail) {
+                                ytImgCount = (res).feed.media$group.media$thumbnail.length;
+                            }
+
+                            if (ytImgCount > 1) {
+                                ytImg = (res).feed.media$group.media$thumbnail[1].url;
+                            } else if (ytImgCount > 0) {
+                                ytImg = (res).feed.media$group.media$thumbnail[0].url;
+                            }
+                        }
+                        cms.global.vYoutubeLiveIn.fileUrl = ytUrlParse.ytUrlFormat;
+                        cms.global.vYoutubeLiveIn.imageUrl = ytImg;
+                        cms.global.vYoutubeLiveIn.name = ytTitle;
+                        cms.global.vYoutubeLiveIn.intro = ytDesc;
+                        cms.global.vYoutubeLiveIn.uploader = (res).data.uploader;
+                        cms.global.vYoutubeLiveIn.uploadDate = (res).data.uploaded;
+                        cms.global.vYoutubeLiveIn.ytId = ytUrlParse.ytId;
+
+                        $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
+                        $("#name").val(ytTitle);
+                        $("#intro").val(ytDesc);
+                        $("#ytUrlLive").data("status", ytLiveStatus);
+
+                        ytObjSub = {
+                            url: "https://gdata.youtube.com/feeds/api/users/" + cms.global.vYoutubeLiveIn.uploader + "?v=2&alt=json",
+                            dataType: "json",
+                            context: self,
+                            success: function(res) {
+                                var ytTitle = "",
+                                    ytDesc = "",
+                                    ytImg = "images/ch_default.png",
+                                    ytImgCount = 0,
+                                    ytObjSub = {};
+
+                                if (undefined !== (res).entry.media$thumbnail.url) {
+                                    ytImg = (res).entry.media$thumbnail.url;
+                                }
+
+                                if ("images/ch_default.png" !== ytImg) {
+                                    $("#thumbnail-imageUrl").attr("src", ytImg);
+                                    $('#imageUrl').val(ytImg);
+                                }
+                            },
+                            error: function() {
+                                nn.log("err Youtube Live sub call!!");
+                            }
+                        }
+                        $.ajax(ytObjSub);
+                    } else {
+                        $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
+                        $("#ytSyncMsg").removeClass("hide");
+
+                    }
+
+                },
+                error: function() {
+                    nn.log("err Youtube Live!!");
+                }
+            }
+
+            $.ajax(ytObj);
+        } else {
+            $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
+            $("#ytSyncMsg").removeClass("hide");
+        }
+        // console.log( "this is a cou****" + $(this).val() );
+    });
+
+
+
     $(document).on('change', '#ytUrl', function () {
         var thisUrl = $(this).val().trim(),
             ytUrlParse = $common.ytUrlParser(thisUrl),
             ytObj = {};
-        // console.log( "this is a cou****" + ytUrlParse.ytType );
+        // console.log( "this is a cou****" + $(this).data("ctype") );
         $("#ytSyncMsg").html("");
         $("#ytSyncMsg").addClass("hide");
         $("#intro").val("");
@@ -550,14 +660,19 @@ $(function () {
             nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
                 userId: cms.global.USER_DATA.id
             }), parameter, function (channel) {
-                if(channel.id > 0){
+                if(channel.id > 0 && cms.global.vIsYoutubeSync === true){
                     nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
                         channelId: channel.id
                     }), null, function (msg) {
                         nn.log("message --- " + msg);
                     });
                 }
-                if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
+
+                if (true === cms.global.vIsYoutubeLive) {
+
+                    $page.ytLiveCreate(channel.id);
+
+                } else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
                     var userIds = [],
                         accessTokens = [];
                     if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {
