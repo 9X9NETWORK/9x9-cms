@@ -11,7 +11,19 @@
     cms.global.vIsYoutubeLive = false;
     cms.global.vYoutubeLiveIn = {};
 
-     $page.storePoolOnOff = function (isOn) {
+    $page.fetchLiveUrl = function(channelId) {
+        nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
+            channelId: channelId
+        }), null, function(episodes) {
+            nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
+                    episodeId: episodes[0].id
+                }), null, function (programs) {
+                    $("#ytUrlLive").val(programs[0].fileUrl);
+                });
+        });
+    }
+
+    $page.storePoolOnOff = function (isOn) {
         var thisObj = $("#add-store-switch"),
             strMsg = "No",
             strSwitch = "switch-off",
@@ -103,6 +115,10 @@
             $.blockUI({
                 message: $('#ytsync-prompt')
             });
+        } else if ("channel-setting.html" === cms.global.USER_URL.attr('file')) {
+            $('#overlay-s').fadeOut(1000, function () {
+                $('body').removeClass('has-change');
+            });
         } else {
             location.href = 'index.html';
         }
@@ -115,7 +131,7 @@
         fm.lang.value = $.trim(fm.lang.value);
         fm.sphere.value = $.trim(fm.sphere.value);
         fm.categoryId.value = $.trim(fm.categoryId.value);
-        nn.log("檢查開始");
+
         if(true === cms.global.vIsYoutubeLive && "processing" !== $("#ytUrlLive").data("status")){
             $('.form-btn .notice').removeClass('hide');
             return false;
@@ -430,6 +446,7 @@
 
             var id = cms.global.USER_URL.param('id');
             cms.global.vIsYoutubeSync = false;
+            cms.global.vIsYoutubeLive = false;
             if (id > 0 && !isNaN(id) && cms.global.USER_DATA.id) {
                 nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
                     userId: cms.global.USER_DATA.id
@@ -451,6 +468,10 @@
                             $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
                             return;
                         }
+                        // youtube live channel check
+                        if(13 == channel.contentType){
+                            cms.global.vIsYoutubeLive = true;
+                        }
                         // youtube sync channel check 
                         if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
                             cms.global.vIsYoutubeSync = true;
@@ -463,6 +484,10 @@
 
                         $page.youtubeYyncOnOff(channel.autoSync);
                         $page.storePoolOnOff("init");
+
+                        if(cms.global.vIsYoutubeLive){
+                            $page.fetchLiveUrl(channel.id);
+                        }
 
                         if (cms.global.vIsYoutubeSync === true) {
                             var ytUrlParse = $common.ytUrlParser(channel.sourceUrl),

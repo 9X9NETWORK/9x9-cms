@@ -194,6 +194,22 @@
             </div>
         </div>
     </div>
+    {{else cms.global.vIsYoutubeLive === true}}
+    <div class="fminput clearfix">
+        <input type="hidden" name="contentType" value="13">
+        <label for="name">
+            <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Add live video URL'])}</label>
+        <div class="fmfield">
+            <p class="text">
+                <span>
+                    <input type="text" name="sourceUrl2" id="ytUrlLive" maxlength="100" value="" class="text" data-ctype="ytlive" placeholder="https://www.youtube.com/watch?v=67kk_xZvzwQ">
+                </span>
+            </p>
+            <div class="clear">
+                <p id="ytSyncMsg" class="validation-failed hide"></p>
+            </div>
+        </div>
+    </div>
     {{/if}}
     <div class="fminput clearfix">
         <label for="name"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Title'])}</label>
