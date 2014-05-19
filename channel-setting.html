@@ -163,7 +163,9 @@
 <!-- Youtube sync alert overlay End-->
 
 <script id="func-nav-tmpl" type="text/x-jquery-tmpl">
+{{if cms.global.vIsYoutubeLive !== true}}
 <li><a href="episode-list.html?id=${id}" class="episode">${nn._([cms.global.PAGE_ID, 'func-nav', 'Episode list'])}</a></li>
+{{/if}}
 {{if !cms.global.IS_REMARK}}
 <li><a href="channel-poi.html?id=${id}" class="poi">${nn._([cms.global.PAGE_ID, 'func-nav', 'Program POI'])}</a></li>
 {{/if}}
