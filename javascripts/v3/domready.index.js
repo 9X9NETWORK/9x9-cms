@@ -108,6 +108,8 @@ $(function () {
             $(".chLi").removeClass("hide");
             $("#channel-counter").text($(".chLi").length);
         }
+        $("#content-main-wrap").scrollTop(0);
+        $("#content-main-wrap").perfectScrollbar('update');
     });
 
     // you tube sync , sync direct
