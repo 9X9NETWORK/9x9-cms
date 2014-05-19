@@ -198,7 +198,7 @@ var cms = {};
             'en': 'en_US',
             'zh': 'zh_TW'
         },
-        FB_APP_ID: '110847978946712',
+        FB_APP_ID: '1429057570658015',
         FB_REQ_PERMS: [
             'email',
             'friends_actions.video',
