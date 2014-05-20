@@ -342,7 +342,7 @@
     <label for="filter_youtube" class="lbTypeLists">
         <input type="radio" name="filter" value="YoutubeSync" id="filter_youtube" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Youtube sync programs'])}}</label>
     <label for="filter_youtubelive" class="lbTypeLists">
-        <input type="radio" name="filter" value="YoutubeLive" id="filter_youtubelive" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Youtube live programs'])}}</label>
+        <input type="radio" name="filter" value="YoutubeLive" id="filter_youtubelive" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Live programs'])}}</label>
 </p>
 {{/if}}
 </script>
@@ -375,17 +375,23 @@
         <div class="wrapper">
             <ul class="content">
                 <li>
-                    <div class="img"><a ><img src="images/banner_ch_01.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a ><img src="images/banner_ch_01.png"width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Create your own <strong>personal and unique</strong> program.'])}}</span></p></div>
                 </li>
                 <li>
-                    <div class="img"><a ><img src="images/banner_ch_02.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a ><img src="images/banner_ch_02.png" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Add online videos into episode and start to <strong>curate your own program.</strong>'])}}</span></p></div>
                 </li>
+                {{if cms.global.MSO > 0}}
                 <li>
-                    <div class="img"><a ><img width="781" height="274" alt="" src="images/banner_01.png"></a></div>
+                    <div class="img"><a ><img width="781" height="274" src="images/banner_01.png"></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sync with <strong>YouTube channel or playlist</strong> to get online videos.'])}}</span></p></div>
                 </li>
+                <li>
+                    <div class="img"><a ><img width="781" height="274" src="images/banner_liveprogran.png"></a></div>
+                    <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Watching live video by live program.'])}}</span></p></div>
+                </li>
+                {{/if}}
             </ul>
         </div>
     </div>
@@ -432,7 +438,7 @@
                     <img title="{{if 4 === sorting}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by YouTube order'])}}{{else}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by YouTube reverse order'])}}{{/if}}"
                          src="images/icon_youtube_order_${sorting}.png">
                 {{else contentType == 13}}
-                    <img title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'YouTube Live program'])}}"
+                    <img title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Live program'])}}"
                              src="images/icon_live_program_sm.png">
                 {{/if}}
                 {{if cms.global.USER_PRIV.isAutoOn === true && status === 0}}

@@ -16,6 +16,9 @@
     }, {
         'msg_name': 'YoutubeSync',
         'msg_body': "You don't have any YouTube sync programs yet."
+    }, {
+        'msg_name': 'YoutubeLive',
+        'msg_body': "You don't have any live programs yet."
     }];
 
     // YouTube sync syncing processing

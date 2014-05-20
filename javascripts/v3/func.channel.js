@@ -59,7 +59,7 @@
     };
 
     $page.ytLiveCreate = function(channelId) {
-        var epName = "YouTube Live auto Episode",
+        var epName = "Live auto Episode",
         inObj = cms.global.vYoutubeLiveIn;
         nn.api('POST', cms.reapi('/api/channels/{channelId}/episodes', {
             channelId: channelId
