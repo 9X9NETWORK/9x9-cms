@@ -58,11 +58,11 @@ $(function () {
 
         $("#ytSyncMsg").html("");
         $("#ytSyncMsg").addClass("hide");
-        $("#intro").val("");
-        $("#name").val("");
         $("#ytUrlLive").data("status", "");
 
-        if (ytUrlParse.ytType > 0) {
+        if (1 === ytUrlParse.ytType) {
+            $("#intro").val("");
+            $("#name").val("");
             ytObj = {
                 url: ytUrlParse.ytUrlApi,
                 dataType: "json",
@@ -73,9 +73,12 @@ $(function () {
                         ytImg = "images/ch_default.png",
                         ytImgCount = 0,
                         ytLiveDuration = (res).data.duration,
-                        ytLiveStatus = (res).data.status.value,
+                        ytLiveStatus = "",
                         ytObjSub = {};
 
+                    if(undefined !== (res).data.status && undefined !== (res).data.status){
+                        ytLiveStatus = (res).data.status.value;
+                    }
                     if (0 == ytLiveDuration && "processing" === ytLiveStatus) {
                         // live video
                         if (ytUrlParse.ytType === 1) {
@@ -152,6 +155,8 @@ $(function () {
             }
 
             $.ajax(ytObj);
+        } else if(2 === ytUrlParse.ytType){
+            $("#ytUrlLive").data("status", "processing");
         } else {
             $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
             $("#ytSyncMsg").removeClass("hide");
@@ -600,6 +605,7 @@ $(function () {
                         } else {
                             $page.ytLiveCreate(channel.id);
                         }
+                        $('body').removeClass('has-change');
                     });
                 }else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
                     var userIds = [],

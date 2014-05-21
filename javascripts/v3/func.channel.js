@@ -58,9 +58,25 @@
         $("#StorePool").val(strValue);
     };
 
+    $page.liveType2Prepare = function(ytUrlParse) {
+        // ytLive 上網至 m3u8，但有些資料本來就沒有或不足
+        cms.global.vYoutubeLiveIn.fileUrl = ytUrlParse.ytUrlFormat;
+        cms.global.vYoutubeLiveIn.imageUrl = $("#thumbnail-imageUrl").attr("src");
+        cms.global.vYoutubeLiveIn.name = $("#name").val();
+        cms.global.vYoutubeLiveIn.intro = $("#intro").val();
+        cms.global.vYoutubeLiveIn.uploader = "";
+        cms.global.vYoutubeLiveIn.uploadDate = "";
+        cms.global.vYoutubeLiveIn.ytId = "";
+    }
+
     $page.ytLiveCreate = function(channelId) {
         var epName = "Live auto Episode",
-        inObj = cms.global.vYoutubeLiveIn;
+        inObj = cms.global.vYoutubeLiveIn,
+        ytUrlParse = $common.ytUrlLiveParser($("#ytUrlLive").val());
+
+        if (2 === ytUrlParse.ytType) {
+            $page.liveType2Prepare(ytUrlParse);
+        }
         nn.api('POST', cms.reapi('/api/channels/{channelId}/episodes', {
             channelId: channelId
         }), {
