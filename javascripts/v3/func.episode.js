@@ -171,6 +171,11 @@
                     // autoSync this field only in this api will beused , in other api this field will alway be "false"
                     channel.isYoutubeSync = false;
                     cms.global.vIsYoutubeSync = false;
+                    // youtube live channel check
+                    if(13 == channel.contentType){
+                        location.href = "index.html";
+                        return false;
+                    }
                     // youtube sync channel check 
                     if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
                         channel.isYoutubeSync = true;

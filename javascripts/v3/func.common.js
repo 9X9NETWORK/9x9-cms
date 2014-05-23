@@ -61,6 +61,32 @@
         return retValue;
     };
 
+    $common.ytUrlLiveParser = function (inUrl) {
+        // ytType = 0 : unknow, 1: yturl
+        var inURL = $.url(inUrl),
+            ytUrlPattern = ["http://www.youtube.com/watch?v="],
+            retValue = {
+                ytType: 0,
+                ytId: "",
+                ytUrlFormat: "",
+                ytUrlApi: ""
+            },
+            tmpListId = inURL.param('v'),
+            arrFilename = inURL.attr("file").split('.');
+
+        if (undefined !== tmpListId && tmpListId.length > 6) {
+            retValue.ytType = 1;
+            retValue.ytId = tmpListId;
+            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
+            retValue.ytUrlApi = "http://gdata.youtube.com/feeds/api/videos/" + retValue.ytId + "?alt=jsonc&v=2";
+        } else if(2 === arrFilename.length && "m3u8" === arrFilename[1]){
+            retValue.ytType = 2;
+            retValue.ytUrlFormat = inUrl;
+        }
+
+        return retValue;
+    };
+
     $common.ytUrlParser = function (inUrl) {
         // ytType = 0 : unknow, 1: user, 2: playlist
         var inURL = $.url(inUrl),

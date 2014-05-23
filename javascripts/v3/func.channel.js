@@ -8,8 +8,22 @@
 
     
     cms.global.vIsYoutubeSync = false;
+    cms.global.vIsYoutubeLive = false;
+    cms.global.vYoutubeLiveIn = {};
 
-     $page.storePoolOnOff = function (isOn) {
+    $page.fetchLiveUrl = function(channelId) {
+        nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
+            channelId: channelId
+        }), null, function(episodes) {
+            nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
+                    episodeId: episodes[0].id
+                }), null, function (programs) {
+                    $("#ytUrlLive").val(programs[0].fileUrl);
+                });
+        });
+    }
+
+    $page.storePoolOnOff = function (isOn) {
         var thisObj = $("#add-store-switch"),
             strMsg = "No",
             strSwitch = "switch-off",
@@ -44,7 +58,58 @@
         $("#StorePool").val(strValue);
     };
 
-     $page.youtubeYyncOnOff = function (isOn) {
+    $page.liveType2Prepare = function(ytUrlParse) {
+        // ytLive 上網至 m3u8，但有些資料本來就沒有或不足
+        cms.global.vYoutubeLiveIn.fileUrl = ytUrlParse.ytUrlFormat;
+        cms.global.vYoutubeLiveIn.imageUrl = $("#thumbnail-imageUrl").attr("src");
+        cms.global.vYoutubeLiveIn.name = $("#name").val();
+        cms.global.vYoutubeLiveIn.intro = $("#intro").val();
+        cms.global.vYoutubeLiveIn.uploader = "";
+        cms.global.vYoutubeLiveIn.uploadDate = "";
+        cms.global.vYoutubeLiveIn.ytId = "";
+    }
+
+    $page.ytLiveCreate = function(channelId) {
+        var epName = "Live auto Episode",
+        inObj = cms.global.vYoutubeLiveIn,
+        ytUrlParse = $common.ytUrlLiveParser($("#ytUrlLive").val());
+
+        if (2 === ytUrlParse.ytType) {
+            $page.liveType2Prepare(ytUrlParse);
+        }
+        nn.api('POST', cms.reapi('/api/channels/{channelId}/episodes', {
+            channelId: channelId
+        }), {
+            duration: 0,
+            isPublic: true,
+            name: epName,
+            publishDate: "NOW",
+            imageUrl: inObj.imageUrl
+        }, function (epObj) {
+            nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
+                episodeId: epObj.id
+            }), {
+                duration: 0,
+                channelId: channelId,
+                contentType: 1,
+                startTime: 0,
+                subSeq: 1,
+                fileUrl: inObj.fileUrl,
+                imageUrl: inObj.imageUrl,
+                name: inObj.name,
+                intro: inObj.intro,
+                uploader: inObj.uploader,
+                uploadDate: inObj.uploadDate,
+                ytId: inObj.ytId
+            }, function (pObj) {
+                // nn.log("YouTube Live created!!");
+                $('body').removeClass('has-change');
+                $page.saveAfter();
+            });
+        });
+    };
+
+    $page.youtubeYyncOnOff = function (isOn) {
         var thisObj = $("#youtube-sync-switch");
         if ("on" === isOn) {
             thisObj.removeClass("switch-off");
@@ -66,6 +131,10 @@
             $.blockUI({
                 message: $('#ytsync-prompt')
             });
+        } else if ("channel-setting.html" === cms.global.USER_URL.attr('file')) {
+            $('#overlay-s').fadeOut(1000, function () {
+                $('body').removeClass('has-change');
+            });
         } else {
             location.href = 'index.html';
         }
@@ -78,6 +147,11 @@
         fm.lang.value = $.trim(fm.lang.value);
         fm.sphere.value = $.trim(fm.sphere.value);
         fm.categoryId.value = $.trim(fm.categoryId.value);
+
+        if(true === cms.global.vIsYoutubeLive && "processing" !== $("#ytUrlLive").data("status")){
+            $('.form-btn .notice').removeClass('hide');
+            return false;
+        }
         if (!fm.categoryId.value) {
             fm.categoryId.value = '';
         }
@@ -388,6 +462,7 @@
 
             var id = cms.global.USER_URL.param('id');
             cms.global.vIsYoutubeSync = false;
+            cms.global.vIsYoutubeLive = false;
             if (id > 0 && !isNaN(id) && cms.global.USER_DATA.id) {
                 nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
                     userId: cms.global.USER_DATA.id
@@ -409,6 +484,10 @@
                             $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
                             return;
                         }
+                        // youtube live channel check
+                        if(13 == channel.contentType){
+                            cms.global.vIsYoutubeLive = true;
+                        }
                         // youtube sync channel check 
                         if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
                             cms.global.vIsYoutubeSync = true;
@@ -421,6 +500,10 @@
 
                         $page.youtubeYyncOnOff(channel.autoSync);
                         $page.storePoolOnOff("init");
+
+                        if(cms.global.vIsYoutubeLive){
+                            $page.fetchLiveUrl(channel.id);
+                        }
 
                         if (cms.global.vIsYoutubeSync === true) {
                             var ytUrlParse = $common.ytUrlParser(channel.sourceUrl),
@@ -574,6 +657,8 @@
 
             if(location.hash === "#ytsync"){
                 cms.global.vIsYoutubeSync = true;
+            }else if(location.hash === "#ytlive"){
+                cms.global.vIsYoutubeLive = true;
             }
 
 
