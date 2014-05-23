@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/uniform.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/channel.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/cms-component.css?v=431625">
 <title>FLIPr.tv - Program settings</title>
 </head>
 <body>
@@ -163,7 +164,9 @@
 <!-- Youtube sync alert overlay End-->
 
 <script id="func-nav-tmpl" type="text/x-jquery-tmpl">
+{{if cms.global.vIsYoutubeLive !== true}}
 <li><a href="episode-list.html?id=${id}" class="episode">${nn._([cms.global.PAGE_ID, 'func-nav', 'Episode list'])}</a></li>
+{{/if}}
 {{if !cms.global.IS_REMARK}}
 <li><a href="channel-poi.html?id=${id}" class="poi">${nn._([cms.global.PAGE_ID, 'func-nav', 'Program POI'])}</a></li>
 {{/if}}
@@ -187,6 +190,22 @@
             <p class="text disabled">
                 <span>
                     <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="${sourceUrl}" class="text" disabled="disabled" >
+                </span>
+            </p>
+            <div class="clear">
+                <p id="ytSyncMsg" class="validation-failed hide"></p>
+            </div>
+        </div>
+    </div>
+    {{else cms.global.vIsYoutubeLive === true}}
+    <div class="fminput clearfix">
+        <input type="hidden" name="contentType" value="13">
+        <label for="name">
+            <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Add live video URL'])}</label>
+        <div class="fmfield">
+            <p class="text">
+                <span>
+                    <input type="text" name="sourceUrl2" id="ytUrlLive" maxlength="100" value="" class="text" data-ctype="ytlive" placeholder="https://www.youtube.com/watch?v=_ABC">
                 </span>
             </p>
             <div class="clear">

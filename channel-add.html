@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/uniform.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/channel.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/cms-component.css?v=431625">
 <title>FLIPr.tv - Create a new program</title>
 </head>
 <body>
@@ -193,6 +194,8 @@
     <h2>${nn._([cms.global.PAGE_ID, 'title-func', 'My Programs'])} > 
     {{if cms.global.vIsYoutubeSync === true}}
         {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new YouTube Sync Program'])}}
+    {{else cms.global.vIsYoutubeLive === true}}
+        {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new Live Program'])}}
     {{else}}
         {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new FLIPr Program'])}}
     {{/if}}
@@ -210,7 +213,23 @@
         <div class="fmfield">
             <p class="text">
                 <span>
-                    <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="" class="text" placeholder="https://www.youtube.com/user/ABC or http://www.youtube.com/playlist?list=ABC">
+                    <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="" class="text" data-ctype="ytsync" placeholder="https://www.youtube.com/user/ABC or http://www.youtube.com/playlist?list=ABC">
+                </span>
+            </p>
+            <div class="clear">
+                <p id="ytSyncMsg" class="validation-failed hide"></p>
+            </div>
+        </div>
+    </div>
+    {{else cms.global.vIsYoutubeLive === true}}
+    <div class="fminput clearfix">
+        <input type="hidden" name="contentType" value="13">
+        <label for="name">
+            <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Add live video URL'])}</label>
+        <div class="fmfield">
+            <p class="text">
+                <span>
+                    <input type="text" name="sourceUrl2" id="ytUrlLive" maxlength="100" value="" class="text" data-ctype="ytlive" placeholder="https://www.youtube.com/watch?v=_ABC">
                 </span>
             </p>
             <div class="clear">
