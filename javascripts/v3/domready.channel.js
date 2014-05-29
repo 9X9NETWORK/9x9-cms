@@ -591,23 +591,26 @@ $(function () {
                 channelId: cms.global.USER_URL.param('id')
             }), parameter, function (channel) {
                 if (true === cms.global.vIsYoutubeLive) {
-
-                    nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
-                        channelId: channel.id
-                    }), null, function(episodes) {
-                        var cntEpisode = episodes.length;
-                        if (cntEpisode > 0) {
-                            nn.api('DELETE', cms.reapi('/api/episodes/{episodeId}', {
-                                episodeId: episodes[0].id
-                            }), null, function(programs) {
+                    if ("processing" === $("#ytUrlLive").data("status")){
+                        nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
+                            channelId: channel.id
+                        }), null, function(episodes) {
+                            var cntEpisode = episodes.length;
+                            if (cntEpisode > 0) {
+                                nn.api('DELETE', cms.reapi('/api/episodes/{episodeId}', {
+                                    episodeId: episodes[0].id
+                                }), null, function(programs) {
+                                    $page.ytLiveCreate(channel.id);
+                                });
+                            } else {
                                 $page.ytLiveCreate(channel.id);
-                            });
-                        } else {
-                            $page.ytLiveCreate(channel.id);
-                        }
-                        $('body').removeClass('has-change');
-                    });
-                }else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
+                            }
+                            $('body').removeClass('has-change');
+                        });
+                    } else {
+                        $page.saveAfter();
+                    }
+               }else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
                     var userIds = [],
                         accessTokens = [];
                     if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {
