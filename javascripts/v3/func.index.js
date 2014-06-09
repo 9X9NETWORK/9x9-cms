@@ -100,12 +100,13 @@
         $(thisChLi)
             .find(".photo-list img.watermark")
             .attr("src", "images/icon_warning_lg.png")
-            .attr("title", nn._([cms.global.PAGE_ID, 'channel-list', "Invalid original YouTube playlist"]))
+            .attr("title", nn._([cms.global.PAGE_ID, 'channel-list', "Invalid auto-sync, please sync again and reset in settings."]))
             .css("left", "78px").css("top", "32px");
 
         $(thisChLi).find("a").removeAttr("href");
         $(thisChLi).find("ul li a").addClass("disable");
         $(thisChLi).find("ul li a.del").removeClass("disable");
+        $(thisChLi).find("ul li a.sync").removeClass("disable");
         if("yes" === cms.global.USER_URL.param('releasethesync')){
             $(thisChLi).find("ul li a.sync").removeClass("disable");
         }
