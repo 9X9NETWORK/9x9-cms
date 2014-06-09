@@ -511,7 +511,7 @@
             "You don't have any FLIPr programs yet.": "你尚無任何FLIPr節目",
             "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目",
             "You don't have any live programs yet.": "你尚無任何直播節目",
-            "Invalid original YouTube playlist": "已失效的YouTube播放清單",
+            "Invalid auto-sync, please sync again and reset in settings.": "自動同步已失效，請再次同步並重新設定。",
             "YouTube sync program": "YouTube 同步節目",
             "Live program": "直播節目",
             "Sort by YouTube order": "依 YouTube 順序排列",
