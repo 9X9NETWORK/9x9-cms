@@ -83,6 +83,52 @@ $(function () {
         var chkVal = $('input[name=scheduleun-app]:checked').val();
         if("Scheduled" === chkVal){
             $(".f-schedule-date").removeClass("hide");
+
+
+$('.f-schedule-date .datepicker').datepicker({
+            firstDay: 0,
+            minDate: 0,
+            dateFormat: 'yy/mm/dd',
+            autoSize: true,
+            onSelect: function (dateText, inst) {
+                $('body').addClass('has-change');
+                var selectDay   = parseInt(inst.currentDay, 10).toString(),
+                    selectMonth = parseInt(inst.currentMonth + 1, 10).toString(),
+                    activeHour  = $('#date-time .time ul li.active').index(),
+                    date = '';
+                if (selectDay.length < 2) {
+                    selectDay = '0' + selectDay;
+                }
+                if (selectMonth.length < 2) {
+                    selectMonth = '0' + selectMonth;
+                }
+                date = inst.currentYear + '/' + selectMonth + '/' + selectDay;
+
+                // if (date === todayDate) {
+                    
+                //     if (activeHour <= nowHour) {
+                //         $('#date-time .time ul li').removeAttr('class');
+                //         $('#date-time .time ul li:eq(' + nowHour + ')').addClass('active').addClass('enable');
+                //         $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
+                //         $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
+                //     } else {
+                //         $('#date-time .time ul li').removeClass('enable').removeClass('disable');
+                //         $('#date-time .time ul li:eq(' + nowHour + ')').addClass('enable');
+                //         $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
+                //         $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
+                //     }
+                // } else {
+                //     $('#date-time .time ul li').removeClass('enable').removeClass('disable');
+                //     $('#date-time .time ul li').addClass('enable');
+                // }
+                $('#ssdate').val(date);
+            }
+        });
+
+$('#basicExample').timepicker();
+
+
+
         } else {
             $(".f-schedule-date").addClass("hide");
         }
