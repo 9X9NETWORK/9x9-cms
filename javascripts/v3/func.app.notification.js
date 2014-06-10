@@ -49,9 +49,22 @@
 
             }
         }
+
         if ("Scheduled" == chkScheduled) {
-            // to do list
-            inDate = "1403258106641";
+            var dateTmp = new Date($(".f-schedule-date .datepicker").datepicker("getDate")),
+                avaDate = new Date(),
+                avaDateTime = 1000 * 60 * 60;
+
+            avaDateTime += avaDate.getTime();
+            dateTmp.setHours($("#schedule-hour").val());
+            dateTmp.setMinutes($("#schedule-minute").val());
+
+
+            inDate = dateTmp.getTime();
+
+            if (inDate < avaDate) {
+                errMsg = 'Pleaet fill the right time.';
+            }
         }
 
         if ("" === errMsg) {
@@ -87,11 +100,52 @@
         }
     };
 
+    $page.scheduleChange = function () {
+
+        var chkVal = $('input[name=scheduleun-app]:checked').val();
+        if ("Scheduled" === chkVal) {
+            $(".f-schedule-date").removeClass("hide");
+
+
+            $('.f-schedule-date .datepicker').datepicker({
+                firstDay: 0,
+                minDate: 0,
+                dateFormat: 'yy/mm/dd',
+                autoSize: true,
+                onSelect: function(dateText, inst) {
+                    $('body').addClass('has-change');
+                    var selectDay = parseInt(inst.currentDay, 10).toString(),
+                        selectMonth = parseInt(inst.currentMonth + 1, 10).toString(),
+                        activeHour = $('#date-time .time ul li.active').index(),
+                        date = '';
+                    if (selectDay.length < 2) {
+                        selectDay = '0' + selectDay;
+                    }
+                    if (selectMonth.length < 2) {
+                        selectMonth = '0' + selectMonth;
+                    }
+
+                    date = inst.currentYear + '/' + selectMonth + '/' + selectDay;
+                }
+            });
+
+        } else {
+            $(".f-schedule-date").addClass("hide");
+        }
+    };
+
     $page.editNotify = function(nid) {
         if (nid > 0) {
             nn.api('GET', cms.reapi('/api/push_notifications/{push_notificationId}', {
                 push_notificationId: nid
-            }), null, function (notify) {
+            }), null, function(notify) {
+                var tmpDate = new Date(notify.scheduleDate),
+                    strDate = cms.common.formatTimestamp(tmpDate.getTime()).split(" "),
+                    strTime = [0, 0];
+
+                if (strDate.length > 1) {
+                    strTime = strDate[1].split(":");
+                }
 
                 $("#channel-sub-name").text(" > " + nn._([cms.global.PAGE_ID, 'title-func', 'Edit app notification']));
 
@@ -101,14 +155,16 @@
                 $("#NotifyMessage").val(notify.message);
                 $("#notifyId").val(notify.id);
 
-                // to do
-                // set scheduled date time
+                $('input[name=scheduleun-app]:checked').val("Scheduled");
+                $page.scheduleChange();
+
+                $(".f-schedule-date .datepicker").datepicker("setDate", tmpDate);
+                $("#schedule-hour").val(strTime[0]);
+                $("#schedule-minute").val(strTime[1]);
+
 
                 $('#overlay-s').fadeOut("slow");
-                nn.log(notify);
             });
-
-
         } else {
             location.href = "app-notification.html"
         }
