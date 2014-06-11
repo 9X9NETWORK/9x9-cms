@@ -6,9 +6,40 @@
 
     var $common = cms.common;
         $page.isNotifyAvailable = false;
+        $page.scheduleLimit = 3;
+        $page.avaDateTime = 1000 * 60 * 30;
+
+    $page.chkWaiting2Send = function () {
+        var avaDate = new Date(),
+            avaDateTime = $page.avaDateTime,
+            inDate = 0;
+
+        avaDateTime += avaDate.getTime();
+
+        $('.notifyEdit').each(function () {
+            inDate = $(this).data("sdate");
+            if (inDate < avaDate) {
+                $(this).addClass("disable");
+                $(this).find(".notice").text(nn._([cms.global.PAGE_ID, 'notification', "Waiting to send..."]));
+            }
+        });
+    };
+
+    $page.chkNewStatus = function () {
+        var schItem = $(".notifyEdit").length;
+        if (schItem >= $page.scheduleLimit) {
+            $("#newNotify").addClass("disable");
+        } else {
+            $("#newNotify").removeClass("disable");
+            if (schItem < 1) {
+                $('#notify-empty-msg-tmpl').tmpl([{
+                    extMsg: 'You have no scheduled notification'
+                }]).appendTo('.list-outline');
+            }
+        }
+    };
 
     $page.chkNotifyForm = function () {
-        // to do
         if(!$page.isNotifyAvailable){
             location.href = "app-notification.html";
             return false;
@@ -53,7 +84,7 @@
         if ("Scheduled" == chkScheduled) {
             var dateTmp = new Date($(".f-schedule-date .datepicker").datepicker("getDate")),
                 avaDate = new Date(),
-                avaDateTime = 1000 * 60 * 60;
+                avaDateTime = $page.avaDateTime;
 
             avaDateTime += avaDate.getTime();
             dateTmp.setHours($("#schedule-hour").val());
@@ -102,10 +133,14 @@
 
     $page.scheduleChange = function () {
 
-        var chkVal = $('input[name=scheduleun-app]:checked').val();
+        var chkVal = $('input[name=scheduleun-app]:checked').val(),
+            tmpDate = new Date(),
+            strDate = cms.common.formatTimestamp(tmpDate.getTime()+(1000 * 60 * 60)).split(" "),
+            strTime = [0, 0],
+            iMin = 0;
+
         if ("Scheduled" === chkVal) {
             $(".f-schedule-date").removeClass("hide");
-
 
             $('.f-schedule-date .datepicker').datepicker({
                 firstDay: 0,
@@ -128,6 +163,15 @@
                     date = inst.currentYear + '/' + selectMonth + '/' + selectDay;
                 }
             });
+
+            strTime = strDate[1].split(":");
+            $("#schedule-hour").val(strTime[0]);
+            iMin = parseInt(strTime[1],10);
+
+            if(iMin >= 30){
+                $("#schedule-minute").val("30");
+            }
+            
 
         } else {
             $(".f-schedule-date").addClass("hide");
@@ -218,18 +262,18 @@
             msoId: cms.global.MSO
         }), {
             type: "schedule"
-        }, function(HistoryLists) {
+        }, function (HistoryLists) {
             var cntList = HistoryLists.length;
 
-            $("#channel-sub-name").text(" > "+nn._([cms.global.PAGE_ID, 'title-func', 'Schedule']));
+            $("#channel-sub-name").text(" > " + nn._([cms.global.PAGE_ID, 'title-func', 'Schedule']));
             $('#notify-list-wrap-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
             $('.notify-list-title').text(nn._([cms.global.PAGE_ID, 'notification', 'Notification scheduled list (20 notifications displayed at the most.)']));
-           if (cntList < 1) {
-                $('#notify-empty-msg-tmpl').tmpl([{extMsg: 'You have no scheduled notification'}]).appendTo('.list-outline');
-                // $page.getEmptyUI(true);
-            } else {
+            if (cntList > 0) {
                 $('#notify-list-item-schedule-tmpl').tmpl(HistoryLists).appendTo('#list-history');
             }
+            $page.chkNewStatus();
+            $page.chkWaiting2Send();
+
             $("#notifySchedule").parent().addClass('on');
             $(".notify-list-wrap").show();
             $('#overlay-s').fadeOut("slow");

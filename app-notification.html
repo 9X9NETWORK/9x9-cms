@@ -203,7 +203,7 @@
 
 <!-- notify-list-wrap Begin -->
 <script id="notify-list-item-schedule-tmpl" type="text/x-jquery-tmpl">
-    <li id="notify_${id}" class="notifyEdit">
+    <li id="notify_${id}" class="notifyEdit" data-sdate="${scheduleDate}">
         <time class="notify-time">${cms.common.formatTimestamp(scheduleDate)}</time> 
         <span class="notify-content">${message}</span>
         <div class="func-btns">                                                        
@@ -276,7 +276,7 @@
                 </div> 
             </div>
             <div class="form-group required-field">
-                <div class="form-label">${nn._([cms.global.PAGE_ID, 'notification', 'Schedule'])}</div>
+                <div class="form-label">${nn._([cms.global.PAGE_ID, 'schedule-form', 'Schedule'])}</div>
                 <div class="form-elements">
 
                     <input type="radio" class="f-schedule-type" autocomplete="off" id="scheduleun-app1" name="scheduleun-app" value="Immediate" checked="checked">
@@ -338,7 +338,7 @@
             <div class="form-submit-wrap">
                 <span class="notifyMsg wRed" ></span>
                 <a class="normal-btn vCancel" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'Cancel'])}</a>
-                <a class="normal-btn vSend" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'Send'])}</a>
+                <a class="normal-btn vSend" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'OK'])}</a>
                 
             </div>
 
