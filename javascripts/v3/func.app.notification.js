@@ -6,7 +6,7 @@
 
     var $common = cms.common;
         $page.isNotifyAvailable = false;
-        $page.scheduleLimit = 3;
+        $page.scheduleLimit = 20;
         $page.avaDateTime = 1000 * 60 * 30;
 
     $page.chkWaiting2Send = function () {
@@ -18,7 +18,7 @@
 
         $('.notifyEdit').each(function () {
             inDate = $(this).data("sdate");
-            if (inDate < avaDate) {
+            if (inDate < avaDateTime) {
                 $(this).addClass("disable");
                 $(this).find(".notice").text(nn._([cms.global.PAGE_ID, 'notification', "Waiting to send..."]));
             }
