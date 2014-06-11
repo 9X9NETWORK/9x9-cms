@@ -196,6 +196,7 @@
             "You can schedule 20 notifications at the most": "最多可排程20個推播通知",
             "Notification scheduled list (20 notifications displayed at the most.)": "排程通知列表 (至多20筆)",
             "Create an app notification": "創建App通知",
+            "Waiting to send...": "等待發送...",
             "You don't have been authorized to send notifications to the iOS app Android app users.": "您還沒有獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
             "You have been authorized to send notifications to the iOS app users.": "您已經獲得授權，可以發送通知給 iOS app 用戶。",
             "You have been authorized to send notifications to the Android app users.": "您已經獲得授權，可以發送通知給 Android app 用戶。",
