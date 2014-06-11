@@ -8,7 +8,7 @@
     "studio-nav": {
         "CMS": "<span class=\"cms-icon\">後台管理系統</span>",
         "CMSContent Management System": "<span class=\"cms-icon\">後台管理系統</span>",
-        "My Programs": "我的節目",
+        "My Programs": "節目管理",
         "My App": "App 管理",
         "CMS Settings": "<img src=\"images/icon_studio_setup.png\" alt=\"\" />管理系統設定",
         "Connection is inactive, click to restart it.": "連結授權已失效，請點此重啟連結。"
@@ -177,7 +177,7 @@
             "Schedule": "排程通知",
             "Edit app notification": "編輯通知",
             "Notification": "通知",
-            "Create a app notification": "創建App通知",
+            "Create an app notification": "創建App通知",
             "History": "已發送通知"
 
         },
@@ -198,7 +198,7 @@
             "You don't have been authorized to send notifications to the iOS app Android app users.": "您還沒有獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
             "You have been authorized to send notifications to the iOS app users.": "您已經獲得授權，可以發送通知給 iOS app 用戶。",
             "You have been authorized to send notifications to the Android app users.": "您已經獲得授權，可以發送通知給 Android app 用戶。",
-            "You have been authorized to send notifications to the iOS app and Android app users.": "您已經獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
+            "You are authorized to send notifications to the iOS app and Android app users.": "您已經獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
             "Input notification message...": "輸入通知內容...",
             "Tip : Input message within 17 Chinese characters or 34 English letters.": "建議字數為17個中文或34英文字母",
             "Notification message": "通知內容",
@@ -297,7 +297,7 @@
             "Find [<span>?</span>] programs.": "找到 [<span>{0}</span>] 個節目。",
             "Your search - [xxx] didn't match any programs.": "找不到符合 [<span>{0}</span>] 的節目。",
             "Search by:": "搜尋依:",
-            "My programs:": "我的節目:",
+            "My programs:": "節目管理:",
             "Results:": "搜尋結果:",
             "Add programs into “<span>Set 2</span>”": "增加節目到你的 “<span>{0}</span>”推薦類別",
             "Please fill in the program url to search.": "請輸入節目網址搜尋",
@@ -410,7 +410,7 @@
             "Find [<span>?</span>] programs.": "找到 [<span>{0}</span>] 個節目。",
             "Your search - [xxx] didn't match any programs.": "找不到符合 [<span>{0}</span>] 的節目。",
             "Search by:": "搜尋依:",
-            "My programs:": "我的節目:",
+            "My programs:": "節目管理:",
             "Results:": "搜尋結果:",
             "Add programs into “<span>Set 2</span>”": "增加節目到 “<span>{0}</span>” 頻道",
             "Please fill in the program url to search.": "請輸入節目網址搜尋",
@@ -485,20 +485,20 @@
     },
     "index": {
         "html-title": {
-            "FLIPr.tv - My Programs": "FLIPr.tv - 我的節目"
+            "FLIPr.tv - My Programs": "FLIPr.tv - 節目管理"
         },
         "func-nav": {
             "Create a new program": "創建節目"
         },
         "title-func": {
-            "My Programs": "我的節目",
+            "My Programs": "節目管理",
             "Reorder programs": "排序節目",
             "Save order": "儲存排序",
             "Create a new program": "創建節目",
             "Filtered by:": "分類條件:",
             "All": "全部",
             "FLIPr programs": "FLIPr節目",
-            "Youtube sync programs": "Youtube同步節目",
+            "YouTube sync programs": "YouTube同步節目",
             "Live programs": "直播節目"
         },
         "channel-list": {
@@ -525,12 +525,12 @@
             "You don't have any FLIPr programs yet.": "你尚無任何FLIPr節目",
             "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目",
             "You don't have any live programs yet.": "你尚無任何直播節目",
-            "Invalid original YouTube playlist": "已失效的YouTube播放清單",
+            "Invalid auto-sync, please sync again and reset in settings.": "自動同步已失效，請再次同步並重新設定。",
             "YouTube sync program": "YouTube 同步節目",
             "Live program": "直播節目",
             "Sort by YouTube order": "依 YouTube 順序排列",
             "Sort by YouTube reverse order": "依 YouTube 反序排列",
-            "On program store": "已添加到節目商店"
+            "In my app": "已上架"
         },
         "overlay": {
             "Create a New Program": "建立一個新的節目",
@@ -595,7 +595,7 @@
             "Settings": "節目設定"
         },
         "title-func": {
-            "My Programs": "我的節目",
+            "My Programs": "節目管理",
             "Create a new FLIPr Program": "創建 FLIPr 節目",
             "Create a new YouTube Sync Program": "創建 YouTube 同步節目",
             "Create a new Live Program": "創建直播節目",
@@ -641,8 +641,8 @@
             "Add Youtube channel or playlist URL": "輸入Youtube頻道或播放清單",
             "Add live video URL": "輸入直播網址",
             "Auto sync with YouTube": "YouTube自動同步",
-            "Program will auto-sync with YouTube at 0 AM, 8 AM, 12 PM, 6 PM and 9 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上0點、8點、中午12點、晚上6點、9點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
-            "This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 6 PM and 9 PM every day. Are you sure to auto sync?": "YouTube 同步功能開啟後，系統會在每天早上0點、8點、中午12點、晚上6點、9點，自動同步YouTube的資訊與影片，確定要進行同步?",
+            "Program will auto-sync with YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上0點、8點、中午12點、晚上6點、9點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
+            "This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?": "YouTube 同步功能開啟後，系統會在每天早上0點、8點、中午12點、下午2點、晚上6點、9點，自動同步YouTube的資訊與影片，確定要進行同步?",
             "Episode sort by": "劇集排序依照",
             "YouTube playlist or YouTube channel order": "YouTube 播放清單或頻道順序排列",
             "YouTube playlist or YouTube channel reverse order": "YouTube 播放清單或頻道反序排列",

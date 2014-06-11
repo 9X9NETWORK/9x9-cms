@@ -33,7 +33,7 @@ $(function () {
             $page.youtubeYyncOnOff("off");
         } else {
             var msgOverlay = $('#youtube-sync-alert-overlay');
-            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
             $(msgOverlay).find('#yes-sync').text(nn._(['overlay', 'button', 'Yes']));
             $(msgOverlay).find('#no-sync').text(nn._(['overlay', 'button', 'No']));
 
@@ -591,23 +591,26 @@ $(function () {
                 channelId: cms.global.USER_URL.param('id')
             }), parameter, function (channel) {
                 if (true === cms.global.vIsYoutubeLive) {
-
-                    nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
-                        channelId: channel.id
-                    }), null, function(episodes) {
-                        var cntEpisode = episodes.length;
-                        if (cntEpisode > 0) {
-                            nn.api('DELETE', cms.reapi('/api/episodes/{episodeId}', {
-                                episodeId: episodes[0].id
-                            }), null, function(programs) {
+                    if ("processing" === $("#ytUrlLive").data("status")){
+                        nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
+                            channelId: channel.id
+                        }), null, function(episodes) {
+                            var cntEpisode = episodes.length;
+                            if (cntEpisode > 0) {
+                                nn.api('DELETE', cms.reapi('/api/episodes/{episodeId}', {
+                                    episodeId: episodes[0].id
+                                }), null, function(programs) {
+                                    $page.ytLiveCreate(channel.id);
+                                });
+                            } else {
                                 $page.ytLiveCreate(channel.id);
-                            });
-                        } else {
-                            $page.ytLiveCreate(channel.id);
-                        }
-                        $('body').removeClass('has-change');
-                    });
-                }else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
+                            }
+                            $('body').removeClass('has-change');
+                        });
+                    } else {
+                        $page.saveAfter();
+                    }
+               }else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
                     var userIds = [],
                         accessTokens = [];
                     if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {

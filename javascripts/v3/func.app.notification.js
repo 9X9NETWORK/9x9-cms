@@ -182,7 +182,7 @@
             location.href = "app-notification.html";
             return false;
         }
-        $("#channel-sub-name").text(" > " + nn._([cms.global.PAGE_ID, 'title-func', 'Create a app notification']));
+        $("#channel-sub-name").text(" > " + nn._([cms.global.PAGE_ID, 'title-func', 'Create an app notification']));
 
         $('#content-main-wrap .constrain').html('');
         // $('#notify-comm-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
@@ -196,7 +196,7 @@
             retVal = "You don't have been authorized to send notifications to the iOS app Android app users.";
 
         if (isNotifyiOS === true && isNotifyAndroid === true) {
-            retVal = "You have been authorized to send notifications to the iOS app and Android app users.";
+            retVal = "You are authorized to send notifications to the iOS app and Android app users.";
         } else if (isNotifyiOS === true) {
             retVal = "You have been authorized to send notifications to the iOS app users.";
         } else if (isNotifyAndroid === true) {
