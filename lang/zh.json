@@ -165,7 +165,7 @@
     },
     "app-notification": {
         "html-title": {
-            "FLIPr.tv - App Notifiction": "FLIPr.tv - 推播訊息"
+            "FLIPr.tv - App Notifiction": "FLIPr.tv - 推播通知"
         },
         "func-nav": {
             "Main Channels": "主頻道",
@@ -174,13 +174,27 @@
             "Notification": "通知"
         },
         "title-func": {
+            "Schedule": "排程通知",
+            "Edit app notification": "編輯通知",
             "Notification": "通知",
             "Create a app notification": "創建App通知",
             "History": "已發送通知"
 
         },
          "notification": {
+            "Schedule": "排程通知",
+            "History": "已發送",
+            "Are you sure you want to delete this notification? All data will be removed permanently.": "所有資料將永久刪除，確定刪除此推撥通知？",
             "Create a app notification": "創建App通知",
+            "Hour": "時",
+            "Minute": "分",
+            "Immediate": "立即發送",
+            "Scheduled": "排程通知",
+            "Pleaet fill the right time.": "時間格式不正確",
+            "You have no history notification": "您尚未發送任何推播通知",
+            "You have no scheduled notification": "您尚未排程任何推播通知",
+            "You can schedule 20 notifications at the most": "最多可排程20個推播通知",
+            "Notification scheduled list (20 notifications displayed at the most.)": "排程通知列表 (至多20筆)",
             "You don't have been authorized to send notifications to the iOS app Android app users.": "您還沒有獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
             "You have been authorized to send notifications to the iOS app users.": "您已經獲得授權，可以發送通知給 iOS app 用戶。",
             "You have been authorized to send notifications to the Android app users.": "您已經獲得授權，可以發送通知給 Android app 用戶。",
@@ -201,7 +215,7 @@
             "Yes": "是",
             "Cancel": "取消",
             "Send": "發送",
-            "Notification history list (20 notifications displayed at the most in history list)": "已發送通知列表(顯示最近20筆):",
+            "Notification history list (20 notifications displayed at the most.)": "已發送通知列表(顯示最近20筆):",
             "Input notification message...": "輸入通知內容...",
             "Input FLIPr program or episode URL...": "輸入 FLIPr 節目或劇集網址..."
         }

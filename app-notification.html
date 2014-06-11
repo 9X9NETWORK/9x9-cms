@@ -185,7 +185,7 @@
 <script id="notify-comm-tmpl" type="text/x-jquery-tmpl">
     <a id="newNotify" href="#" class="normal-btn ${disableFix}">+ ${nn._([cms.global.PAGE_ID, 'notification', 'Create a app notification'])}</a>
     <a class="icon-question is-with-tooltip" href=""><div class="tooltip-wrap">
-        ${nn._([cms.global.PAGE_ID, 'notification', 'you can schedule 20 notifications at the most'])}
+        ${nn._([cms.global.PAGE_ID, 'notification', 'You can schedule 20 notifications at the most'])}
     </div></a>
 
     <div class="normal-margin">${extMsg}</div>
@@ -233,7 +233,7 @@
             <li class="tab-item"><a id="notifyHistory" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'History'])}</a></li>
         </ul>   
         <h2 class="notify-list-title">
-        ${nn._([cms.global.PAGE_ID, 'notification', 'Notification history list (20 notifications displayed at the most in history list)'])}
+        
         </h2>
 
         <div class="list-outline">
@@ -276,7 +276,7 @@
                 </div> 
             </div>
             <div class="form-group required-field">
-                <div class="form-label">Schedule</div>
+                <div class="form-label">${nn._([cms.global.PAGE_ID, 'notification', 'Schedule'])}</div>
                 <div class="form-elements">
 
                     <input type="radio" class="f-schedule-type" autocomplete="off" id="scheduleun-app1" name="scheduleun-app" value="Immediate" checked="checked">
@@ -291,7 +291,7 @@
                         <div class="datepicker"></div>
 
                         <div class="fTimeSelect">
-                            <h3>Hour:</h3>
+                            <h3>${nn._([cms.global.PAGE_ID, 'notification', 'Hour'])}:</h3>
                             <select id="schedule-hour">
                                 <option value="00">00</option>
                                 <option value="01">01</option>
@@ -319,7 +319,7 @@
                                 <option value="23">23</option>
                             </select>
 
-                            <h3>Minute:</h3>
+                            <h3>${nn._([cms.global.PAGE_ID, 'notification', 'Minute'])}:</h3>
                             <select id="schedule-minute">
                                 <option value="00">00</option>
                                 <option value="30">30</option>

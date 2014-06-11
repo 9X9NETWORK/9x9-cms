@@ -155,6 +155,12 @@
                 $("#NotifyMessage").val(notify.message);
                 $("#notifyId").val(notify.id);
 
+                if ("" !== notify.content) {
+                    $("#run-app2").click();
+                    $('#NotifyContent').val(notify.content);
+                }
+
+                $("#scheduleun-app2").click();
                 $('input[name=scheduleun-app]:checked').val("Scheduled");
                 $page.scheduleChange();
 
@@ -217,7 +223,8 @@
 
             $("#channel-sub-name").text(" > "+nn._([cms.global.PAGE_ID, 'title-func', 'Schedule']));
             $('#notify-list-wrap-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
-            if (cntList < 1) {
+            $('.notify-list-title').text(nn._([cms.global.PAGE_ID, 'notification', 'Notification scheduled list (20 notifications displayed at the most.)']));
+           if (cntList < 1) {
                 $('#notify-empty-msg-tmpl').tmpl([{extMsg: 'You have no scheduled notification'}]).appendTo('.list-outline');
                 // $page.getEmptyUI(true);
             } else {
@@ -248,6 +255,7 @@
 
             $("#channel-sub-name").text(" > "+nn._([cms.global.PAGE_ID, 'title-func', 'History']));
             $('#notify-list-wrap-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
+            $('.notify-list-title').text(nn._([cms.global.PAGE_ID, 'notification', 'Notification history list (20 notifications displayed at the most.)']));
             if (cntList < 1) {
                 $('#notify-empty-msg-tmpl').tmpl([{extMsg: 'You have no history notification'}]).appendTo('.list-outline');
                 // $page.getEmptyUI(true);

@@ -30,7 +30,7 @@ $(function () {
     });
 
     $(document).on('click', '.notifyDel', function (e) {
-        var showMsg = "Are you sure wont to delete this notification? All data will be removed permanently.",
+        var showMsg = "Are you sure you want to delete this notification? All data will be removed permanently.",
             nid = $(this).data('nid');
 
         $('#confirm-prompt-basic').data("actli", nid);
