@@ -63,7 +63,7 @@
             inDate = dateTmp.getTime();
 
             if (inDate < avaDate) {
-                errMsg = 'Pleaet fill the right time.';
+                errMsg = 'Invalid scheduled time, please try again.';
             }
         }
 

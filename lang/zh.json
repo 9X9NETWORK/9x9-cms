@@ -175,7 +175,7 @@
         },
         "title-func": {
             "Schedule": "排程通知",
-            "Edit app notification": "編輯通知",
+            "Edit app notification": "編輯App通知",
             "Notification": "通知",
             "Create an app notification": "創建App通知",
             "History": "已發送通知"
@@ -190,7 +190,7 @@
             "Minute": "分",
             "Immediate": "立即發送",
             "Scheduled": "排程通知",
-            "Pleaet fill the right time.": "時間格式不正確",
+            "Invalid scheduled time, please try again.": "排程時間已失效，請重新填寫。",
             "You have no history notification": "您尚未發送任何推播通知",
             "You have no scheduled notification": "您尚未排程任何推播通知",
             "You can schedule 20 notifications at the most": "最多可排程20個推播通知",
