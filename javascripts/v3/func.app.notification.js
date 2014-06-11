@@ -6,9 +6,23 @@
 
     var $common = cms.common;
         $page.isNotifyAvailable = false;
+        $page.scheduleLimit = 3;
+
+    $page.chkNewStatus = function () {
+        var schItem = $(".notifyEdit").length;
+        if (schItem >= $page.scheduleLimit) {
+            $("#newNotify").addClass("disable");
+        } else {
+            $("#newNotify").removeClass("disable");
+            if (schItem < 1) {
+                $('#notify-empty-msg-tmpl').tmpl([{
+                    extMsg: 'You have no scheduled notification'
+                }]).appendTo('.list-outline');
+            }
+        }
+    };
 
     $page.chkNotifyForm = function () {
-        // to do
         if(!$page.isNotifyAvailable){
             location.href = "app-notification.html";
             return false;
@@ -218,18 +232,17 @@
             msoId: cms.global.MSO
         }), {
             type: "schedule"
-        }, function(HistoryLists) {
+        }, function (HistoryLists) {
             var cntList = HistoryLists.length;
 
-            $("#channel-sub-name").text(" > "+nn._([cms.global.PAGE_ID, 'title-func', 'Schedule']));
+            $("#channel-sub-name").text(" > " + nn._([cms.global.PAGE_ID, 'title-func', 'Schedule']));
             $('#notify-list-wrap-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
             $('.notify-list-title').text(nn._([cms.global.PAGE_ID, 'notification', 'Notification scheduled list (20 notifications displayed at the most.)']));
-           if (cntList < 1) {
-                $('#notify-empty-msg-tmpl').tmpl([{extMsg: 'You have no scheduled notification'}]).appendTo('.list-outline');
-                // $page.getEmptyUI(true);
-            } else {
+            if (cntList > 0) {
                 $('#notify-list-item-schedule-tmpl').tmpl(HistoryLists).appendTo('#list-history');
             }
+            $page.chkNewStatus();
+
             $("#notifySchedule").parent().addClass('on');
             $(".notify-list-wrap").show();
             $('#overlay-s').fadeOut("slow");

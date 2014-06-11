@@ -45,12 +45,13 @@ $(function () {
     $(document).on('click', '#confirm-prompt-basic .btn-leave', function (e) {
         var nid = $("#confirm-prompt-basic").data('actli');
         // 待微調
-        if(nid >0){
+        if (nid > 0) {
             nn.api('DELETE', cms.reapi('/api/push_notifications/{push_notificationId}', {
                 push_notificationId: nid
-            }), null, function(ret) {
+            }), null, function (ret) {
                 $('#confirm-prompt-basic').data("actli", "");
                 $('#notify_' + nid).remove();
+                $page.chkNewStatus();
                 $.unblockUI();
                 return false;
             });
