@@ -327,20 +327,21 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   white-space: nowrap;
   left: 28px;
   top: -16px;
+  color: #555555;
 }
-/* line 246, ../sass/cms-component.sass */
+/* line 247, ../sass/cms-component.sass */
 .icon-question.is-with-tooltip:hover > .tooltip-wrap {
   display: block;
 }
 
-/* line 248, ../sass/cms-component.sass */
+/* line 249, ../sass/cms-component.sass */
 .nav-tabs {
   overflow: hidden;
   *zoom: 1;
   position: relative;
   padding-bottom: 20px;
 }
-/* line 254, ../sass/cms-component.sass */
+/* line 255, ../sass/cms-component.sass */
 .nav-tabs:after {
   content: "";
   display: block;
@@ -356,12 +357,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   -moz-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
 }
-/* line 268, ../sass/cms-component.sass */
+/* line 269, ../sass/cms-component.sass */
 .nav-tabs .tab-item {
   float: left;
   margin-bottom: -1px;
 }
-/* line 271, ../sass/cms-component.sass */
+/* line 272, ../sass/cms-component.sass */
 .nav-tabs .tab-item a {
   text-decoration: none;
   color: #555555;
@@ -373,22 +374,22 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   padding: 8px 25px;
   background-color: white;
 }
-/* line 282, ../sass/cms-component.sass */
+/* line 283, ../sass/cms-component.sass */
 .nav-tabs .tab-item a:hover {
   color: #999999;
 }
-/* line 285, ../sass/cms-component.sass */
+/* line 286, ../sass/cms-component.sass */
 .nav-tabs .tab-item.on a {
   background-color: #e2e2e2;
   border-bottom: 1px solid #e2e2e2;
   cursor: default;
 }
-/* line 289, ../sass/cms-component.sass */
+/* line 290, ../sass/cms-component.sass */
 .nav-tabs .tab-item.on a:hover {
   color: #555555;
 }
 
-/* line 293, ../sass/cms-component.sass */
+/* line 294, ../sass/cms-component.sass */
 .func-btns .del {
   display: block;
   width: 22px;
@@ -399,12 +400,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   text-indent: -100000px;
   background-position: 0 -97px;
 }
-/* line 302, ../sass/cms-component.sass */
+/* line 303, ../sass/cms-component.sass */
 .func-btns .del:hover {
   background-position: -23px -97px;
 }
 
-/* line 305, ../sass/cms-component.sass */
+/* line 306, ../sass/cms-component.sass */
 .btn-item {
   display: inline-block;
 }
