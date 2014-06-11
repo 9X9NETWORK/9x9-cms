@@ -71,12 +71,21 @@
   margin-left: 5px;
 }
 
+/* line 56, ../sass/cms-notification.sass */
+.notify-list.notify-history > li {
+  cursor: default;
+}
 /* line 58, ../sass/cms-notification.sass */
+.notify-list.notify-history > li:hover {
+  font-weight: normal;
+}
+
+/* line 62, ../sass/cms-notification.sass */
 .notify-intro-image {
   display: none;
 }
 
-/* line 60, ../sass/cms-notification.sass */
+/* line 64, ../sass/cms-notification.sass */
 .notify-list-wrap {
   display: none;
 }

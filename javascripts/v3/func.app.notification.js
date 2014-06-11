@@ -274,6 +274,7 @@
             $page.chkNewStatus();
             $page.chkWaiting2Send();
 
+            $('#list-history').removeClass("notify-history");
             $("#notifySchedule").parent().addClass('on');
             $(".notify-list-wrap").show();
             $('#overlay-s').fadeOut("slow");
@@ -288,7 +289,10 @@
         }
 
         $('#content-main-wrap .constrain').html('');
-        $('#notify-comm-tmpl').tmpl([{extMsg: $page.getNotifyAvailable(), disableFix: strDisableFix}]).appendTo('#content-main-wrap .constrain');
+        $('#notify-comm-tmpl').tmpl([{
+            extMsg: $page.getNotifyAvailable(),
+            disableFix: strDisableFix
+        }]).appendTo('#content-main-wrap .constrain');
 
         nn.api('GET', cms.reapi('/api/mso/{msoId}/push_notifications', {
             msoId: cms.global.MSO
@@ -297,15 +301,19 @@
         }, function(HistoryLists) {
             var cntList = HistoryLists.length;
 
-            $("#channel-sub-name").text(" > "+nn._([cms.global.PAGE_ID, 'title-func', 'History']));
+            $("#channel-sub-name").text(" > " + nn._([cms.global.PAGE_ID, 'title-func', 'History']));
             $('#notify-list-wrap-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
             $('.notify-list-title').text(nn._([cms.global.PAGE_ID, 'notification', 'Notification history list (20 notifications displayed at the most.)']));
             if (cntList < 1) {
-                $('#notify-empty-msg-tmpl').tmpl([{extMsg: 'You have no history notification'}]).appendTo('.list-outline');
+                $('#notify-empty-msg-tmpl').tmpl([{
+                    extMsg: 'You have no history notification'
+                }]).appendTo('.list-outline');
                 // $page.getEmptyUI(true);
             } else {
                 $('#notify-list-item-history-tmpl').tmpl(HistoryLists).appendTo('#list-history');
             }
+
+            $('#list-history').addClass("notify-history");
             $("#notifyHistory").parent().addClass('on');
             $(".notify-list-wrap").show();
             $('#overlay-s').fadeOut("slow");
