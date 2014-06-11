@@ -10,8 +10,31 @@
   display: block;
   overflow: hidden;
 }
+/* line 12, ../sass/cms-notification.sass */
+.notify-list .func-btns {
+  float: right;
+  margin-top: -22px;
+  position: relative;
+  z-index: 20;
+}
+/* line 17, ../sass/cms-notification.sass */
+.notify-list .notice {
+  color: red;
+  float: right;
+  margin-top: -15px;
+  margin-right: 8px;
+}
+/* line 23, ../sass/cms-notification.sass */
+.notify-list > li.disable {
+  color: #999999;
+}
+/* line 25, ../sass/cms-notification.sass */
+.notify-list > li.disable .del {
+  background-position: -46px -97px;
+  cursor: default;
+}
 
-/* line 11, ../sass/cms-notification.sass */
+/* line 29, ../sass/cms-notification.sass */
 .notify-content {
   white-space: nowrap;
   overflow: hidden;
@@ -22,8 +45,25 @@
   display: inline-block;
 }
 
-/* line 18, ../sass/cms-notification.sass */
+/* line 37, ../sass/cms-notification.sass */
 .form-group input[type="text"], .form-group textarea {
   width: calc(100% - 18em);
   font-size: 0.85rem;
+}
+
+/* line 41, ../sass/cms-notification.sass */
+.normal-btn + .icon-question {
+  line-height: 25px;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+/* line 49, ../sass/cms-notification.sass */
+.notify-intro-image {
+  display: none;
+}
+
+/* line 51, ../sass/cms-notification.sass */
+.notify-list-wrap {
+  display: none;
 }

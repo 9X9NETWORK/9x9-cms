@@ -8,6 +8,80 @@ $(function () {
     var $page = cms['app-notification'],
         $common = cms.common;
 
+    $(document).on('click', '.notifyEdit', function (e) {
+
+        var editId = $(this).attr("id").split("_")[1];
+
+        if ($(this).hasClass("disable")) {
+            // only delete
+            nn.log("..notifyEdit Disable");
+        } else {
+            // do edit process
+            if (editId > 0) {
+                location.replace("app-notification.html#edit");
+                $common.showProcessingOverlay();
+                $page.editNotify(editId);
+            } else {
+                location.href = "app-notification.html";
+            }
+        }
+
+        return false;
+    });
+
+    $(document).on('click', '.notifyDel', function (e) {
+        var showMsg = "Are you sure you want to delete this notification? All data will be removed permanently.",
+            nid = $(this).data('nid');
+
+        $('#confirm-prompt-basic').data("actli", nid);
+
+        $('#confirm-prompt-basic .content').text(nn._([cms.global.PAGE_ID, 'notification', showMsg]));
+        $.blockUI({
+            message: $('#confirm-prompt-basic')
+        });
+        return false;
+    });
+    // sure to delete
+    $(document).on('click', '#confirm-prompt-basic .btn-leave', function (e) {
+        var nid = $("#confirm-prompt-basic").data('actli');
+        // 待微調
+        if(nid >0){
+            nn.api('DELETE', cms.reapi('/api/push_notifications/{push_notificationId}', {
+                push_notificationId: nid
+            }), null, function(ret) {
+                $('#confirm-prompt-basic').data("actli", "");
+                $('#notify_' + nid).remove();
+                $.unblockUI();
+                return false;
+            });
+        }
+        return false;
+    });
+
+    $(document).on('click', '#notifySchedule', function (e) {
+        if(!$(this).parent().hasClass('on')){
+            $(".nav-tabs .tab-item").removeClass('on');
+            $(this).parent().hasClass('on')
+            $common.showProcessingOverlay();
+            $page.getNotifySchedule();
+        }
+
+    });
+
+    $(document).on('click', '#notifyHistory', function (e) {
+        if(!$(this).parent().hasClass('on')){
+            $(".nav-tabs .tab-item").removeClass('on');
+            $(this).parent().hasClass('on')
+            $common.showProcessingOverlay();
+            $page.getNotifyHistory();
+        }
+
+    });
+
+    $(document).on('click', '.f-schedule-type', function (e) {
+        $page.scheduleChange();
+    });
+
     $(document).on('click', '#run-app1, #run-app2', function (e) {
 
         var rValue = $(this).attr("id");

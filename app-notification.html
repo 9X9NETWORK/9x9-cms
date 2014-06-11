@@ -145,6 +145,21 @@
 </div>
 <!-- Unsave Prompt Layer End -->
 
+<!-- confirm Prompt basic Layer Begin -->
+<div id="confirm-prompt-basic" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">Are you sure?</p>
+            <div class="overlay-btn">
+                <p class="btns btn-no"><span><a href="#">No</a></span></p>
+                <p class="btns btn-leave"><span><a href="#">Yes</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm Prompt basic Layer End -->
+
 <!-- confirm Prompt Layer Begin -->
 <div id="confirm-prompt" class="lightbox-content overlay-l">
     <div class="overlay-container">
@@ -160,9 +175,19 @@
 </div>
 <!-- confirm Prompt Layer End -->
 
+<!-- notify-empty-msg-tmpl Begin -->
+<script id="notify-empty-msg-tmpl" type="text/x-jquery-tmpl">
+    <div class="normal-margin">${nn._([cms.global.PAGE_ID, 'notification', extMsg])}</div>
+</script>
+<!-- notify-empty-msg-tmpl End -->
+
 <!-- notify-intro-image-tmpl Begin -->
 <script id="notify-comm-tmpl" type="text/x-jquery-tmpl">
     <a id="newNotify" href="#" class="normal-btn ${disableFix}">+ ${nn._([cms.global.PAGE_ID, 'notification', 'Create an app notification'])}</a>
+    <a class="icon-question is-with-tooltip" href=""><div class="tooltip-wrap">
+        ${nn._([cms.global.PAGE_ID, 'notification', 'You can schedule 20 notifications at the most'])}
+    </div></a>
+
     <div class="normal-margin">${extMsg}</div>
 </script>
 <!-- notify-intro-image-tmpl End -->
@@ -177,9 +202,24 @@
 
 
 <!-- notify-list-wrap Begin -->
-<script id="notify-list-item-tmpl" type="text/x-jquery-tmpl">
+<script id="notify-list-item-schedule-tmpl" type="text/x-jquery-tmpl">
+    <li id="notify_${id}" class="notifyEdit">
+        <time class="notify-time">${cms.common.formatTimestamp(scheduleDate)}</time> 
+        <span class="notify-content">${message}</span>
+        <div class="func-btns">                                                        
+            <ul>
+                <li class="btn-item"><a data-nid="${id}" class="del notifyDel" href="">Del</a></li>
+            </ul>
+        </div>
+        <span class="notice"></span>
+    </li>
+</script>
+<!-- notify-list-wrap End -->
+
+<!-- notify-list-wrap Begin -->
+<script id="notify-list-item-history-tmpl" type="text/x-jquery-tmpl">
     <li id="notify_${id}">
-        <time class="notify-time">${cms.common.formatTimestamp(updateDate)}</time> 
+        <time class="notify-time">${cms.common.formatTimestamp(publishDate)}</time> 
         <span class="notify-content">${message}</span>
     </li>
 </script>
@@ -188,8 +228,12 @@
 <!-- notify-list-wrap Begin -->
 <script id="notify-list-wrap-tmpl" type="text/x-jquery-tmpl">
     <div class="notify-list-wrap">
+        <ul class="nav-tabs">
+            <li class="tab-item"><a id="notifySchedule" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'Schedule'])}</a></li>
+            <li class="tab-item"><a id="notifyHistory" href="#">${nn._([cms.global.PAGE_ID, 'notification', 'History'])}</a></li>
+        </ul>   
         <h2 class="notify-list-title">
-        ${nn._([cms.global.PAGE_ID, 'notification', 'Notification history list (20 notifications displayed at the most in history list)'])}
+        
         </h2>
 
         <div class="list-outline">
@@ -204,6 +248,7 @@
 <script id="notify-form-tmpl" type="text/x-jquery-tmpl">
     <div class="notify-form">
         <form>
+            <input type="hidden" id="notifyId" value="0" />
             <fieldset>
             <legend class="form-title">Create an app notification</legend>
 
@@ -229,9 +274,65 @@
 
                     <input id="NotifyContent" type="text" placeholder="${nn._([cms.global.PAGE_ID, 'notification', 'Input FLIPr program or episode URL...'])}" style="display: none;">                                                
                 </div> 
-                
             </div>
+            <div class="form-group required-field">
+                <div class="form-label">${nn._([cms.global.PAGE_ID, 'notification', 'Schedule'])}</div>
+                <div class="form-elements">
+
+                    <input type="radio" class="f-schedule-type" autocomplete="off" id="scheduleun-app1" name="scheduleun-app" value="Immediate" checked="checked">
+                    <label for="scheduleun-app1" class="radio-btn">${nn._([cms.global.PAGE_ID, 'notification', 'Immediate'])}</label>
+                    
+                    <input type="radio" class="f-schedule-type" autocomplete="off" id="scheduleun-app2" name="scheduleun-app" value="Scheduled">
+                    <label for="scheduleun-app2" class="radio-btn">${nn._([cms.global.PAGE_ID, 'notification', 'Scheduled'])}</label>
+
+
+                    <div class="form-data f-schedule-date hide">
+
+                        <div class="datepicker"></div>
+
+                        <div class="fTimeSelect">
+                            <h3>${nn._([cms.global.PAGE_ID, 'notification', 'Hour'])}:</h3>
+                            <select id="schedule-hour">
+                                <option value="00">00</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                            </select>
+
+                            <h3>${nn._([cms.global.PAGE_ID, 'notification', 'Minute'])}:</h3>
+                            <select id="schedule-minute">
+                                <option value="00">00</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+                        <input id="scheduled" type="hidden" >
+
+                    </div>
+
+                                                                   
+                </div> 
                 
+            </div>                
             </fieldset>
 
             <div class="form-submit-wrap">
