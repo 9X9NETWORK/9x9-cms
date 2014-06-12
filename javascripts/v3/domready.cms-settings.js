@@ -69,20 +69,30 @@ $(function () {
         if (cms.global.USER_DATA.fbUser) {
             return false;
         }
-        var parameter = null;
+        var parameter = null,
+            isLangChange = false;
         if ($page.chkData(this)) {
             $common.showSavingOverlay();
+            if(this.lang.value !== cms.global.USER_DATA.lang){
+                isLangChange = true;
+            }
             parameter = {
-                name: this.username.value
+                name: this.username.value,
+                lang: this.lang.value
             };
+
             nn.api('PUT', cms.reapi('/api/users/{userId}', {
                 userId: cms.global.USER_DATA.id
             }), parameter, function (user) {
-                $('#overlay-s').fadeOut('fast', function () {
-                    $('body').removeClass('has-change');
-                    cms.global.USER_DATA = user;
-                    $('#selected-profile').text(cms.global.USER_DATA.name);
-                });
+                $('body').removeClass('has-change');
+                if(isLangChange){
+                    location.reload();
+                } else {
+                    $('#overlay-s').fadeOut('fast', function () {
+                        cms.global.USER_DATA = user;
+                        $('#selected-profile').text(cms.global.USER_DATA.name);
+                    });
+                }
             });
         }
         return false;

@@ -157,6 +157,7 @@
         $('#change-pwd-overlay .overlay-container').html('');
         $('#change-pwd-overlay-tmpl').tmpl().appendTo('#change-pwd-overlay .overlay-container');
         $('#content-main-wrap').perfectScrollbar({marginTop: 0, marginBottom: 50});
+        $("#lang").val(cms.global.USER_DATA.lang);
         $('#overlay-s').fadeOut('fast', function () {
             $('#username').charCounter(16, {
                 container: '<span class="hide"><\/span>',
