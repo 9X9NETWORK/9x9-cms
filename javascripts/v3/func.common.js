@@ -11,6 +11,7 @@
             strAutoOn = "",
             retValue = {
                 isCMS: false,
+                isYoutuber: false,
                 isPCS: false,
                 isAutoOn: false
             };
@@ -27,6 +28,10 @@
 
         if ("111" === strCMS) {
             retValue.isCMS = true;
+        }
+
+        if ("0000" === strCMS) {
+            retValue.isYoutuber = true;
         }
 
         if ("111" === strPCS) {
