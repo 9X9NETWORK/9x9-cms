@@ -234,31 +234,35 @@
         <p class="overlay-button-close"></p>
         <h2 class="overlay-title langkey">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Create a New Program'])}}</h2>
         <h3 class="overlay-subtitle">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Choose a type'])}}</h3>
-        <div id="create-9x9-program" class="btn-large btn-create">
-            <div class="left"></div>
-            <div class="center">    
-                <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'FLIPr<br />Program'])}}</p>
-                <img src="images/icon_9x9.png" alt="">               
+        {{if !cms.global.USER_PRIV.isYoutuber}}
+            <div id="create-9x9-program" class="btn-large btn-create">
+                <div class="left"></div>
+                <div class="center">    
+                    <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'FLIPr<br />Program'])}}</p>
+                    <img src="images/icon_9x9.png" alt="">               
+                </div>
+                <div class="right"></div>
             </div>
-            <div class="right"></div>
-        </div>
-        {{if cms.global.MSO > 0}}
-        <div id="create-youtube-program" class="btn-large btn-create">
-            <div class="left"></div>
-            <div class="center">
-                <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'YouTube Sync<br />Program'])}}</p>
-                <img src="images/icon_youtube.png" alt="">
+        {{/if}}
+        {{if cms.global.MSO > 0 || cms.global.USER_PRIV.isYoutuber}}
+            <div id="create-youtube-program" class="btn-large btn-create">
+                <div class="left"></div>
+                <div class="center">
+                    <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'YouTube Sync<br />Program'])}}</p>
+                    <img src="images/icon_youtube.png" alt="">
+                </div>
+                <div class="right"></div>
             </div>
-            <div class="right"></div>
-        </div>
-        <div id="create-live-program" class="btn-large btn-create">
-            <div class="left"></div>
-            <div class="center">
-                <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'Live<br />Program'])}}</p>    
-                <img src="images/icon_live_program.png" alt="">                   
+        {{/if}}
+        {{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
+            <div id="create-live-program" class="btn-large btn-create">
+                <div class="left"></div>
+                <div class="center">
+                    <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'Live<br />Program'])}}</p>    
+                    <img src="images/icon_live_program.png" alt="">                   
+                </div>
+                <div class="right"></div>
             </div>
-            <div class="right"></div>
-        </div>
         {{/if}}
         <div class="overlay-button-holder">
             <div class="btn-gray">
@@ -322,7 +326,7 @@
     <li><p class="curate btns"><span><a class="btn_create_new" >${nn._([cms.global.PAGE_ID, 'title-func', 'Create a new program'])}</a></span></p></li>
     <li class="last"><p class="order btns"><span><a href="javascript:void(0);" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder programs'])}</a></span></p></li>
 </ul>
-{{if cms.global.MSO > 0}}
+{{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
 <p class="radio-list">
     <span>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</span>
     <label for="filter_all" class="lbTypeLists checked">
