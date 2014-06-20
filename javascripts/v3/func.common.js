@@ -30,7 +30,7 @@
             retValue.isCMS = true;
         }
 
-        if ("0000" === strCMS) {
+        if ("000" === strCMS) {
             retValue.isYoutuber = true;
         }
 
