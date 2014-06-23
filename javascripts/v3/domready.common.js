@@ -54,6 +54,9 @@ $(function () {
                 cms.global.MSO = 0;
                 if (tmpPriv.isPCS && user.msoId > 0) {
                     cms.global.MSO = user.msoId;
+                    if(cms.global.MSO === 3){
+                    	cms.global.IS_REMARK = false;
+                    }
                     if (-1 !== $.inArray(tmpUrl.attr('file'), ['store-manage.html', 'store-promotion.html', 'portal-manage.html', 'brand-setting.html', 'app-notification.html'])) {
                         // set mso info
                         nn.api('GET', cms.reapi('/api/mso/{msoId}', {
