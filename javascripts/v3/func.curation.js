@@ -312,31 +312,31 @@
             return false;
         }
         // Check if the file path of the channel url field is in the hostAllow array.
-        if (-1 === $.inArray(url.attr('path'), pathAllow)) {
-        	nn.log("########3");
-            $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            callback(false);
-            return false;
-        }
-        // CHeck if the file path of the channel url is '/' and it is empty after the # tag.
-        if ('/' === url.attr('path') && !url.attr('fragment')) {
-        	nn.log("########4");
-            $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            callback(false);
-            return false;
-        }
-        if ('/view' === url.attr('path') && !url.attr('query')) {
-        	nn.log("########5");
-            $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            callback(false);
-            return false;
-        }
-        if ('/playback' === url.attr('path') && !url.attr('query')) {
-        	nn.log("########6");
-            $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            callback(false);
-            return false;
-        }
+        // if (-1 === $.inArray(url.attr('path'), pathAllow)) {
+        	// nn.log("########3");
+            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            // callback(false);
+            // return false;
+        // }
+        // // CHeck if the file path of the channel url is '/' and it is empty after the # tag.
+        // if ('/' === url.attr('path') && !url.attr('fragment')) {
+        	// nn.log("########4");
+            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            // callback(false);
+            // return false;
+        // }
+        // if ('/view' === url.attr('path') && !url.attr('query')) {
+        	// nn.log("########5");
+            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            // callback(false);
+            // return false;
+        // }
+        // if ('/playback' === url.attr('path') && !url.attr('query')) {
+        	// nn.log("########6");
+            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            // callback(false);
+            // return false;
+        // }
         if ('' !== url.attr('fragment')) {
             hash = url.attr('fragment').substr(1).replace(/\!/g, '&');
             if (isNaN(hash)) {
