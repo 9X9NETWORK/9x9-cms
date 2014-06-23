@@ -199,6 +199,7 @@
             hostAllow = [
                 'www.flipr.tv',
                 'beagle.flipr.tv',
+                'superstar.flipr.tv',
                 'v3alpha.flipr.tv',
                 'dev.teltel.com',
                 'demo.doubleservice.com',
