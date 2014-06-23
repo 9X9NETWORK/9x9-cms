@@ -199,7 +199,6 @@
             hostAllow = [
                 'www.flipr.tv',
                 'beagle.flipr.tv',
-                'superstar.flipr.tv',
                 'v3alpha.flipr.tv',
                 'dev.teltel.com',
                 'demo.doubleservice.com',
@@ -295,7 +294,6 @@
         }
         // Check if channel or episode url field is unmodified.
         if (nn._([cms.global.PAGE_ID, 'poi-event', 'Input 9x9 channel or episode URL']) === fm.channelUrl.value) {
-        	nn.log("########1");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
@@ -306,37 +304,32 @@
         }
         // Check if the host domain of the channel url field is in the hostAllow array.
         if (-1 === $.inArray(url.attr('host'), hostAllow)) {
-        	nn.log("########2");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
         }
         // Check if the file path of the channel url field is in the hostAllow array.
-        // if (-1 === $.inArray(url.attr('path'), pathAllow)) {
-        	// nn.log("########3");
-            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            // callback(false);
-            // return false;
-        // }
-        // // CHeck if the file path of the channel url is '/' and it is empty after the # tag.
-        // if ('/' === url.attr('path') && !url.attr('fragment')) {
-        	// nn.log("########4");
-            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            // callback(false);
-            // return false;
-        // }
-        // if ('/view' === url.attr('path') && !url.attr('query')) {
-        	// nn.log("########5");
-            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            // callback(false);
-            // return false;
-        // }
-        // if ('/playback' === url.attr('path') && !url.attr('query')) {
-        	// nn.log("########6");
-            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            // callback(false);
-            // return false;
-        // }
+        if (-1 === $.inArray(url.attr('path'), pathAllow)) {
+            $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            callback(false);
+            return false;
+        }
+        // CHeck if the file path of the channel url is '/' and it is empty after the # tag.
+        if ('/' === url.attr('path') && !url.attr('fragment')) {
+            $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            callback(false);
+            return false;
+        }
+        if ('/view' === url.attr('path') && !url.attr('query')) {
+            $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            callback(false);
+            return false;
+        }
+        if ('/playback' === url.attr('path') && !url.attr('query')) {
+            $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            callback(false);
+            return false;
+        }
         if ('' !== url.attr('fragment')) {
             hash = url.attr('fragment').substr(1).replace(/\!/g, '&');
             if (isNaN(hash)) {
@@ -357,72 +350,67 @@
                 }
             }
         }
-        // if (!cid) {
-        	// nn.log("########7");
-            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            // callback(false);
-            // return false;
-        // }
-        // nn.on([400, 401, 403, 404], function (jqXHR, textStatus) {
-            // nn.log(textStatus + ': ' + jqXHR.responseText, 'warning');
-        	// nn.log("########8");
-            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            // callback(false);
-            // return false;
-        // });
-        // if (!eid || 11 === eid.length) {
-            // nn.api('GET', cms.reapi('/api/channels/{channelId}', {
-                // channelId: cid
-            // }), null, function (channel) {
-                // if (channel.id) {
-                    // if (11 === eid.length) {
-                        // nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + eid + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
-                            // if (youtubes.data) {
-                                // // notice and url reset
-                                // $('#poi-event-overlay .event .func ul li.notice').hide();
-                                // normalUrl = normalUrl + 'ch=' + cid + '&ep=' + eid;
-                                // fm.channelUrl.value = normalUrl;
-                                // callback(true);
-                                // return true;
-                            // }
-        	// nn.log("########9");
-                            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-                            // callback(false);
-                            // return false;
-                        // }, 'jsonp');
-                    // } else {
-                        // // notice and url reset
-                        // $('#poi-event-overlay .event .func ul li.notice').hide();
-                        // normalUrl = normalUrl + 'ch=' + cid;
-                        // fm.channelUrl.value = normalUrl;
-                        // callback(true);
-                        // return true;
-                    // }
-                // } else {
-        	// nn.log("########10");
-                    // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-                    // callback(false);
-                    // return false;
-                // }
-            // });
-        // } else {
-            // nn.api('GET', cms.reapi('/api/episodes/{episodeId}', {
-                // episodeId: eid
-            // }), null, function (episode) {
-                // if (episode.id && parseInt(cid, 10) === parseInt(episode.channelId, 10)) {
-                    // // notice and url reset
-                    // $('#poi-event-overlay .event .func ul li.notice').hide();
-                    // normalUrl = normalUrl + 'ch=' + cid + '&ep=e' + eid;
-                    // fm.channelUrl.value = normalUrl;
-                    // callback(true);
-                    // return true;
-                // }
-        	// nn.log("########11");
-                // $('#poi-event-overlay .event .event-input .fminput .notice').show();
-                // callback(false);
-                // return false;
-            // });
-        // }
+        if (!cid) {
+            $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            callback(false);
+            return false;
+        }
+        nn.on([400, 401, 403, 404], function (jqXHR, textStatus) {
+            nn.log(textStatus + ': ' + jqXHR.responseText, 'warning');
+            $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            callback(false);
+            return false;
+        });
+        if (!eid || 11 === eid.length) {
+            nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                channelId: cid
+            }), null, function (channel) {
+                if (channel.id) {
+                    if (11 === eid.length) {
+                        nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + eid + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
+                            if (youtubes.data) {
+                                // notice and url reset
+                                $('#poi-event-overlay .event .func ul li.notice').hide();
+                                normalUrl = normalUrl + 'ch=' + cid + '&ep=' + eid;
+                                fm.channelUrl.value = normalUrl;
+                                callback(true);
+                                return true;
+                            }
+                            $('#poi-event-overlay .event .event-input .fminput .notice').show();
+                            callback(false);
+                            return false;
+                        }, 'jsonp');
+                    } else {
+                        // notice and url reset
+                        $('#poi-event-overlay .event .func ul li.notice').hide();
+                        normalUrl = normalUrl + 'ch=' + cid;
+                        fm.channelUrl.value = normalUrl;
+                        callback(true);
+                        return true;
+                    }
+                } else {
+                    $('#poi-event-overlay .event .event-input .fminput .notice').show();
+                    callback(false);
+                    return false;
+                }
+            });
+        } else {
+            nn.api('GET', cms.reapi('/api/episodes/{episodeId}', {
+                episodeId: eid
+            }), null, function (episode) {
+                if (episode.id && parseInt(cid, 10) === parseInt(episode.channelId, 10)) {
+                    // notice and url reset
+                    $('#poi-event-overlay .event .func ul li.notice').hide();
+                    normalUrl = normalUrl + 'ch=' + cid + '&ep=e' + eid;
+                    fm.channelUrl.value = normalUrl;
+                    callback(true);
+                    return true;
+                }
+                $('#poi-event-overlay .event .event-input .fminput .notice').show();
+                callback(false);
+                return false;
+            });
+        }
     };
 
     $page.setVideoMeasure = function () {
