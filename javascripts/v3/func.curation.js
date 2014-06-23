@@ -357,72 +357,72 @@
                 }
             }
         }
-        if (!cid) {
-        	nn.log("########7");
-            $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            callback(false);
-            return false;
-        }
-        nn.on([400, 401, 403, 404], function (jqXHR, textStatus) {
-            nn.log(textStatus + ': ' + jqXHR.responseText, 'warning');
-        	nn.log("########8");
-            $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            callback(false);
-            return false;
-        });
-        if (!eid || 11 === eid.length) {
-            nn.api('GET', cms.reapi('/api/channels/{channelId}', {
-                channelId: cid
-            }), null, function (channel) {
-                if (channel.id) {
-                    if (11 === eid.length) {
-                        nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + eid + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
-                            if (youtubes.data) {
-                                // notice and url reset
-                                $('#poi-event-overlay .event .func ul li.notice').hide();
-                                normalUrl = normalUrl + 'ch=' + cid + '&ep=' + eid;
-                                fm.channelUrl.value = normalUrl;
-                                callback(true);
-                                return true;
-                            }
-        	nn.log("########9");
-                            $('#poi-event-overlay .event .event-input .fminput .notice').show();
-                            callback(false);
-                            return false;
-                        }, 'jsonp');
-                    } else {
-                        // notice and url reset
-                        $('#poi-event-overlay .event .func ul li.notice').hide();
-                        normalUrl = normalUrl + 'ch=' + cid;
-                        fm.channelUrl.value = normalUrl;
-                        callback(true);
-                        return true;
-                    }
-                } else {
-        	nn.log("########10");
-                    $('#poi-event-overlay .event .event-input .fminput .notice').show();
-                    callback(false);
-                    return false;
-                }
-            });
-        } else {
-            nn.api('GET', cms.reapi('/api/episodes/{episodeId}', {
-                episodeId: eid
-            }), null, function (episode) {
-                if (episode.id && parseInt(cid, 10) === parseInt(episode.channelId, 10)) {
-                    // notice and url reset
-                    $('#poi-event-overlay .event .func ul li.notice').hide();
-                    normalUrl = normalUrl + 'ch=' + cid + '&ep=e' + eid;
-                    fm.channelUrl.value = normalUrl;
-                    callback(true);
-                    return true;
-                }
-        	nn.log("########11");
-                $('#poi-event-overlay .event .event-input .fminput .notice').show();
-                callback(false);
-                return false;
-            });
-        }
+        // if (!cid) {
+        	// nn.log("########7");
+            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            // callback(false);
+            // return false;
+        // }
+        // nn.on([400, 401, 403, 404], function (jqXHR, textStatus) {
+            // nn.log(textStatus + ': ' + jqXHR.responseText, 'warning');
+        	// nn.log("########8");
+            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+            // callback(false);
+            // return false;
+        // });
+        // if (!eid || 11 === eid.length) {
+            // nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                // channelId: cid
+            // }), null, function (channel) {
+                // if (channel.id) {
+                    // if (11 === eid.length) {
+                        // nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + eid + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
+                            // if (youtubes.data) {
+                                // // notice and url reset
+                                // $('#poi-event-overlay .event .func ul li.notice').hide();
+                                // normalUrl = normalUrl + 'ch=' + cid + '&ep=' + eid;
+                                // fm.channelUrl.value = normalUrl;
+                                // callback(true);
+                                // return true;
+                            // }
+        	// nn.log("########9");
+                            // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+                            // callback(false);
+                            // return false;
+                        // }, 'jsonp');
+                    // } else {
+                        // // notice and url reset
+                        // $('#poi-event-overlay .event .func ul li.notice').hide();
+                        // normalUrl = normalUrl + 'ch=' + cid;
+                        // fm.channelUrl.value = normalUrl;
+                        // callback(true);
+                        // return true;
+                    // }
+                // } else {
+        	// nn.log("########10");
+                    // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+                    // callback(false);
+                    // return false;
+                // }
+            // });
+        // } else {
+            // nn.api('GET', cms.reapi('/api/episodes/{episodeId}', {
+                // episodeId: eid
+            // }), null, function (episode) {
+                // if (episode.id && parseInt(cid, 10) === parseInt(episode.channelId, 10)) {
+                    // // notice and url reset
+                    // $('#poi-event-overlay .event .func ul li.notice').hide();
+                    // normalUrl = normalUrl + 'ch=' + cid + '&ep=e' + eid;
+                    // fm.channelUrl.value = normalUrl;
+                    // callback(true);
+                    // return true;
+                // }
+        	// nn.log("########11");
+                // $('#poi-event-overlay .event .event-input .fminput .notice').show();
+                // callback(false);
+                // return false;
+            // });
+        // }
     };
 
     $page.setVideoMeasure = function () {
