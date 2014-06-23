@@ -294,6 +294,7 @@
         }
         // Check if channel or episode url field is unmodified.
         if (nn._([cms.global.PAGE_ID, 'poi-event', 'Input 9x9 channel or episode URL']) === fm.channelUrl.value) {
+        	nn.log("########1");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
@@ -304,28 +305,33 @@
         }
         // Check if the host domain of the channel url field is in the hostAllow array.
         if (-1 === $.inArray(url.attr('host'), hostAllow)) {
+        	nn.log("########2");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
         }
         // Check if the file path of the channel url field is in the hostAllow array.
         if (-1 === $.inArray(url.attr('path'), pathAllow)) {
+        	nn.log("########3");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
         }
         // CHeck if the file path of the channel url is '/' and it is empty after the # tag.
         if ('/' === url.attr('path') && !url.attr('fragment')) {
+        	nn.log("########4");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
         }
         if ('/view' === url.attr('path') && !url.attr('query')) {
+        	nn.log("########5");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
         }
         if ('/playback' === url.attr('path') && !url.attr('query')) {
+        	nn.log("########6");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
@@ -351,12 +357,14 @@
             }
         }
         if (!cid) {
+        	nn.log("########7");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
         }
         nn.on([400, 401, 403, 404], function (jqXHR, textStatus) {
             nn.log(textStatus + ': ' + jqXHR.responseText, 'warning');
+        	nn.log("########8");
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
             callback(false);
             return false;
@@ -376,6 +384,7 @@
                                 callback(true);
                                 return true;
                             }
+        	nn.log("########9");
                             $('#poi-event-overlay .event .event-input .fminput .notice').show();
                             callback(false);
                             return false;
@@ -389,6 +398,7 @@
                         return true;
                     }
                 } else {
+        	nn.log("########10");
                     $('#poi-event-overlay .event .event-input .fminput .notice').show();
                     callback(false);
                     return false;
@@ -406,6 +416,7 @@
                     callback(true);
                     return true;
                 }
+        	nn.log("########11");
                 $('#poi-event-overlay .event .event-input .fminput .notice').show();
                 callback(false);
                 return false;
