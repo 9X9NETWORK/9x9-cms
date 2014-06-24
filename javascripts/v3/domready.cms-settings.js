@@ -70,15 +70,17 @@ $(function () {
             return false;
         }
         var parameter = null,
-            isLangChange = false;
+            isLangChange = false,
+            strLang = $page._langGet();
+
         if ($page.chkData(this)) {
             $common.showSavingOverlay();
-            if(this.lang.value !== cms.global.USER_DATA.lang){
+            if(strLang !== cms.global.USER_DATA.lang){
                 isLangChange = true;
             }
             parameter = {
                 name: this.username.value,
-                lang: this.lang.value
+                lang: strLang
             };
 
             nn.api('PUT', cms.reapi('/api/users/{userId}', {

@@ -240,12 +240,10 @@
     <div class="fminput clearfix">
         <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Language'])}</label>
         <div class="fmfield">
-            <p style="padding-top:8px" >
-                <select id="lang" name="lang">
-                    <option value="en">English</option>
-                    <option value="zh">中文</option>
-                </select>
-            </p>
+            <div class="connect">
+                <label for="lang_en" style="width:80px"><input type="radio" value="en" name="lang" id="lang_en"> &nbsp;English</label>
+                <label for="lang_zh" style="width:80px"><input type="radio" value="zh" name="lang" id="lang_zh"> &nbsp;中文</label>
+            </div>
         </div>
     </div>
     <div class="form-btn">
