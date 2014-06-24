@@ -109,6 +109,17 @@
         return true;
     };
 
+    $page._langSet = function () {
+        var langId = "#lang_" + cms.global.USER_DATA.lang;
+        $(langId).attr("checked",true);
+    }
+
+    $page._langGet = function () {
+        var retValue = "";
+        retValue = $("input[name='lang']:checked").val();
+        return retValue;
+    }
+
     $page.resetChangePwdForm = function () {
         var fm = document.changePwdForm;
         $('#change-pwd-overlay .change-pwd .notice').addClass('hide');
@@ -157,7 +168,7 @@
         $('#change-pwd-overlay .overlay-container').html('');
         $('#change-pwd-overlay-tmpl').tmpl().appendTo('#change-pwd-overlay .overlay-container');
         $('#content-main-wrap').perfectScrollbar({marginTop: 0, marginBottom: 50});
-        $("#lang").val(cms.global.USER_DATA.lang);
+        $page._langSet();
         $('#overlay-s').fadeOut('fast', function () {
             $('#username').charCounter(16, {
                 container: '<span class="hide"><\/span>',
