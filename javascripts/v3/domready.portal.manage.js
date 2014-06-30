@@ -332,20 +332,21 @@ $(function () {
         // channel set update
         function channelSetUpdate() {
             var deferred = $.Deferred(),
-                cntUpdate = procList.length;
+                cntUpdate = procList.length,
+                tmpSeq = 0;
             nn.log("4: channel set Update--" + cntUpdate);
             if (cntUpdate > 0) {
 
                 $.each(procList, function (eKey, eValue) {
+                    tmpSeq = eKey + 1;
                     nn.api('PUT', cms.reapi('/api/sets/{setId}', {
                         setId: eValue.id
                     }), {
                         name: eValue.name,
                         sortingType: eValue.sortingType,
-                        seq: eValue.seq
+                        seq: tmpSeq
                     }, function (set) {
                         cntUpdate -= 1;
-                        nn.log("cntUpdate::::" + cntUpdate);
                         if (cntUpdate === 0) {
                             procList = [];
                             deferred.resolve();
