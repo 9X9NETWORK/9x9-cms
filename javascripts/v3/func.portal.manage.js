@@ -535,6 +535,14 @@
                 $("#store-category-ul li").show();
 
                 $page.catLiClick(setId);
+
+                $('#store-category-ul').sortable({
+                    cancel: '.empty',
+                    change: function(event, ui) {
+                        $('body').addClass('has-change');
+                    }
+                });
+
                 // $('#overlay-s').fadeOut("slow");
             } else {
                 // $page.listCategory(sets, setId);
