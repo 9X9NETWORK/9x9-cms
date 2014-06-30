@@ -1099,8 +1099,6 @@ span.sType {
     border-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.05) rgba(0, 0, 0, 0.9);
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(0, 0, 0, 0.05), 0 1px 1px rgba(255,255,255,0.9);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(0, 0, 0, 0.05), 0 1px 1px rgba(255,255,255,0.9);
-}
-#store-category ul li.is-move:hover {
     cursor: move;
 }
 #store-category ul li span {
