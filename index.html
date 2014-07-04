@@ -428,7 +428,7 @@
                 ${nn._([cms.global.PAGE_ID, 'channel-list', 'Update:'])} ${cms.common.formatTimestamp(updateDate)} 
                 {{if true === isYoutubeSync}}
                     <img title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'YouTube sync program'])}}"
-                         src="images/icon_youtube_sm.png">
+                         src="images/icon_youtube_sm_${autoSync}.png">
                     <img title="{{if 4 === sorting}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by YouTube order'])}}{{else}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by YouTube reverse order'])}}{{/if}}"
                          src="images/icon_youtube_order_${sorting}.png">
                 {{else contentType == 13}}
