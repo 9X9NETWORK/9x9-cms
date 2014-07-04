@@ -22,6 +22,34 @@ $(function () {
         }
     });
 
+    $(document).on('click', '.fucnYtSync', function () {
+        var nowStatus = $(this).data("meta"),
+            newStatus = "",
+            actProgram = 0;
+
+        if ("on" === nowStatus) {
+            newStatus = "off";
+            actProgram = $(this).data("program");
+        } else if ("off" === nowStatus) {
+            newStatus = "on";
+            actProgram = $(this).data("program");
+        }
+        if (actProgram > 0) {
+            nn.api('PUT', cms.reapi('/api/channels/{channelId}', {
+                channelId: actProgram
+            }), {
+                autoSync: newStatus
+            }, function (channel) {
+                var actProgramId = "#ytSync_" + channel.id,
+                    strIconUrl = "images/icon_youtube_sm_" + channel.autoSync + ".png";
+
+                if (channel.id > 0) {
+                    $(actProgramId).attr("src", strIconUrl);
+                }
+            });
+        }
+    });
+
     $(document).on('click', '.unblock, .btn-close, .btn-no, .btn-ok', function () {
         $.unblockUI();
         $('#channel-list li').removeClass('deleting').removeData('deleteId');
