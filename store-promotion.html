@@ -392,10 +392,10 @@
     <h4>${overLayTitle}</h4>
     <div class="change-category">
         <form method="post" action="">
-            <p class="text"><span class="input-right"><span class="input-middle"><input type="text" id="proCatEnName" maxlength="16" value="${valEnName}" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'English Name'])}" class="text" /></span></span></p>
-            <p class="notice">${nn._([cms.global.PAGE_ID, 'overlay', 'Max length is 14 characters'])}</p>
-            <p class="text"><span class="input-right"><span class="input-middle"><input type="text" id="proCatZhName" maxlength="16" value="${valZhName}" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'Chinese Name'])}" class="text" /></span></span></p>
-            <p class="notice">${nn._([cms.global.PAGE_ID, 'overlay', 'Max length is 8 chinese characters'])}</p>
+            <p class="text {{if cms.global.USER_DATA.lang != 'en'}}hide{{/if}}"><span class="input-right"><span class="input-middle"><input type="text" id="proCatEnName" maxlength="16" value="${valEnName}" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'English Name'])}" class="text" /></span></span></p>
+            <p class="notice {{if cms.global.USER_DATA.lang != 'en'}}hide{{/if}}">${nn._([cms.global.PAGE_ID, 'overlay', 'Max length is 14 characters'])}</p>
+            <p class="text {{if cms.global.USER_DATA.lang != 'zh'}}hide{{/if}}"><span class="input-right"><span class="input-middle"><input type="text" id="proCatZhName" maxlength="16" value="${valZhName}" placeholder="${nn._([cms.global.PAGE_ID, 'overlay', 'Chinese Name'])}" class="text" /></span></span></p>
+            <p class="notice {{if cms.global.USER_DATA.lang != 'zh'}}hide{{/if}}">${nn._([cms.global.PAGE_ID, 'overlay', 'Max length is 8 chinese characters'])}</p>
         </form>
     </div>
     <div class="overlay-btn">
