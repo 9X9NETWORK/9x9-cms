@@ -91,6 +91,14 @@ $(function () {
             actLi = $("#catLi_" + catId),
             tmpName = inZhName;
 
+        if (cms.global.USER_DATA.lang === 'en' && inZhName === '') {
+            inZhName = inEnName;
+            $("#proCatZhName").val(inZhName);
+        } else if (cms.global.USER_DATA.lang === 'zh' && inEnName === '') {
+            inEnName = inZhName;
+            $("#proCatEnName").val(inEnName);
+        }
+
         if (cms.global.USER_DATA.lang === 'en') {
             tmpName = inEnName;
         }
