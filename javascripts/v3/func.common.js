@@ -67,7 +67,7 @@
     };
 
     $common.ytUrlLiveParser = function (inUrl) {
-        // ytType = 0 : unknow, 1: yturl
+        // ytType = 0 : unknow, 1: yturl, 2: m3u8, 3: ustream.tv
         var inURL = $.url(inUrl),
             ytUrlPattern = ["http://www.youtube.com/watch?v="],
             retValue = {
@@ -84,9 +84,13 @@
             retValue.ytId = tmpListId;
             retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
             retValue.ytUrlApi = "http://gdata.youtube.com/feeds/api/videos/" + retValue.ytId + "?alt=jsonc&v=2";
-        } else if(2 === arrFilename.length && "m3u8" === arrFilename[1]){
+        } else if (2 === arrFilename.length && "m3u8" === arrFilename[1]) {
             retValue.ytType = 2;
             retValue.ytUrlFormat = inUrl;
+        } else if ("www.ustream.tv" === inURL.attr("host")) {
+            retValue.ytType = 3;
+            retValue.ytUrlFormat = inUrl;
+            retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").replace("/channel/", "") + "/getValueOf/id?callback=?";
         }
 
         return retValue;
