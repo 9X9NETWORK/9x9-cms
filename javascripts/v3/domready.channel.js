@@ -184,7 +184,7 @@ $(function () {
                                 if (undefined !== datas.channel.owner.picture) {
                                     ytImg = datas.channel.owner.picture;
                                 }
-                                cms.global.vYoutubeLiveIn.fileUrl = datas.channel.owner.picture; // 
+                                cms.global.vYoutubeLiveIn.fileUrl = datas.channel.stream.hls; // 
                                 cms.global.vYoutubeLiveIn.imageUrl = datas.channel.thumbnail.live; // 
                                 cms.global.vYoutubeLiveIn.name = ytTitle; //
                                 cms.global.vYoutubeLiveIn.intro = ytDesc; // 
