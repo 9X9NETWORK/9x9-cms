@@ -54,7 +54,8 @@ $(function () {
     $(document).on('change', '#ytUrlLive', function () {
         var thisUrl = $(this).val().trim(),
             ytUrlParse = $common.ytUrlLiveParser(thisUrl),
-            ytObj = {};
+            ytObj = {},
+            strDefErr = nn._([cms.global.PAGE_ID, 'setting-form', 'Invalid URL, please check the URL and try again.']);;
 
         $("#ytSyncMsg").html("");
         $("#ytSyncMsg").addClass("hide");
@@ -67,7 +68,7 @@ $(function () {
                 url: ytUrlParse.ytUrlApi,
                 dataType: "json",
                 context: self,
-                success: function(res) {
+                success: function (res) {
                     var ytTitle = "",
                         ytDesc = "",
                         ytImg = "images/ch_default.png",
@@ -143,7 +144,7 @@ $(function () {
                         }
                         $.ajax(ytObjSub);
                     } else {
-                        $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
+                        $("#ytSyncMsg").html(strDefErr);
                         $("#ytSyncMsg").removeClass("hide");
 
                     }
@@ -162,56 +163,62 @@ $(function () {
             $("#intro").val("");
             $("#name").val("");
 
-
-
             $.getJSON(ytUrlParse.ytUrlApi, {
                 format: "json"
             })
-                .done(function(data) {
-                    // nn.log("data is[" + Number(data) + "]");
-                    var retiveUrl = "https://api.ustream.tv/channels/" + data + ".json";
-                    $.getJSON(retiveUrl, {
-                        format: "json"
-                    })
-                        .done(function (datas) {
+                .done(function (data) {
+                    if (data > 0) {
+                        var retiveUrl = "https://api.ustream.tv/channels/" + data + ".json";
+                        $.getJSON(retiveUrl, {
+                            format: "json"
+                        })
+                            .done(function (datas) {
 
-                            var ytTitle = "",
-                                ytDesc = "",
-                                ytImg = "images/ch_default.png";
+                                var ytTitle = "",
+                                    ytDesc = "",
+                                    ytImg = "images/ch_default.png";
 
+                                ytTitle = datas.channel.title;
+                                ytDesc = datas.channel.description;
 
-                            ytTitle = datas.channel.title;
-                            ytDesc = datas.channel.description;
-                            
-                            if (undefined !== datas.channel.owner.picture) {
-                                ytImg = datas.channel.owner.picture;
-                            }
-                            cms.global.vYoutubeLiveIn.fileUrl = datas.channel.owner.picture; // 
-                            cms.global.vYoutubeLiveIn.imageUrl = datas.channel.thumbnail.live; // 
-                            cms.global.vYoutubeLiveIn.name = ytTitle; //
-                            cms.global.vYoutubeLiveIn.intro = ytDesc; // 
+                                if (undefined !== datas.channel.owner.picture) {
+                                    ytImg = datas.channel.owner.picture;
+                                }
+                                cms.global.vYoutubeLiveIn.fileUrl = datas.channel.owner.picture; // 
+                                cms.global.vYoutubeLiveIn.imageUrl = datas.channel.thumbnail.live; // 
+                                cms.global.vYoutubeLiveIn.name = ytTitle; //
+                                cms.global.vYoutubeLiveIn.intro = ytDesc; // 
 
-                            cms.global.vYoutubeLiveIn.uploader = datas.channel.owner.username; // 
-                            cms.global.vYoutubeLiveIn.uploadDate = datas.channel.last_broadcast_at; // 
-                            cms.global.vYoutubeLiveIn.ytId = datas.channel.url; //
+                                cms.global.vYoutubeLiveIn.uploader = datas.channel.owner.username; // 
+                                cms.global.vYoutubeLiveIn.uploadDate = datas.channel.last_broadcast_at; // 
+                                cms.global.vYoutubeLiveIn.ytId = datas.channel.url; //
 
-                            if ("images/ch_default.png" !== ytImg) {
-                                $("#thumbnail-imageUrl").attr("src", ytImg);
-                                $('#imageUrl').val(ytImg);
-                            }
-                            $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
-                            $("#name").val(ytTitle);
-                            $("#intro").val(ytDesc);
-                            $("#ytUrlLive").data("status", "processing");
+                                if ("images/ch_default.png" !== ytImg) {
+                                    $("#thumbnail-imageUrl").attr("src", ytImg);
+                                    $('#imageUrl').val(ytImg);
+                                }
+                                $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
+                                $("#name").val(ytTitle);
+                                $("#intro").val(ytDesc);
+                                $("#ytUrlLive").data("status", "processing");
 
-                        });
+                            })
+                            .fail(function() {
+                                $("#ytSyncMsg").html(strDefErr);
+                                $("#ytSyncMsg").removeClass("hide");
+                            });
+                    } else {
+                        $("#ytSyncMsg").html(strDefErr);
+                        $("#ytSyncMsg").removeClass("hide");
+                    }
 
-
+                }).fail(function() {
+                    $("#ytSyncMsg").html(strDefErr);
+                    $("#ytSyncMsg").removeClass("hide");
                 });
 
-
         } else {
-            $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
+            $("#ytSyncMsg").html(strDefErr);
             $("#ytSyncMsg").removeClass("hide");
         }
         // console.log( "this is a cou****" + $(this).val() );
