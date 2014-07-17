@@ -650,6 +650,8 @@
             "YouTube playlist or YouTube channel order": "YouTube 播放清單或頻道順序排列",
             "YouTube playlist or YouTube channel reverse order": "YouTube 播放清單或頻道反序排列",
             "Add to My App": "上架到App",
+            "Invalid URL, please check the URL and try again.": "網址輸入錯誤，請檢查網址後重新輸入。",
+            "Input live video URL...": "輸入直播網址...",
             "You can search the programs which has been added to \"Main Channels\" and \"Program store\" of My App.": "上架到App的節目，將能在「App管理」的「主頻道」與「類別」中被找到。"
         }
     },
