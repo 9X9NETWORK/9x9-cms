@@ -88,9 +88,11 @@
             retValue.ytType = 2;
             retValue.ytUrlFormat = inUrl;
         } else if ("www.ustream.tv" === inURL.attr("host")) {
+            // http://www.ustream.tv/channel/iss-hdev-payload
+            // http://www.ustream.tv/arirangtv
             retValue.ytType = 3;
             retValue.ytUrlFormat = inUrl;
-            retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").replace("/channel/", "") + "/getValueOf/id?callback=?";
+            retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").split("/").pop() + "/getValueOf/id?callback=?";
         }
 
         return retValue;
