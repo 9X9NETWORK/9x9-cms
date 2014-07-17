@@ -76,7 +76,7 @@ $(function () {
                         ytLiveStatus = "",
                         ytObjSub = {};
 
-                    if(undefined !== (res).data.status && undefined !== (res).data.status){
+                    if (undefined !== (res).data.status && undefined !== (res).data.status) {
                         ytLiveStatus = (res).data.status.value;
                     }
                     if (0 == ytLiveDuration && "processing" === ytLiveStatus) {
@@ -121,7 +121,7 @@ $(function () {
                             url: "https://gdata.youtube.com/feeds/api/users/" + cms.global.vYoutubeLiveIn.uploader + "?v=2&alt=json",
                             dataType: "json",
                             context: self,
-                            success: function(res) {
+                            success: function (res) {
                                 var ytTitle = "",
                                     ytDesc = "",
                                     ytImg = "images/ch_default.png",
@@ -155,8 +155,61 @@ $(function () {
             }
 
             $.ajax(ytObj);
-        } else if(2 === ytUrlParse.ytType){
+        } else if (2 === ytUrlParse.ytType) {
             $("#ytUrlLive").data("status", "processing");
+        } else if (3 === ytUrlParse.ytType) {
+
+            $("#intro").val("");
+            $("#name").val("");
+
+
+
+            $.getJSON(ytUrlParse.ytUrlApi, {
+                format: "json"
+            })
+                .done(function(data) {
+                    // nn.log("data is[" + Number(data) + "]");
+                    var retiveUrl = "https://api.ustream.tv/channels/" + data + ".json";
+                    $.getJSON(retiveUrl, {
+                        format: "json"
+                    })
+                        .done(function (datas) {
+
+                            var ytTitle = "",
+                                ytDesc = "",
+                                ytImg = "images/ch_default.png";
+
+
+                            ytTitle = datas.channel.title;
+                            ytDesc = datas.channel.description;
+                            
+                            if (undefined !== datas.channel.owner.picture) {
+                                ytImg = datas.channel.owner.picture;
+                            }
+                            cms.global.vYoutubeLiveIn.fileUrl = datas.channel.owner.picture; // 
+                            cms.global.vYoutubeLiveIn.imageUrl = datas.channel.thumbnail.live; // 
+                            cms.global.vYoutubeLiveIn.name = ytTitle; //
+                            cms.global.vYoutubeLiveIn.intro = ytDesc; // 
+
+                            cms.global.vYoutubeLiveIn.uploader = datas.channel.owner.username; // 
+                            cms.global.vYoutubeLiveIn.uploadDate = datas.channel.last_broadcast_at; // 
+                            cms.global.vYoutubeLiveIn.ytId = datas.channel.url; //
+
+                            if ("images/ch_default.png" !== ytImg) {
+                                $("#thumbnail-imageUrl").attr("src", ytImg);
+                                $('#imageUrl').val(ytImg);
+                            }
+                            $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
+                            $("#name").val(ytTitle);
+                            $("#intro").val(ytDesc);
+                            $("#ytUrlLive").data("status", "processing");
+
+                        });
+
+
+                });
+
+
         } else {
             $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
             $("#ytSyncMsg").removeClass("hide");
@@ -694,7 +747,7 @@ $(function () {
                 }
 
                 if (true === cms.global.vIsYoutubeLive) {
-
+                    // live program
                     $page.ytLiveCreate(channel.id);
 
                 } else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
