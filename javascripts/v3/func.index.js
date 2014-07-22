@@ -246,8 +246,12 @@
                             }
                         }
                         channel.isYoutubeSync = false;
-                        // youtube sync channel check 
-                        if (null !== channel.sourceUrl && channel.sourceUrl.length > 10) {
+                        channel.isYoutubeLive = false;
+                        if (13 == channel.contentType) {
+                            // check if live program
+                            channel.isYoutubeLive = true;
+                        } else if (null !== channel.sourceUrl && channel.sourceUrl.length > 10) {
+                            // youtube sync channel check 
                             $page.channelYouSync += 1;
                             channel.isYoutubeSync = true;
                         } else {

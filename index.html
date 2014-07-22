@@ -401,7 +401,8 @@
 
 <!-- channel-list-tmpl-item Begin -->
 <script id="channel-list-tmpl-item" type="text/x-jquery-tmpl">
-<li id="program_${id}" class="clearfix chLi {{if true === isYoutubeSync}}ctypeYoutubeSync{{else contentType == 13}}ctypeYoutubeLive{{else}}ctype9x9{{/if}} {{if 'failed' === autoSync}}isFailedYoutubeSync{{else}}{{if true === readonly}}inSyncing{{/if}}{{/if}}" data-meta="${id}">
+<li id="program_${id}" class="clearfix chLi 
+{{if true === isYoutubeSync}}ctypeYoutubeSync{{else true === isYoutubeLive}}ctypeYoutubeLive{{else}}ctype9x9{{/if}} {{if 'failed' === autoSync}}isFailedYoutubeSync{{else}}{{if true === readonly}}inSyncing{{/if}}{{/if}}" data-meta="${id}">
 <div class="container">
 <div class="container-right">
 <div class="container-bottom">
@@ -432,7 +433,7 @@
                          src="images/icon_youtube_sm_${autoSync}.png">
                     <img title="{{if 4 === sorting}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by YouTube order'])}}{{else}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by YouTube reverse order'])}}{{/if}}"
                          src="images/icon_youtube_order_${sorting}.png">
-                {{else contentType == 13}}
+                {{else true === isYoutubeLive}}
                     <img title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Live program'])}}"
                              src="images/icon_live_program_sm.png">
                 {{/if}}
@@ -447,7 +448,7 @@
                         {{if true === isYoutubeSync}}
                         <li><a class="sync" href="javascript:void(0);" data-meta="${id}">Sync<span class="tip"><img alt="" src="images/bg_tip_bottom.png"><span class="tip-left"><span class="tip-right"><span class="tip-middle">{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sync'])}}</span></span></span></span></a></li>
                         {{else}}
-                            {{if contentType == 13}}
+                            {{if true === isYoutubeLive}}
                             <li><a class="add disable">Add</a></li>
                             {{else}}
                             <li><a href="epcurate-curation.html?cid=${id}" class="add">Add<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Curate a new episode'])}</span></span></span></span></a></li>
@@ -456,7 +457,7 @@
                         {{if !cms.global.IS_REMARK}}
                         <li><a href="channel-poi.html?id=${id}" class="channel-poi">Program POI<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Program POI'])}</span></span></span></span></a></li>
                         {{/if}}
-                        {{if contentType == 13}}
+                        {{if true === isYoutubeLive}}
                         <li><a class="detail disable">Detail</a></li>
                         {{else}}
                         <li><a href="episode-list.html?id=${id}" class="detail">Detail<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Episode list'])}</span></span></span></span></a></li>
