@@ -485,13 +485,13 @@
                             return;
                         }
                         // youtube live channel check
-                        if(13 == channel.contentType){
+                        if (13 == channel.contentType) {
                             cms.global.vIsYoutubeLive = true;
-                        }
-                        // youtube sync channel check 
-                        if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                        } else if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                            // youtube sync channel check
                             cms.global.vIsYoutubeSync = true;
                         }
+
                         $common.showProcessingOverlay();
                         $('#func-nav ul').html('');
                         $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
@@ -501,8 +501,14 @@
                         $page.youtubeYyncOnOff(channel.autoSync);
                         $page.storePoolOnOff("init");
 
-                        if(cms.global.vIsYoutubeLive){
-                            $page.fetchLiveUrl(channel.id);
+                        if (cms.global.vIsYoutubeLive) {
+                            var tmpSourceUrl = $common.ytUrlLiveParser(channel.sourceUrl);
+                            if (3 === tmpSourceUrl.ytType) {
+                                $("#ytUrlLive").val(channel.sourceUrl);
+                                $("#ytUrlLive").trigger("change");
+                            } else {
+                                $page.fetchLiveUrl(channel.id);
+                            }
                         }
 
                         if (cms.global.vIsYoutubeSync === true) {
