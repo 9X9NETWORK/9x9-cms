@@ -79,6 +79,8 @@
             tmpListId = inURL.param('v'),
             arrFilename = inURL.attr("file").split('.');
 
+        $("#ytUrlLive").attr("name", "sourceUrl2");
+
         if (undefined !== tmpListId && tmpListId.length > 6) {
             retValue.ytType = 1;
             retValue.ytId = tmpListId;
@@ -90,6 +92,7 @@
         } else if ("www.ustream.tv" === inURL.attr("host")) {
             // http://www.ustream.tv/channel/iss-hdev-payload
             // http://www.ustream.tv/arirangtv
+            $("#ytUrlLive").attr("name", "sourceUrl");
             retValue.ytType = 3;
             retValue.ytUrlFormat = inUrl;
             retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").split("/").pop() + "/getValueOf/id?callback=?";
