@@ -56,6 +56,7 @@
                             }
                         }
                         channel.isYoutubeSync = true;
+                        channel.isYoutubeLive = false;
 
                         $("#program_" + channel.id).replaceWith($('#channel-list-tmpl-item').tmpl(channel, {
                             userId: cms.global.USER_DATA.id
