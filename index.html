@@ -420,7 +420,7 @@
             <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank"><img src="images/icon_playlist.png" alt="" class="watermark" /></a>
         </div>
         <div class="info">
-            <h3><a href="episode-list.html?id=${id}">${name}</a></h3>
+            <h3><a href="{{if true === isYoutubeLive}}javascript:void(0);{{else}}episode-list.html?id=${id}{{/if}}">${name}</a></h3>
             <p><span>${cntEpisode}</span>${nn._([cms.global.PAGE_ID, 'channel-list', 'Episodes'])}</p>
             <p><span>${cntSubscribe}</span>${nn._([cms.global.PAGE_ID, 'channel-list', 'Followers'])}</p>
         </div>
