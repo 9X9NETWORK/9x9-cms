@@ -226,6 +226,14 @@
     //-------------------------------------------------------------------------
     // Overlay: Error, Prompt, Notice, Processing, Saving, Unsave...
     //-------------------------------------------------------------------------
+    $common.showProcessingOverlay = function () {
+        $('#sysProcessing').modal('show');
+    };
+
+    $common.hideProcessingOverlay = function () {
+        $('#sysProcessing').modal('hide');
+    };
+    // ---------- new / old ----------
 
     $common.showSystemErrorOverlay = function (msg) {
         if ('' === $.trim(msg)) {
@@ -251,10 +259,6 @@
         });
     };
 
-    $common.showProcessingOverlay = function () {
-        $('#overlay-s .overlay-middle').html('<img src="images/icon_load_l.gif" alt="" />' + nn._(['overlay', 'loading', 'Processing...']));
-        $('#overlay-s').fadeIn().css('z-index', '1200');
-    };
 
     $common.showSavingOverlay = function () {
         $('#overlay-s .overlay-middle').html('<img src="images/icon_load_l.gif" alt="" />' + nn._(['overlay', 'loading', 'Saving...']));

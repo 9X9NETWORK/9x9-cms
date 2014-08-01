@@ -22,18 +22,15 @@
 
                 <a href="http://www.flipr.tv" target="_blank" class="main-logo navbar-brand col-md-2"></a>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="http://www.flipr.tv" class="langkeyT">Link to FLIPr.tv</a>
-                    </li>
+                    <li><a href="http://www.flipr.tv" class="langkeyT">Link to FLIPr.tv</a></li>
 
                     <li class="dropdown ">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:(0);"> 
-                        <span id="selected-profile"> User </span> <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a id="profile-logout langkeyT" href="#">Log out</a></li>
-                    </ul>
-                </li>
-
-
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:(0);"> 
+                            <span id="selected-profile"> User </span> <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a id="profile-logout" class="langkeyT" href="#">Log out</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -69,10 +66,10 @@
         <div class="row">
             <div class="col-md-3">
                 <ul class="nav nav-sidebar func-nav" data-spy="affix" data-offset-top="80" data-offset-bottom="50">
-                    <li><a href="#"><span class="icon-home"></span>  <sapn class="langkeyT">Main Channels</span></a></li>
-                    <li><a href="#"><span class="icon-store"></span> <sapn class="langkeyT">Program Store</span></a></li>
-                    <li><a href="#"><span class="icon-band"></span> <sapn class="langkeyT">Brand Settings</span></a></li>
-                    <li><a href="#"><span class="icon-notification"></span> <sapn class="langkeyT">Notification</span></a></li>
+                    <li><a href="portal-manage.html"><span class="icon-home"></span>  <sapn class="langkeyT">Main Channels</span></a></li>
+                    <li><a href="store-promotion.html"><span class="icon-store"></span> <sapn class="langkeyT">Program Store</span></a></li>
+                    <li><a href="brand-setting.html"><span class="icon-band"></span> <sapn class="langkeyT">Brand Settings</span></a></li>
+                    <li><a href="app-notification.html"><span class="icon-notification"></span> <sapn class="langkeyT">Notification</span></a></li>
                 </ul>
             </div>
             <div class="col-md-9">
@@ -301,21 +298,22 @@
     </footer>
 
     <!-- Modal -->
-    <div class="modal fade langOverlay" id="sysProcessings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-target=".bs-example-modal-sm">
+    <div class="modal fade langOverlay" id="sysMessage" tabindex="-1" role="dialog" aria-hidden="true" 
+         data-backdrop="static" data-target=".bs-example-modal-sm">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title langkeyT" >System Message</h4>
                 </div>
                 <div class="modal-body">
-                    <img alt="" src="images/icon_load_l.gif">
-                    <span class="langkeyT">Processing...</span>
+                    <!-- put message here -->
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade langOverlay " id="sysProcessing" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal fade langOverlay " id="sysProcessing" tabindex="-1" role="dialog" aria-hidden="true" 
+         data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-sm modal-center">
             <div class="modal-content" style="padding:10px;">
                 <img alt="" src="images/icon_load_l.gif">

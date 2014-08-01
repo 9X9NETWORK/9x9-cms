@@ -20,6 +20,13 @@ $(function () {
         var tmpUrl = $.url(location.href.replace('@', '%40')),
             tmpPriv = {},
             isStoreLangKey = true,
+            pcsLists = [
+                'store-manage.html',
+                'store-promotion.html',
+                'portal-manage.html',
+                'brand-setting.html',
+                'app-notification.html'
+            ],
             msoName = "flipr",
             loginUrl = "https://" + tmpUrl.attr('host') + '/cms/signin.html',
             homeUrl = "http://" + tmpUrl.attr('host') + '/cms/index.html';
@@ -57,7 +64,7 @@ $(function () {
                     if(cms.global.MSO === 12){
                         cms.global.IS_REMARK = false;
                     }
-                    if (-1 !== $.inArray(tmpUrl.attr('file'), ['store-manage.html', 'store-promotion.html', 'portal-manage.html', 'brand-setting.html', 'app-notification.html'])) {
+                    if (-1 !== $.inArray(tmpUrl.attr('file'), pcsLists)) {
                         // set mso info
                         nn.api('GET', cms.reapi('/api/mso/{msoId}', {
                             msoId: cms.global.MSO

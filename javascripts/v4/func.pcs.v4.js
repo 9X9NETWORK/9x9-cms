@@ -117,7 +117,6 @@
         }, 'debug');
 
 
- $('#sysProcessing').modal('show');
 
 
         // $common.showProcessingOverlay();
@@ -154,8 +153,9 @@
         //     $('#overlay-s').fadeOut("slow");
         // }
 
-        setTimeout(function(){
-            $('#sysProcessing').modal('hide');
+        $common.showProcessingOverlay();
+        setTimeout(function() {
+            $common.hideProcessingOverlay();
         }, 2000)
 
     };
