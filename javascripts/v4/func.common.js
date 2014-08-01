@@ -816,14 +816,10 @@
                 $('.func-nav .langkeyT').each(function () {
                     $(this).data('langkey', $(this).text());
                 });
-
-                $('.langkeyT').each(function () {
+                $('.langOverlay .langkeyT').each(function () {
                     $(this).data('langkey', $(this).text());
                 });
 
-                $('.langkeyH').each(function () {
-                    $(this).data('langkey', $(this).html());
-                });
             }
 
             // replace lang value
@@ -841,36 +837,10 @@
             $('.func-nav .langkeyT').each(function () {
                 $(this).text(nn._(['func-nav', $(this).data('langkey')]));
             });
+            $('.langOverlay .langkeyT').each(function () {
+                $(this).text(nn._(['overlay', 'loading', $(this).data('langkey')]));
+            });
 
-
-
-            $('#studio-nav a, #studio-nav .langkey').each(function () {
-                $(this).html(nn._(['studio-nav', $(this).data('langkey')]));
-            });
-            $('#footer span, #footer a').each(function () {
-                $(this).text(nn._(['footer', $(this).data('langkey')]));
-            });
-            $('.setup-notice h4, .setup-notice h5, .setup-notice .content').each(function () {
-                $(this).html(nn._(['overlay', 'facebook', $(this).data('langkey')]));
-            });
-            $('.lightbox-content .btns a').each(function () {
-                $(this).html(nn._(['overlay', 'button', $(this).data('langkey')]));
-            });
-            $('#func-nav a').each(function () {
-                $(this).text(nn._([cms.global.PAGE_ID, 'func-nav', $(this).data('langkey')]));
-            });
-            $('#epcurate-nav .langkey').each(function () {
-                $(this).text(nn._([cms.global.PAGE_ID, 'epcurate-nav', $(this).data('langkey')]));
-            });
-            $('#epcurateForm .langkey').each(function () {
-                $(this).html(nn._([cms.global.PAGE_ID, 'epcurate-form', $(this).data('langkey')]));
-            });
-            $('#epcurateForm .langkey-val').each(function () {
-                $(this).val(nn._([cms.global.PAGE_ID, 'epcurate-form', $(this).data('langkey')]));
-            });
-            $('#language').text($('#language-' + lang).text());
-            $('#language-en, #language-zh').parent('li').removeClass('on');
-            $('#language-' + lang).parent('li').addClass('on');
 
             // setup POI campaign Id
             if (-1 !== $.inArray(userUrlFile, ['epcurate-curation.html', 'channel-poi.html'])) {

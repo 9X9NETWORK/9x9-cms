@@ -115,7 +115,11 @@
             subject: 'CMS.PAGE.INITIALIZED: brand-setting',
             options: options
         }, 'debug');
-nn.log("**********");
+
+
+ $('#sysProcessing').modal('show');
+
+
         // $common.showProcessingOverlay();
         // var msoId = cms.global.MSO;
         // if (msoId < 1) {
@@ -149,6 +153,11 @@ nn.log("**********");
         //     $page.uploadImage();
         //     $('#overlay-s').fadeOut("slow");
         // }
+
+        setTimeout(function(){
+            $('#sysProcessing').modal('hide');
+        }, 2000)
+
     };
 
     // NOTE: remember to change page-key to match file-name
