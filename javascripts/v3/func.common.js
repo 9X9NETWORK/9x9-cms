@@ -595,9 +595,10 @@
                         // sync cms settings
                         cms.global.FB_RESTART_CONNECT = isRestartConnect;
                         if (true === isRestartConnect) {
-                            $('#studio-nav .reconnect-notice').removeClass('hide');
-                            $('#studio-nav .reconnect-notice .notice-left').stop(true).delay(2000).slideDown(100).delay(10000).fadeOut(1500);
-                            $('#cms-setting .connect .notice, #cms-setting .connect .notify').removeClass('hide');
+                        	// 暫時 - fbconnect 暫時不處理，所以這個訊息顯示先不處理
+                            // $('#studio-nav .reconnect-notice').removeClass('hide');
+                            // $('#studio-nav .reconnect-notice .notice-left').stop(true).delay(2000).slideDown(100).delay(10000).fadeOut(1500);
+                            // $('#cms-setting .connect .notice, #cms-setting .connect .notify').removeClass('hide');
                         }
                         cms.global.FB_PAGES_MAP = $common.buildFacebookPagesMap(facebook);
                         cms.global.USER_SNS_AUTH = facebook;

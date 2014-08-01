@@ -354,6 +354,9 @@
         if(cms.global.vIsYoutubeSync){
             $(".connected.youtube-sync").removeClass("hide");
         }
+        if(true === cms.global.USER_PRIV.isAutoOn){
+        	$(".connected.add-store").removeClass("hide");
+        }
         if (true === isAutoCheckedTimeline) {
             $('#fbTimeline').prop('checked', true);
             $('#fbTimeline-label').addClass('checked');
