@@ -165,6 +165,20 @@
             "Only letters, numbers or low line are allowed.": "用戶名稱請輸入中英文、數字或底線。"
         }
     },
+    "app-brand": {
+        "html-title": {
+            "FLIPr.tv - Brand Settings": "FLIPr.tv - 品牌設定"
+        },
+        "brand-layer": {
+            "Name:": "品牌名稱:",
+            "Brand Logo:": "品牌商標:",
+            "Best within 16 characters": "建議長度不超過16個字元 ",
+            "Please fill in your brand name.": "請輸入品牌名稱",
+            "Better results with 260x200 or higher resolution image.": "圖檔最佳解析為 260x200, 檔案大小不超過500KB",
+            "Please upload png file.": "請上傳 PNG 格式圖檔",
+            "your upload file is large than 500KB, please reupload file.": "您上傳的檔案超過500KB，請重新上傳較小檔案。"
+        }
+    },
     "app-notification": {
         "html-title": {
             "FLIPr.tv - App Notifiction": "FLIPr.tv - 推播通知"

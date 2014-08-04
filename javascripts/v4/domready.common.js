@@ -21,6 +21,7 @@ $(function () {
             tmpPriv = {},
             isStoreLangKey = true,
             pcsLists = [
+                'app-brand.html',
                 'store-manage.html',
                 'store-promotion.html',
                 'portal-manage.html',
