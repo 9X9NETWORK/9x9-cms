@@ -823,6 +823,9 @@
                 $('.langOverlay .langkeyT').each(function () {
                     $(this).data('langkey', $(this).text());
                 });
+                $('div.main-area .langkeyT').each(function () {
+                    $(this).data('langkey', $(this).text());
+                });
 
             }
 
@@ -843,6 +846,9 @@
             });
             $('.langOverlay .langkeyT').each(function () {
                 $(this).text(nn._(['overlay', 'loading', $(this).data('langkey')]));
+            });
+            $('div.main-area .langkeyT').each(function () {
+                $(this).text(nn._([cms.global.PAGE_ID, 'main-area', $(this).data('langkey')]));
             });
 
 

@@ -72,23 +72,21 @@
                     <li><a href="app-notification.html"><span class="icon-notification"></span> <sapn class="langkeyT">Notification</span></a></li>
                 </ul>
             </div>
-            <div class="col-md-9">
+            <div class="col-md-9 main-area">
                 <ol class="breadcrumb">
                     <li><a href="#">My App</a></li>
                     <li>Brand Management</li>
                 </ol>
 
 
-                <form class="form-horizontal" role="form">
-
-
+                <form id="msoInfo" class="form-horizontal" role="form">
                     <h3>Introduce your app
                         <span  class="btn btn-default badge" data-container="body" data-toggle="popover" title="where is suggested programs" data-content=" <img src='http://fakeimg.pl/200/'><br /> And here's some amazing content. It's very engaging. Right?">?</span>
                     </h3>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">App Name</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" placeholder="Readonly input here…" readonly>
+                            <input id="appTitle" class="form-control" type="text" placeholder="Readonly input here…" readonly>
 
                             <!-- <p class="form-control-static">123456app</p> -->
                         </div>
@@ -96,13 +94,13 @@
                     <div class="form-group ">
                         <label class="col-sm-2 control-label">App Logo</label>
                         <div class="col-sm-10">
-                            <img class="img-thumbnail app-thumbnail" src="http://fakeimg.pl/100" alt="">
+                            <img id="appLogo" class="img-thumbnail app-thumbnail" src="http://fakeimg.pl/100" alt="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Detailed description</label>
                         <div class="col-sm-10">
-                            <textarea name="" class="col-sm-12"></textarea>
+                            <textarea id="appIntro" class="col-sm-12"></textarea>
                              <span class="help-block text-right"><span class="words-amount">0</span> Best within 80 characters</span>
 
                         </div>
@@ -110,176 +108,61 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Short descript</label>
                         <div class="col-sm-10">
-                            <input class="form-control">
+                            <input id="appSortIntro" type="text" class="form-control">
                             <span class="help-block text-right"><span class="words-amount ">0</span> Best within 40 characters</span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-2 control-label">call to action</label>
                         <div class="col-sm-10">
-                            <input class="form-control">
+                            <input id="appSlogan" type="text" class="form-control">
                             <span class="help-block text-right "><span class="words-amount">0</span> Best within 15 characters</span>
                         </div>
                     </div>
                     <hr>
                 </form>
-                <form class="form-horizontal" role="form">
 
+
+
+                <form class="form-horizontal" role="form">
 
                     <h3>Promote your app <span  class="btn btn-default badge" data-container="body" data-toggle="popover" title="where is suggested programs" data-content=" <img src='http://fakeimg.pl/200/'><br /> And here's some amazing content. It's very engaging. Right?">?</span></h3>
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">SNS</label>
-                        <div class="col-sm-10">
-                            <div class="input-group">
-                                <input type="text" class="form-control">
-                                <div class="input-group-btn">
-                                    <a href="" class="btn btn-default"  data-toggle="popover" data-placement="top"  data-container="body" data-content="click icon button to upload your personal SNS icon icon.better results with 50x50 image"><span class="glyphicon glyphicon-cloud-upload"></span></a>
-                                    <a class="btn btn-default">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </a>
-                                </div>
+                    <div id="listsSNS">
+                    </div>
 
+                    <div id="addNewSNS" class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <div class="empty-add">
+                                <span class="empty-add-text langkeyT">+Add social network services</span>
                             </div>
-                            <span class="help-block text-right">Please upload SNS icon.</span>
-                            <!-- <input  class="form-control"> -->
                         </div>
                     </div>
-                    <div class="form-group">
-                    	<label class="col-sm-2 control-label"></label>
-                    	<div class="col-sm-10">
-                    		<div class="empty-add">
-                    			<span class="empty-add-text">
-                    				+Add social network services
-                    			</span>
-                    		</div>
-                    	</div>
 
-                    </div>
+                </form>
+
+                <form class="form-horizontal" role="form">
+
 
                     <h3>Suggested programs <span  class="btn btn-default badge" data-container="body" data-toggle="popover" title="where is suggested programs" data-content=" <img src='http://fakeimg.pl/200/'><br /> And here's some amazing content. It's very engaging. Right?">?</span></h3>
 
                     <div class="row">
-                        <div class="col-sm-6 col-md-4">
+                        <div id="listsSuggested"></div>
 
-                            <div class="thumbnail">
-                                <div class="caption">
-
-                                    <p>
-                                        <input type="text" class="form-control" placeholder="Input program link">
-                                    </p>
-                                    <p>
-                                        <input type="text" class="form-control" placeholder="Input program name">
-                                    </p>
-
-                                </div>
-
-                                <img src="http://fakeimg.pl/200/">
-                                 <a href="" class="btn btn-default btn-thumbnail" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
-
+                        <div id="addNewSuggested" class="col-sm-6 col-md-4">
+                            <div class="thumbnail empty-add">
+                                <span class="empty-add-text">+Add suggested program</span> 
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4">
 
-                            <div class="thumbnail">
-                                <div class="caption">
-
-                                    <p>
-                                        <input type="text" class="form-control" placeholder="Input program link">
-                                    </p>
-                                    <p>
-                                        <input type="text" class="form-control" placeholder="Input program name">
-                                    </p>
-
-                                </div>
-
-                                <img src="http://fakeimg.pl/200/">
-                                 <a href="" class="btn btn-default btn-thumbnail" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
-
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-
-                            <div class="thumbnail">
-                                <div class="caption">
-
-                                    <p>
-                                        <input type="text" class="form-control" placeholder="Input program link">
-                                    </p>
-                                    <p>
-                                        <input type="text" class="form-control" placeholder="Input program name">
-                                    </p>
-
-                                </div>
-
-                                <img src="http://fakeimg.pl/200/">
-                                 <a href="" class="btn btn-default btn-thumbnail" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
-
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-
-                            <div class="thumbnail">
-                                <div class="caption">
-
-                                    <p>
-                                        <input type="text" class="form-control" placeholder="Input program link">
-                                    </p>
-                                    <p>
-                                        <input type="text" class="form-control" placeholder="Input program name">
-                                    </p>
-
-                                </div>
-
-                                <img src="http://fakeimg.pl/200/">
-                                <a href="" class="btn btn-default btn-thumbnail" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
-
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-
-                            <div class="thumbnail">
-                                <div class="caption">
-
-
-                                    
-                                    	
-                                    	<p class="col-md-11 row">
-                                        	<input type="text" class="form-control" placeholder="Input program link">
-                                        </p>
-                                       
-                                        <a href="" class="btn btn-default btn-thumbnail" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
-
-                                        <a class="btn btn-default pull-right " href=""><span class="glyphicon glyphicon-remove"></span></a>
-                                       
-
-                                        
-                                   
-                                    <p class="clearfix">
-                                        <input type="text" class="form-control" placeholder="Input program name">
-                                    </p>
-
-                                </div>
-
-                                <img src="http://fakeimg.pl/200/">
-                                 <a href="" class="btn btn-default btn-thumbnail" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
-
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                        	 <div class="thumbnail empty-add">
-                        	 	<span class="empty-add-text">+Add suggested program</span>
-                        	 </div>
-                        </div>
-
-               
                     </div>
 
                     <hr>
                     <div class="pull-right">
 
                     <a href="" class="btn btn-default" >Cancel</a>
-                    <a href="" class="btn btn-primary">Save & Visit the page</a>
+                    <a id="btnSave" class="btn btn-primary">Save & Visit the page</a>
                     </div>
 
 
@@ -296,6 +179,52 @@
     		<p class="navbar-text navbar-right">© 2014 FLIPr.tv. All rights reserved</p>
     	</div>
     </footer>
+
+
+    <script id="tmpl-lists-SNS" type="text/x-jquery-tmpl">
+        <div id="SNS_${id}" data-meta="${id}" class="form-group listItem{{if id > 1407400000000}} newItem{{/if}}">
+            <label class="col-sm-2 control-label">SNS</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input type="text" value="${link}" class="form-control inUrlSNS" 
+                        placeholder="${nn._([cms.global.PAGE_ID, 'main-area', 'Input SNS link...'])}">
+                    <div class="input-group-btn">
+                        <a class="btn btn-default"  data-toggle="popover" data-placement="top"  data-container="body" 
+                            data-content="${nn._([cms.global.PAGE_ID, 'main-area', 'Click icon button to upload your personal SNS icon! Better results with 50x50 image.'])}">
+                            {{if '' != logoUrl}}
+                                <img class="logoUrl" src="${logoUrl}" width="30px" height-"30px" >
+                            {{else}}
+                                <span class="glyphicon glyphicon-cloud-upload"></span>
+                            {{/if}}</a>
+                        <a class="btn btn-default delSNS" ><span class="glyphicon glyphicon-trash"></span></a>
+                    </div>
+                </div>
+                <span class="help-block text-right msgSNS {{if logoUrl !== ''}} hide{{/if}}">${nn._([cms.global.PAGE_ID, 'main-area', 'Please upload SNS icon.'])}</span>
+            </div>
+        </div>
+    </script>
+
+    <script id="tmpl-lists-Suggested" type="text/x-jquery-tmpl">
+        <div id="Sugg_${id}" class="col-sm-6 col-md-4 listItem{{if id > 1407400000000}} newItem{{/if}}">
+            <div class="thumbnail">
+                <div class="caption">
+                    <p class="{{if $isSecII}}col-md-11 row{{/if}}">
+                        <input value="${isSecII}" type="text" class="form-control" placeholder="Input program link">
+                    </p>
+                    {{if $isSecII}}
+                        <a class="btn btn-default pull-right " href=""><span class="glyphicon glyphicon-remove"></span></a>
+                    {{/if}}
+                    <p  class="{{if $isSecII}}clearfix{{/if}}">
+                        <input type="text" class="form-control" placeholder="Input program name">
+                    </p>
+                </div>
+
+                <img src="http://fakeimg.pl/200/">
+                <a href="" class="btn btn-default btn-thumbnail" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
+            </div>
+        </div>
+    </script>
+
 
     <!-- Modal -->
     <div class="modal fade langOverlay" id="sysMessage" tabindex="-1" role="dialog" aria-hidden="true" 
@@ -323,6 +252,8 @@
     </div>
 
 
+
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -332,6 +263,7 @@
     <script src="javascripts/libs/jquery.cookie.min.js?v=411104"></script>
     <script src="javascripts/libs/json2.min.js?v=411104"></script>
     <script src="javascripts/libs/purl.min.js?v=411104"></script>
+    <script src="javascripts/libs/jquery.fileupload.js"></script>
 
     <script src="javascripts/v4/config.js?v=411104"></script>
     <script src="javascripts/v4/func.common.js?v=411104"></script>

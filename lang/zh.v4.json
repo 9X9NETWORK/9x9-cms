@@ -169,10 +169,11 @@
         "html-title": {
             "FLIPr.tv - Brand Settings": "FLIPr.tv - 品牌設定"
         },
-        "brand-layer": {
-            "Name:": "品牌名稱:",
-            "Brand Logo:": "品牌商標:",
-            "Best within 16 characters": "建議長度不超過16個字元 ",
+        "main-area": {
+            "Input SNS link...": "請輸入 SNS 網址...",
+            "Please upload SNS icon.": "請上傳 SNS 小圖",
+            "Click icon button to upload your personal SNS icon! Better results with 50x50 image.": "Click icon button to upload your personal SNS icon! Better results with 50x50 image.111",
+            "+Add social network services": "+ 加入社群連結",
             "Please fill in your brand name.": "請輸入品牌名稱",
             "Better results with 260x200 or higher resolution image.": "圖檔最佳解析為 260x200, 檔案大小不超過500KB",
             "Please upload png file.": "請上傳 PNG 格式圖檔",
