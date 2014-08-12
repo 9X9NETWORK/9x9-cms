@@ -23,6 +23,7 @@
         "loading": {
             "Saving...": "儲存中...",
             "System Message": "系統訊息",
+            "Image Upload": "圖片上傳",
             "Processing...": "處理中..."
         },
         "system-error": {

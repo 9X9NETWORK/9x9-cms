@@ -128,8 +128,7 @@
 
                     <h3>Promote your app <span  class="btn btn-default badge" data-container="body" data-toggle="popover" title="where is suggested programs" data-content=" <img src='http://fakeimg.pl/200/'><br /> And here's some amazing content. It's very engaging. Right?">?</span></h3>
 
-                    <div id="listsSNS">
-                    </div>
+                    <div id="listsSNS"></div>
 
                     <div id="addNewSNS" class="form-group">
                         <label class="col-sm-2 control-label"></label>
@@ -161,7 +160,7 @@
                     <hr>
                     <div class="pull-right">
 
-                    <a href="" class="btn btn-default" >Cancel</a>
+                    <a id="funcCancel" class="btn btn-default" >Cancel</a>
                     <a id="btnSave" class="btn btn-primary">Save & Visit the page</a>
                     </div>
 
@@ -182,17 +181,18 @@
 
 
     <script id="tmpl-lists-SNS" type="text/x-jquery-tmpl">
-        <div id="SNS_${id}" data-meta="${id}" class="form-group listItem{{if id > 1407400000000}} newItem{{/if}}">
+        <div id="SNS_${id}" data-meta="${id}" data-seq="${seq}"
+             class="form-group listItem{{if id > 1407400000000}} newItem{{/if}}">
             <label class="col-sm-2 control-label">SNS</label>
             <div class="col-sm-10">
                 <div class="input-group">
                     <input type="text" value="${link}" class="form-control inUrlSNS" 
                         placeholder="${nn._([cms.global.PAGE_ID, 'main-area', 'Input SNS link...'])}">
                     <div class="input-group-btn">
-                        <a class="btn btn-default"  data-toggle="popover" data-placement="top"  data-container="body" 
+                        <a class="btn btn-default logoSNS"  data-toggle="popover" data-placement="top"  data-container="body" 
                             data-content="${nn._([cms.global.PAGE_ID, 'main-area', 'Click icon button to upload your personal SNS icon! Better results with 50x50 image.'])}">
                             {{if '' != logoUrl}}
-                                <img class="logoUrl" src="${logoUrl}" width="30px" height-"30px" >
+                                <img class="logoUrl" src="${logoUrl}" width="30px" height="30px" >
                             {{else}}
                                 <span class="glyphicon glyphicon-cloud-upload"></span>
                             {{/if}}</a>
@@ -205,28 +205,46 @@
     </script>
 
     <script id="tmpl-lists-Suggested" type="text/x-jquery-tmpl">
-        <div id="Sugg_${id}" class="col-sm-6 col-md-4 listItem{{if id > 1407400000000}} newItem{{/if}}">
+        <div id="Sugg_${id}" data-meta="${id}" data-seq="${seq}"
+             class="col-sm-6 col-md-4 listItem{{if id > 1407400000000}} newItem{{/if}}">
             <div class="thumbnail">
                 <div class="caption">
-                    <p class="{{if $isSecII}}col-md-11 row{{/if}}">
-                        <input value="${isSecII}" type="text" class="form-control" placeholder="Input program link">
+                    <p class="{{if isSecII === true }}col-md-11 row{{/if}}">
+                        <input type="text" class="form-control inLinkSugg" placeholder="Input program link" value="${link}">
                     </p>
-                    {{if $isSecII}}
-                        <a class="btn btn-default pull-right " href=""><span class="glyphicon glyphicon-remove"></span></a>
+                    {{if isSecII === true}}
+                    <a class="btn btn-default pull-right delSugg"><span class="glyphicon glyphicon-remove"></span></a>
                     {{/if}}
-                    <p  class="{{if $isSecII}}clearfix{{/if}}">
-                        <input type="text" class="form-control" placeholder="Input program name">
+                    <p  class="{{if isSecII === true}}clearfix{{/if}}">
+                        <input type="text" class="form-control inTitleSugg" placeholder="Input program name" value="${title}">
                     </p>
                 </div>
 
-                <img src="http://fakeimg.pl/200/">
-                <a href="" class="btn btn-default btn-thumbnail" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
+                <img class="logoUrl" src="${logoUrl}" width="200px" height="200px">
+                <a class="btn btn-default btn-thumbnail uploadSugg" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
             </div>
         </div>
     </script>
 
 
     <!-- Modal -->
+    <div class="modal fade langOverlay" id="imageUpload" tabindex="-1" role="dialog" aria-hidden="true" 
+         data-backdrop="static" data-target=".bs-example-modal-sm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" ><span class="langkeyT">Image Upload</span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modalUpload">
+                        <p id="uploadThumbnail"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade langOverlay" id="sysMessage" tabindex="-1" role="dialog" aria-hidden="true" 
          data-backdrop="static" data-target=".bs-example-modal-sm">
         <div class="modal-dialog">
