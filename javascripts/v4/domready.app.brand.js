@@ -36,7 +36,7 @@ $(function () {
     $(document).on("change", ".inLinkSugg, .inTitleSugg", function (event) {
         var thisSugg = $(this).parent().parent().parent().parent();
 
-        thisSugg.addClass("has-change");
+        $page.itemHasChange(thisSugg);
         $("body").addClass("has-change");
     });
 
@@ -48,7 +48,7 @@ $(function () {
             logoBox = $(this).parent().find("a.logoSNS"),
             iconImg = "";
 
-        thisSNS.addClass("has-change");
+        $page.itemHasChange(thisSNS);
         $("body").addClass("has-change");
 
         $(this).val(thisVal);
@@ -79,6 +79,9 @@ $(function () {
         } else {
             $("#addNewSNS").removeClass("hide");
         }
+
+        $page.itemHasChange(opObj);
+        $("body").addClass("has-change");
     });
 
 
@@ -105,6 +108,8 @@ $(function () {
 
             });
         }
+
+        $("body").addClass("has-change");
     });
 
     $(document).on("click", ".uploadSugg", function (event) {
@@ -127,9 +132,6 @@ $(function () {
         $("#modalUpload").html("<p id='uploadThumbnail'></p>");
 
         $page.imageUpload("Sugg", parameter);
-
-
-
     });
 
     $(document).on("click", ".delSugg", function (event) {
@@ -149,6 +151,9 @@ $(function () {
         } else {
             $("#addNewSuggested").removeClass("hide");
         }
+
+        $page.itemHasChange(opObj);
+        $("body").addClass("has-change");
     });
 
     $(document).on("click", "#addNewSuggested", function (event) {
@@ -174,6 +179,8 @@ $(function () {
                 $("#addNewSuggested").addClass("hide");
             }
         }
+
+        $("body").addClass("has-change");
     });
 
     $(document).on("click", "#btnSave", function(event) {

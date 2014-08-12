@@ -14,6 +14,12 @@
     $page.defImgSNS = "http://fakeimg.pl/100/";
     $page.defImgSugg = "http://fakeimg.pl/200/";
 
+    $page.itemHasChange = function (opObj) {
+        if(!opObj.hasClass("newItem")){
+            opObj.addClass("has-change");
+        }
+    };
+
     $page.imageUpload = function (inType, parameter) {
  
         var thisId = $("#imageUpload").data("meta");
