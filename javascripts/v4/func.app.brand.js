@@ -23,19 +23,22 @@
             strNewId = "",
             theObj;
 
-        if ($page.typeSNS == inType) {
+        if ($page.typeSNS == inObj.type) {
             strPrefix = "#listsSNS div.listItem";
             strNewId = "SNS_" + inObj.id;
         } else {
             strPrefix = "#listsSuggested div.listItem";
             strNewId = "Sugg_" + inObj.id;
         }
-        $(strPrefix).each(function() {
-            theObj = this;
 
-            if (theObj.seq == inObj.seq) {
+        $(strPrefix).each(function() {
+            theObj = $(this);
+
+            if (theObj.data("seq") == inObj.seq) {
                 theObj.removeClass("newItem");
+
                 theObj.attr("id", strNewId);
+                theObj.data("meta", inObj.id);
             }
         });
 
@@ -55,8 +58,8 @@
                 link: opObj.link,
                 title: "",
                 logoUrl: opObj.logoUrl,
-                type: opObj.inType,
-                seq: opObj.seq,
+                type: inType,
+                seq: opObj.seq
             };
 
         if(inType === $page.typeSugg){
@@ -65,9 +68,10 @@
 
         switch (act) {
             case "POST":
-                nn.api('POST', cms.reapi('/api/mso/{msoId}/mso_promotions', {
+                nn.api('POST', cms.reapi('/api/mso/{msoId}/promotions', {
                     msoId: cms.global.MSO
                 }), objParameters, function(dataInfo) {
+                    nn.log(dataInfo);
                     $page.procPromotionAdd(dataInfo);
 
                     $page.saveItems --;
@@ -223,7 +227,6 @@
         return retValue;
     };
 
-
     $page.addCheckSNS = function () {
         var itemCount = $page.itemCountSNS();
 
@@ -376,7 +379,13 @@
                     countI++;
                     // seq update
                     if (countI != opObj.data("seq")) {
+                        nn.log(countI + "******" +tmpLink);
                         opObj.data("seq", countI);
+
+                        nn.log(opObj.attr("id") + "=== seq ---- "+opObj.data("seq"));
+
+                        nn.log("$$"+$("#SNS_1407921547279"+opObj.attr("id")).data("seq"));
+
                         $page.itemHasChange(opObj);
                         $("body").addClass("has-change");
                     }
@@ -475,7 +484,7 @@
         }, function (dataLists) {
 
             $('#tmpl-lists-SNS').tmpl(dataLists, null).appendTo('#listsSNS');
-
+            $page.addCheckSNS();
             $page.isSNS = true;
             $page.chkFormSet();
 
@@ -502,6 +511,7 @@
 
             $('#tmpl-lists-Suggested').tmpl(dataLists, null).appendTo('#listsSuggested');
 
+            $page.addCheckSugg();
             $page.isSuggested = true;
             $page.chkFormSet();
         });
