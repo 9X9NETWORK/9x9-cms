@@ -48,13 +48,20 @@ $(function () {
             thisVal = $(this).val().trim(),
             msgBox = $(this).parent().parent().find("span.msgSNS"),
             logoBox = $(this).parent().find("a.logoSNS"),
+            logoBoxSrc = logoBox.find("img.logoUrl").attr("src"),
             iconImg = "";
 
         $page.itemHasChange(thisSNS);
         $("body").addClass("has-change");
 
         $(this).val(thisVal);
+
         iconImg = $page.changeUrlSNS(thisVal);
+
+        if (undefined !== logoBoxSrc && $.inArray(logoBoxSrc, $page.defImgsSNS) < 0 && iconImg === "") {
+            iconImg = logoBoxSrc;
+        }
+
         if (iconImg !== "") {
             logoBox.html("<img class='logoUrl' src='" + iconImg + "' width='30px' height-'30px' >");
             msgBox.addClass("hide");

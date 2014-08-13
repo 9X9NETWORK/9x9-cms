@@ -16,6 +16,7 @@
     $page.saveItems = 0;
     $page.typeSNS = 1;
     $page.typeSugg = 2;
+    $page.defImgsSNS = ["images/icon-pcs-sns-fb.png", "images/icon-pcs-sns-gplus.png", "images/icon-pcs-sns-youtube.png", "images/icon-pcs-sns-twitter.png"];
 
     $page.procPromotionAdd = function (inObj) {
         var strPrefix = "",
@@ -205,18 +206,18 @@
             retValue = "";
         switch (strHost) {
             case "www.facebook.com":
-                retValue = "images/icon-pcs-sns-fb.png";
+                retValue = $page.defImgsSNS[0];// "images/icon-pcs-sns-fb.png";
                 break;
             case "plus.google.com":
-                retValue = "images/icon-pcs-sns-gplus.png";
+                retValue = $page.defImgsSNS[1];// "images/icon-pcs-sns-gplus.png";
 
                 break;
             case "www.youtube.com":
-                retValue = "images/icon-pcs-sns-youtube.png";
+                retValue = $page.defImgsSNS[2];// "images/icon-pcs-sns-youtube.png";
 
                 break;
             case "twitter.com":
-                retValue = "images/icon-pcs-sns-twitter.png";
+                retValue = $page.defImgsSNS[3];// "images/icon-pcs-sns-twitter.png";
                 break;
         }
         return retValue;
