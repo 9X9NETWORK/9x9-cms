@@ -190,21 +190,16 @@ $(function () {
 
         if (inMsoInfo.isChecked && inSNS.isChecked && inSugg.isChecked) {
             $common.showProcessingOverlay();
+
             nn.api('PUT', cms.reapi('/api/mso/{msoId}', {
                 msoId: cms.global.MSO
-            }), inMsoInfo, function(msoInfo) {
-                $common.hideProcessingOverlay();
+            }), inMsoInfo, function (msoInfo) {
+                $page.chkProcPromotion();
             });
 
             $page.saveItems = inSNS.items.length + inSugg.items.length;
 
             $(".listItem.delItem").remove();
-
-            nn.api('PUT', cms.reapi('/api/mso/{msoId}', {
-                msoId: cms.global.MSO
-            }), inMsoInfo, function(msoInfo) {
-                $common.hideProcessingOverlay();
-            });
 
             $.each(inSNS.items, function (eKey, eValue) {
                 $page.procPromotion(eValue, $page.typeSNS);
@@ -216,6 +211,7 @@ $(function () {
 
 
         }else{
+            // todo
             nn.log(inMsoInfo);
             nn.log(inSNS);
             nn.log(inSugg);

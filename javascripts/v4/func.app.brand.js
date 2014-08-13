@@ -334,7 +334,6 @@
 
             if (tmpMin < countTmp && !opObj.hasClass("delItem") && ("" === tmpItem.link || "" === tmpItem.title)) {
                 retValue.errCount++;
-
             } else {
                 tmpItem.id = opObj.data("meta");
                 tmpItem.seq = opObj.data("seq");
@@ -349,8 +348,6 @@
                 if ("" !== tmpItem.act) {
                     countI ++;
                     retValue.items.push(tmpItem);
-                }else{
-                    retValue.errCount++;
                 }
             }
 
