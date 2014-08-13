@@ -13,6 +13,87 @@
     $page.limitSuggested = 6;
     $page.defImgSNS = "http://fakeimg.pl/100/";
     $page.defImgSugg = "http://fakeimg.pl/200/";
+    $page.saveItems = 0;
+    $page.typeSNS = 1;
+    $page.typeSugg = 2;
+
+    $page.procPromotionAdd = function (inObj) {
+        var strPrefix = "",
+            strNewId = "",
+            theObj;
+
+        if ($page.typeSNS == inType) {
+            strPrefix = "#listsSNS div.listItem";
+            strNewId = "SNS_" + inObj.id;
+        } else {
+            strPrefix = "#listsSuggested div.listItem";
+            strNewId = "Sugg_" + inObj.id;
+        }
+        $(strPrefix).each(function() {
+            theObj = this;
+
+            if (theObj.seq == inObj.seq) {
+                theObj.removeClass("newItem");
+                theObj.attr("id", strNewId);
+            }
+        });
+
+    }
+
+    $page.chkProcPromotion = function () {
+        if ($page.saveItems == 0) {
+            $(".has-change").removeClass("has-change");
+            $common.hideProcessingOverlay();
+        }
+    }
+
+    $page.procPromotion = function (opObj, inType) {
+        var act = opObj.act,
+            actId = opObj.id,
+            objParameters = {
+                link: opObj.link,
+                title: "",
+                logoUrl: opObj.logoUrl,
+                type: opObj.inType,
+                seq: opObj.seq,
+            };
+
+        if(inType === $page.typeSugg){
+            objParameters.title = opObj.title;
+        }
+
+        switch (act) {
+            case "POST":
+                nn.api('POST', cms.reapi('/api/mso/{msoId}/mso_promotions', {
+                    msoId: cms.global.MSO
+                }), objParameters, function(dataInfo) {
+                    $page.procPromotionAdd(dataInfo);
+
+                    $page.saveItems --;
+                    $page.chkProcPromotion();
+                });
+                break;
+
+            case "DELETE":
+                nn.api('DELETE', cms.reapi('/api/mso_promotions/{id}', {
+                    id: actId
+                }), null, function(dataInfo) {
+                    $page.saveItems --;
+                    $page.chkProcPromotion();
+                });
+                break;
+            case "PUT":
+                nn.api('PUT', cms.reapi('/api/mso_promotions/{id}', {
+                    id: actId
+                }), objParameters, function(dataInfo) {
+                    $page.saveItems --;
+                    $page.chkProcPromotion();
+
+                });
+                break;
+
+        }
+    };
 
     $page.itemHasChange = function (opObj) {
         if(!opObj.hasClass("newItem")){
@@ -112,6 +193,7 @@
                 swfu = new SWFUpload(settings);
 
             swfu.debug = cms.config.IS_DEBUG;
+
             $common.hideProcessingOverlay();
             $('#imageUpload').modal('show');
         });
@@ -141,12 +223,32 @@
     };
 
 
+    $page.addCheckSNS = function () {
+        var itemCount = $page.itemCountSNS();
+
+        if (itemCount.itemCount >= $page.limitSNS) {
+            $("#addNewSNS").addClass("hide");
+        } else {
+            $("#addNewSNS").removeClass("hide");
+        }
+    };
+
     $page.itemCountSNS = function () {
         var retValue = {
             delCount: $('#listsSNS .listItem.delItem').length,
             itemCount: $('#listsSNS .listItem').length - $('#listsSNS .listItem.delItem').length
         };
         return retValue;
+    };
+
+    $page.addCheckSugg = function () {
+        var itemCount = $page.itemCountSugg();
+
+        if (itemCount.itemCount >= $page.limitSuggested) {
+            $("#addNewSuggested").addClass("hide");
+        } else {
+            $("#addNewSuggested").removeClass("hide");
+        }
     };
 
     $page.itemCountSugg = function () {
@@ -157,7 +259,7 @@
         return retValue;
     };
 
-    $page.chkFormSet = function() {
+    $page.chkFormSet = function () {
         if ($page.isMsoInfo && $page.isSNS && $page.isSuggested) {
             $('[data-toggle=popover]').popover({
                 html: true,
@@ -165,6 +267,177 @@
             })
             $common.hideProcessingOverlay();
         }
+    };
+
+    $page.seqUpdateSugg = function () {
+        var opObj, tmpLink, tmpTitle, tmpLogoUrl, countI = 0,
+            countTmp = 0,
+            tmpMin = $page.limitSuggestedMin;
+
+        $("#listsSuggested  div.listItem").each(function () {
+            opObj = $(this);
+            tmpLink = opObj.find("input.inLinkSugg").val();
+            tmpTitle = opObj.find("input.inTitleSugg").val();
+            tmpLogoUrl = opObj.find("img.logoUrl").attr("src");
+
+            countTmp = countI + 1;
+
+            if (countTmp > tmpMin && opObj.hasClass("newItem") && "" === tmpLink && "" === tmpTitle) {
+                opObj.remove();
+                $page.addCheckSugg();
+           } else {
+                // skip delete item
+                if (!opObj.hasClass("delItem")) {
+                    countI++;
+                    // seq update
+                    if (countI != opObj.data("seq")) {
+                        opObj.data("seq", countI);
+                        $page.itemHasChange(opObj);
+                        $("body").addClass("has-change");
+                    }
+                }
+            }
+        });
+    };
+
+    $page.inSugg = function() {
+        var retValue = {
+            isChecked: false,
+            errCount: 0,
+            items: []
+        }, tmpItem, opObj, countI = 0,
+            countTmp = 0,
+            isDel = false,
+            tmpMin = $page.limitSuggestedMin;
+
+        $page.seqUpdateSugg();
+
+        $("#listsSuggested  div.listItem").each(function () {
+            opObj = $(this);
+            countI ++;
+            isDel = false;
+            tmpItem = {
+                id: 0,
+                seq: 0,
+                link: "",
+                title: "",
+                logoUrl: "",
+                act: ""
+            };
+
+            countTmp = countI + 1;
+
+            tmpItem.link = opObj.find("input.inLinkSugg").val();
+            tmpItem.title = opObj.find("input.inTitleSugg").val();
+            tmpItem.logoUrl = opObj.find("img.logoUrl").attr("src");
+
+            if (tmpMin < countTmp && !opObj.hasClass("delItem") && ("" === tmpItem.link || "" === tmpItem.title)) {
+                retValue.errCount++;
+
+            } else {
+                tmpItem.id = opObj.data("meta");
+                tmpItem.seq = opObj.data("seq");
+
+                if (opObj.hasClass("delItem")) {
+                    tmpItem.act = "DELETE";
+                } else if (opObj.hasClass("newItem")) {
+                    tmpItem.act = "POST";
+                } else if (opObj.hasClass("has-change")) {
+                    tmpItem.act = "PUT";
+                }
+                if ("" !== tmpItem.act) {
+                    countI ++;
+                    retValue.items.push(tmpItem);
+                }else{
+                    retValue.errCount++;
+                }
+            }
+
+        });
+
+        if (0 === retValue.errCount) {
+            retValue.isChecked = true;
+        }
+        return retValue;
+    };
+
+    $page.seqUpdateSNS = function () {
+        var opObj, tmpLink, tmpLogoUrl, countI = 0;
+
+        $("#listsSNS  div.listItem").each(function () {
+            opObj = $(this);
+            tmpLink = opObj.find("input.inUrlSNS").val();
+            tmpLogoUrl = opObj.find("img.logoUrl").attr("src");
+
+            if (opObj.hasClass("newItem") && undefined === tmpLogoUrl && "" === tmpLink) {
+                opObj.remove();
+                $page.addCheckSNS();
+            } else {
+                // skip delete item
+                if (!opObj.hasClass("delItem")) {
+                    countI++;
+                    // seq update
+                    if (countI != opObj.data("seq")) {
+                        opObj.data("seq", countI);
+                        $page.itemHasChange(opObj);
+                        $("body").addClass("has-change");
+                    }
+                }
+            }
+        });
+    };
+
+    $page.inSNS = function() {
+        var retValue = {
+            isChecked: false,
+            errCount: 0,
+            items: []
+        }, tmpItem, opObj, countI = 0,
+            isDel = false;
+
+        $page.seqUpdateSNS();
+
+        $("#listsSNS  div.listItem").each(function () {
+            opObj = $(this);
+            countI ++;
+            isDel = false;
+            tmpItem = {
+                id: 0,
+                seq: 0,
+                link: "",
+                logoUrl: "",
+                act: ""
+            };
+
+            tmpItem.link = opObj.find("input.inUrlSNS").val();
+            tmpItem.logoUrl = opObj.find("img.logoUrl").attr("src");
+
+            if (!opObj.hasClass("delItem") && undefined === tmpItem.logoUrl || "" === tmpItem.link) {
+                retValue.errCount++;
+                // retValue.items.push(tmpItem);
+
+            } else {
+                tmpItem.id = opObj.data("meta");
+                tmpItem.seq = opObj.data("seq");
+
+                if (opObj.hasClass("delItem")) {
+                    tmpItem.act = "DELETE";
+                } else if (opObj.hasClass("newItem")) {
+                    tmpItem.act = "POST";
+                } else if (opObj.hasClass("has-change")) {
+                    tmpItem.act = "PUT";
+                }
+                if ("" !== tmpItem.act) {
+                    retValue.items.push(tmpItem);
+                }
+            }
+
+        });
+
+        if (0 === retValue.errCount) {
+            retValue.isChecked = true;
+        }
+        return retValue;
     };
 
     $page.inMsoinfo = function() {
@@ -203,12 +476,8 @@
             type: 1
         }, function (dataLists) {
 
-
             $('#tmpl-lists-SNS').tmpl(dataLists, null).appendTo('#listsSNS');
 
-            dataLists[1].isSecII = true;
-            nn.log(dataLists);
-            nn.log("SNS count[" + dataLists.length + "]");
             $page.isSNS = true;
             $page.chkFormSet();
 

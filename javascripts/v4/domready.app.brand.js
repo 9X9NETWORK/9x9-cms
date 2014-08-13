@@ -10,8 +10,10 @@ $(function () {
 
     $(document).on("click", "#funcCancel", function (event) {
         
+        var aa = $page.inSugg();
 
-        $('#imageUpload').modal('show');
+        nn.log(aa);
+        // $('#imageUpload').modal('show');
     });
 
     $(document).on("click", ".logoSNS", function (event) {
@@ -74,11 +76,7 @@ $(function () {
 
         itemCount = $page.itemCountSNS();
 
-        if (itemCount.itemCount >= $page.limitSNS) {
-            $("#addNewSNS").addClass("hide");
-        } else {
-            $("#addNewSNS").removeClass("hide");
-        }
+        $page.addCheckSNS();
 
         $page.itemHasChange(opObj);
         $("body").addClass("has-change");
@@ -98,10 +96,10 @@ $(function () {
 
         if ($page.limitSNS > itemCount.itemCount) {
             $('#tmpl-lists-SNS').tmpl(emptyItem, null).appendTo('#listsSNS');
+
             itemCount = $page.itemCountSNS();
-            if (itemCount.itemCount >= $page.limitSNS) {
-                $("#addNewSNS").addClass("hide");
-            }
+            $page.addCheckSNS();
+
             $('[data-toggle=popover]').popover({
                 html: true,
                 trigger: 'hover'
@@ -146,11 +144,7 @@ $(function () {
 
         itemCount = $page.itemCountSNS();
 
-        if (itemCount.itemCount >= $page.limitSuggested) {
-            $("#addNewSuggested").addClass("hide");
-        } else {
-            $("#addNewSuggested").removeClass("hide");
-        }
+        $page.addCheckSugg();
 
         $page.itemHasChange(opObj);
         $("body").addClass("has-change");
@@ -175,25 +169,51 @@ $(function () {
         if ($page.limitSuggested > itemCount) {
             $('#tmpl-lists-Suggested').tmpl(emptyItem, null).appendTo('#listsSuggested');
             itemCount++;
-            if (itemCount >= $page.limitSuggested) {
-                $("#addNewSuggested").addClass("hide");
-            }
+            $page.addCheckSugg();
         }
 
         $("body").addClass("has-change");
     });
 
-    $(document).on("click", "#btnSave", function(event) {
-        var inMsoInfo = $page.inMsoinfo();
+    $(document).on("click", "#btnSave", function (event) {
+        var inMsoInfo = $page.inMsoinfo(),
+            inSNS = $page.inSNS(),
+            inSugg = $page.inSugg();
 
 
-        if (inMsoInfo.isChecked) {
+        if (inMsoInfo.isChecked && inSNS.isChecked && inSugg.isChecked) {
             $common.showProcessingOverlay();
             nn.api('PUT', cms.reapi('/api/mso/{msoId}', {
                 msoId: cms.global.MSO
-            }), inMsoInfo, function (msoInfo) {
+            }), inMsoInfo, function(msoInfo) {
                 $common.hideProcessingOverlay();
             });
+
+            $page.saveItems = inSNS.items.length + inSugg.items.length;
+
+            $(".listItem.delItem").remove();
+
+            nn.api('PUT', cms.reapi('/api/mso/{msoId}', {
+                msoId: cms.global.MSO
+            }), inMsoInfo, function(msoInfo) {
+                $common.hideProcessingOverlay();
+            });
+
+            $.each(inSNS.items, function (eKey, eValue) {
+                $page.procPromotion(eValue, $page.typeSNS);
+            });
+
+            $.each(inSugg.items, function (eKey, eValue) {
+                $page.procPromotion(eValue, $page.typeSugg);
+            });
+
+
+        }else{
+            nn.log(inMsoInfo);
+            nn.log(inSNS);
+            nn.log(inSugg);
+            $("#sysMessage div.modal-body").text("錯誤!!");
+            $('#sysMessage').modal('show');
         }
 
         return false;
