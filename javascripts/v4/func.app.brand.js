@@ -8,7 +8,7 @@
     $page.isMsoInfo = false;
     $page.isSNS = false;
     $page.isSuggested = false;
-    $page.limitSNS = 4;
+    $page.limitSNS = 5;
     $page.limitSuggestedMin = 4;
     $page.limitSuggested = 6;
     $page.defImgSNS = "http://fakeimg.pl/100/";
@@ -42,14 +42,14 @@
             }
         });
 
-    }
+    };
 
     $page.chkProcPromotion = function () {
         if ($page.saveItems == 0) {
             $(".has-change").removeClass("has-change");
             $common.hideProcessingOverlay();
         }
-    }
+    };
 
     $page.procPromotion = function (opObj, inType) {
         var act = opObj.act,
@@ -268,7 +268,8 @@
             $('[data-toggle=popover]').popover({
                 html: true,
                 trigger: 'hover'
-            })
+            });
+            $('[data-toggle="tooltip"]').tooltip();
             $common.hideProcessingOverlay();
         }
     };
@@ -473,6 +474,7 @@
 
             $page.isMsoInfo = true;
             $page.chkFormSet();
+            $(".wordsCount").keyup();
         });
     };
 
@@ -527,10 +529,11 @@
 
         $common.showProcessingOverlay();
 
-        $('[data-toggle=popover]').popover({
-            html: true,
-            trigger: 'hover'
-
+        $(".badge").each(function() {
+            var oriString = $(this).data("original-title"), 
+            transString = nn._([cms.global.PAGE_ID, 'main-area', oriString]);
+            $(this).data('langkey', oriString );
+            $(this).attr('title', transString);
         });
 
         $page.formSetMsoInfo();

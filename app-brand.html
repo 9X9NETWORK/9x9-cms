@@ -74,49 +74,49 @@
             </div>
             <div class="col-md-9 main-area">
                 <ol class="breadcrumb">
-                    <li><a href="#">My App</a></li>
-                    <li>Brand Management</li>
+                    <li><a href="portal-manage.html" class="langkeyT">My App</a></li>
+                    <li class="langkeyT">Brand Management</li>
                 </ol>
 
 
                 <form id="msoInfo" class="form-horizontal" role="form">
-                    <h3>Introduce your app
-                        <span  class="btn btn-default badge" data-container="body" data-toggle="popover" title="where is suggested programs" data-content=" <img src='http://fakeimg.pl/200/'><br /> And here's some amazing content. It's very engaging. Right?">?</span>
+                    <h3><span class="langkeyT">Introduce your app</span>
+                        <span class="btn btn-default badge" data-container="body" data-toggle="popover"
+                            data-original-title="where is 'Introduce your app'"
+                            data-content="<img src='images/landing-tooltip1.gif'><br />">?</span>
                     </h3>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">App Name</label>
+                        <label class="col-sm-2 control-label langkeyT">App Name</label>
                         <div class="col-sm-10">
                             <input id="appTitle" class="form-control" type="text" placeholder="Readonly input here…" readonly>
-
-                            <!-- <p class="form-control-static">123456app</p> -->
                         </div>
                     </div>
                     <div class="form-group ">
-                        <label class="col-sm-2 control-label">App Logo</label>
+                        <label class="col-sm-2 control-label langkeyT">App Logo</label>
                         <div class="col-sm-10">
                             <img id="appLogo" class="img-thumbnail app-thumbnail" src="http://fakeimg.pl/100" alt="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Detailed description</label>
+                        <label class="col-sm-2 control-label langkeyT">Detailed description</label>
                         <div class="col-sm-10">
-                            <textarea id="appIntro" class="col-sm-12"></textarea>
-                             <span class="help-block text-right"><span class="words-amount">0</span> Best within 80 characters</span>
+                            <textarea id="appIntro" class="col-sm-12 wordsCount"></textarea>
+                             <span class="help-block text-right"><span class="words-amount">0</span> <span class="langkeyT">Best within 80 characters</span></span>
 
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Short descript</label>
+                        <label class="col-sm-2 control-label langkeyT">Short descript</label>
                         <div class="col-sm-10">
-                            <input id="appSortIntro" type="text" class="form-control">
-                            <span class="help-block text-right"><span class="words-amount ">0</span> Best within 40 characters</span>
+                            <input id="appSortIntro" type="text" class="form-control wordsCount">
+                            <span class="help-block text-right"><span class="words-amount ">0</span> <span class="langkeyT">Best within 40 characters</span></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">call to action</label>
+                        <label class="col-sm-2 control-label langkeyT">call to action</label>
                         <div class="col-sm-10">
-                            <input id="appSlogan" type="text" class="form-control">
-                            <span class="help-block text-right "><span class="words-amount">0</span> Best within 15 characters</span>
+                            <input id="appSlogan" type="text" class="form-control wordsCount">
+                            <span class="help-block text-right "><span class="words-amount">0</span> <span class="langkeyT">Best within 15 characters</span></span>
                         </div>
                     </div>
                     <hr>
@@ -126,7 +126,11 @@
 
                 <form class="form-horizontal" role="form">
 
-                    <h3>Promote your app <span  class="btn btn-default badge" data-container="body" data-toggle="popover" title="where is suggested programs" data-content=" <img src='http://fakeimg.pl/200/'><br /> And here's some amazing content. It's very engaging. Right?">?</span></h3>
+                    <h3>
+                        <span class="langkeyT">Promote your app</span>
+                        <span class="btn btn-default badge" data-container="body" data-toggle="popover" 
+                            data-original-title="where is 'Promote your app'" 
+                            data-content="<img src='images/landing-tooltip2.gif'><br />">?</span></h3>
 
                     <div id="listsSNS"></div>
 
@@ -144,7 +148,11 @@
                 <form class="form-horizontal" role="form">
 
 
-                    <h3>Suggested programs <span  class="btn btn-default badge" data-container="body" data-toggle="popover" title="where is suggested programs" data-content=" <img src='http://fakeimg.pl/200/'><br /> And here's some amazing content. It's very engaging. Right?">?</span></h3>
+                    <h3>
+                        <span class="langkeyT">Suggested programs</span>
+                        <span class="btn btn-default badge" data-container="body" data-toggle="popover" 
+                            data-original-title="where is 'Suggested programs'" 
+                            data-content="<img src='images/landing-tooltip3.gif'><br />">?</span></h3>
 
                     <div class="row">
                         <div id="listsSuggested"></div>
@@ -160,8 +168,8 @@
                     <hr>
                     <div class="pull-right">
 
-                    <a id="funcCancel" class="btn btn-default" >Cancel</a>
-                    <a id="btnSave" class="btn btn-primary">Save & Visit the page</a>
+                    <!--<a id="funcCancel" class="btn btn-default" >Cancel</a>-->
+                    <a id="btnSave" class="btn btn-primary langkeyT">Save & Visit the page</a>
                     </div>
 
 
@@ -183,7 +191,7 @@
     <script id="tmpl-lists-SNS" type="text/x-jquery-tmpl">
         <div id="SNS_${id}" data-meta="${id}" data-seq="${seq}"
              class="form-group listItem{{if id > 1407400000000}} newItem{{/if}}">
-            <label class="col-sm-2 control-label">SNS</label>
+            <label class="col-sm-2 control-label">${nn._([cms.global.PAGE_ID, 'main-area', 'SNS'])}</label>
             <div class="col-sm-10">
                 <div class="input-group">
                     <input type="text" value="${link}" class="form-control inUrlSNS" 
@@ -210,18 +218,21 @@
             <div class="thumbnail">
                 <div class="caption">
                     <p class="{{if isSecII === true }}col-md-11 row{{/if}}">
-                        <input type="text" class="form-control inLinkSugg" placeholder="Input program link" value="${link}">
+                        <input type="text" class="form-control inLinkSugg" value="${link}" 
+                        placeholder="${nn._([cms.global.PAGE_ID, 'main-area', 'Input program link...'])}">
                     </p>
                     {{if isSecII === true}}
                     <a class="btn btn-default pull-right delSugg"><span class="glyphicon glyphicon-remove"></span></a>
                     {{/if}}
                     <p  class="{{if isSecII === true}}clearfix{{/if}}">
-                        <input type="text" class="form-control inTitleSugg" placeholder="Input program name" value="${title}">
+                        <input type="text" class="form-control inTitleSugg" value="${title}" 
+                        placeholder="${nn._([cms.global.PAGE_ID, 'main-area', 'Input program name...'])}">
                     </p>
                 </div>
 
                 <img class="logoUrl" src="${logoUrl}" width="200px" height="200px">
-                <a class="btn btn-default btn-thumbnail uploadSugg" data-toggle="tooltip" data-placement="top" title="Upload program logo"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
+                <a class="btn btn-default btn-thumbnail uploadSugg" data-toggle="tooltip" data-placement="top" 
+                    title="${nn._([cms.global.PAGE_ID, 'main-area', 'Upload program logo'])}"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
             </div>
         </div>
     </script>

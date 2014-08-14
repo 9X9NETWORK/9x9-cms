@@ -14,6 +14,7 @@
         "Main Channels": "主頻道",
         "Program Store": "節目商店",
         "Brand Settings": "品牌設定",
+        "Brand Management": "品牌設定",
         "Notification": "通知"
     },
     "footer": {
@@ -171,9 +172,32 @@
             "FLIPr.tv - Brand Settings": "FLIPr.tv - 品牌設定"
         },
         "main-area": {
+            "My App": "App 管理",
+            "Brand Management": "品牌設定",
             "Input SNS link...": "請輸入 SNS 網址...",
             "Please upload SNS icon.": "請上傳 SNS 小圖",
-            "Click icon button to upload your personal SNS icon! Better results with 50x50 image.": "Click icon button to upload your personal SNS icon! Better results with 50x50 image.111",
+            "Introduce your app": "app 介紹",
+            "Promote your app": "社群推廣",
+            "Suggested programs": "節目推薦",
+            "App Name": "APP 名稱",
+            "App Logo": "APP 商標",
+            "Detailed description": "App介紹",
+            "Short descript": "簡短介紹",
+            "call to action": "標語",
+            "SNS": "社群網址",
+            "Input program link...": "輸入節目網址...",
+            "Input program name...": "輸入節目名稱...",
+            "Save & Visit the page": "儲存 & 開啟頁面",
+            "Best within 80 characters": "最佳字數80",
+            "Best within 40 characters": "最佳字數40",
+            "Best within 15 characters": "最佳字數15",
+            "where is 'Introduce your app'": "'app 介紹'在那裡",
+            "where is 'Promote your app'": "'社群推廣'在那裡",
+            "where is 'Suggested programs'": "'節目推薦'在那裡",
+            "Upload program logo": "上傳節目 logo",
+            "Click icon button to upload your personal SNS icon! Better results with 50x50 image.": "點擊上傳客製化 SNS 的icon! 最佳解析度 50x50 。",
+
+
             "+Add social network services": "+ 加入社群連結",
             "Please fill in your brand name.": "請輸入品牌名稱",
             "Better results with 260x200 or higher resolution image.": "圖檔最佳解析為 260x200, 檔案大小不超過500KB",

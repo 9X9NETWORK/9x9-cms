@@ -9,11 +9,23 @@ $(function () {
         $common = cms.common;
 
     $(document).on("click", "#funcCancel", function (event) {
-        
+        // for test
         var aa = $page.inSugg();
 
         nn.log(aa);
         // $('#imageUpload').modal('show');
+    });
+
+    $(document).on("keyup", ".wordsCount", function (event) {
+        var thisObj = $(this),
+            thisCount = $(this).parent().find("span.words-amount");
+
+        $(thisCount).text(thisObj.val().length);
+    });
+
+    $(document).on("change", ".wordsCount", function (event) {
+        $('#msoInfo').addClass('has-change');
+        $('body').addClass('has-change');
     });
 
     $(document).on("click", ".logoSNS", function (event) {
