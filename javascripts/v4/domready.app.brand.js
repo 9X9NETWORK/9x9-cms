@@ -223,11 +223,8 @@ $(function () {
 
 
         }else{
-            // todo
-            nn.log(inMsoInfo);
-            nn.log(inSNS);
-            nn.log(inSugg);
-            $("#sysMessage div.modal-body").text("錯誤!!");
+            // error
+            $("#sysMessage div.modal-body").text(nn._([cms.global.PAGE_ID, 'main-area', 'Please fill in all required fields.']));
             $('#sysMessage').modal('show');
         }
 

@@ -380,12 +380,7 @@
                     countI++;
                     // seq update
                     if (countI != opObj.data("seq")) {
-                        nn.log(countI + "******" +tmpLink);
                         opObj.data("seq", countI);
-
-                        nn.log(opObj.attr("id") + "=== seq ---- "+opObj.data("seq"));
-
-                        nn.log("$$"+$("#SNS_1407921547279"+opObj.attr("id")).data("seq"));
 
                         $page.itemHasChange(opObj);
                         $("body").addClass("has-change");
