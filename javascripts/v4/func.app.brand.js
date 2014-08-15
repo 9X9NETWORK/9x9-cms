@@ -524,6 +524,14 @@
 
         $common.showProcessingOverlay();
 
+        // placeholder
+        $(".langkeyPH").each(function() {
+            var oriString = $(this).attr("placeholder"), 
+            transString = nn._([cms.global.PAGE_ID, 'main-area', oriString]);
+            $(this).data('langkey', oriString );
+            $(this).attr('placeholder', transString);
+        });
+
         $page.formSetMsoInfo();
         $page.formSetSNS();
         $page.formSetSuggested();
