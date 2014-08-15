@@ -1,0 +1,101 @@
+/* line 9, ../sass/old-portal-manage-add.sass */
+#portal-constrain {
+  position: static;
+}
+
+/* line 11, ../sass/old-portal-manage-add.sass */
+#portal-constrain {
+  position: static;
+}
+
+/* line 13, ../sass/old-portal-manage-add.sass */
+#portal-list {
+  position: static;
+}
+/* line 15, ../sass/old-portal-manage-add.sass */
+#portal-list .channel-list {
+  padding-top: 40px;
+}
+
+/* line 17, ../sass/old-portal-manage-add.sass */
+#store-layer {
+  position: static;
+}
+
+/* line 20, ../sass/old-portal-manage-add.sass */
+.banner-wrap {
+  position: relative;
+  width: 45%;
+  padding-right: 3%;
+  margin-right: 2%;
+  float: left;
+  max-width: 500px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+/* line 30, ../sass/old-portal-manage-add.sass */
+.banner-text {
+  padding: 5px;
+}
+
+/* line 32, ../sass/old-portal-manage-add.sass */
+.thumb-wrap {
+  border: 4px solid white;
+  position: relative;
+  background-color: rgba(173, 173, 173, 0.8);
+  background-image: -webkit-gradient(linear, to bottom, to top, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(255, 255, 255, 0.1)));
+  background-image: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  min-height: 150px;
+}
+/* line 38, ../sass/old-portal-manage-add.sass */
+.thumb-wrap img {
+  width: 100%;
+}
+
+/* line 40, ../sass/old-portal-manage-add.sass */
+.thumb-inner-text {
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+/* line 44, ../sass/old-portal-manage-add.sass */
+.thumb-hover-wrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  color: transparent;
+  background: transparent url("../images/baenner-upload.gif") no-repeat 8px 8px;
+  transition: all 0.5s ease;
+}
+/* line 53, ../sass/old-portal-manage-add.sass */
+.banner-wrap:hover .thumb-hover-wrap {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+/* line 57, ../sass/old-portal-manage-add.sass */
+.thumb-inner-warning {
+  position: absolute;
+  color: red;
+  top: 70%;
+  left: 50%;
+  width: 90%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
