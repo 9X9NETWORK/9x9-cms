@@ -261,7 +261,34 @@
   content: "\e600";
 }
 
-/* line 6, ../sass/pcs-landing.scss */
+/* line 2, ../sass/_pcs-component.scss */
+.placeholder-link::-webkit-input-placeholder::before {
+  font-family: 'Glyphicons Halflings';
+  content: '\e144  ';
+  vertical-align: middle;
+}
+/* line 6, ../sass/_pcs-component.scss */
+.placeholder-link:-moz-placeholder::before {
+  /* Firefox 18- */
+  font-family: 'Glyphicons Halflings';
+  content: '\e144  ';
+  vertical-align: middle;
+}
+/* line 10, ../sass/_pcs-component.scss */
+.placeholder-link::-moz-placeholder::before {
+  /* Firefox 19+ */
+  font-family: 'Glyphicons Halflings';
+  content: '\e144  ';
+  vertical-align: middle;
+}
+/* line 14, ../sass/_pcs-component.scss */
+.placeholder-link:-ms-input-placeholder::before {
+  font-family: 'Glyphicons Halflings';
+  content: '\e144  ';
+  vertical-align: middle;
+}
+
+/* line 7, ../sass/pcs-landing.scss */
 .modal.fade .modal-dialog.modal-center {
   position: absolute;
   top: 50%;
@@ -273,75 +300,75 @@
   transform: translate3d(-50%, -50%, 0);
 }
 
-/* line 17, ../sass/pcs-landing.scss */
+/* line 18, ../sass/pcs-landing.scss */
 a {
   color: #777777;
   text-decoration: none;
 }
-/* line 21, ../sass/pcs-landing.scss */
+/* line 22, ../sass/pcs-landing.scss */
 a:hover {
   color: #333333;
 }
 
-/* line 27, ../sass/pcs-landing.scss */
+/* line 28, ../sass/pcs-landing.scss */
 body {
   background-color: #EEE;
 }
 
-/* line 30, ../sass/pcs-landing.scss */
+/* line 31, ../sass/pcs-landing.scss */
 .cms-nav {
   background-color: #fff;
 }
 
-/* line 35, ../sass/pcs-landing.scss */
+/* line 36, ../sass/pcs-landing.scss */
 .nav-sidebar [class^="icon-"]:before {
   font-size: 1.2em;
   padding-right: 1.2em;
 }
 
-/* line 40, ../sass/pcs-landing.scss */
+/* line 41, ../sass/pcs-landing.scss */
 .thumbnail img {
   width: 100%;
 }
 
-/* line 44, ../sass/pcs-landing.scss */
+/* line 45, ../sass/pcs-landing.scss */
 .btn-thumbnail {
   position: absolute;
   bottom: 240px;
   left: 25px;
 }
 
-/* line 56, ../sass/pcs-landing.scss */
+/* line 57, ../sass/pcs-landing.scss */
 textarea {
   border-radius: 4px;
 }
 
-/* line 62, ../sass/pcs-landing.scss */
+/* line 63, ../sass/pcs-landing.scss */
 .nav-left {
   float: left;
   padding: 0 12px;
 }
 
-/* line 67, ../sass/pcs-landing.scss */
+/* line 68, ../sass/pcs-landing.scss */
 .cms-nav.jumbotron {
   padding-top: 68px;
   padding-bottom: 20px;
   text-align: center;
 }
 
-/* line 76, ../sass/pcs-landing.scss */
+/* line 77, ../sass/pcs-landing.scss */
 .main-logo {
   background: url(../images/logo.png) 0 50% no-repeat;
   cursor: pointer;
 }
 
-/* line 80, ../sass/pcs-landing.scss */
+/* line 81, ../sass/pcs-landing.scss */
 .app-thumbnail {
   width: 110px;
   height: 110px;
 }
 
-/* line 85, ../sass/pcs-landing.scss */
+/* line 86, ../sass/pcs-landing.scss */
 .cms-icon {
   display: inline-block;
   background: transparent url(../images/icon_studio.png) no-repeat 0 0;
@@ -352,7 +379,7 @@ textarea {
   font-weight: bold;
 }
 
-/* line 95, ../sass/pcs-landing.scss */
+/* line 96, ../sass/pcs-landing.scss */
 .sub-title {
   display: block;
   font-size: 11px;
@@ -360,14 +387,14 @@ textarea {
   line-height: 16px;
 }
 
-/* line 116, ../sass/pcs-landing.scss */
+/* line 117, ../sass/pcs-landing.scss */
 .empty-add {
   cursor: pointer;
   position: relative;
   border: 1px dashed #dddddd;
   border-radius: 4px;
 }
-/* line 121, ../sass/pcs-landing.scss */
+/* line 122, ../sass/pcs-landing.scss */
 .empty-add .empty-add-text {
   position: absolute;
   white-space: nowrap;
@@ -380,24 +407,24 @@ textarea {
   transform: translate(-50%, -50%);
 }
 
-/* line 134, ../sass/pcs-landing.scss */
+/* line 135, ../sass/pcs-landing.scss */
 footer.navbar {
   border-radius: 0;
   margin-bottom: 0px;
   margin-top: 20px;
 }
 
-/* line 141, ../sass/pcs-landing.scss */
+/* line 142, ../sass/pcs-landing.scss */
 .affix {
   top: 80px;
 }
 
-/* line 145, ../sass/pcs-landing.scss */
+/* line 146, ../sass/pcs-landing.scss */
 .thumbnail.empty-add {
   height: 26.2em;
 }
 
-/* line 150, ../sass/pcs-landing.scss */
+/* line 151, ../sass/pcs-landing.scss */
 .form-group .empty-add {
   min-height: 2.3em;
   background-color: #fff;
