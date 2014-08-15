@@ -77,6 +77,7 @@
   height: 40px;
   line-height: 40px;
   color: transparent;
+  text-align: center;
   background: transparent url("../images/baenner-upload.gif") no-repeat 8px 8px;
   transition: all 0.5s ease;
 }
@@ -98,4 +99,14 @@
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+
+#store-list{
+  position: relative;
+}
+
+.key-card-wrap{
+  position: relative;
+  margin-top: 25px;
 }
