@@ -529,13 +529,6 @@
 
         $common.showProcessingOverlay();
 
-        $(".badge").each(function() {
-            var oriString = $(this).data("original-title"), 
-            transString = nn._([cms.global.PAGE_ID, 'main-area', oriString]);
-            $(this).data('langkey', oriString );
-            $(this).attr('title', transString);
-        });
-
         $page.formSetMsoInfo();
         $page.formSetSNS();
         $page.formSetSuggested();
