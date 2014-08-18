@@ -58,8 +58,24 @@ $(function () {
         thisSuggInput.removeClass("has-error");
 
         if (true === urlParser.isAllow) {
-            $page.itemHasChange(thisSugg);
-            $("body").addClass("has-change");
+            if (urlParser.chId > 0) {
+                nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                    channelId: urlParser.chId
+                }), null, function (channel) {
+                    if ("" !== channel.imageUrl) {
+                        thisSugg.find("img.logoUrl").attr("src", channel.imageUrl)
+                    }
+                    if ("" !== channel.name) {
+                        thisSugg.find("input.inTitleSugg").val(channel.name)
+                    }
+                    $page.itemHasChange(thisSugg);
+                    $("body").addClass("has-change");
+                });
+            } else {
+                $page.itemHasChange(thisSugg);
+                $("body").addClass("has-change");
+            }
+
         } else {
             thisSuggStatus.addClass("has-error");
             thisSuggInput.addClass("has-error");
