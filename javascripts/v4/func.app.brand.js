@@ -484,6 +484,7 @@
             $page.addCheckSNS();
             $page.isSNS = true;
             $page.chkFormSet();
+            $( "#addNewSNS" ).trigger( "click" );
 
         });
     };
