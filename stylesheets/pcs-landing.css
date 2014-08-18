@@ -484,3 +484,9 @@ footer.navbar {
   min-height: 2.3em;
   background-color: #fff;
 }
+
+/* line 156, ../sass/pcs-landing.scss */
+.suggested-programs-thumb {
+  height: 368px;
+  overflow: hidden;
+}

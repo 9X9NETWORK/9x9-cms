@@ -213,7 +213,7 @@
     <script id="tmpl-lists-Suggested" type="text/x-jquery-tmpl">
         <div id="Sugg_${id}" data-meta="${id}" data-seq="${seq}"
              class="col-sm-6 col-md-4 listItem{{if id > 1407400000000}} newItem{{/if}}">
-            <div class="thumbnail">
+            <div class="thumbnail suggested-programs-thumb">
                 <div class="caption">
                     <p class="{{if isSecII === true }}col-md-11 row{{/if}}">
                         <input type="text" class="form-control inLinkSugg" value="${link}" 
@@ -228,7 +228,7 @@
                     </p>
                 </div>
 
-                <img class="logoUrl" src="${logoUrl}" width="200px" height="200px">
+                <img class="logoUrl" src="${logoUrl}">
                 <a class="btn btn-default btn-thumbnail uploadSugg" data-toggle="tooltip" data-placement="top" 
                     title="${nn._([cms.global.PAGE_ID, 'main-area', 'Upload program logo'])}"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
             </div>
