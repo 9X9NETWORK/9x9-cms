@@ -47,7 +47,29 @@ $(function () {
     });
 
 
-    $(document).on("change", ".inLinkSugg, .inTitleSugg", function (event) {
+    $(document).on("change", ".inLinkSugg", function (event) {
+        var thisSugg = $(this).parent().parent().parent().parent(),
+            thisSuggStatus = $(this).parent(),
+            thisSuggInput = $(this),
+            urlParser = $common.playerUrlParserMso(thisSuggInput.val()),
+            errMsg = nn._([cms.global.PAGE_ID, 'main-area', 'Please use your branding URL']) + ", ex. http://" + cms.global.MSOINFO.name + ".flipr.tv/view/p1234";
+
+        thisSuggStatus.removeClass("has-error");
+        thisSuggInput.removeClass("has-error");
+
+        if (true === urlParser.isAllow) {
+            $page.itemHasChange(thisSugg);
+            $("body").addClass("has-change");
+        } else {
+            thisSuggStatus.addClass("has-error");
+            thisSuggInput.addClass("has-error");
+            $("#sysMessage div.modal-body").text(errMsg);
+            $('#sysMessage').modal('show');
+        }
+    });
+
+
+    $(document).on("change", ".inTitleSugg", function (event) {
         var thisSugg = $(this).parent().parent().parent().parent();
 
         $page.itemHasChange(thisSugg);
@@ -181,7 +203,7 @@ $(function () {
         },
             itemCount = $('#listsSuggested .listItem').length;
 
-        if (itemCount >= 4) {
+        if (itemCount >= $page.limitSuggestedMin) {
             emptyItem.isSecII = true;
         }
 

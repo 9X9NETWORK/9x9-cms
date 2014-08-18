@@ -494,7 +494,8 @@
             msoId: cms.global.MSO
         }), {
             type: 2
-        }, function(dataLists) {
+        }, function (dataLists) {
+            var newSugg = $page.limitSuggestedMin - dataLists.length;
             $.each(dataLists, function(eKey, eValue) {
                 if("" == eValue.logoUrl){
                     eValue.logoUrl = $page.defImgSugg;
@@ -512,6 +513,12 @@
             $page.addCheckSugg();
             $page.isSuggested = true;
             $page.chkFormSet();
+
+            if(newSugg > 0){
+                for (var i = 1; i <= newSugg; i++) {
+                    $( "#addNewSuggested" ).trigger( "click" );
+                };
+            }
         });
     };
 
