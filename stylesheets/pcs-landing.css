@@ -261,31 +261,86 @@
   content: "\e600";
 }
 
-/* line 2, ../sass/_pcs-component.scss */
+/* line 4, ../sass/_pcs-component.scss */
 .placeholder-link::-webkit-input-placeholder::before {
   font-family: 'Glyphicons Halflings';
   content: '\e144  ';
   vertical-align: middle;
 }
-/* line 6, ../sass/_pcs-component.scss */
+/* line 8, ../sass/_pcs-component.scss */
 .placeholder-link:-moz-placeholder::before {
   /* Firefox 18- */
   font-family: 'Glyphicons Halflings';
   content: '\e144  ';
   vertical-align: middle;
 }
-/* line 10, ../sass/_pcs-component.scss */
+/* line 12, ../sass/_pcs-component.scss */
 .placeholder-link::-moz-placeholder::before {
   /* Firefox 19+ */
   font-family: 'Glyphicons Halflings';
   content: '\e144  ';
   vertical-align: middle;
 }
-/* line 14, ../sass/_pcs-component.scss */
+/* line 16, ../sass/_pcs-component.scss */
 .placeholder-link:-ms-input-placeholder::before {
   font-family: 'Glyphicons Halflings';
   content: '\e144  ';
   vertical-align: middle;
+}
+
+/* line 5, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+.help-block.text-primary {
+  color: #428bca;
+}
+
+/* line 8, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+a.help-block.text-primary:hover {
+  color: #3071a9;
+}
+
+/* line 5, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+.help-block.text-success {
+  color: #3c763d;
+}
+
+/* line 8, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+a.help-block.text-success:hover {
+  color: #2b542c;
+}
+
+/* line 5, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+.help-block.text-info {
+  color: #31708f;
+}
+
+/* line 8, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+a.help-block.text-info:hover {
+  color: #245269;
+}
+
+/* line 5, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+.help-block.text-warning {
+  color: #8a6d3b;
+}
+
+/* line 8, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+a.help-block.text-warning:hover {
+  color: #66512c;
+}
+
+/* line 5, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+.help-block.text-danger {
+  color: #a94442;
+}
+
+/* line 8, ../sass/bootstrap/stylesheets/bootstrap/mixins/_text-emphasis.scss */
+a.help-block.text-danger:hover {
+  color: #843534;
+}
+
+/* line 50, ../sass/_pcs-component.scss */
+.btn .btn-inner-image {
+  height: 18px;
 }
 
 /* line 7, ../sass/pcs-landing.scss */

@@ -198,14 +198,14 @@
                         <a class="btn btn-default logoSNS"  data-toggle="popover" data-placement="top"  data-container="body" 
                             data-content="${nn._([cms.global.PAGE_ID, 'main-area', 'Upload your personal SNS icon now! Better results with 50x50 image.'])}">
                             {{if '' != logoUrl}}
-                                <img class="logoUrl" src="${logoUrl}" width="30px" height="30px" >
+                                <img class="logoUrl btn-inner-image" src="${logoUrl}">
                             {{else}}
                                 <span class="glyphicon glyphicon-cloud-upload"></span>
                             {{/if}}</a>
                         <a class="btn btn-default delSNS" ><span class="glyphicon glyphicon-trash"></span></a>
                     </div>
                 </div>
-                <span class="help-block text-right msgSNS {{if logoUrl !== ''}} hide{{/if}}">${nn._([cms.global.PAGE_ID, 'main-area', 'Please upload SNS icon.'])}</span>
+                <span class="help-block text-right text-danger msgSNS {{if logoUrl !== ''}} hide{{/if}}">${nn._([cms.global.PAGE_ID, 'main-area', 'Please upload SNS icon.'])}</span>
             </div>
         </div>
     </script>
