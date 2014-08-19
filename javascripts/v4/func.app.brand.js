@@ -51,6 +51,20 @@
         }
     };
 
+
+    $page.onImgLoad = function (selector, callback) {
+        $(selector).each(function() {
+            if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
+                callback.apply(this);
+            } else {
+                $(this).on('load', function() {
+                    callback.apply(this);
+                });
+            }
+        });
+    };
+
+
     $page.procPromotion = function (opObj, inType) {
         var act = opObj.act,
             actId = opObj.id,
@@ -108,31 +122,43 @@
 
     $page.imageUpload = function (inType, parameter) {
  
-        var thisId = $("#imageUpload").data("meta");
+        var thisId = $("#imageUpload").data("meta"),
+            loadingImg = "images/loading.gif";
+
         nn.api('GET', cms.reapi('/api/s3/attributes'), parameter, function (s3attr) {
             var timestamp = (new Date()).getTime(),
                 handlerUploadProgress = function (file, completed, total) {
+                    var thisLogUrl = $("#" + thisId).find("img.logoUrl");
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Uploading...']) + '</span>');
+                    if(thisLogUrl.attr("src")!= loadingImg){
+                        thisLogUrl.data("oldLogoUrl", thisLogUrl.attr("src"));
+                        thisLogUrl.attr("src",loadingImg);
+                    }
                 },
                 handlerUploadSuccess = function (file, serverData, recievedResponse) {
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     if (!file.type) {
                         file.type = nn.getFileTypeByName(file.name);
                     }
+
                     this.setButtonDisabled(false);
                     // enable upload button again
                     var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + timestamp + '-' + file.size + file.type.toLowerCase();
                     $('body').addClass("has-change");
                     $("#" + thisId).addClass("has-change");
-                    $("#" + thisId).find("img.logoUrl").attr("src", url);
+                    $("#" + thisId).find("img.logoUrl").attr("src", url).data("oldLogoUrl", "");
                     setTimeout(function() {
                         $('#imageUpload').modal('hide');
                     }, 500);
                 },
                 handlerUploadError = function (file, code, message) {
+                    var thisLogUrl = $("#" + thisId).find("img.logoUrl"); 
 
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     this.setButtonDisabled(false);
+                    if("" !== thisLogUrl.data("oldLogoUrl")){
+                        thisLogUrl.attr("src", thisLogUrl.data("oldLogoUrl")).data("oldLogoUrl", "");
+                    }
                     if (code === -280) { // user cancel upload
                         alert(message);
                         // show some error prompt
@@ -544,6 +570,9 @@
         $page.formSetSNS();
         $page.formSetSuggested();
 
+        $page.onImgLoad($('img'), function() {
+            $(this).hide().fadeIn(700);
+        });
     };
 
     // NOTE: remember to change page-key to match file-name
