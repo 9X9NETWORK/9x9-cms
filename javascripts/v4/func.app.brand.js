@@ -362,7 +362,7 @@
             tmpItem.title = opObj.find("input.inTitleSugg").val();
             tmpItem.logoUrl = opObj.find("img.logoUrl").attr("src");
 
-            if (tmpMin < countTmp && !opObj.hasClass("delItem") && ("" === tmpItem.link || "" === tmpItem.title)) {
+            if (!opObj.hasClass("delItem") && ("" === tmpItem.link || "" === tmpItem.title)) {
                 retValue.errCount++;
             } else {
                 tmpItem.id = opObj.data("meta");

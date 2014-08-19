@@ -242,6 +242,7 @@ $(function () {
             inSNS = $page.inSNS(),
             inSugg = $page.inSugg();
 
+        $("#sbErrMsg").text("");
 
         if (inMsoInfo.isChecked && inSNS.isChecked && inSugg.isChecked) {
             $common.showProcessingOverlay();
@@ -267,8 +268,8 @@ $(function () {
 
         }else{
             // error
-            $("#sysMessage div.modal-body").text(nn._([cms.global.PAGE_ID, 'main-area', 'Please fill in all required fields.']));
-            $('#sysMessage').modal('show');
+            $("#sbErrMsg").text(nn._([cms.global.PAGE_ID, 'main-area', 'Please fill in all required fields.']));
+            // $('#sysMessage').modal('show');
         }
 
         return false;
