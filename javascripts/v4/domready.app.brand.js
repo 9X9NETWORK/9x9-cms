@@ -141,6 +141,7 @@ $(function () {
         $page.addCheckSNS();
 
         $page.itemHasChange(opObj);
+        $page.seqUpdateSNSText();
         $("body").addClass("has-change");
     });
 
@@ -161,14 +162,13 @@ $(function () {
 
             itemCount = $page.itemCountSNS();
             $page.addCheckSNS();
-
             $('[data-toggle=popover]').popover({
                 html: true,
                 trigger: 'hover'
 
             });
         }
-
+        $page.seqUpdateSNSText();
         $("body").addClass("has-change");
     });
 
@@ -243,6 +243,10 @@ $(function () {
             inSugg = $page.inSugg();
 
         $("#sbErrMsg").text("");
+
+        if(!$page.isDoSuggested()){
+           inSugg.isChecked = true; 
+        }
 
         if (inMsoInfo.isChecked && inSNS.isChecked && inSugg.isChecked) {
             $common.showProcessingOverlay();

@@ -5,6 +5,7 @@
     'use strict';
 
     var $common = cms.common;
+    $page.supportedRegion = "";
     $page.isMsoInfo = false;
     $page.isSNS = false;
     $page.isSuggested = false;
@@ -17,6 +18,14 @@
     $page.typeSNS = 1;
     $page.typeSugg = 2;
     $page.defImgsSNS = ["images/icon-pcs-sns-fb.png", "images/icon-pcs-sns-gplus.png", "images/icon-pcs-sns-youtube.png", "images/icon-pcs-sns-twitter.png"];
+
+    $page.isDoSuggested = function() {
+        var retValue = false;
+        if ($page.supportedRegion === "zh") {
+            retValue = true;
+        }
+        return retValue;
+    };
 
     $page.procPromotionAdd = function (inObj) {
         var strPrefix = "",
@@ -389,6 +398,17 @@
         return retValue;
     };
 
+    $page.seqUpdateSNSText = function () {
+        var opObj, tmpLabel, tmpLogoUrl, countI = 0;
+
+        $("#listsSNS  div.listItem").each(function () {
+            opObj = $(this);
+            tmpLabel = opObj.find("label.SNS-Seq");
+            countI++;
+            tmpLabel.text(countI + " .");
+        });
+    };
+
     $page.seqUpdateSNS = function () {
         var opObj, tmpLink, tmpLogoUrl, countI = 0;
 
@@ -487,6 +507,9 @@
         nn.api('GET', cms.reapi('/api/mso/{msoId}', {
             msoId: cms.global.MSO
         }), null, function (msoInfo) {
+            $page.supportedRegion = msoInfo.supportedRegion;
+            $page.formSetSuggested();
+
             $("#appTitle").val(msoInfo.title);
             $("#appLogo").attr("src", msoInfo.logoUrl);
             $("#appIntro").val(msoInfo.intro);
@@ -515,37 +538,42 @@
         });
     };
 
-    $page.formSetSuggested = function () {
-        nn.api('GET', cms.reapi('/api/mso/{msoId}/promotions', {
-            msoId: cms.global.MSO
-        }), {
-            type: 2
-        }, function (dataLists) {
-            var newSugg = $page.limitSuggestedMin - dataLists.length;
-            $.each(dataLists, function(eKey, eValue) {
-                if("" == eValue.logoUrl){
-                    eValue.logoUrl = $page.defImgSugg;
-                }
-                if (eKey < $page.limitSuggestedMin) {
-                    eValue.isSecII = false;
-                } else {
-                    eValue.isSecII = true;
-                }
-                dataLists[eKey] = eValue;
-            });
-
-            $('#tmpl-lists-Suggested').tmpl(dataLists, null).appendTo('#listsSuggested');
-
-            $page.addCheckSugg();
+    $page.formSetSuggested = function() {
+        if (!$page.isDoSuggested()) {
             $page.isSuggested = true;
-            $page.chkFormSet();
+        } else {
+            nn.api('GET', cms.reapi('/api/mso/{msoId}/promotions', {
+                msoId: cms.global.MSO
+            }), {
+                type: 2
+            }, function (dataLists) {
+                var newSugg = $page.limitSuggestedMin - dataLists.length;
+                $.each(dataLists, function(eKey, eValue) {
+                    if ("" == eValue.logoUrl) {
+                        eValue.logoUrl = $page.defImgSugg;
+                    }
+                    if (eKey < $page.limitSuggestedMin) {
+                        eValue.isSecII = false;
+                    } else {
+                        eValue.isSecII = true;
+                    }
+                    dataLists[eKey] = eValue;
+                });
 
-            if(newSugg > 0){
-                for (var i = 1; i <= newSugg; i++) {
-                    $( "#addNewSuggested" ).trigger( "click" );
-                };
-            }
-        });
+                $('#tmpl-lists-Suggested').tmpl(dataLists, null).appendTo('#listsSuggested');
+
+                $page.addCheckSugg();
+                $page.isSuggested = true;
+                $page.chkFormSet();
+
+                if (newSugg > 0) {
+                    for (var i = 1; i <= newSugg; i++) {
+                        $("#addNewSuggested").trigger("click");
+                    };
+                }
+            });
+            $(".formSugg").removeClass("hide");
+        }
     };
 
     // NOTE: page entry point (keep at the bottom of this file)
@@ -568,7 +596,7 @@
 
         $page.formSetMsoInfo();
         $page.formSetSNS();
-        $page.formSetSuggested();
+        // $page.formSetSuggested();
 
         $page.onImgLoad($('img'), function() {
             $(this).hide().fadeIn(700);
