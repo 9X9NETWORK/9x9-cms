@@ -54,8 +54,10 @@
   line-height: 40px;
   color: transparent;
   text-align: center;
+  z-index: 20;
   background: transparent url("../images/baenner-upload.gif") no-repeat 8px 8px;
   transition: all 0.5s ease;
+
 }
 /* line 53, ../sass/old-portal-manage-add.sass */
 .banner-wrap:hover .thumb-hover-wrap {
@@ -75,4 +77,23 @@
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+
+.centre-image{
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 10;
+
+}
+.centre-image img{
+
+
+  transform: translateY(-50%);
+  margin-top: 75px;
 }
