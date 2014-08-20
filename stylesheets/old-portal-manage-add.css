@@ -1,27 +1,3 @@
-/* line 9, ../sass/old-portal-manage-add.sass */
-#portal-constrain {
-  position: static;
-}
-
-/* line 11, ../sass/old-portal-manage-add.sass */
-#portal-constrain {
-  position: static;
-}
-
-/* line 13, ../sass/old-portal-manage-add.sass */
-#portal-list {
-  position: static;
-}
-/* line 15, ../sass/old-portal-manage-add.sass */
-#portal-list .channel-list {
-  padding-top: 40px;
-}
-
-/* line 17, ../sass/old-portal-manage-add.sass */
-#store-layer {
-  position: static;
-}
-
 /* line 20, ../sass/old-portal-manage-add.sass */
 .banner-wrap {
   position: relative;
@@ -99,14 +75,4 @@
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-}
-
-
-#store-list{
-  position: relative;
-}
-
-.key-card-wrap{
-  position: relative;
-  margin-top: 25px;
 }
