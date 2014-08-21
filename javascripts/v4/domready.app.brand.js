@@ -18,9 +18,16 @@ $(function () {
 
     $(document).on("keyup", ".wordsCount", function (event) {
         var thisObj = $(this),
-            thisCount = $(this).parent().find("span.words-amount");
+            thisCount = $(this).parent().find("span.words-amount"),
+            thisCountWord = 0;
 
-        $(thisCount).text(thisObj.val().length);
+        thisCount.val($.trim(thisCount.val()));
+        thisCountWord = thisObj.val().length;
+        if (thisCountWord === 0) {
+            thisObj.val(thisObj.attr("placeholder"));
+            thisCountWord = thisObj.val().length;
+        }
+        $(thisCount).text(thisCountWord);
     });
 
     $(document).on("change", ".wordsCount", function (event) {
@@ -28,6 +35,7 @@ $(function () {
             thisCount = $(this).parent().find("span.words-amount");
         if(thisObj.val().length === 0){
             thisObj.val(thisObj.attr("placeholder"));
+            thisObj.trigger( "keyup" );
         }
         $('#msoInfo').addClass('has-change');
         $('body').addClass('has-change');
@@ -118,7 +126,7 @@ $(function () {
         }
 
         if (iconImg !== "") {
-            logoBox.html("<img class='logoUrl' src='" + iconImg + "' width='30px' height-'30px' >");
+            logoBox.html("<img class='logoUrl btn-inner-image' src='" + iconImg + "'>");
             msgBox.addClass("hide");
         } else {
             logoBox.html("<span class='glyphicon glyphicon-cloud-upload'></span>");

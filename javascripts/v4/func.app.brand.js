@@ -145,6 +145,11 @@
                     }
                 },
                 handlerUploadSuccess = function (file, serverData, recievedResponse) {
+                    var thisImg =  $("#" + thisId).find("img.logoUrl");
+                    if(thisImg.length ===0 && inType ==="SNS"){
+                        $("#" + thisId).find("a.logoSNS").html('<img src="'+loadingImg+'" class="logoUrl btn-inner-image">');
+                    }
+
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     if (!file.type) {
                         file.type = nn.getFileTypeByName(file.name);
@@ -503,6 +508,28 @@
         return retValue;
     };
 
+    $page.defaultMsoInfo = function () {
+        var opObj, tmpString = "";
+
+        opObj = $("#appIntro");
+        tmpString = opObj.attr("placeholder");
+        if ("" === opObj.val()) {
+            opObj.val(tmpString);
+        }
+
+        opObj = $("#appSortIntro");
+        tmpString = opObj.attr("placeholder");
+        if ("" === opObj.val()) {
+            opObj.val(tmpString);
+        }
+
+        opObj = $("#appSlogan");
+        tmpString = opObj.attr("placeholder");
+        if ("" === opObj.val()) {
+            opObj.val(tmpString);
+        }
+    };
+
     $page.formSetMsoInfo = function () {
         nn.api('GET', cms.reapi('/api/mso/{msoId}', {
             msoId: cms.global.MSO
@@ -512,9 +539,12 @@
 
             $("#appTitle").val(msoInfo.title);
             $("#appLogo").attr("src", msoInfo.logoUrl);
-            $("#appIntro").val(msoInfo.intro);
-            $("#appSortIntro").val(msoInfo.shortIntro);
-            $("#appSlogan").val(msoInfo.slogan);
+
+            $("#appIntro").val($.trim(msoInfo.intro));
+            $("#appSortIntro").val($.trim(msoInfo.shortIntro));
+            $("#appSlogan").val($.trim(msoInfo.slogan));
+
+            $page.defaultMsoInfo();
 
             $page.isMsoInfo = true;
             $page.chkFormSet();
