@@ -23,20 +23,20 @@ $(function () {
 
         thisCount.val($.trim(thisCount.val()));
         thisCountWord = thisObj.val().length;
-        if (thisCountWord === 0) {
-            thisObj.val(thisObj.attr("placeholder"));
-            thisCountWord = thisObj.val().length;
-        }
+        // if (thisCountWord === 0) {
+        //     thisObj.val(thisObj.attr("placeholder"));
+        //     thisCountWord = thisObj.val().length;
+        // }
         $(thisCount).text(thisCountWord);
     });
 
     $(document).on("change", ".wordsCount", function (event) {
         var thisObj = $(this),
             thisCount = $(this).parent().find("span.words-amount");
-        if(thisObj.val().length === 0){
-            thisObj.val(thisObj.attr("placeholder"));
-            thisObj.trigger( "keyup" );
-        }
+        // if(thisObj.val().length === 0){
+        //     thisObj.val(thisObj.attr("placeholder"));
+        //     thisObj.trigger( "keyup" );
+        // }
         $('#msoInfo').addClass('has-change');
         $('body').addClass('has-change');
     });
