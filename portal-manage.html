@@ -117,40 +117,7 @@
 
 <!-- { key card upload -->
         <div class="key-card-wrap">
-        <div class="intro clearfix">
-            <p><span class="langkey">Upload channel banner images to make the channel more unique.</span></p>
-        </div>
-        <div class="clearfix">
-            <div class="banner-wrap">
-                <div class="thumb-wrap">
-                    <div class="centre-image keyCardImg" id="keyCardiOS"></div>
-                    
-                    <span class="thumb-inner-text">iOS image Upload Now!</span>
-                    <span class="thumb-inner-warning">The photo you uploaded is too small! It must be at least 1536 pixels wide and 570 pixels tall.</span>
-                    <div class="thumb-hover-wrap">
-                        <div id="upImgiOS" style="margin-top:12px"><span>Upload image</sapn></div>
-                    </div>
-                </div>
-                <div class="banner-text">
-                    Recommended large channel art size: 1536 x 570
-                </div>
-            </div>
-            <div class="banner-wrap">
-                <div class="thumb-wrap">
-                    <div class="centre-image" id="keyCardAndroid"></div>
 
-                    <span class="thumb-inner-text">Andriod image Upload Now!</span>
-                    <span class="thumb-inner-warning">The photo you uploaded is too small! It must be at least 800 pixels wide and 244 pixels tall.</span>
-                    <div class="thumb-hover-wrap">
-                        <span id="upImgAndroid" >Upload image</span>
-                    </div>
-                </div>
-                <div class="banner-text">
-                    Recommended large channel art size: 800 x 244
-                </div>
-
-            </div>
-        </div>
         </div>
 <!-- key card upload }-->
 
@@ -320,6 +287,45 @@
 </div>
 <!-- Poratl Add Layer End -->
 
+
+<!-- set-key-card-tmpl Begin -->
+<script id="set-key-card-tmpl" type="text/x-jquery-tmpl">
+        <div class="intro clearfix">
+            <p><span class="langkey">Upload channel banner images to make the channel more unique.</span></p>
+        </div>
+        <div class="clearfix">
+            <div class="banner-wrap">
+                <div class="thumb-wrap">
+                    <div class="centre-image keyCardImg" id="keyCardiOS" style="background: url('${iosBannerUrl}')"></div>
+                    
+                    <span class="thumb-inner-text">iOS image Upload Now!</span>
+                    <span class="thumb-inner-warning">The photo you uploaded is too small! It must be at least 1536 pixels wide and 570 pixels tall.</span>
+                    <div class="thumb-hover-wrap">
+                        <span id="upImgiOS" style="margin-top:12px">Upload image</sapn>
+                    </div>
+                </div>
+                <div class="banner-text">
+                    Recommended large channel art size: 1536 x 570
+                </div>
+            </div>
+
+            <div class="banner-wrap">
+                <div class="thumb-wrap">
+                    <div class="centre-image" id="keyCardAndroid" style="background: url('${androidBannerUrl}')"></div>
+
+                    <span class="thumb-inner-text">Andriod image Upload Now!</span>
+                    <span class="thumb-inner-warning">The photo you uploaded is too small! It must be at least 800 pixels wide and 244 pixels tall.</span>
+                    <div class="thumb-hover-wrap">
+                        <span id="upImgAndroid" >Upload image</span>
+                    </div>
+                </div>
+                <div class="banner-text">
+                    Recommended large channel art size: 800 x 244
+                </div>
+            </div>
+        </div>
+</script>
+<!-- set-key-card-tmpl End -->
 
 <!-- store-empty-category-li-tmpl Begin -->
 <script id="store-empty-category-li-tmpl" type="text/x-jquery-tmpl">

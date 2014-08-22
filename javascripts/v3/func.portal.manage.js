@@ -569,17 +569,9 @@
             // setInfo.iosBannerUrl = "http://i.ytimg.com/vi/rEL7lWfFaWE/mqdefault.jpg";
             var tmpStr = "",
                 parameter = {};
-            tmpStr = setInfo.iosBannerUrl;
-            if ("" !== tmpStr) {
-                tmpStr = "url('" + tmpStr + "')";
-            }
-            $("#keyCardiOS").css("background-image", tmpStr);
 
-            tmpStr = setInfo.androidBannerUrl;
-            if ("" !== tmpStr) {
-                tmpStr = "url('" + tmpStr + "')";
-            }
-            $("#keyCardAndroid").css("background-image", tmpStr);
+            $(".key-card-wrap").empty();
+            $('#set-key-card-tmpl').tmpl(setInfo).appendTo(".key-card-wrap");
 
             parameter = {
                 'prefix': 'app-setBanner-iOS-' + inObj + "-",
@@ -587,11 +579,11 @@
                 'size': 5120000,
                 'acl': 'public-read'
             };
-
             $page.imageUpload({
                 opObj: $("#upImgiOS"),
                 acObj: $("#keyCardiOS")
             }, parameter);
+
 
             parameter = {
                 'prefix': 'app-setBanner-android-' + inObj + "-",
@@ -599,7 +591,6 @@
                 'size': 5120000,
                 'acl': 'public-read'
             };
-
             $page.imageUpload({
                 opObj: $("#upImgAndroid"),
                 acObj: $("#keyCardAndroid")
