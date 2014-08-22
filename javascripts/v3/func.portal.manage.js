@@ -460,6 +460,154 @@
         }
     };
 
+    $page.imageUpload = function (inObj, parameter) {
+
+        var loadingImg = "images/loading.gif",
+            opObj = inObj.opObj,
+            acObj = inObj.acObj,
+            objMsg = {
+                "bTxtUploading": '<span class="uploadstyle">' + nn._(['upload', 'Uploading...']) + "</span>",
+                "bTxtUpload": '<span class="uploadstyle">' + nn._(['upload', 'Upload image']) + "</span>"
+            };
+        nn.api('GET', cms.reapi('/api/s3/attributes'), parameter, function(s3attr) {
+            var timestamp = (new Date()).getTime(),
+                handlerUploadProgress = function (file, completed, total) {
+                    this.setButtonText(objMsg.bTxtUploading);
+                },
+                handlerUploadSuccess = function (file, serverData, recievedResponse) {
+                    this.setButtonText(objMsg.bTxtUpload);
+                    if (!file.type) {
+                        file.type = nn.getFileTypeByName(file.name);
+                    }
+
+                    // enable upload button again
+                    this.setButtonDisabled(false);
+
+                    // image url
+                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + timestamp + '-' + file.size + file.type.toLowerCase();
+                    // action after upload
+                    acObj.css("background-image", "url('" + url + "')");
+                    acObj.addClass("has-change");
+                    $('body').addClass("has-change");
+                },
+                handlerUploadError = function (file, code, message) {
+                    this.setButtonText(objMsg.bTxtUpload);
+                    this.setButtonDisabled(false);
+
+                    if (code === -280) { // user cancel upload
+                        alert(message);
+                        // show some error prompt
+                    } else {
+                        alert(message);
+                        // show some error prompt
+                    }
+                },
+                handlerFileQueue = function (file) {
+                    if (file.size > parameter.size) {
+                        alert("upload failed");
+                        return false;
+                    }
+                    if (!file.type) {
+                        file.type = nn.getFileTypeByName(file.name);
+                        // Mac Chrome compatible
+                    }
+                    var postParams = {
+                        "AWSAccessKeyId": s3attr.id,
+                        "key": parameter.prefix + timestamp + '-' + file.size + file.type.toLowerCase(),
+                        "acl": parameter.acl,
+                        "policy": s3attr.policy,
+                        "signature": s3attr.signature,
+                        "content-type": parameter.type,
+                        "success_action_status": "201"
+                    };
+                    this.setPostParams(postParams);
+                    this.startUpload(file.id);
+                    this.setButtonDisabled(true);
+                },
+                handlerFileQueueError = function (file, code, message) {
+                    if (code === -130) { // error file type
+                        // $('#brand-logo').removeClass('hide');
+                        // $('.img .loading').hide();
+                    }
+                },
+                settings = {
+                    flash_url: 'javascripts/libs/swfupload/swfupload.swf',
+                    upload_url: 'http://' + s3attr.bucket + '.s3.amazonaws.com/', // http://9x9tmp-ds.s3.amazonaws.com/
+                    file_size_limit: parameter.size,
+                    file_types: '*.png,*.jpg',
+                    file_types_description: 'Thumbnail',
+                    file_post_name: 'file',
+                    button_placeholder: opObj.get(0),
+                    button_image_url: '',
+                    button_width: '480',
+                    button_height: '38',
+                    button_text: objMsg.bTxtUpload,
+                    button_text_style: '.uploadstyle { color: #777777; font-family: Arial, Helvetica; font-size: 15px; text-align: center; } .uploadstyle:hover { color: #999999; }',
+                    button_text_top_padding: 10,
+                    button_action: SWFUpload.BUTTON_ACTION.SELECT_FILE,
+                    button_cursor: SWFUpload.CURSOR.HAND,
+                    button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+                    http_success: [201],
+                    upload_progress_handler: handlerUploadProgress,
+                    upload_success_handler: handlerUploadSuccess,
+                    upload_error_handler: handlerUploadError,
+                    file_queued_handler: handlerFileQueue,
+                    file_queue_error_handler: handlerFileQueueError,
+                    debug: false
+                },
+                swfu = new SWFUpload(settings);
+
+            swfu.debug = cms.config.IS_DEBUG;
+        });
+    };
+
+    $page._getKeyCard = function (inObj) {
+        nn.api('GET', cms.reapi('/api/sets/{setId}', {
+            setId: inObj
+        }), null, function(setInfo) {
+            // setInfo.androidBannerUrl = "https://i1.ytimg.com/vi/OH1S7OL0jdQ/mqdefault.jpg";
+            // setInfo.iosBannerUrl = "http://i.ytimg.com/vi/rEL7lWfFaWE/mqdefault.jpg";
+            var tmpStr = "",
+                parameter = {};
+            tmpStr = setInfo.iosBannerUrl;
+            if ("" !== tmpStr) {
+                tmpStr = "url('" + tmpStr + "')";
+            }
+            $("#keyCardiOS").css("background-image", tmpStr);
+
+            tmpStr = setInfo.androidBannerUrl;
+            if ("" !== tmpStr) {
+                tmpStr = "url('" + tmpStr + "')";
+            }
+            $("#keyCardAndroid").css("background-image", tmpStr);
+
+            parameter = {
+                'prefix': 'app-setBanner-iOS-' + inObj + "-",
+                'type': 'image',
+                'size': 5120000,
+                'acl': 'public-read'
+            };
+
+            $page.imageUpload({
+                opObj: $("#upImgiOS"),
+                acObj: $("#keyCardiOS")
+            }, parameter);
+
+            parameter = {
+                'prefix': 'app-setBanner-android-' + inObj + "-",
+                'type': 'image',
+                'size': 5120000,
+                'acl': 'public-read'
+            };
+
+            $page.imageUpload({
+                opObj: $("#upImgAndroid"),
+                acObj: $("#keyCardAndroid")
+            }, parameter);
+
+        });
+    };
+
     $page.catLiClick = function (inObj) {
         var msoId = 0;
         msoId = cms.global.MSO;
@@ -472,6 +620,7 @@
         $("#title-func .set_name").text(tmpCategoryName);
         $('#channel-list').empty();
         $('#store-list').scrollTop(0);
+        $page._getKeyCard(inObj);
         $page.listSetProgram(msoId, inObj);
         $('#store-list').perfectScrollbar('update');
     };
@@ -576,6 +725,10 @@
 
         $page.drawChannelSets(msoId, setId);
 
+
+
+
+// $page.imageUpload();
         // portal manage
         $('#portal-add-layer .langkey').each(function () {
             $(this).text(nn._([cms.global.PAGE_ID, 'portal-add-layer', $(this).data('langkey')]));
