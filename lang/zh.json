@@ -86,6 +86,7 @@
     },
     "upload": {
         "Upload": "上傳",
+        "Upload image": "上傳圖片",
         "Uploading...": "上傳中..."
     },
     "lang-map": {
@@ -449,6 +450,14 @@
             "Channel Name": "頻道名稱 ",
             "Program List": "節目列表 ",
             "Programs": "節目",
+
+            "Upload channel banner images to make the channel more unique.": "上傳 Banner 圖片",
+            "iOS image Upload Now!": "立刻上傳iOS圖片",
+            "Andriod image Upload Now!": "立刻上傳Andriod圖片",
+            "The photo you uploaded is too small! It must be at least 1536 pixels wide and 570 pixels tall.": "您所上傳的照片太小了！它必須至少為1536像素寬和570像素高。",
+            "Recommended large channel art size": "建議圖片尺寸",
+            "The photo you uploaded is too small! It must be at least 800 pixels wide and 244 pixels tall.": "您所上傳的照片太小了！它必須至少為800像素寬和240像素高。",
+
             "Add Channel": "增加頻道",
             "Add programs": "新增節目",
             "Add programs sub": "",

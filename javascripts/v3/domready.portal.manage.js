@@ -256,6 +256,7 @@ $(function () {
             tmpItem.seq = theSeq;
             tmpItem.name = $(eValue).data("name");
             tmpItem.sortingType = $(eValue).data("sortingtype");
+            tmpItem.isOn = $(eValue).hasClass("on");
 
             if ($(eValue).hasClass("newCat")) {
                 tmpItem.id = 0;
@@ -292,18 +293,33 @@ $(function () {
         // channel set add
         function channelSetAdd() {
             var deferred = $.Deferred(),
-                cntAdd = newCatList.length;
+                cntAdd = newCatList.length,
+                tmpSetInfo = {};
             nn.log("3: channel set add");
             if (cntAdd > 0) {
-
                 $.each(newCatList, function (eKey, eValue) {
-                    nn.api('POST', cms.reapi('/api/mso/{msoId}/sets', {
-                        msoId: msoId
-                    }), {
+                    tmpSetInfo = {
                         name: eValue.name,
                         sortingType: eValue.sortingType,
                         seq: eValue.seq
-                    }, function (set) {
+                    };
+                    if(eValue.isOn ){
+                        var tmpObj = $("#keyCardiOS");
+                        if(tmpObj.data("meta")!== ""){
+                            tmpSetInfo.iosBannerUrl = tmpObj.data("meta");
+                            tmpObj.data("meta", "");
+                        }
+
+                        tmpObj = $("#keyCardAndroid");
+                        if(tmpObj.data("meta")!== ""){
+                            tmpSetInfo.androidBannerUrl = tmpObj.data("meta");
+                            tmpObj.data("meta", "");
+                        }
+                    }
+                    
+                    nn.api('POST', cms.reapi('/api/mso/{msoId}/sets', {
+                        msoId: msoId
+                    }), tmpSetInfo, function (set) {
                         var setLocate = set.seq - 1,
                             tmpObj = catLiLists[setLocate],
                             objId = "";
@@ -333,19 +349,36 @@ $(function () {
         function channelSetUpdate() {
             var deferred = $.Deferred(),
                 cntUpdate = procList.length,
-                tmpSeq = 0;
+                tmpSeq = 0,
+                tmpSetInfo = {};
             nn.log("4: channel set Update--" + cntUpdate);
             if (cntUpdate > 0) {
 
                 $.each(procList, function (eKey, eValue) {
                     tmpSeq = eKey + 1;
-                    nn.api('PUT', cms.reapi('/api/sets/{setId}', {
-                        setId: eValue.id
-                    }), {
+
+                    tmpSetInfo = {
                         name: eValue.name,
                         sortingType: eValue.sortingType,
                         seq: tmpSeq
-                    }, function (set) {
+                    };
+                    if(eValue.isOn ){
+                        var tmpObj = $("#keyCardiOS");
+                        if(tmpObj.data("meta")!== ""){
+                            tmpSetInfo.iosBannerUrl = tmpObj.data("meta");
+                            tmpObj.data("meta", "");
+                        }
+
+                        tmpObj = $("#keyCardAndroid");
+                        if(tmpObj.data("meta")!== ""){
+                            tmpSetInfo.androidBannerUrl = tmpObj.data("meta");
+                            tmpObj.data("meta", "");
+                        }
+                    }
+
+                    nn.api('PUT', cms.reapi('/api/sets/{setId}', {
+                        setId: eValue.id
+                    }), tmpSetInfo, function (set) {
                         cntUpdate -= 1;
                         if (cntUpdate === 0) {
                             procList = [];
