@@ -276,7 +276,8 @@ var cms = {};
         MSO: 0,
         MSOINFO: null,
         YOUTUBE_PLAYER: null,
-        IS_REMARK: true
+        IS_REMARK: true,
+        RAND: (new Date()).getTime()
     };
 
     //-------------------------------------------------------------------------
