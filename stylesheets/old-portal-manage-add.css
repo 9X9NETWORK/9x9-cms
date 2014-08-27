@@ -1,0 +1,165 @@
+/* line 20, ../sass/old-portal-manage-add.sass */
+.banner-wrap {
+  position: relative;
+  width: 45%;
+  padding-right: 3%;
+  margin-right: 2%;
+  float: left;
+  max-width: 500px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+/* line 30, ../sass/old-portal-manage-add.sass */
+.banner-text {
+  padding: 5px;
+}
+
+/* line 32, ../sass/old-portal-manage-add.sass */
+.thumb-wrap {
+  border: 4px solid white;
+  position: relative;
+  background-color: rgba(173, 173, 173, 0.8);
+  background-image: -webkit-gradient(linear, to bottom, to top, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(255, 255, 255, 0.1)));
+  background-image: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  min-height: 150px;
+}
+/* line 38, ../sass/old-portal-manage-add.sass */
+.thumb-wrap img {
+  width: 100%;
+}
+
+/* line 40, ../sass/old-portal-manage-add.sass */
+.thumb-inner-text {
+  font-size: 18px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+/* line 44, ../sass/old-portal-manage-add.sass */
+.thumb-hover-wrap {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  color: transparent;
+  text-align: center;
+  z-index: 20;
+  background: transparent url("../images/baenner-upload.gif") no-repeat 8px 8px;
+  transition: all 0.5s ease;
+
+}
+/* line 53, ../sass/old-portal-manage-add.sass */
+.banner-wrap:hover .thumb-hover-wrap {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+.banner-wrap .swfupload{
+  opacity: 0;
+}
+.banner-wrap:hover .swfupload{
+  opacity: 1;
+}
+
+/* line 57, ../sass/old-portal-manage-add.sass */
+.thumb-inner-warning {
+  position: absolute;
+  color: red;
+  top: 70%;
+  left: 50%;
+  width: 90%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
+.centre-image{
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  position: relative;
+  /*z-index: 10;*/
+
+}
+.centre-image img{
+
+
+  transform: translateY(-50%);
+  margin-top: 75px;
+}
+
+
+/*progress bar*/
+.progress{
+  position: absolute;
+  width: 100%;
+  top: 0;
+  
+}
+
+.progress-bar {
+  float: left;
+  width: 0;
+  height: 100%;
+  font-size: 12px;
+  line-height: 20px;
+  color: #fff;
+  text-align: center;
+  background-color: #428bca;
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
+  -webkit-transition: width .6s ease;
+  -o-transition: width .6s ease;
+  transition: width .6s ease;
+}
+
+.progress-striped .progress-bar, .progress-bar-striped {
+  background-image: -webkit-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+  background-image: -o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+  background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+  -webkit-background-size: 40px 40px;
+  background-size: 40px 40px;
+}
+
+.progress.active .progress-bar, .progress-bar.active {
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}
+
+.btn-upload-flash{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 30;
+  cursor: pointer;
+}
+
+@-webkit-keyframes progress-bar-stripes{
+  from{ background-position:40px 0  }
+  to{background-position:0 0}
+}
+@-o-keyframes progress-bar-stripes{
+  from{background-position:40px 0}
+  to{background-position:0 0}
+}
+@keyframes progress-bar-stripes{
+  from{background-position:40px 0}
+  to{background-position:0 0}
+}

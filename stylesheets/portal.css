@@ -1,4 +1,12 @@
 /* Set */
+.notice {
+    color: #f00;
+    font-size: 13px;
+    height: 31px;
+    line-height: 31px;
+    margin-right: 10px;
+}
+
 #portal-layer, #brand-layer {
     width: 100%;
     height: 100%;
