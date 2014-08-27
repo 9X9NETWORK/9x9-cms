@@ -143,6 +143,14 @@
     animation: progress-bar-stripes 2s linear infinite;
 }
 
+.btn-upload-flash{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 30;
+  cursor: pointer;
+}
+
 @-webkit-keyframes progress-bar-stripes{
   from{ background-position:40px 0  }
   to{background-position:0 0}
