@@ -457,6 +457,7 @@
             "The photo you uploaded is too small! It must be at least 1536 pixels wide and 570 pixels tall.": "上傳的圖片太小了！相片寬度至少必須是1536像素，高度則至少是570像素。",
             "Recommended large channel art size": "建議圖片尺寸",
             "The photo you uploaded is too small! It must be at least 800 pixels wide and 244 pixels tall.": "上傳的圖片太小了！相片寬度至少必須是800像素，高度則至少是244像素。",
+            "Please fill in all required fields.": "請輸入必填項目。",
 
             "Add Channel": "增加頻道",
             "Add programs": "新增節目",
