@@ -246,14 +246,6 @@ $(function () {
         nn.log("000: save.....");
         currentSetId = parseInt(tmpCat.data("meta"), 10);
     
-        $("p.notice").addClass("hide");
-
-        if (!$("#keyCardiOS").data("meta") || !$("#keyCardAndroid").data("meta") || $("#keyCardiOS").data("meta").length < 10 || $("#keyCardAndroid").data("meta").length < 10) {
-            $("p.notice").text(nn._([cms.global.PAGE_ID, 'channel-list', "Please fill in all required fields."]));
-            $("p.notice").removeClass("hide");
-            return false;
-        }
-
         // set Channel set
         $.each(catLiLists, function (eKey, eValue) {
             theSeq = eKey + 1;
