@@ -46,7 +46,7 @@ $(function () {
             return false;
         } else {
             // flipr program && without isVideoAuth , only add yt episode
-            $(this).attr("href", "epcurate-curation.html?cid=" + $(this).data("meta"));
+            $(this).attr("href", "epcurate-curation.html?cid=" + objId);
         }
     });
 

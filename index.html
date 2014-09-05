@@ -222,6 +222,10 @@
 <div id="terms-overlay" class="overlay-h501 terms-overlay"></div>
 
 
+<!-- Create Episode Options Begin -->
+<div id="new-Episode-Option" class="overlay-h316 create-episode-options central-l fixed-l align-center">
+</div>
+<!-- Create Episode Options End -->
 
 
 <div id="tmpHtml2" style="display: none"></div>
@@ -451,7 +455,7 @@
                             {{if true === isYoutubeLive}}
                             <li><a class="add disable">Add</a></li>
                             {{else}}
-                            <li><a href="epcurate-curation.html?cid=${id}" class="add">Add<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Curate a new episode'])}</span></span></span></span></a></li>
+                            <li><a data-meta="${id}" class="add btnNewEpisode">Add<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Curate a new episode'])}</span></span></span></span></a></li>
                             {{/if}}
                         {{/if}}
                         {{if !cms.global.IS_REMARK}}
@@ -486,6 +490,42 @@
 </li>
 </script>
 <!-- channel-list-tmpl-item End -->
+
+<!-- new-Episode-Option-tmpl Begin -->
+<script id="new-Episode-Option-tmpl" type="text/x-jquery-tmpl">
+    <div class="overlay-h316-left"></div>
+    <div class="overlay-h316-center">
+        <p class="overlay-button-close ov-cancel"></p>
+        <h2 class="overlay-title">Create a New Episode</h2>
+        <div id="func-upvideo" data-meta="${oid}" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">    
+                <p>By upload video </p> 
+                <img src="images/icon-upload.png" alt="">               
+            </div>
+            <div class="right"></div>
+        </div>
+        <div id="func-episode" data-meta="${oid}" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">
+                <p>By curation</p>    
+                <img src="images/icon-pencel.png" alt="">                   
+            </div>
+            <div class="right"></div>
+        </div>
+
+        <div class="overlay-button-holder">
+            <div class="btn-gray ov-cancel">
+                <p class="left"></p>
+                <p  class="center langkey">Close</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-h316-right"></div>
+</script>
+<!-- new-Episode-Option-tmpl End -->
+
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
