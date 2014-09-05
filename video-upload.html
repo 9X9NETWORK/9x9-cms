@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="en" lang="en">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="cache-control" content="no-cache" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="0" />
+<link rel="stylesheet" href="stylesheets/perfect-scrollbar.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/style.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/episode.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/cms-component.css?v=411104" />
+<title>FLIPr.tv - Episode list</title>
+</head>
+<body>
+<div id="fb-root"></div>
+
+<!-- Header Layer Begin -->
+<div id="header">
+    <a href="../" target="_blank" id="logo"></a>
+    <ul id="nav">
+        <li id="tv"><span><a href="../" target="_blank">Link to FLIPr.tv</a></span></li>
+        <li id="profile">
+            <p id="btn-profile"></p>
+            <p id="selected-profile">Guest</p>
+            <ul id="profile-dropdown" class="dropdown">
+                <li><a id="profile-logout" href="signin.html">Log out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<!-- Header Layer End -->
+
+<!-- Navigation Layer Begin -->
+<div id="studio-nav">
+    <div class="studio-nav-wrap">
+        <h3><a href="index.html"><span class="cms-icon">CMS</span><span class="sub-title">Content Management System</span></a></h3>
+        <ul>
+            <li class="on"><span><a href="index.html">My Programs</a></span></li>
+            <li id="my-portal" class="hide"><span><a href="portal-manage.html">My App</a></span></li>
+        </ul>
+        <div class="studio-setup">
+            <p class="btn-left"><span class="btn-right"><span class="btn-middle"><a href="cms-settings.html"><img src="images/icon_studio_setup.png" alt="" />CMS Settings</a></span></span></p>
+            <div class="reconnect-notice hide">
+                <img src="images/icon_notification.png" alt="" />
+                <p class="notice-left"><span class="notice-right"><span class="notice-middle langkey">Connection is inactive, click to restart it.</span></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Navigation Layer End -->
+
+<!-- Content Layer Begin -->
+<div id="content-wrap">
+    <div id="content-nav">
+        <div id="func-nav">
+            <ul>
+                <!-- template = #func-nav-tmpl -->
+            </ul>
+        </div>
+    </div>
+    <div id="main-wrap-slider" class="slider-wrap"><div class="slider-vertical"></div></div>
+    <div id="content-main">
+        <div id="title-func" class="clearfix">
+            <!-- template = #title-func-tmpl -->
+        </div>
+        <div id="content-main-wrap" class="episode-list">
+            <div class="constrain">
+                <!-- template = #episode-first-tmpl or #episode-list-tmpl -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Content Layer End -->
+
+<!-- Footer Layer Begin -->
+<p id="footer-control"></p>
+<div id="footer">
+    <span>© 2014 FLIPr.tv. All rights reserved.</span>
+</div>
+<!-- Footer Layer End -->
+
+<!-- Loading Layer Begin -->
+<div id="overlay-s">
+    <p class="overlay-content">
+        <span class="overlay-right">
+            <span class="overlay-middle"><img src="images/icon_load_l.gif" alt="" />Saving...</span>
+        </span>
+    </p>
+</div>
+<!-- Loading Layer End -->
+
+<!-- System Error Layer Begin -->
+<div id="system-error" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">You are not authorized to edit episodes in this program.</p>
+            <div class="overlay-btn">
+                <p class="btns btn-ok"><span><a href="#">OK</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- System Error Layer End -->
+
+
+<!-- Unsave Prompt Layer Begin -->
+<div id="unsave-prompt" class="lightbox-content overlay-l">
+    <div class="overlay-container">
+        <div class="overlay-wrap">
+            <a href="#" class="btn-close">Close</a>
+            <p class="content">Unsaved changes will be lost, are you sure you want to leave?</p>
+            <div class="overlay-btn">
+                <p class="btns btn-no"><span><a href="#">No</a></span></p>
+                <p class="btns btn-leave"><span><a href="#">Yes</a></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Unsave Prompt Layer End -->
+
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+<script src="javascripts/libs/nn-sdk.js?v=411104"></script>
+<script src="javascripts/libs/jquery.mousewheel.min.js?v=411104"></script>
+<script src="javascripts/libs/jquery.ellipsis.min.js?v=411104"></script>
+<script src="javascripts/libs/jquery.blockUI.min.js?v=411104"></script>
+<script src="javascripts/libs/jquery.cycle.all.min.js?v=411104"></script>
+<script src="javascripts/libs/jquery.tmpl.min.js?v=411104"></script>
+<script src="javascripts/libs/jquery.cookie.min.js?v=411104"></script>
+<script src="javascripts/libs/json2.min.js?v=411104"></script>
+<script src="javascripts/libs/purl.min.js?v=411104"></script>
+<script src="javascripts/libs/perfect-scrollbar.js?v=411104"></script>
+<script src="javascripts/v3/config.js?v=411104"></script>
+<script src="javascripts/v3/func.common.js?v=411104"></script>
+<script src="javascripts/v3/func.video.upload.js?v=411104"></script>
+<script src="javascripts/v3/domready.common.js?v=411104"></script>
+<script src="javascripts/v3/domready.video.upload.js?v=411104"></script>
+</body>
+</html>
