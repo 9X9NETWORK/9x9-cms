@@ -409,3 +409,161 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .btn-item {
   display: inline-block;
 }
+
+/* line 310, ../sass/cms-component.sass */
+.central-l {
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3D(-50%, -50%, 0);
+  -moz-transform: translate3D(-50%, -50%, 0);
+  -ms-transform: translate3D(-50%, -50%, 0);
+  -o-transform: translate3D(-50%, -50%, 0);
+  transform: translate3D(-50%, -50%, 0);
+}
+
+/* line 315, ../sass/cms-component.sass */
+.fixed-l {
+  position: fixed;
+}
+
+/* line 317, ../sass/cms-component.sass */
+.align-center {
+  text-align: center;
+}
+
+/* line 322, ../sass/cms-component.sass */
+.progress {
+  position: absolute;
+  width: 100%;
+  top: 0;
+}
+
+/* line 329, ../sass/cms-component.sass */
+.progress-bar {
+  float: left;
+  width: 0;
+  height: 100%;
+  font-size: 12px;
+  line-height: 20px;
+  color: white;
+  text-align: center;
+  background-color: #ff9800;
+  -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  -webkit-transition: width 0.6s ease;
+  -o-transition: width 0.6s ease;
+  transition: width 0.6s ease;
+}
+
+/* line 345, ../sass/cms-component.sass */
+.progress-striped .progress-bar, .progress-bar-striped {
+  background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  -webkit-background-size: 40px 40px;
+  background-size: 40px 40px;
+}
+
+/* line 353, ../sass/cms-component.sass */
+.btn-upload-flash {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 30;
+  cursor: pointer;
+}
+
+/* line 360, ../sass/cms-component.sass */
+.btn-dash {
+  cursor: pointer;
+  border: 3px dashed white;
+}
+
+/* line 365, ../sass/cms-component.sass */
+.title-func {
+  position: relative;
+  position: relative;
+  margin-right: 35px;
+  z-index: 99;
+  padding: 26px 0 17px;
+}
+/* line 371, ../sass/cms-component.sass */
+.title-func h2 {
+  float: left;
+  font-weight: 500;
+  font-size: 17px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  -moz-binding: url("ellipsis.xml#ellipsis");
+  position: absolute;
+  left: 0;
+  right: 350px;
+}
+
+/* line 386, ../sass/cms-component.sass */
+.intro {
+  margin: 0 30px 0 0;
+  font-size: 13px;
+  height: 41px;
+  line-height: 41px;
+}
+/* line 391, ../sass/cms-component.sass */
+.intro span {
+  float: left;
+}
+
+/* line 395, ../sass/cms-component.sass */
+.upload-progress-wrap {
+  margin-bottom: 1.5em;
+  position: relative;
+}
+/* line 398, ../sass/cms-component.sass */
+.upload-progress-wrap .progress {
+  position: relative;
+  height: 30px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  background-color: whitesmoke;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  width: calc(100% - 35px);
+}
+/* line 408, ../sass/cms-component.sass */
+.upload-progress-wrap .progress-bar {
+  line-height: 30px;
+}
+/* line 410, ../sass/cms-component.sass */
+.upload-progress-wrap .overlay-button-close {
+  right: 0;
+  top: 4px;
+}
+
+/* line 413, ../sass/cms-component.sass */
+.upload-video-btn {
+  line-height: 40px;
+  text-align: center;
+  border-radius: 4px;
+}
+/* line 420, ../sass/cms-component.sass */
+.upload-video-btn:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+/* line 422, ../sass/cms-component.sass */
+.upload-video-btn .title {
+  position: relative;
+}
+/* line 424, ../sass/cms-component.sass */
+.upload-video-btn .title:before {
+  content: " ";
+  background: url(../images/icon-upload.png) no-repeat 50% 50%;
+  background-size: 70%;
+  width: 48px;
+  height: 42px;
+  display: block;
+  position: absolute;
+  left: -50px;
+}
