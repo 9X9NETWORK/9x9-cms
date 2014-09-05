@@ -8,6 +8,49 @@ $(function () {
     var $page = cms['episode-list'],
         $common = cms.common;
 
+
+    $(document).on('click', '.ov-cancel', function () {
+        $.unblockUI();
+    });
+
+    $(document).on('click', '.btn-create', function () {
+        var thisOption = $(this).attr("id"),
+            objId = $(this).data("meta"),
+            nextUrl = "index.html";
+
+        switch (thisOption) {
+            case "func-upvideo":
+                nextUrl = "video-upload.html?cid=" + objId;
+                break;
+
+            case "func-episode":
+                nextUrl = "epcurate-curation.html?cid=" + objId;
+                break;
+        }
+        location.href = nextUrl;
+    });
+
+    $(document).on('click', '.btnNewEpisode', function () {
+        var isVideoAuth = cms.global.USER_PRIV.isVideoAuth,
+            objId = $(this).data("meta");
+
+        if (isVideoAuth) {
+            // flipr program && with isVideoAuth , can choose add yt episode or upload video
+            $('#new-Episode-Option').empty();
+            $('#new-Episode-Option-tmpl').tmpl({
+                oid: objId
+            }).appendTo('#new-Episode-Option');
+            $.blockUI({
+                message: $('#new-Episode-Option')
+            });
+            return false;
+        } else {
+            // flipr program && without isVideoAuth , only add yt episode
+            $(this).attr("href", "epcurate-curation.html?cid=" + $(this).data("meta"));
+        }
+    });
+
+
     $('#content-main-wrap').perfectScrollbar({marginTop: 30, marginBottom: 60});
 
     $('body').keyup(function (e) {

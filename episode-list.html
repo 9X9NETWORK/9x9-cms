@@ -6,6 +6,7 @@
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="expires" content="0" />
 <link rel="stylesheet" href="stylesheets/perfect-scrollbar.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/overlay.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/style.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/episode.css?v=411104" />
@@ -134,6 +135,11 @@
 </div>
 <!-- Unsave Prompt Layer End -->
 
+<!-- Create Episode Options Begin -->
+<div id="new-Episode-Option" class="overlay-h316 create-episode-options central-l fixed-l align-center">
+</div>
+<!-- Create Episode Options End -->
+
 <div id="tmpHtml2" style="display: none"></div>
 <div id="tmpHtml" style="display: none"></div>
 
@@ -161,7 +167,7 @@
             <li style="line-hieght:34px">&nbsp;</li>
             <li class="last"><p class="sync-time">{{if null !== syncDate}}${nn._([cms.global.PAGE_ID, 'title-func', 'Sync time'])} : ${cms.common.formatTimestamp(syncDate)}{{else}}&nbsp;{{/if}}</p></li>
         {{else}}
-            <li><p class="curate btns"><span><a href="epcurate-curation.html?cid=${id}" class="curate">${nn._([cms.global.PAGE_ID, 'title-func', 'Curate a new episode'])}</a></span></p></li>
+            <li><p class="curate btns"><span><a data-meta="${id}" class="curate btnNewEpisode">${nn._([cms.global.PAGE_ID, 'title-func', 'Curate a new episode'])}</a></span></p></li>
             <li class="last"><p class="order btns"><span><a href="javascript:void(0);" rel="${id}" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder episodes'])}</a></span></p></li>
         {{/if}}
     </ul>
@@ -366,6 +372,42 @@
 </li>
 </script>
 <!-- episode-list-tmpl-item End -->
+
+<!-- new-Episode-Option-tmpl Begin -->
+<script id="new-Episode-Option-tmpl" type="text/x-jquery-tmpl">
+    <div class="overlay-h316-left"></div>
+    <div class="overlay-h316-center">
+        <p class="overlay-button-close ov-cancel"></p>
+        <h2 class="overlay-title">Create a New Episode</h2>
+        <div id="func-upvideo" data-meta="${oid}" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">    
+                <p>By upload video </p> 
+                <img src="images/icon-upload.png" alt="">               
+            </div>
+            <div class="right"></div>
+        </div>
+        <div id="func-episode" data-meta="${oid}" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">
+                <p>By curation</p>    
+                <img src="images/icon-pencel.png" alt="">                   
+            </div>
+            <div class="right"></div>
+        </div>
+
+        <div class="overlay-button-holder">
+            <div class="btn-gray ov-cancel">
+                <p class="left"></p>
+                <p  class="center langkey">Close</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-h316-right"></div>
+</script>
+<!-- new-Episode-Option-tmpl End -->
+
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
