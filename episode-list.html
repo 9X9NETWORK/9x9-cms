@@ -206,7 +206,7 @@
 <script id="episode-first-tmpl" type="text/x-jquery-tmpl">
 <div id="ep-time-list">
     <h3>{{html nn._([cms.global.PAGE_ID, 'episode-list', "You don't have any episodes yet"])}}</h3>
-    <p class="btns"><span><a href="epcurate-curation.html?cid=${id}">${nn._([cms.global.PAGE_ID, 'episode-list', 'Curate new episode to tell a story'])}</a></span></p>
+    <p class="btns"><span><a data-meta="${id}" class="btnNewEpisode">${nn._([cms.global.PAGE_ID, 'episode-list', 'Curate new episode to tell a story'])}</a></span></p>
     <div id="selected-episode">
         <p class="episode-pager">
             <a href="javascript:void(0);" class="active">。</a>
@@ -217,19 +217,19 @@
         <div class="wrapper">
             <ul class="content">
                 <li>
-                    <div class="img"><a href="epcurate-curation.html?cid=${id}"><img src="images/banner_01.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a href="#" data-meta="${id}" class="btnNewEpisode"><img src="images/banner_01.png" alt="" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'episode-list', '<strong>Curate online videos</strong> into each single episode.'])}}</span></p></div>
                 </li>
                 <li>
-                    <div class="img"><a href="epcurate-curation.html?cid=${id}"><img src="images/banner_02.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a href="#" data-meta="${id}" class="btnNewEpisode"><img src="images/banner_02.png" alt="" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'episode-list', 'Tell your story by <strong>arranging the video sequence.</strong>'])}}</span></p></div>
                 </li>
                 <li>
-                    <div class="img"><a href="epcurate-curation.html?cid=${id}"><img src="images/banner_03.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a href="#" data-meta="${id}" class="btnNewEpisode"><img src="images/banner_03.png" alt="" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'episode-list', '<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.'])}}</span></p></div>
                 </li>
                 <li>
-                    <div class="img"><a href="epcurate-curation.html?cid=${id}"><img src="images/banner_04.png" alt="" width="781" height="274" /></a></div>
+                    <div class="img"><a href="#" data-meta="${id}" class="btnNewEpisode"><img src="images/banner_04.png" alt="" width="781" height="274" /></a></div>
                     <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'episode-list', '<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.'])}}</span></p></div>
                 </li>
             </ul>
