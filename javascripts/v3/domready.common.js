@@ -24,7 +24,7 @@ $(function () {
             loginUrl = "https://" + tmpUrl.attr('host') + '/cms/signin.html',
             homeUrl = "http://" + tmpUrl.attr('host') + '/cms/index.html';
 
-        if (tmpUrl.attr('host') === "localhost") {
+        if (tmpUrl.attr('host') === "localhost" || tmpUrl.attr('host') === "mars.cms") {
             loginUrl = "http://" + tmpUrl.attr('host') + '/signin.html',
             homeUrl = "http://" + tmpUrl.attr('host') + '/index.html';
         }

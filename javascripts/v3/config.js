@@ -352,7 +352,7 @@ var cms = {};
         break;
     }
 
-    if (location.host === "localhost") {
+    if (location.host === "localhost" || location.host === "mars.cms") {
         cms.config.API_BASE = 'http://beagle.flipr.tv';
     }
 
