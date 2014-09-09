@@ -3,8 +3,41 @@
 
 $(function () {
     'use strict';
+    var $page = cms['video-upload'];
+
 
     $('#content-main-wrap').perfectScrollbar({marginTop: 30, marginBottom: 60});
+
+
+    $(document).on('click', '#upload-box', function() {
+        $("#files").trigger("click");
+    });
+
+    $(document).on('change', '#files', function() {
+        var cntFiles = this.files.length,
+            arrUpFiles = [];
+        if ($page.s3Info.isGet && cntFiles > 0) {
+            $.each(this.files, function(eKey, eValue) {
+                if ("video/mp4" === eValue.type && eValue.size >0) {
+                    $page.videoUpload(eValue, eKey);
+                }else{
+
+                nn.log(eValue);
+            $page.videoUpload(eValue, eKey);
+                    
+                }
+            });
+
+            // if(arrUpFiles.length >0){
+            //     nn.log("********* 可上傳檔案數 [" + arrUpFiles.length + "]");
+            // }else{
+            //    nn.log(" ????????????? 檔案不可以上傳 ????????????? ");
+            // }
+        }
+
+        // $page.videoUpload(this.files[0]);
+        nn.log("*********" + this.files.length);
+    });
 
     $(document).on('click', '.unblock, .btn-close, .btn-no', function () {
         $.unblockUI();

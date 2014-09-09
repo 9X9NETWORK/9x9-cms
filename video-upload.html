@@ -6,6 +6,7 @@
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="expires" content="0" />
 <link rel="stylesheet" href="stylesheets/perfect-scrollbar.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/overlay.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/style.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/episode.css?v=411104" />
@@ -60,15 +61,32 @@
         </div>
     </div>
     <div id="main-wrap-slider" class="slider-wrap"><div class="slider-vertical"></div></div>
-    <div id="content-main">
-        <div id="title-func" class="clearfix">
-            <!-- template = #title-func-tmpl -->
+    <div id="content-main" class="hide">
+        <div class="clearfix title-func">
+            <h2>
+                <span id="channel-name" ></span>
+                <span class="title-crumb">&gt; Create new episode &gt; Upload a video</span>
+            </h2>
         </div>
-        <div id="content-main-wrap" class="episode-list">
+        <div class="intro clearfix">
+            <p>
+                <span class="langkey">The uploaded video will be import to an episode automatically.</span>
+            </p>        
+        </div>
+
+        <div id="content-main-wrap">
             <div class="constrain">
-                <!-- template = #episode-first-tmpl or #episode-list-tmpl -->
+                <div id="upload-area">
+
+                </div>
+                <input type="file" id="files" multiple class="hide" />
+                <div id="upload-box" class="upload-video-btn btn-dash hide">
+                    <span class="title"><img src="images/icon-upload.png">Choose videos to upload</span>
+
+                </div>
             </div>
         </div>
+
     </div>
 </div>
 <!-- Content Layer End -->
@@ -120,7 +138,19 @@
 </div>
 <!-- Unsave Prompt Layer End -->
 
-
+<!-- upload-element-tmpl Start -->
+<script id="upload-element-tmpl" type="text/x-jquery-tmpl">
+<div id="up_${tmpId}" class="upload-progress-wrap">
+    <div class="progress">
+        <div class="progress-bar active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+            <span class="sr-only progress-bar-text">0%</span>
+        </div>
+    </div>
+    <p class="video-name">${tmpFileName}</p>
+    <div class="overlay-button-close"> </div>
+</div>
+</script>
+<!-- upload-element-tmpl End -->
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>

@@ -5,8 +5,13 @@
     'use strict';
 
     var $common = cms.common;
+    $page.s3Info = {
+        isGet: false,
+        parameter: {},
+        s3attr: {}
+    };
 
-    $page.imageUpload = function (inObj, parameter) {
+    $page.imageUpload = function(inObj, parameter) {
 
         var loadingImg = "images/loading.gif",
             opObj = inObj.opObj,
@@ -145,6 +150,61 @@
         });
     };
 
+    $page.videoUpload = function(fileObj, eKey) {
+
+        var timestamp = (new Date()).getTime(),
+            filenamePreFix = timestamp + eKey,
+            tmpS3attr = $page.s3Info.s3attr,
+            upFileName = $page.s3Info.parameter.prefix + filenamePreFix + ".mp4",
+            s3Url = "http://" + tmpS3attr.bucket + ".s3.amazonaws.com/",
+            s3FileName = s3Url + upFileName;
+        // var file = this.files[0];
+
+
+        $('#upload-element-tmpl').tmpl({
+            tmpId: filenamePreFix,
+            tmpFileName: fileObj.name
+        }, null).appendTo('#upload-area');
+
+        var thisObj = $("#up_" + filenamePreFix),
+        tmpProgress = $(thisObj).find("div.progress-bar"),
+            tmpProgressText = $(thisObj).find("span.progress-bar-text");
+
+        nn.log(fileObj)
+        // upFileName = fileObj.name;
+
+        var formData = new FormData();
+        formData.append('AWSAccessKeyId', tmpS3attr.id);
+        formData.append('key', upFileName);
+        formData.append('acl', 'public-read');
+        formData.append('policy', tmpS3attr.policy);
+        formData.append('signature', tmpS3attr.signature);
+        formData.append('content-type', "video");
+        formData.append('filename', upFileName);
+        formData.append('success_action_status', "201");
+        formData.append('file', fileObj);
+
+        nn.log(formData);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', s3Url);
+        xhr.upload.onprogress = function(event) {
+            if (event.lengthComputable) {
+                var complete = (event.loaded / event.total * 100 | 0);
+                tmpProgress.css("width", complete + "%")
+                tmpProgressText.text(" " + complete + "% ")
+                if(complete > 50){
+                    xhr.abort();
+                    nn.log("不傳了!!!!!!!");
+                }
+            }
+        }
+        xhr.onload = function() {
+            nn.log('上傳完成!');
+            nn.log(s3FileName);
+        };
+        xhr.send(formData);
+    };
 
 
     // NOTE: page entry point (keep at the bottom of this file)
@@ -155,8 +215,8 @@
             options: options
         }, 'debug');
 
-        var id = cms.global.USER_URL.param('cid'), 
-        isVideoAuth = cms.global.USER_PRIV.isVideoAuth;
+        var id = cms.global.USER_URL.param('cid'),
+            isVideoAuth = cms.global.USER_PRIV.isVideoAuth;
 
         if (!isVideoAuth) {
             $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
@@ -174,6 +234,25 @@
                     $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
                     return false;
                 }
+                $("#channel-name").text(channel.name);
+                $("#content-main").removeClass("hide");
+                
+                $page.s3Info.parameter = {
+                    'prefix': 'up-video-' + cms.global.MSO + '-' + id + '-',
+                    'type': 'video',
+                    'size': 31267400,
+                    'acl': 'public-read',
+                    'mso': cms.global.MSO
+                };
+
+                nn.api('GET', cms.reapi('/api/s3/attributes'), $page.s3Info.parameter, function (s3attr) {
+                    $page.s3Info.s3attr = s3attr;
+                    $page.s3Info.isGet = true;
+                    $("#upload-box").removeClass("hide");
+
+                    nn.log(s3attr);
+                });
+
 
                 $('#overlay-s').fadeOut();
 
