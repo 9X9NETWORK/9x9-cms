@@ -4,6 +4,26 @@
 (function ($common) {
     'use strict';
 
+    $common.fileSizeUnit = function (dg, inNum) {
+        var dgLists = ["KB", "MB", "GB", "TB"],
+            retNum = inNum / 1000 | 0,
+            retNumRound = Math.round(inNum / 10) / 100,
+            retValue = "";
+
+        if (retNum > 999) {
+            dg++;
+            retValue = $common.fileSizeUnit(dg, retNum);
+        } else {
+            if (dg < 1) {
+                retValue = retNum + " " + dgLists[dg];
+            } else {
+                retValue = retNumRound + " " + dgLists[dg];
+            }
+
+        }
+        return retValue;
+    };
+
     $common.privParser = function (inPriv) {
         var countPriv = inPriv.length,
             strCMS = "",
