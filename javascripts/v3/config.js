@@ -140,6 +140,7 @@ var cms = {};
             '/api/store':                                           'fakeapi/json/store_search.json'
         },
         YOUR_FAVORITE: 11,
+        FLIPR_VIDEO: 5,
         PROGRAM_MAX: 50,
         LANG_MAP: {
             'en': 'English',
