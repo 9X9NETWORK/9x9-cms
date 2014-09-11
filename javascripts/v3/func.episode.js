@@ -5,6 +5,36 @@
     'use strict';
 
     var $common = cms.common;
+    $page.s3Info = {
+        isGet: false,
+        parameter: {},
+        s3attr: {},
+        gt: (new Date()).getTime()
+    };
+
+
+    $page.getEpisodeAndProgram = function (inID) {
+        $('#edit-Episode-Info').empty();
+        $('#edit-Episode-Info-def-tmpl').tmpl(null).appendTo('#edit-Episode-Info');
+        $.blockUI({
+            message: $('#edit-Episode-Info')
+        });
+        nn.api('GET', cms.reapi('/api/episodes/{episodesId}', {
+            episodesId: inID
+        }), null, function (epObj) {
+
+            nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
+                episodeId: inID
+            }), null, function (programs) {
+                if (programs.length > 0) {
+                    epObj.progId = programs[0].id;
+                    $('#edit-Episode-Info').empty();
+                    $('#edit-Episode-Info-tmpl').tmpl(epObj).appendTo('#edit-Episode-Info');
+
+                }
+            });
+        });
+    };
 
     $page.epYoutubeCheck = function (inID) {
 

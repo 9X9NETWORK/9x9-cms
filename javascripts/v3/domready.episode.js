@@ -9,6 +9,13 @@ $(function () {
         $common = cms.common;
 
 
+    $(document).on('click', '.btnEpSave', function () {
+        var epId = $(this).data("meta"),
+        progId = $(this).data("program");
+
+        nn.log("Episode ["+epId+"]  *****   Program ["+progId+"]");
+    });
+
     $(document).on('click', '.ov-cancel', function () {
         $.unblockUI();
     });
@@ -28,6 +35,19 @@ $(function () {
                 break;
         }
         location.href = nextUrl;
+    });
+
+    $(document).on('click', '.btnEditEpisode', function () {
+        var isVideoAuth = cms.global.USER_PRIV.isVideoAuth,
+            objId = $(this).data("meta"),
+            inTyep = $(this).data("contentype");
+
+        if (isVideoAuth && inTyep === cms.config.FLIPR_VIDEO) {
+            $page.getEpisodeAndProgram(objId);
+            return false;
+        } else {
+            $(this).attr("href", "epcurate-curation.html?id=" + objId);
+        }
     });
 
     $(document).on('click', '.btnNewEpisode', function () {
@@ -63,6 +83,7 @@ $(function () {
             return false;
         }
     });
+
     $(document).on('click', '.check', function () {
         var this_id = parseInt($(this).data("meta"), 10),
             this_btn = "#yuchk-btn-" + this_id;

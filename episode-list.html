@@ -136,9 +136,13 @@
 <!-- Unsave Prompt Layer End -->
 
 <!-- Create Episode Options Begin -->
-<div id="new-Episode-Option" class="overlay-h316 create-episode-options central-l fixed-l align-center">
-</div>
+<div id="new-Episode-Option" class="overlay-h316 create-episode-options central-l fixed-l align-center"></div>
 <!-- Create Episode Options End -->
+
+<!-- edit Episode info Begin -->
+<div id="edit-Episode-Info" class="overlay-h316 edit-episode-infomation central-l fixed-l align-center"></div>
+<!-- edit Episode info End -->
+
 
 <div id="tmpHtml2" style="display: none"></div>
 <div id="tmpHtml" style="display: none"></div>
@@ -311,10 +315,10 @@
                             <img src="${imageUrl}" alt="" class="photo" />
                         {{/if}}
                     </div>
-                    <span class="duration"><span class="time-right"><span class="time-middle">${cms.common.formatDuration(duration)}</span></span></span>
+                    <span class="duration{{if contentType === cms.config.FLIPR_VIDEO}} hide{{/if}}"><span class="time-right"><span class="time-middle">${cms.common.formatDuration(duration)}</span></span></span>
                 </div>
             </div>
-            <div class="check{{if true === cms.global.vIsYoutubeSync}} hide-00{{/if}}" data-meta="${id}">
+            <div class="check{{if true === cms.global.vIsYoutubeSync}} hide-00{{/if}}{{if contentType === cms.config.FLIPR_VIDEO}} hide{{/if}}" data-meta="${id}">
                 <div class="btn" id="yuchk-btn-${id}"></div>
                 <div class="tip-white">
                     <p class="left"></p>
@@ -328,10 +332,12 @@
                 <div class="btn-wrap enable">
                     <ul>
                         {{if true !== cms.global.vIsYoutubeSync}}
-                        <li><a href="epcurate-curation.html?id=${id}" class="edit"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Edit'])}</a></li>
+                        <li><a href="#" data-meta="${id}" data-contentype="${contentType}" class="edit btnEditEpisode"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Edit'])}</a></li>
                         <li><a href="/api/episodes/${id}" rel="${id}" class="del"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Delete'])}</a></li>
                         {{/if}}
+                        {{if contentType !== cms.config.FLIPR_VIDEO}}
                         <li><a href="javascript:void(0);" class="url{{if null === publishDate}} disable{{/if}}"><span></span>${nn._([cms.global.PAGE_ID, 'episode-list', 'Get URL'])}</a></li>
+                        {{/if}}
                     </ul>
                 </div>
                 <div id="get-url-${id}" class="get-url tooltip-wrap" data-metach="${$.url().param('id')}" data-metaep="${id}">
@@ -407,6 +413,92 @@
     <div class="overlay-h316-right"></div>
 </script>
 <!-- new-Episode-Option-tmpl End -->
+
+<!-- edit-Episode-Info-def Begin -->
+<script id="edit-Episode-Info-def-tmpl" type="text/x-jquery-tmpl">
+    <div class="overlay-h316-left"></div>
+    <div class="overlay-h316-center">
+        <p class="overlay-button-close ov-cancel epiDef hide"></p>
+        <h2 class="overlay-title">Edit episode infomation</h2>
+        <div class="overlay-content">
+            <br /><br /><br />
+            <img src="images/loading.gif" />
+        </div>
+        <div class="overlay-button-holder">
+            <div class="btn-gray epiDef hide">
+                <p class="left"></p>
+                <p class="center ov-cancel">Close</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-h316-right"></div>
+</script>
+<!-- edit-Episode-Info-def End -->
+
+<!-- Edit episode infomation Begin -->
+<script id="edit-Episode-Info-tmpl" type="text/x-jquery-tmpl">
+    <div class="overlay-h316-left"></div>
+    <div class="overlay-h316-center">
+        <p class="overlay-button-close ov-cancel"></p>
+        <h2 class="overlay-title">Edit episode infomation</h2>
+        <div class="overlay-content">
+            <legend class="form-title">Create an app notification</legend>
+            <div class="thumb-wrap">
+                <div class="img-wrap">
+                    <img src="${imageUrl}" alt="" class="photo">
+                </div>
+                <div class="thumb-hover-wrap">
+                    <span>Upload image</span>
+                </div>
+            </div>
+            <div class="form-wrap">
+                <div class="form-group required-field">
+                    <!-- <div class="form-label">Click the notification to go to</div> -->
+                    <div class="form-elements">
+
+                        <input type="text" value="${name}" placeholder="Episode title..">
+                    </div>
+
+                </div>
+
+                <div class="form-group ">
+                    <div class="form-elements">
+                        <textarea placeholder="Desscription...">${intro}</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                     <div class="form-label">Publish status</div>
+                        <div class="form-elements">
+
+                        <input type="radio" name="scheduleun-app" id="scheduleun-app1" autocomplete="off" {{if !isPublic}}checked="checked"{{/if}}>
+                        <label class="radio-btn" for="scheduleun-app1">Darft</label>
+
+                        <input type="radio" name="scheduleun-app" id="scheduleun-app2" autocomplete="off" {{if isPublic}}checked="checked"{{/if}}>
+                        <label class="radio-btn" for="scheduleun-app2">Publish</label>
+                        <br>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="overlay-button-holder">
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p class="center ov-cancel">Close</p>
+                <p class="right"></p>
+            </div>
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p class="center btnEpSave" data-meta="${id}" data-program="${progId}">Save</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-h316-right"></div>
+</script>
+<!-- Edit episode infomation End -->
 
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
