@@ -9,11 +9,59 @@ $(function () {
         $common = cms.common;
 
 
-    $(document).on('click', '.btnEpSave', function () {
+    $(document).on('click', '.btnEpSave', function() {
         var epId = $(this).data("meta"),
-        progId = $(this).data("program");
+            progId = $(this).data("program"),
+            oldIsPublic = $(this).data("ispublic"),
+            newIsPublic = false,
+            inputInfo = {
+                "name": $("#epName").val(),
+                "intro": $("#epIntro").val(),
+                "imageUrl": $("#epImage").attr("src")
+            },
+            status_params = {
+                isPublic: $('input[name=isPublic]:checked').val(),
+                publishDate: 'NOW',
+                scheduleDate: ''
+            },
+            inputInfoEp = {},
+            isFormCheck = false;
 
-        nn.log("Episode ["+epId+"]  *****   Program ["+progId+"]");
+        if(status_params.isPublic === "true"){
+            status_params.publishDate = "NOW";
+            newIsPublic = true;
+        }else{
+            status_params.publishDate = "";
+        }
+
+        inputInfoEp = {
+                "name": inputInfo.name,
+                "intro": inputInfo.intro,
+                "imageUrl": inputInfo.imageUrl
+            };
+        if(oldIsPublic != newIsPublic){
+            $.extend(inputInfoEp, status_params);
+        }
+
+        if (inputInfo.name.length) {
+            isFormCheck = true;
+        }
+
+        if(isFormCheck){
+
+            nn.api('PUT', cms.reapi('/api/episodes/{episodesId}', {
+                episodesId: epId
+            }), inputInfoEp, function (epObj) {
+
+                nn.api('PUT', cms.reapi('/api/programs/{programId}', {
+                    programId: progId
+                }), inputInfo, function (pgObj) {
+
+
+                });
+            });
+
+        }
     });
 
     $(document).on('click', '.ov-cancel', function () {
