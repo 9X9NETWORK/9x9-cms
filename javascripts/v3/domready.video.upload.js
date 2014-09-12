@@ -29,11 +29,6 @@ $(function () {
             $.each(this.files, function(eKey, eValue) {
                 if ("video/mp4" === eValue.type && eValue.size > 0) {
                     $page.videoUpload(eValue, eKey);
-                } else {
-
-                    nn.log(eValue);
-                    $page.videoUpload(eValue, eKey);
-
                 }
             });
         }
