@@ -9,6 +9,27 @@ $(function () {
         $common = cms.common;
 
 
+    $(document).on('click', '#upload-box', function() {
+        $("#upImage").trigger("click");
+    });
+
+    $(document).on('change', '#upImage', function() {
+        var cntFiles = this.files.length,
+            arrUpFiles = [];
+        if ($page.s3Info.isGet && cntFiles > 0) {
+            $.each(this.files, function(eKey, eValue) {
+                if ("video/mp4" === eValue.type && eValue.size > 0) {
+                    $page.imageUpload(eValue, eKey);
+                } else {
+
+                    nn.log(eValue);
+                     $page.imageUpload(eValue, eKey);
+
+                }
+            });
+        }
+    });
+
     $(document).on('click', '.btnEpSave', function() {
         var epId = $(this).data("meta"),
             progId = $(this).data("program"),
@@ -56,8 +77,13 @@ $(function () {
                 nn.api('PUT', cms.reapi('/api/programs/{programId}', {
                     programId: progId
                 }), inputInfo, function (pgObj) {
+                    var epItemObj = "#li_" +epObj.id, 
+                    epLists = [];
 
-
+                    epObj.seq = $(epItemObj).find("div.seqNumber").text();
+                    epLists.push(epObj);
+                    $(epItemObj).replaceWith($('#episode-list-tmpl-item').tmpl(epLists));
+                    $.unblockUI();
                 });
             });
 
@@ -91,6 +117,7 @@ $(function () {
             inTyep = $(this).data("contentype");
 
         if (isVideoAuth && inTyep === cms.config.FLIPR_VIDEO) {
+            $page.prepareS3Attr();
             $page.getEpisodeAndProgram(objId);
             return false;
         } else {

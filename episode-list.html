@@ -295,13 +295,13 @@
 
 <!-- episode-list-tmpl-item Begin -->
 <script id="episode-list-tmpl-item" type="text/x-jquery-tmpl">
-<li class="clearfix isItem" data-meta="${id}">
+<li  id="li_${id}" class="clearfix isItem" data-meta="${id}">
 <div class="container">
 <div class="container-right">
 <div class="container-bottom">
 <div class="container-left">
     <div class="wrap">
-        <div class="number">${seq}</div>
+        <div class="number seqNumber">${seq}</div>
         <div class="episode">
             <div class="img">
                 <div class="img-container">
@@ -449,7 +449,7 @@
                     <input type="file" id="upImage" class="hide" />
                     <img id="epImage" src="${imageUrl}" alt="" class="photo">
                 </div>
-                <div class="thumb-hover-wrap">
+                <div id="upload-box" class="thumb-hover-wrap curHand">
                     <span>Upload image</span>
                 </div>
             </div>
