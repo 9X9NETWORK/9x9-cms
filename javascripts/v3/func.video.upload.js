@@ -60,6 +60,15 @@
         });
     };
 
+    $page.isUploading = function () {
+        var cntUploads = $("#upload-area div.upload-progress-wrap").length,
+            cntSuccesss = $("#upload-area div.upload-progress-wrap.is-success").length;
+        if (cntUploads !== cntSuccesss) {
+            $("body").addClass("has-change");
+        } else {
+            $("body").removeClass("has-change");
+        }
+    }
 
     $page.videoUpload = function (fileObj, eKey) {
 
@@ -83,7 +92,7 @@
 
         formData.append('AWSAccessKeyId', tmpS3attr.id);
         formData.append('key', upFileName);
-        formData.append('acl', 'public-read');
+        formData.append('acl', 'private');
         formData.append('policy', tmpS3attr.policy);
         formData.append('signature', tmpS3attr.signature);
         formData.append('content-type', "video");
@@ -112,8 +121,10 @@
             $(thisObj).addClass("is-success");
             $(thisObj).data("s3filename", s3FileName);
             $page.createEpisodeProgram(thisObj);
+            $page.isUploading();
         };
         xhr.send(formData);
+        $page.isUploading();
     };
 
     // NOTE: page entry point (keep at the bottom of this file)
@@ -166,7 +177,7 @@
                     'prefix': 'up-video-' + cms.global.MSO + '-' + id + '-',
                     'type': 'video',
                     'size': 31267400,
-                    'acl': 'public-read',
+                    'acl': 'private',
                     'mso': cms.global.MSO
                 };
 
@@ -176,9 +187,7 @@
                     $("#upload-box").removeClass("hide");
                 });
 
-
                 $('#overlay-s').fadeOut();
-
             });
         }
     };
