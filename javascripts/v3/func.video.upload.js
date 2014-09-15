@@ -109,7 +109,7 @@
             }
         }
         xhr.onload = function() {
-            $(thisObj).find("div.upload_cancel").addClass("hide");
+            $(thisObj).addClass("is-success");
             $(thisObj).data("s3filename", s3FileName);
             $page.createEpisodeProgram(thisObj);
         };
@@ -146,6 +146,8 @@
             $('.langkeyH').each(function() {
                 $(this).html(nn._([cms.global.PAGE_ID, 'content-area', $(this).data('langkey')]));
             });
+
+            $("a.btn-backEpisode").attr("href", "episode-list.html?id=" + id);
 
             // cms.global.USER_DATA.id
             nn.api('GET', cms.reapi('/api/channels/{channelId}', {

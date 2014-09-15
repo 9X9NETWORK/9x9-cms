@@ -10,11 +10,12 @@ $(function () {
 
     $(document).on('click', '.upload_cancel', function () {
         var thisUpload = $(this).parent();
-
-        if (thisUpload.hasClass("del-upload")) {
-            thisUpload.removeClass("del-upload");
-        } else {
-            thisUpload.addClass("del-upload");
+        if (!thisUpload.hasClass("is-success")) {
+            if (thisUpload.hasClass("del-upload")) {
+                thisUpload.removeClass("del-upload");
+            } else {
+                thisUpload.addClass("del-upload");
+            }
         }
     });
 
