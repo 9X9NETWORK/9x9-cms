@@ -92,6 +92,7 @@ $(function () {
     });
 
     $(document).on('click', '.ov-cancel', function () {
+        $("#edit-Episode-Info").empty();
         $.unblockUI();
     });
 
