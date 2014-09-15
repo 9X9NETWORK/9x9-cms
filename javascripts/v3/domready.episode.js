@@ -69,7 +69,8 @@ $(function () {
         }
 
         if(isFormCheck){
-
+            $.unblockUI();
+            $common.showSavingOverlay();
             nn.api('PUT', cms.reapi('/api/episodes/{episodesId}', {
                 episodesId: epId
             }), inputInfoEp, function (epObj) {
@@ -83,7 +84,7 @@ $(function () {
                     epObj.seq = $(epItemObj).find("div.seqNumber").text();
                     epLists.push(epObj);
                     $(epItemObj).replaceWith($('#episode-list-tmpl-item').tmpl(epLists));
-                    $.unblockUI();
+                    $('#overlay-s').fadeOut();
                 });
             });
 

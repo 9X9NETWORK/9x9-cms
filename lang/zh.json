@@ -751,6 +751,19 @@
             "Sync time": "同步時間"
         },
         "episode-list": {
+            "Edit episode infomation": "劇集資訊編輯",
+            "Upload image": "上傳圖片",
+            "Episode title...": "劇集名稱...",
+            "Desscription...": "簡介...",
+            "Publish status": "發佈狀態",
+            "Darft": "草稿",
+            "Publish": "發佈",
+            "Close": "關閉",
+            "Save": "儲存",
+            "Create a New Episode": "策展新劇集",
+            "By upload video": "從上傳影片",
+            "By curation": "從策展編輯",
+
             "You don't have any episodes yet": "您尚無任何劇集",
             "Click on <span>Favorite</span> button when watching programs to collect more episodes": "觀看節目時，點 <span>Favorite</span> 將劇集收藏到我的最愛頻道。",
             "Edit": "編輯",

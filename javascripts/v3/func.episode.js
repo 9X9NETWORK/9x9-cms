@@ -23,17 +23,15 @@
             tmpS3attr = $page.s3Info.s3attr,
             upFileName = $page.s3Info.parameter.prefix + filenamePreFix + ".jpg",
             s3Url = "http://" + tmpS3attr.bucket + ".s3.amazonaws.com/",
-            s3FileName = s3Url + upFileName;
+            s3FileName = s3Url + upFileName,
+            procBody = $("#edit-Episode-Info").find("div.progress"),
+            procBar = procBody.find("div.progress-bar"),
+            procBarText = procBody.find("span.progress-bar-text");
 
 
-        // $('#upload-element-tmpl').tmpl({
-        //     tmpId: filenamePreFix,
-        //     tmpFileName: fileObj.name
-        // }, null).appendTo('#upload-area');
-
-        // var thisObj = $("#up_" + filenamePreFix),
-        //     tmpProgress = $(thisObj).find("div.progress-bar"),
-        //     tmpProgressText = $(thisObj).find("span.progress-bar-text");
+        procBar.css("width", "0%");
+        procBarText.text("0%");
+        procBody.removeClass("hide");
 
         formData.append('AWSAccessKeyId', tmpS3attr.id);
         formData.append('key', upFileName);
@@ -51,23 +49,20 @@
         xhr.upload.onprogress = function (event) {
             if (event.lengthComputable) {
                 var complete = (event.loaded / event.total * 100 | 0);
-                // tmpProgress.css("width", complete + "%")
-                // tmpProgressText.text(" " + complete + "% ")
-
-                // if (thisObj.hasClass("del-upload")) {
-                //     xhr.abort();
-                //     thisObj.remove();
-                // }
+                procBar.css("width", complete + "%")
+                procBarText.text(" " + complete + "% ")
             }
         }
         xhr.onload = function() {
-            // $(thisObj).find("div.upload_cancel").addClass("hide");
-            // $(thisObj).data("s3filename", s3FileName);
             $("#epImage").attr("src", s3FileName);
-            nn.log("upload s3.file =======" + s3FileName);
+            $("#upload-box").find("span").removeClass("hide");
+            procBody.addClass("hide");
+            procBar.css("width", "0%");
+            procBarText.text("0%");
         };
 
-        $("#epImage").attr("src", loadingImg);
+        $("#epImage").attr("src", "");
+        $("#upload-box").find("span").addClass("hide");
         xhr.send(formData);
     };
 
