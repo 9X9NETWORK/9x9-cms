@@ -728,6 +728,16 @@
             "If users press OK or Enter, the mobile notification will be send immediately.": "當使用者按下OK或Enter時，通知會即時送出。"
         }
     },
+    "video-upload": {
+        "html-title": {
+            "FLIPr.tv - Video upload": "FLIPr.tv - 影片上傳"
+        },
+        "content-area": {
+            "The uploaded video will be import to an episode automatically.": "上傳的影片將會自動匯入一個劌集。",
+            "&gt; Create new episode &gt; Upload a video": "&gt; 策展新劇集 &gt; 上傳影片",
+            "Choose videos to upload": "選擇上傳影片"
+        }
+    },
     "episode-list": {
         "html-title": {
             "FLIPr.tv - Episode list": "FLIPr.tv - 劇集列表"

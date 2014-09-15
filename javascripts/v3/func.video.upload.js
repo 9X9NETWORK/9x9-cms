@@ -133,6 +133,20 @@
         } else {
             $common.showProcessingOverlay();
 
+            $('.langkeyT').each(function() {
+                $(this).data('langkey', $(this).text());
+            });
+            $('.langkeyH').each(function() {
+                $(this).data('langkey', $(this).html());
+            });
+
+            $('.langkeyT').each(function() {
+                $(this).text(nn._([cms.global.PAGE_ID, 'content-area', $(this).data('langkey')]));
+            });
+            $('.langkeyH').each(function() {
+                $(this).html(nn._([cms.global.PAGE_ID, 'content-area', $(this).data('langkey')]));
+            });
+
             // cms.global.USER_DATA.id
             nn.api('GET', cms.reapi('/api/channels/{channelId}', {
                 channelId: id
