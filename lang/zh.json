@@ -733,10 +733,11 @@
             "FLIPr.tv - Video upload": "FLIPr.tv - 影片上傳"
         },
         "content-area": {
-            "The uploaded video will be import to an episode automatically.": "上傳的影片將會自動匯入一個劌集。",
+            "The uploaded video will be import to an episode automatically.": "每個上傳後的影片，將會各自匯入成單一劇集。",
             "&gt; Create new episode &gt; Upload a video": "&gt; 策展新劇集 &gt; 上傳影片",
             "Choose videos to upload": "選擇上傳影片",
-            "Done": "完成"
+            "Done": "完成",
+            "Your video is still upoading, all unfinished uploads data will be lost. Are you sure you want to cancel this upload?": "影片正在進行上傳，未完成上傳的資料將會遺失。妳確定要離開頁面？"
         }
     },
     "episode-list": {
@@ -762,7 +763,7 @@
             "Sync time": "同步時間"
         },
         "episode-list": {
-            "Edit episode infomation": "劇集資訊編輯",
+            "Edit episode infomation": "劇集編輯",
             "Upload image": "上傳圖片",
             "Episode title...": "劇集名稱...",
             "Desscription...": "簡介...",
@@ -772,8 +773,9 @@
             "Close": "關閉",
             "Save": "儲存",
             "Create a New Episode": "策展新劇集",
-            "By upload video": "從上傳影片",
-            "By curation": "從策展編輯",
+            "By upload video": "上傳影片",
+            "By curation": "策展編輯",
+            "Please fill in all required fields.": "請輸入必填項目。",
 
             "You don't have any episodes yet": "您尚無任何劇集",
             "Click on <span>Favorite</span> button when watching programs to collect more episodes": "觀看節目時，點 <span>Favorite</span> 將劇集收藏到我的最愛頻道。",
