@@ -513,6 +513,12 @@
             "YouTube sync programs": "YouTube同步節目",
             "Live programs": "直播節目"
         },
+        "episode-list": {
+            "Close": "關閉",
+            "Create a New Episode": "策展新劇集",
+            "By upload video": "上傳影片",
+            "By curation": "策展編輯"
+        },
         "channel-list": {
             "Get URL": "網址",
             "Brand": "品牌",

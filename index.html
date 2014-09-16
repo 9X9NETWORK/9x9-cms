@@ -496,11 +496,11 @@
     <div class="overlay-h316-left"></div>
     <div class="overlay-h316-center">
         <p class="overlay-button-close ov-cancel"></p>
-        <h2 class="overlay-title">Create a New Episode</h2>
+        <h2 class="overlay-title">${nn._([cms.global.PAGE_ID, 'episode-list', 'Create a New Episode'])}</h2>
         <div id="func-upvideo" data-meta="${oid}" class="btn-large btn-create">
             <div class="left"></div>
             <div class="center">    
-                <p>By upload video </p> 
+                <p>${nn._([cms.global.PAGE_ID, 'episode-list', 'By upload video'])}</p> 
                 <img src="images/icon-upload.png" alt="">               
             </div>
             <div class="right"></div>
@@ -508,7 +508,7 @@
         <div id="func-episode" data-meta="${oid}" class="btn-large btn-create">
             <div class="left"></div>
             <div class="center">
-                <p>By curation</p>    
+                <p>${nn._([cms.global.PAGE_ID, 'episode-list', 'By curation'])}</p>    
                 <img src="images/icon-pencel.png" alt="">                   
             </div>
             <div class="right"></div>
@@ -517,7 +517,7 @@
         <div class="overlay-button-holder">
             <div class="btn-gray ov-cancel">
                 <p class="left"></p>
-                <p  class="center langkey">Close</p>
+                <p  class="center langkey">${nn._([cms.global.PAGE_ID, 'episode-list', 'Close'])}</p>
                 <p class="right"></p>
             </div>
         </div>
