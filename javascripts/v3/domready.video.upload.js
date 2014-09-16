@@ -3,7 +3,8 @@
 
 $(function () {
     'use strict';
-    var $page = cms['video-upload'];
+    var $page = cms['video-upload'],
+        $common = cms.common;
 
 
     $('#content-main-wrap').perfectScrollbar({marginTop: 30, marginBottom: 60});
@@ -57,15 +58,10 @@ $(function () {
         }
     }
     window.onbeforeunload = confirmExit;
-    $('body').removeClass('has-change');
-    $(document).on('click', '#episode-list a.edit', function (e) {
-        if ($('body').hasClass('in-reorder')) {
-            // in reorder desable function
-            return false;
-        }
-    });
 
-    $(document).on('click', '#header #logo, #header a, #studio-nav a, #content-nav a, #footer a, #title-func .curate', function (e) {
+    $('body').removeClass('has-change');
+
+    $(document).on('click', '.btn-backEpisode, #header #logo, #header a, #studio-nav a, #content-nav a, #footer a, #title-func .curate', function (e) {
         if ($('body').hasClass('has-change')) {
             if (e && $(e.currentTarget).attr('href')) {
                 $('body').data('leaveUrl', $(e.currentTarget).attr('href'));
@@ -73,7 +69,12 @@ $(function () {
             if (e && $(e.currentTarget).attr('id')) {
                 $('body').data('leaveId', $(e.currentTarget).attr('id'));
             }
-            $common.showUnsaveOverlay();
+
+            $('#unsave-prompt p.content').text(nn._(['overlay', 'prompt', 'Your video is still upoading, all unfinished uploads data will be lost. Are you sure you want to cancel this upload?']));
+            $.blockUI.defaults.overlayCSS.opacity = '0.9';
+            $.blockUI({
+                message: $("#unsave-prompt")
+            });
             return false;
         }
     });
@@ -88,7 +89,6 @@ $(function () {
         }
         return false;
     });
-
 
     // NOTE: Keep Window Resize Event at the bottom of this file
     $(window).resize(function () {

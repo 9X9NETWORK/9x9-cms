@@ -39,6 +39,7 @@
             "You have reached the maximum amount of 50 videos.": "您加入的影片已達50個上限。"
         },
         "prompt": {
+            "Your video is still upoading, all unfinished uploads data will be lost. Are you sure you want to cancel this upload?": "影片正在進行上傳，未完成上傳的資料將會遺失。妳確定要離開頁面？",
             "Are you sure you want to delete this program? All data will be removed permanently.": "所有資料將永久刪除，確定刪除此節目？",
             "Are you sure you want to delete this episode?": "確定刪除此劇集？",
             "Are you sure you want to delete this title?": "確定刪除此字卡？",
