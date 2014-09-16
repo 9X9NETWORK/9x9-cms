@@ -588,48 +588,51 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   float: left;
   position: relative;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  min-height: 97px;
+  max-height: 165px;
+  overflow: hidden;
 }
-/* line 467, ../sass/cms-component.sass */
+/* line 470, ../sass/cms-component.sass */
 .edit-episode-infomation .thumb-wrap:hover .thumb-hover-wrap {
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
 }
-/* line 471, ../sass/cms-component.sass */
+/* line 474, ../sass/cms-component.sass */
 .edit-episode-infomation .img-wrap {
   background-color: #fff;
   width: 100%;
   padding: 5px;
   box-sizing: border-box;
 }
-/* line 476, ../sass/cms-component.sass */
+/* line 479, ../sass/cms-component.sass */
 .edit-episode-infomation .img-wrap img {
   width: 100%;
 }
-/* line 478, ../sass/cms-component.sass */
+/* line 481, ../sass/cms-component.sass */
 .edit-episode-infomation .form-group {
   margin-bottom: 1em;
   padding-left: 0.5em;
 }
-/* line 481, ../sass/cms-component.sass */
+/* line 484, ../sass/cms-component.sass */
 .edit-episode-infomation .form-wrap {
   width: 70%;
   float: left;
 }
-/* line 484, ../sass/cms-component.sass */
+/* line 487, ../sass/cms-component.sass */
 .edit-episode-infomation .form-elements {
   margin-left: 1em;
   width: 100%;
 }
-/* line 487, ../sass/cms-component.sass */
+/* line 490, ../sass/cms-component.sass */
 .edit-episode-infomation .form-elements textarea, .edit-episode-infomation .form-elements input[type="text"] {
   width: 100%;
 }
-/* line 489, ../sass/cms-component.sass */
+/* line 492, ../sass/cms-component.sass */
 .edit-episode-infomation .form-label {
   padding-left: 1.2em;
   text-align: left;
 }
-/* line 492, ../sass/cms-component.sass */
+/* line 495, ../sass/cms-component.sass */
 .edit-episode-infomation .thumb-hover-wrap {
   font-size: 0.75rem;
   position: absolute;
@@ -641,8 +644,15 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   background: transparent url("../images/baenner-upload.gif") no-repeat 8px 6px;
   transition: all 0.5s ease;
 }
+/* line 505, ../sass/cms-component.sass */
+.edit-episode-infomation .notice {
+  color: #f00;
+  font-size: 13px;
+  margin-top: -15px;
+  margin-bottom: 5px;
+}
 
-/* line 503, ../sass/cms-component.sass */
+/* line 511, ../sass/cms-component.sass */
 .is-right {
   float: right;
 }

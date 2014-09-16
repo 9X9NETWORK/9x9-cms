@@ -48,6 +48,8 @@ $(function () {
             inputInfoEp = {},
             isFormCheck = false;
 
+        $("#epEditNotice").addClass("hide");
+
         if(status_params.isPublic === "true"){
             status_params.publishDate = "NOW";
             newIsPublic = true;
@@ -87,7 +89,8 @@ $(function () {
                     $('#overlay-s').fadeOut();
                 });
             });
-
+        }else{
+            $("#epEditNotice").removeClass("hide");
         }
     });
 

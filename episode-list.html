@@ -482,11 +482,7 @@
             </div>
         </div>
         <div class="overlay-button-holder">
-            <div class="btn-gray">
-                <p class="left"></p>
-                <p class="center ov-cancel">${nn._([cms.global.PAGE_ID, 'episode-list', 'Close'])}</p>
-                <p class="right"></p>
-            </div>
+            <div id="epEditNotice" class="notice hide">${nn._([cms.global.PAGE_ID, 'episode-list', 'Please fill in all required fields.'])}</div>
             <div class="btn-gray">
                 <p class="left"></p>
                 <p class="center btnEpSave" data-meta="${id}" data-program="${progId}" data-ispublic="${isPublic}">${nn._([cms.global.PAGE_ID, 'episode-list', 'Save'])}</p>
