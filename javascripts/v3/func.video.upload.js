@@ -15,6 +15,7 @@
         var thisObj = epObj,
             s3FileName = $(thisObj).data("s3filename"),
             epName = $(thisObj).find("p.video-name").text().replace(".mp4", ""),
+            tmbBtnCancel = $(thisObj).find("div.upload_cancel"),
             channelId = cms.global.USER_URL.param('cid');
 
 
@@ -39,11 +40,20 @@
                 uploader: cms.global.USER_DATA.id,
                 uploadDate: "NOW"
             }, function (pObj) {
+                var myLibrary = {
+                    createDate: "NOW",
+                    updateDate: "NOW",
+                    name: epName,
+                    contentType: 5,
+                    fileUrl: s3FileName,
+                    imageUrl: ""
+                };
 
                 nn.api('GET', cms.reapi('/api/thumbnails'), {
                     "url": s3FileName
                 }, function (thVideo) {
                     if(thVideo.length >0){
+                        myLibrary.imageUrl = thVideo[0].url;
                         nn.api('PUT', cms.reapi('/api/episodes/{episodesId}', {
                             episodesId: epObj.id
                         }), {
@@ -55,6 +65,13 @@
                     }else{
                         $(thisObj).data("done", "yes");
                     }
+                    nn.api('POST', cms.reapi('/api/mso/{msoId}/my_library', {
+                        msoId: cms.global.MSO
+                    }), myLibrary, function (LibObj) {
+                        tmbBtnCancel.removeClass("hide");
+                        $(thisObj).addClass("is-success");
+                        $page.isUploading();
+                    });
                 });
             });
         });
@@ -88,6 +105,7 @@
         var thisObj = $("#up_" + filenamePreFix),
             tmpProgress = $(thisObj).find("div.progress-bar"),
             tmpProgressText = $(thisObj).find("span.progress-bar-text"),
+            tmpBtnCancel = $(thisObj).find("div.upload_cancel"),
             formData = new FormData();
 
         formData.append('AWSAccessKeyId', tmpS3attr.id);
@@ -118,10 +136,10 @@
             }
         }
         xhr.onload = function() {
-            $(thisObj).addClass("is-success");
+            tmpBtnCancel.addClass("hide");
             $(thisObj).data("s3filename", s3FileName);
             $page.createEpisodeProgram(thisObj);
-            $page.isUploading();
+            // $page.isUploading();
         };
         xhr.send(formData);
         $page.isUploading();
