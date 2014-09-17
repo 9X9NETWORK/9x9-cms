@@ -39,6 +39,7 @@
             "You have reached the maximum amount of 50 videos.": "您加入的影片已達50個上限。"
         },
         "prompt": {
+            "Your video is still upoading, all unfinished uploads data will be lost. Are you sure you want to cancel this upload?": "影片正在進行上傳，未完成上傳的資料將會遺失。妳確定要離開頁面？",
             "Are you sure you want to delete this program? All data will be removed permanently.": "所有資料將永久刪除，確定刪除此節目？",
             "Are you sure you want to delete this episode?": "確定刪除此劇集？",
             "Are you sure you want to delete this title?": "確定刪除此字卡？",
@@ -513,6 +514,12 @@
             "YouTube sync programs": "YouTube同步節目",
             "Live programs": "直播節目"
         },
+        "episode-list": {
+            "Close": "關閉",
+            "Create a New Episode": "策展新劇集",
+            "By upload video": "上傳影片",
+            "By curation": "策展編輯"
+        },
         "channel-list": {
             "Get URL": "網址",
             "Brand": "品牌",
@@ -728,6 +735,18 @@
             "If users press OK or Enter, the mobile notification will be send immediately.": "當使用者按下OK或Enter時，通知會即時送出。"
         }
     },
+    "video-upload": {
+        "html-title": {
+            "FLIPr.tv - Video upload": "FLIPr.tv - 影片上傳"
+        },
+        "content-area": {
+            "The uploaded video will be import to an episode automatically.": "每個上傳後的影片，將會各自匯入成單一劇集。",
+            "&gt; Create new episode &gt; Upload a video": "&gt; 策展新劇集 &gt; 上傳影片",
+            "Choose videos to upload": "選擇上傳影片",
+            "Done": "完成",
+            "Your video is still upoading, all unfinished uploads data will be lost. Are you sure you want to cancel this upload?": "影片正在進行上傳，未完成上傳的資料將會遺失。妳確定要離開頁面？"
+        }
+    },
     "episode-list": {
         "html-title": {
             "FLIPr.tv - Episode list": "FLIPr.tv - 劇集列表"
@@ -751,6 +770,20 @@
             "Sync time": "同步時間"
         },
         "episode-list": {
+            "Edit episode infomation": "劇集編輯",
+            "Upload image": "上傳圖片",
+            "Episode title...": "劇集名稱...",
+            "Desscription...": "簡介...",
+            "Publish status": "發佈狀態",
+            "Darft": "草稿",
+            "Publish": "發佈",
+            "Close": "關閉",
+            "Save": "儲存",
+            "Create a New Episode": "策展新劇集",
+            "By upload video": "上傳影片",
+            "By curation": "策展編輯",
+            "Please fill in all required fields.": "請輸入必填項目。",
+
             "You don't have any episodes yet": "您尚無任何劇集",
             "Click on <span>Favorite</span> button when watching programs to collect more episodes": "觀看節目時，點 <span>Favorite</span> 將劇集收藏到我的最愛頻道。",
             "Edit": "編輯",
