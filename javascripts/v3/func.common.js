@@ -4,17 +4,43 @@
 (function ($common) {
     'use strict';
 
+    $common.fileSizeUnit = function (dg, inNum) {
+        var dgLists = ["KB", "MB", "GB", "TB"],
+            retNum = inNum / 1000 | 0,
+            retNumRound = Math.round(inNum / 10) / 100,
+            retValue = "";
+
+        if (retNum > 999) {
+            dg++;
+            retValue = $common.fileSizeUnit(dg, retNum);
+        } else {
+            if (dg < 1) {
+                retValue = retNum + " " + dgLists[dg];
+            } else {
+                retValue = retNumRound + " " + dgLists[dg];
+            }
+
+        }
+        return retValue;
+    };
+
     $common.privParser = function (inPriv) {
         var countPriv = inPriv.length,
             strCMS = "",
             strPCS = "",
             strAutoOn = "",
+            strVideoAuth = "",
             retValue = {
                 isCMS: false,
                 isYoutuber: false,
                 isPCS: false,
-                isAutoOn: false
+                isAutoOn: false,
+                isVideoAuth: false
             };
+
+        if (countPriv >= 8) {
+            strVideoAuth = inPriv.substr(7, 1);
+        }
 
         if (countPriv > 5) {
             strCMS = inPriv.substr(3, 3);
@@ -40,6 +66,10 @@
 
         if ("1" === strAutoOn) {
             retValue.isAutoOn = true;
+        }
+
+        if ("1" === strVideoAuth) {
+            retValue.isVideoAuth = true;
         }
 
         return retValue;
