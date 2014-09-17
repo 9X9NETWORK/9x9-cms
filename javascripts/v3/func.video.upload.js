@@ -23,7 +23,7 @@
             channelId: channelId
         }), {
             duration: 0,
-            isPublic: true,
+            isPublic: false,
             contentType: 5,
             name: epName
         }, function (epObj) {
@@ -194,7 +194,7 @@
                 $page.s3Info.parameter = {
                     'prefix': 'up-video-' + cms.global.MSO + '-' + id + '-',
                     'type': 'video',
-                    'size': 31267400,
+                    'size': 999999000,
                     'acl': 'private',
                     'mso': cms.global.MSO
                 };
