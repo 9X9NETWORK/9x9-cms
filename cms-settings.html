@@ -246,6 +246,25 @@
             </div>
         </div>
     </div>
+    <div class="fminput clearfix">
+        <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Permission'])}<br /><br /><br /></label>
+        <div class="fmfield">
+            <p  >
+            {{if cms.global.USER_PRIV.isVideoAuth}}
+                Viceo upload <br />
+            {{/if}}
+            {{if cms.global.USER_PRIV.isAutoOn}}
+                Auto On <br />
+            {{/if}}
+            {{if cms.global.USER_PRIV.isPCS}}
+                PCS <br />
+            {{/if}}
+            {{if cms.global.USER_PRIV.isYoutuber}}
+                Youtuber <br />
+            {{/if}}
+            </p>
+        </div>
+    </div>
     <div class="form-btn">
         <div class="form-btn-wrap">
             <p class="notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please fill in all required fields.'])}</p>
