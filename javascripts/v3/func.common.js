@@ -125,7 +125,8 @@
             $("#ytUrlLive").attr("name", "sourceUrl");
             retValue.ytType = 3;
             retValue.ytUrlFormat = inUrl;
-            retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").split("/").pop() + "/getValueOf/id?callback=?";
+            // retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").split("/").pop() + "/getValueOf/id?callback=?";
+            retValue.ytUrlApi = "/api/ustream";
         }
 
         return retValue;
