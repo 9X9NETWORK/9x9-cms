@@ -163,60 +163,56 @@ $(function () {
             $("#intro").val("");
             $("#name").val("");
 
-            $.getJSON(ytUrlParse.ytUrlApi, {
-                format: "json"
-            })
-                .done(function (data) {
-                    if (data > 0) {
-                        var retiveUrl = "https://api.ustream.tv/channels/" + data + ".json";
-                        $.getJSON(retiveUrl, {
-                            format: "json"
+            nn.api('GET', cms.reapi('/api/ustream'), {
+                url: thisUrl
+            }, function (ursreamObj) {
+                var tmpId = 0;
+                if (ursreamObj.length > 0) {
+                    tmpId = ursreamObj[0].id;
+                    var retiveUrl = "https://api.ustream.tv/channels/" + tmpId + ".json";
+                    $.getJSON(retiveUrl, {
+                        format: "json"
+                    })
+                        .done(function (datas) {
+
+                            var ytTitle = "",
+                                ytDesc = "",
+                                ytImg = "images/ch_default.png";
+
+                            ytTitle = datas.channel.title;
+                            ytDesc = datas.channel.description;
+
+                            if (undefined !== datas.channel.owner.picture) {
+                                ytImg = datas.channel.owner.picture;
+                            }
+                            cms.global.vYoutubeLiveIn.fileUrl = datas.channel.stream.hls; // 
+                            cms.global.vYoutubeLiveIn.imageUrl = datas.channel.thumbnail.live; // 
+                            cms.global.vYoutubeLiveIn.name = ytTitle; //
+                            cms.global.vYoutubeLiveIn.intro = ytDesc; // 
+
+                            cms.global.vYoutubeLiveIn.uploader = datas.channel.owner.username; // 
+                            cms.global.vYoutubeLiveIn.uploadDate = datas.channel.last_broadcast_at; // 
+                            cms.global.vYoutubeLiveIn.ytId = datas.channel.url; //
+
+                            if ("images/ch_default.png" !== ytImg) {
+                                $("#thumbnail-imageUrl").attr("src", ytImg);
+                                $('#imageUrl').val(ytImg);
+                            }
+                            $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
+                            $("#name").val(ytTitle);
+                            $("#intro").val(ytDesc);
+                            $("#ytUrlLive").data("status", "processing");
+
                         })
-                            .done(function (datas) {
-
-                                var ytTitle = "",
-                                    ytDesc = "",
-                                    ytImg = "images/ch_default.png";
-
-                                ytTitle = datas.channel.title;
-                                ytDesc = datas.channel.description;
-
-                                if (undefined !== datas.channel.owner.picture) {
-                                    ytImg = datas.channel.owner.picture;
-                                }
-                                cms.global.vYoutubeLiveIn.fileUrl = datas.channel.stream.hls; // 
-                                cms.global.vYoutubeLiveIn.imageUrl = datas.channel.thumbnail.live; // 
-                                cms.global.vYoutubeLiveIn.name = ytTitle; //
-                                cms.global.vYoutubeLiveIn.intro = ytDesc; // 
-
-                                cms.global.vYoutubeLiveIn.uploader = datas.channel.owner.username; // 
-                                cms.global.vYoutubeLiveIn.uploadDate = datas.channel.last_broadcast_at; // 
-                                cms.global.vYoutubeLiveIn.ytId = datas.channel.url; //
-
-                                if ("images/ch_default.png" !== ytImg) {
-                                    $("#thumbnail-imageUrl").attr("src", ytImg);
-                                    $('#imageUrl').val(ytImg);
-                                }
-                                $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
-                                $("#name").val(ytTitle);
-                                $("#intro").val(ytDesc);
-                                $("#ytUrlLive").data("status", "processing");
-
-                            })
-                            .fail(function() {
-                                $("#ytSyncMsg").html(strDefErr);
-                                $("#ytSyncMsg").removeClass("hide");
-                            });
-                    } else {
-                        $("#ytSyncMsg").html(strDefErr);
-                        $("#ytSyncMsg").removeClass("hide");
-                    }
-
-                }).fail(function() {
+                        .fail(function() {
+                            $("#ytSyncMsg").html(strDefErr);
+                            $("#ytSyncMsg").removeClass("hide");
+                        });
+                } else {
                     $("#ytSyncMsg").html(strDefErr);
                     $("#ytSyncMsg").removeClass("hide");
-                });
-
+                }
+            });
         } else {
             $("#ytSyncMsg").html(strDefErr);
             $("#ytSyncMsg").removeClass("hide");
