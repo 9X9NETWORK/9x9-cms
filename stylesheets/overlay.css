@@ -119,6 +119,7 @@
 
 /* Overlay with height 316px */
 .overlay-h316 {
+	width: 680px;
 }
 .overlay-h316-left {
     background: url(../images/overlay_bg_m_l.png) no-repeat;
