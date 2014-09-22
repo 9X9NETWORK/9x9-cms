@@ -225,12 +225,20 @@ $(function () {
     $(document).on('change', '#ytUrl', function () {
         var thisUrl = $(this).val().trim(),
             ytUrlParse = $common.ytUrlParser(thisUrl),
-            ytObj = {};
+            ytObj = {},
+            thisUrlInfo = $.url(thisUrl),
+            thisHost = thisUrlInfo.attr("host"),
+            pgType = "youtube";
         // console.log( "this is a cou****" + $(this).data("ctype") );
         $("#ytSyncMsg").html("");
         $("#ytSyncMsg").addClass("hide");
         $("#intro").val("");
         $("#name").val("");
+
+        if("vimeo.com" === thisHost){
+            ytUrlParse = $common.vimeoUrlParser(thisUrl);
+            pgType = "vimeo";
+        }
 
         if (ytUrlParse.ytType > 0) {
             ytObj = {
@@ -243,25 +251,51 @@ $(function () {
                         ytImg = "images/ch_default.png",
                         ytImgCount = 0;
 
-                    if (ytUrlParse.ytType === 1) {
-                        ytTitle = (res).entry.title.$t;
-                        ytDesc = (res).entry.summary.$t;
+                    if(pgType = "vimeo"){
+                        if (ytUrlParse.ytType === 1) {
+                            ytTitle = res.display_name;
+                            ytDesc = res.bio;
 
-                        if(undefined !== (res).entry.media$thumbnail.url){
-                            ytImg = (res).entry.media$thumbnail.url;
+                            if(undefined !== res.portrait_huge && res.portrait_huge !== ""){
+                                ytImg = res.portrait_huge;
+                            }else if(undefined !== res.portrait_large && res.portrait_large !== ""){
+                                ytImg = res.portrait_large;
+                            }else if(undefined !== res.portrait_medium && res.portrait_medium !== ""){
+                                ytImg = res.portrait_medium;
+                            }else if(undefined !== res.portrait_small && res.portrait_small !== ""){
+                                ytImg = res.portrait_small;
+                            }
+                           
+                        } else {
+                            ytTitle = res.name;
+                            ytDesc = res.description;
+
+                            if (res.logo !== "") {
+                                ytImg = res.logo;
+                            }
                         }
-                    } else {
-                        ytTitle = (res).feed.title.$t;
-                        ytDesc = (res).feed.subtitle.$t;
 
-                        if ((res).feed.media$group.media$thumbnail) {
-                            ytImgCount = (res).feed.media$group.media$thumbnail.length;
-                        }
+                    }else{
+                        if (ytUrlParse.ytType === 1) {
+                            ytTitle = (res).entry.title.$t;
+                            ytDesc = (res).entry.summary.$t;
 
-                        if (ytImgCount > 1) {
-                            ytImg = (res).feed.media$group.media$thumbnail[1].url;
-                        }else if(ytImgCount > 0){
-                            ytImg = (res).feed.media$group.media$thumbnail[0].url;
+                            if(undefined !== (res).entry.media$thumbnail.url){
+                                ytImg = (res).entry.media$thumbnail.url;
+                            }
+                        } else {
+                            ytTitle = (res).feed.title.$t;
+                            ytDesc = (res).feed.subtitle.$t;
+
+                            if ((res).feed.media$group.media$thumbnail) {
+                                ytImgCount = (res).feed.media$group.media$thumbnail.length;
+                            }
+
+                            if (ytImgCount > 1) {
+                                ytImg = (res).feed.media$group.media$thumbnail[1].url;
+                            }else if(ytImgCount > 0){
+                                ytImg = (res).feed.media$group.media$thumbnail[0].url;
+                            }
                         }
                     }
 
