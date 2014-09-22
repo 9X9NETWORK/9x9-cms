@@ -21,7 +21,7 @@
         'msg_body': "You don't have any FLIPr programs yet."
     }, {
         'msg_name': 'YoutubeSync',
-        'msg_body': "You don't have any YouTube sync programs yet."
+        'msg_body': "You don't have any Sync programs yet."
     }, {
         'msg_name': 'YoutubeLive',
         'msg_body': "You don't have any live programs yet."
@@ -85,9 +85,9 @@
     $page.failedYoutubeSyncPopUpMsg = function (inCount) {
         var tmpStr = "";
         if(inCount > 1){
-            tmpStr = "You have ? invalid YouTube sync programs.";
+            tmpStr = "You have ? invalid Sync programs.";
         } else {
-            tmpStr = "You have ? invalid YouTube sync program.";
+            tmpStr = "You have ? invalid Sync program.";
         }
         $.unblockUI();
         $('#system-notice .content').text(nn._([cms.global.PAGE_ID, 'overlay', tmpStr], [inCount]));

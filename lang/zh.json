@@ -511,7 +511,7 @@
             "Filtered by:": "分類條件:",
             "All": "全部",
             "FLIPr programs": "FLIPr節目",
-            "YouTube sync programs": "YouTube同步節目",
+            "Sync programs": "同步節目",
             "Live programs": "直播節目"
         },
         "episode-list": {
@@ -539,29 +539,29 @@
             "Create a new program": "創建節目",
             "Create your own <strong>personal and unique</strong> program.": "創建屬於你<strong>個人且獨特</strong>的節目。",
             "Add online videos into episode and start to <strong>curate your own program.</strong>": "在一集劇集中策展多個單元，開始<strong>策展你的專屬節目</strong>",
-            "Sync with <strong>YouTube channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
+            "Sync with <strong>channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
             "Sync": "立即同步",
             "You don't have any FLIPr programs yet.": "你尚無任何FLIPr節目",
-            "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目",
+            "You don't have any Sync programs yet.": "你尚無任何同步節目",
             "You don't have any live programs yet.": "你尚無任何直播節目",
             "Invalid auto-sync, please sync again and reset in settings.": "自動同步已失效，請再次同步並重新設定。",
-            "YouTube sync program": "YouTube 同步節目",
+            "Sync program": "同步節目",
             "Live program": "直播節目",
-            "Sort by YouTube order": "依 YouTube 順序排列",
-            "Sort by YouTube reverse order": "依 YouTube 反序排列",
+            "Sort by order": "依順序排列",
+            "Sort by reverse order": "依反序排列",
             "In my app": "已上架"
         },
         "overlay": {
             "Create a New Program": "建立一個新的節目",
             "Choose a type": "選一個類型",
-            "YouTube Sync<br />Program": "YouTube同步節目",
+            "Sync<br />Program": "同步節目",
             "FLIPr<br />Program": "FLIPr節目",
             "Live<br />Program": "直播節目",
             "Terms of use": "使用條款",
             "Agree": "同意",
             "Disagree": "不同意",
-            "You have ? invalid YouTube sync program.": "您有 {0} 個已失效的YouTube同步節目",
-            "You have ? invalid YouTube sync programs.": "您有 {0} 個已失效的YouTube同步節目"
+            "You have ? invalid Sync program.": "您有 {0} 個已失效的同步節目",
+            "You have ? invalid Sync programs.": "您有 {0} 個已失效的同步節目"
         }
     },
     "cms-settings": {
