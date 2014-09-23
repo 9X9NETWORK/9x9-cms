@@ -55,7 +55,7 @@ $(function () {
         var thisUrl = $(this).val().trim(),
             ytUrlParse = $common.ytUrlLiveParser(thisUrl),
             ytObj = {},
-            strDefErr = nn._([cms.global.PAGE_ID, 'setting-form', 'Invalid URL, please check the URL and try again.']);;
+            strDefErr = nn._([cms.global.PAGE_ID, 'setting-form', 'Invalid URL, please check the URL and try again.']);
 
         $("#ytSyncMsg").html("");
         $("#ytSyncMsg").addClass("hide");
@@ -315,7 +315,7 @@ $(function () {
 
             $.ajax(ytObj);
         } else {
-            $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
+            $("#ytSyncMsg").html(nn._([cms.global.PAGE_ID, 'setting-form', 'Invalid URL, please check the URL and try again.']));
             $("#ytSyncMsg").removeClass("hide");
         }
         // console.log( "this is a cou****" + $(this).val() );
