@@ -33,7 +33,7 @@ $(function () {
             $page.youtubeYyncOnOff("off");
         } else {
             var msgOverlay = $('#youtube-sync-alert-overlay');
-            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize videos from video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
             $(msgOverlay).find('#yes-sync').text(nn._(['overlay', 'button', 'Yes']));
             $(msgOverlay).find('#no-sync').text(nn._(['overlay', 'button', 'No']));
 
