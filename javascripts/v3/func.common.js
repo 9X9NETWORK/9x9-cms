@@ -152,7 +152,7 @@
             retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
             retValue.ytUrlApi = "https://vimeo.com/api/v2/channel/" + retValue.ytId + "/info.json";
 
-        } else if (arrPath.length === 2 && arrPath[1] !== "") {
+        } else if ((arrPath.length === 2 && arrPath[1] !== "") || (arrPath.length === 3 && "videos" === arrPath[2])) {
             retValue.ytType = 1;
             retValue.ytId = arrPath[1];
             retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
