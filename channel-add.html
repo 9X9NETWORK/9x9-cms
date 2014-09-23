@@ -160,7 +160,7 @@
     <div class="overlay-h172-center">
         <p class="btn-close"></p>
         <img src="images/icon_warning_lg.png" alt="">
-        <p class="vMsg">This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?</p>
+        <p class="vMsg">This program will automatically synchronize videos from video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?</p>
         <div class="overlay-button-holder">
             <div class="btn-gray">
                 <p class="left"></p>
@@ -183,7 +183,7 @@
 <div id="title-func" class="clearfix">
     <h2>${nn._([cms.global.PAGE_ID, 'title-func', 'My Programs'])} > 
     {{if cms.global.vIsYoutubeSync === true}}
-        {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new YouTube Sync Program'])}}
+        {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new Sync Program'])}}
     {{else cms.global.vIsYoutubeLive === true}}
         {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new Live Program'])}}
     {{else}}
@@ -199,13 +199,25 @@
     {{if cms.global.vIsYoutubeSync === true}}
     <div class="fminput clearfix">
         <label for="name">
-            <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Add Youtube channel or playlist URL'])}</label>
+            <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Add channel or playlist URL'])}</label>
         <div class="fmfield">
             <p class="text">
                 <span>
-                    <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="" class="text" data-ctype="ytsync" placeholder="https://www.youtube.com/user/ABC or http://www.youtube.com/playlist?list=ABC">
+                    <input type="text" name="sourceUrl" id="ytUrl" maxlength="100" value="" class="text" data-ctype="ytsync" >
                 </span>
             </p>
+            <div class="clear">
+                ${nn._([cms.global.PAGE_ID, 'setting-form', 'Please input YouTube or Vimeo URL.'])}
+                <table><tr>
+                    <td style="vertical-align:top">${nn._([cms.global.PAGE_ID, 'setting-form', 'URL sample'])} : </td>
+                    <td >
+                        &nbsp;https://www.youtube.com/channel/userid<br/>
+                        &nbsp;https://www.youtube.com/playlist?list=userid<br/>
+                        &nbsp;https://vimeo.com/channels/channelid<br/>
+                        &nbsp;https://vimeo.com/userid/videos<br/>
+                    </td>
+                </tr></table>
+            </div>
             <div class="clear">
                 <p id="ytSyncMsg" class="validation-failed hide"></p>
             </div>
@@ -324,10 +336,10 @@
         <div class="fmfield">
             <div >
             <label style="width:100%" for="st4">
-                <input type="radio" id="st4" name="sorting" value="4" checked/> ${nn._([cms.global.PAGE_ID, 'setting-form', 'YouTube playlist or YouTube channel order'])}
+                <input type="radio" id="st4" name="sorting" value="4" checked/> ${nn._([cms.global.PAGE_ID, 'setting-form', 'Playlist or channel order'])}
             </label><br />
             <label style="width:100%" for="st5">
-                <input type="radio" id="st5" name="sorting" value="5" /> ${nn._([cms.global.PAGE_ID, 'setting-form', 'YouTube playlist or YouTube channel reverse order'])}
+                <input type="radio" id="st5" name="sorting" value="5" /> ${nn._([cms.global.PAGE_ID, 'setting-form', 'Playlist or channel reverse order'])}
             </label>
             </div>
         </div>
@@ -372,11 +384,11 @@
     {{if cms.global.vIsYoutubeSync === true}}
     <div class="fminput clearfix">
         <input type="hidden" id="autoSync" name="autoSync" value="off" />
-        <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Auto sync with YouTube'])}}</label>
+        <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Auto sync with video source'])}}</label>
         <div class="fmfield">
             <div class="connected brand youtube-sync">
                 <div class="share-item first">
-                    <img alt="youtube" src="images/icon_youtube_sm.png">
+                    <img src="images/icon_sync_on.png">
                     <a id="youtube-sync-switch" href="#" class="switch-off">OFF</a> 
                     <a id="fb-reconnect" href="javascript:void(0);">
                         <img src="images/icon_question.png" alt="">
@@ -384,7 +396,7 @@
                             <img src="images/bg_tip_top.png" alt="" class="up-arrow">
                             <div class="overlay-h60-left"></div>
                             <div class="overlay-h60-center">
-                                {{html nn._([cms.global.PAGE_ID, 'setting-form', 'Program will auto-sync with YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Manually do so by clicking "Sync" in program list.'])}}
+                                {{html nn._([cms.global.PAGE_ID, 'setting-form', 'Program will auto-sync with video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Manually do so by clicking "Sync" in program list.'])}}
                             </div>
                             <div class="overlay-h60-right"></div>
                         </div>
@@ -401,7 +413,7 @@
         <div class="fmfield">
             <div class="connected add-store">
                 <div class="share-item first">
-                    <img alt="youtube" src="images/icon_program_store.png">
+                    <img src="images/icon_program_store.png">
                     <a id="add-store-switch" href="#" class="switch-off">No</a> 
                     <a id="fb-reconnect" href="javascript:void(0);">
                         <img src="images/icon_question.png" alt="">
