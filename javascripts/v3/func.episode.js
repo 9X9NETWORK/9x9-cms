@@ -13,6 +13,15 @@
     };
 
 
+    $page.importEp = function (inObj) {
+        // prepare data ep info, program list
+        var timeCheck = (new Date()).getTime() + (50 * 60 * 1000);
+
+        nn.log(timeCheck);
+
+        
+    };
+
     $page.imageUpload = function (fileObj, eKey) {
 
         var formData = new FormData(),

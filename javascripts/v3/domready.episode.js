@@ -9,6 +9,32 @@ $(function () {
         $common = cms.common;
 
 
+    $(document).on('change', '#importInText', function () {
+        var arrUrl = $common.playerUrlParser($(this).val());
+
+        if (!arrUrl.isAllow) {
+            $("#epImportNotice").removeClass("hide");
+            // errmsg
+        } else {
+            // success
+            $("#epImportNotice").addClass("hide");
+        }
+    });
+
+    $(document).on('click', '.btnImportEp', function () {
+        var hasDisabled = $(this).hasClass("disabled"),
+            arrUrl = $common.playerUrlParser($("#importInText").val()),
+            thisEpId = arrUrl.epId.replace("e", "") || 0;
+
+        $("#epImportNotice").addClass("hide");
+        if (arrUrl.isAllow && thisEpId >0) {
+            $page.importEp(thisEpId);
+        } else {
+            // errmsg
+            $("#epImportNotice").removeClass("hide");
+        }
+    });
+
     $(document).on('click', '#upload-box', function() {
         $("#upImage").trigger("click");
     });
