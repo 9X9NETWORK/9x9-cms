@@ -168,6 +168,10 @@ $(function () {
         var isVideoAuth = cms.global.USER_PRIV.isVideoAuth,
             objId = $(this).data("meta");
 
+        if (40347 === cms.global.USER_DATA.id) {
+            cms.global.USER_PRIV.isImportEpisode = true;
+        }
+
         if (isVideoAuth) {
             // flipr program && with isVideoAuth , can choose add yt episode or upload video
             $('#new-Episode-Option').empty();
