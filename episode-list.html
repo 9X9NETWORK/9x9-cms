@@ -403,6 +403,7 @@
             </div>
             <div class="right"></div>
         </div>
+        {{if true === cms.global.USER_PRIV.isImportEpisode}}
         <div id="func-fromepisode" data-meta="${oid}" class="btn-large btn-create">
             <div class="left"></div>
             <div class="center">
@@ -411,7 +412,7 @@
             </div>
             <div class="right"></div>
         </div>
-
+        {{/if}}
         <div class="overlay-button-holder">
             <div class="btn-gray ov-cancel">
                 <p class="left"></p>
@@ -421,7 +422,7 @@
         </div>
     </div>
 
-
+    {{if true === cms.global.USER_PRIV.isImportEpisode}}
     <div id="areaImport" class="overlay-h316-center hide">
         <p class="overlay-button-close ov-cancel"></p>
         <h2 class="overlay-title">${nn._([cms.global.PAGE_ID, 'episode-list', 'Create a New Episode'])}</h2>
@@ -443,6 +444,7 @@
             </div>
         </div>
     </div>
+    {{/if}}
 
     <div class="overlay-h316-right"></div>
 </script>
