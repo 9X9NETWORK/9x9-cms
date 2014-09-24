@@ -251,7 +251,7 @@ $(function () {
                         ytImg = "images/ch_default.png",
                         ytImgCount = 0;
 
-                    if(pgType = "vimeo"){
+                    if("vimeo" === pgType){
                         if (ytUrlParse.ytType === 1) {
                             ytTitle = res.display_name;
                             ytDesc = res.bio;
