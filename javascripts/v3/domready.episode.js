@@ -112,8 +112,16 @@ $(function () {
             case "func-episode":
                 nextUrl = "epcurate-curation.html?cid=" + objId;
                 break;
+
+            case "func-fromepisode":
+                nextUrl = "";
+                $("#areaOption").addClass("hide");
+                $("#areaImport").removeClass("hide");
+                break;
         }
-        location.href = nextUrl;
+        if("" !== nextUrl){
+            location.href = nextUrl;
+        }
     });
 
     $(document).on('click', '.btnEditEpisode', function () {
