@@ -1311,7 +1311,7 @@ $(function () {
                                     $page.buildPoiEventOverlayTmpl(poiPointEventData);
 
                                     // For poll event buttons
-                                    if (poiPointEventData.pollButtons.length > 2) {                                                    
+                                    if (poiPointEventData.pollButtons && poiPointEventData.pollButtons.length > 2) {                                                    
                                         $('.poll-button-del').addClass('deletable');
                                         if (poiPointEventData.pollButtons.length > 3) {
                                             $('#btn-add-poll-item').addClass('disabled');
