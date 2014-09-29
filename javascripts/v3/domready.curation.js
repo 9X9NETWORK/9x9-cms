@@ -475,7 +475,8 @@ $(function () {
         if ($('#epcurate-curation > .curation-content > ul.tabs > li.poi').hasClass('hide')) {
             $('#epcurate-curation ul.tabs li').removeClass('on');
             $('#epcurate-curation ul.tabs li a.cur-add').parent().parent().removeClass('last');
-            $('#epcurate-curation ul.tabs li a.cur-edit').parent().parent().removeClass('hide').addClass('last on');
+            $('#epcurate-curation ul.tabs li a.cur-edit').parent().parent().removeClass('hide last').addClass('on');
+            $('#epcurate-curation ul.tabs li a.cur-poi').parent().parent().removeClass('hide');
             $('#epcurate-curation .tab-content').addClass('hide');
             $('#cur-edit').removeClass('hide');
             $('#cur-edit .edit-time').removeClass('hide');
@@ -1310,7 +1311,7 @@ $(function () {
                                     $page.buildPoiEventOverlayTmpl(poiPointEventData);
 
                                     // For poll event buttons
-                                    if (poiPointEventData.pollButtons.length > 2) {                                                    
+                                    if (poiPointEventData.pollButtons && poiPointEventData.pollButtons.length > 2) {                                                    
                                         $('.poll-button-del').addClass('deletable');
                                         if (poiPointEventData.pollButtons.length > 3) {
                                             $('#btn-add-poll-item').addClass('disabled');

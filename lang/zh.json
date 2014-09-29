@@ -938,8 +938,8 @@
             "Add button": "新增按鈕",
             "Input button text": "輸入按鈕文字",
             "Hyper link": "連結網址",
-            "Input FLIPr program or episode URL": "輸入FLIPr節目或劇集網址",
-            "Invalid FLIPr URL, please try again.": "FLIPr網址設定有誤，請重試。",
+            "Input URL": "輸入網址",
+            "Invalid URL, please try again.": "網址設定有誤，請重試。",
             "Mobile Notification and Time": "行動裝置通知與時間",
             "iOS": "iOS",
             "iOS-button": {
