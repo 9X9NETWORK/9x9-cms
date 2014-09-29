@@ -448,8 +448,8 @@
             "Terms of use": "Terms of use",
             "Agree": "Agree",
             "Disagree": "Disagree",
-            "You have ? invalid YouTube sync program.": "You have {0} invalid YouTube sync program.",
-            "You have ? invalid YouTube sync programs.": "You have {0} invalid YouTube sync programs."
+            "You have ? invalid sync program.": "You have {0} invalid sync program.",
+            "You have ? invalid sync programs.": "You have {0} invalid sync programs."
         }
     },
     "cms-settings": {
