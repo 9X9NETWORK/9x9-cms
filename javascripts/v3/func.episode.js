@@ -64,6 +64,8 @@
             nn.api('GET', cms.reapi('/api/episodes/{epId}/programs', {
                 epId: inObj
             }), null, function (programs) {
+                $("#new-Episode-Option").addClass("hide");
+                $common.showProcessingOverlay();
                 $page.createFromEpisode(episode, programs);
             });
         });        
