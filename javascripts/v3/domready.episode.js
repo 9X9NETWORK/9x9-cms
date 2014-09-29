@@ -9,6 +9,32 @@ $(function () {
         $common = cms.common;
 
 
+    $(document).on('change', '#importInText', function () {
+        var arrUrl = $common.playerUrlParser($(this).val());
+
+        if (!arrUrl.isAllow) {
+            $("#epImportNotice").removeClass("hide");
+            // errmsg
+        } else {
+            // success
+            $("#epImportNotice").addClass("hide");
+        }
+    });
+
+    $(document).on('click', '.btnImportEp', function () {
+        var hasDisabled = $(this).hasClass("disabled"),
+            arrUrl = $common.playerUrlParser($("#importInText").val()),
+            thisEpId = arrUrl.epId.replace("e", "") || 0;
+
+        $("#epImportNotice").addClass("hide");
+        if (arrUrl.isAllow && thisEpId >0) {
+            $page.importEp(thisEpId);
+        } else {
+            // errmsg
+            $("#epImportNotice").removeClass("hide");
+        }
+    });
+
     $(document).on('click', '#upload-box', function() {
         $("#upImage").trigger("click");
     });
@@ -112,8 +138,16 @@ $(function () {
             case "func-episode":
                 nextUrl = "epcurate-curation.html?cid=" + objId;
                 break;
+
+            case "func-fromepisode":
+                nextUrl = "";
+                $("#areaOption").addClass("hide");
+                $("#areaImport").removeClass("hide");
+                break;
         }
-        location.href = nextUrl;
+        if("" !== nextUrl){
+            location.href = nextUrl;
+        }
     });
 
     $(document).on('click', '.btnEditEpisode', function () {
@@ -133,6 +167,10 @@ $(function () {
     $(document).on('click', '.btnNewEpisode', function () {
         var isVideoAuth = cms.global.USER_PRIV.isVideoAuth,
             objId = $(this).data("meta");
+
+        if (40347 === cms.global.USER_DATA.id) {
+            cms.global.USER_PRIV.isImportEpisode = true;
+        }
 
         if (isVideoAuth) {
             // flipr program && with isVideoAuth , can choose add yt episode or upload video

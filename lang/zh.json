@@ -786,6 +786,9 @@
             "By upload video": "上傳影片",
             "By curation": "策展編輯",
             "Please fill in all required fields.": "請輸入必填項目。",
+            "Import episode": "匯入劇集",
+            "Episode URL": "劇集網址",
+            "Import": "匯入",
 
             "You don't have any episodes yet": "您尚無任何劇集",
             "Click on <span>Favorite</span> button when watching programs to collect more episodes": "觀看節目時，點 <span>Favorite</span> 將劇集收藏到我的最愛頻道。",
