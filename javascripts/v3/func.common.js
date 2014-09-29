@@ -133,6 +133,36 @@
         return retValue;
     };
 
+    $common.vimeoUrlParser = function (inUrl) {
+        // ytType = 0 : unknow, 1: user, 2: channel
+        // user https://vimeo.com/api/v2/adoramatv/info.json
+        // channel https://vimeo.com/api/v2/channel/worldhd/info.json
+        var inURL = $.url(inUrl),
+            ytUrlPattern = ["https://vimeo.com/", "https://vimeo.com/channels/"],
+            retValue = {
+                ytType: 0,
+                ytId: "",
+                ytUrlFormat: "",
+                ytUrlApi: ""
+            },
+            arrPath = inURL.attr("path").split("/");
+
+        if (arrPath.length === 3 && "channels" === arrPath[1]) {
+            retValue.ytType = 2;
+            retValue.ytId = arrPath[2];
+            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
+            retValue.ytUrlApi = "https://vimeo.com/api/v2/channel/" + retValue.ytId + "/info.json";
+
+        } else if ((arrPath.length === 2 && arrPath[1] !== "") || (arrPath.length === 3 && "videos" === arrPath[2])) {
+            retValue.ytType = 1;
+            retValue.ytId = arrPath[1];
+            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
+            retValue.ytUrlApi = "https://vimeo.com/api/v2/" + retValue.ytId + "/info.json";
+        }
+
+        return retValue;
+    };
+
     $common.ytUrlParser = function (inUrl) {
         // ytType = 0 : unknow, 1: user, 2: playlist
         var inURL = $.url(inUrl),
