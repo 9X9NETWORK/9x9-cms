@@ -35,7 +35,8 @@
                 isYoutuber: false,
                 isPCS: false,
                 isAutoOn: false,
-                isVideoAuth: false
+                isVideoAuth: false,
+                isImportEpisode: false
             };
 
         if (countPriv >= 8) {
