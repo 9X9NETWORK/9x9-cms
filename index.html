@@ -494,7 +494,8 @@
 <!-- new-Episode-Option-tmpl Begin -->
 <script id="new-Episode-Option-tmpl" type="text/x-jquery-tmpl">
     <div class="overlay-h316-left"></div>
-    <div class="overlay-h316-center">
+
+    <div id="areaOption" class="overlay-h316-center">
         <p class="overlay-button-close ov-cancel"></p>
         <h2 class="overlay-title">${nn._([cms.global.PAGE_ID, 'episode-list', 'Create a New Episode'])}</h2>
         <div id="func-upvideo" data-meta="${oid}" class="btn-large btn-create">
@@ -513,6 +514,16 @@
             </div>
             <div class="right"></div>
         </div>
+        {{if true === cms.global.USER_PRIV.isImportEpisode}}
+        <div id="func-fromepisode" data-meta="${oid}" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">
+                <p>${nn._([cms.global.PAGE_ID, 'episode-list', 'Import episode'])}</p>    
+                <img src="images/icon-pencel.png" alt="">                   
+            </div>
+            <div class="right"></div>
+        </div>
+        {{/if}}
 
         <div class="overlay-button-holder">
             <div class="btn-gray ov-cancel">
@@ -522,6 +533,31 @@
             </div>
         </div>
     </div>
+
+    {{if true === cms.global.USER_PRIV.isImportEpisode}}
+    <div id="areaImport" class="overlay-h316-center hide">
+        <p class="overlay-button-close ov-cancel"></p>
+        <h2 class="overlay-title">${nn._([cms.global.PAGE_ID, 'episode-list', 'Create a New Episode'])}</h2>
+
+        <div class="overlay-content">
+            <div class="form-wrap">
+                <br /><br /><br />
+                ${nn._([cms.global.PAGE_ID, 'episode-list', 'Episode URL'])} : &nbsp; <input id="importInText" type="text" placeholder="http://www.mars.cms/view/p35443/e995914" style="width: 68%; height:1.6rem; font-size: 1.1rem" />
+                <br /><br />
+                <div class="notice hide" id="epImportNotice" style="color: red">請輸入必填項目。</div>
+            </div>
+        </div>
+
+        <div class="overlay-button-holder">
+            <div class="btn-gray btnImportEp">
+                <p class="left"></p>
+                <p  class="center">${nn._([cms.global.PAGE_ID, 'episode-list', 'Import'])}</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
     <div class="overlay-h316-right"></div>
 </script>
 <!-- new-Episode-Option-tmpl End -->
