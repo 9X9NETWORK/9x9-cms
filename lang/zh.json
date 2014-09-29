@@ -518,6 +518,11 @@
             "Close": "關閉",
             "Create a New Episode": "策展新劇集",
             "By upload video": "上傳影片",
+
+            "Import episode": "匯入劇集",
+            "Episode URL": "劇集網址",
+            "Import": "匯入",
+
             "By curation": "策展編輯"
         },
         "channel-list": {
