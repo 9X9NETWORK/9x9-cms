@@ -4,6 +4,23 @@
 (function ($common) {
     'use strict';
 
+    $common.isFliprBlock = function () {
+        var hostLists = ["www.flipr.tv", "beagle.flipr.tv", "dev6.flipr.tv", "mars.cms"],
+            pageHost = cms.global.USER_URL.attr("host"),
+            retValue = false;
+
+        if ($.inArray(pageHost, hostLists) > -1) {
+            retValue = true;
+        }
+        return retValue;
+    };
+
+    $common.fliprBlockCheck = function () {
+        if ($common.isFliprBlock()) {
+            $(".fliprOptions").removeClass("hide");
+        }
+    };
+
     $common.fileSizeUnit = function (dg, inNum) {
         var dgLists = ["KB", "MB", "GB", "TB"],
             retNum = inNum / 1000 | 0,
@@ -903,9 +920,6 @@
             $('#studio-nav a, #studio-nav .langkey').each(function () {
                 $(this).html(nn._(['studio-nav', $(this).data('langkey')]));
             });
-            $('#footer span, #footer a').each(function () {
-                $(this).text(nn._(['footer', $(this).data('langkey')]));
-            });
             $('.setup-notice h4, .setup-notice h5, .setup-notice .content').each(function () {
                 $(this).html(nn._(['overlay', 'facebook', $(this).data('langkey')]));
             });
@@ -946,6 +960,7 @@
             $page.init({
                 init: true
             });
+            $common.fliprBlockCheck();
         }, 'json');
     };
 
