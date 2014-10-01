@@ -955,6 +955,7 @@
             $page.init({
                 init: true
             });
+            $common.fliprBlockCheck();
         }, 'json');
     };
 
