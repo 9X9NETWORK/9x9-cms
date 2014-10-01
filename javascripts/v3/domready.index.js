@@ -40,7 +40,7 @@ $(function () {
         $.unblockUI();
     });
 
-    $(document).on('click', '.btn-create', function () {
+    $(document).on('click', '#new-Episode-Option .btn-create', function () {
         var thisOption = $(this).attr("id"),
             objId = $(this).data("meta"),
             nextUrl = "index.html";
