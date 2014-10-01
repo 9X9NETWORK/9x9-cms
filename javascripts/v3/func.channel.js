@@ -694,7 +694,7 @@
             if ($('.connected input').length > 0) {
                 $('.connected input').uniform();
             }
-            $common.initFacebookJavaScriptSdk();
+            // $common.initFacebookJavaScriptSdk();
             // ON PURPOSE to wait api (async)
             $('#overlay-s').fadeOut(3000, function () {
                 $('#content-main-wrap').perfectScrollbar({marginBottom:63});
