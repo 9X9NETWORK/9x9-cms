@@ -4,6 +4,15 @@
 (function ($common) {
     'use strict';
 
+    $common.fliprBlockCheck = function () {
+        var hostLists = ["www.flipr.tv", "beagle.flipr.tv", "dev6.flipr.tv", "mars.cms"],
+            pageHost = cms.global.USER_URL.attr("host");
+
+        if ($.inArray(pageHost, hostLists) > -1) {
+            $(".fliprOptions").removeClass("hide");
+        }
+    };
+
     $common.fileSizeUnit = function (dg, inNum) {
         var dgLists = ["KB", "MB", "GB", "TB"],
             retNum = inNum / 1000 | 0,
