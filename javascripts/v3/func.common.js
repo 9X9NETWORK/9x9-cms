@@ -5,11 +5,9 @@
     'use strict';
 
     $common.isFliprBlock = function () {
-        var hostLists = ["www.flipr.tv", "beagle.flipr.tv", "dev6.flipr.tv", "mars.cms"],
-            pageHost = cms.global.USER_URL.attr("host"),
+        var bodyMSO = $("body").data("mso"),
             retValue = false;
-
-        if ($.inArray(pageHost, hostLists) > -1) {
+        if ("flipr" === bodyMSO) {
             retValue = true;
         }
         return retValue;
