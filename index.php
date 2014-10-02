@@ -19,6 +19,8 @@
 
             $content = str_replace('src="images/logo_flipr_pg.png"',
                                    'src="' . htmlspecialchars($mso['cmsLogo']) . '"', $content);
+            $content = str_replace('data-mso="flipr"',
+                                   'data-mso"' . htmlspecialchars($msoName) . '"', $content);
         }
     }
 
