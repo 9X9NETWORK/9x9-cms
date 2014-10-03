@@ -1717,7 +1717,6 @@
             // var episode, data, channel, programs;   // Not ideal, temp workaround.
             $('body').addClass('is_landing');
             getEpisode($('#id').val())
-                .then(getChannels)
                 .then(getChannel)
                 .then(getPrograms)
                 .then(setPrograms);
@@ -1725,6 +1724,8 @@
 
         function getEpisode(episodeId) {
             var deferred = $.Deferred();
+
+            $common.showProcessingOverlay();
 
             nn.api('GET', cms.reapi('/api/episodes/{episodeId}', {
                 episodeId: $('#id').val()
@@ -1755,29 +1756,15 @@
             return deferred.promise();
         }
 
-        function getChannel(data, episode) {
+        function getChannel(episode) {
             var deferred = $.Deferred();
 
-            var channelIds = [];
-
-            if (data.length > 0) {
-                $.each(data, function (i, list) {
-                    channelIds.push(list.id);
-                });
-            }
-
-            if (-1 === $.inArray(parseInt(episode.channelId, 10), channelIds)) {
-                $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
-                // return;
-                deferred.reject();
-            } else {
-                    nn.api('GET', cms.reapi('/api/channels/{channelId}', {
-                        channelId: episode.channelId
-                }), null, function (channel) {
-                    // channel = response;
-                    deferred.resolve(channel, episode);
-                });
-            }
+            nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                channelId: episode.channelId
+            }), null, function (channel) {
+                // channel = response;
+                deferred.resolve(channel, episode);
+            });
 
             return deferred.promise();
         }
@@ -1785,12 +1772,17 @@
         function getPrograms(channel, episode) {
             var deferred = $.Deferred();
 
-            if (channel.contentType === cms.config.YOUR_FAVORITE) {
+            if (channel.userIdStr !== cms.global.USER_DATA.idStr) {
+                $('#overlay-s').fadeOut();
+                $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
+                // return;
+                deferred.reject();
+            } else if (channel.contentType === cms.config.YOUR_FAVORITE) {
+                $('#overlay-s').fadeOut();
                 $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
                 // return;
                 deferred.reject();
             } else {
-                $common.showProcessingOverlay();
                 crumb = $.extend({}, crumb, episode);
                 $('#epcurate-info').remove();
                 $('#epcurate-info-tmpl').tmpl(crumb).prependTo('#epcurateForm');

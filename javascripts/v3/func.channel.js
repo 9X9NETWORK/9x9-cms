@@ -467,189 +467,179 @@
             cms.global.vIsYoutubeSync = false;
             cms.global.vIsYoutubeLive = false;
             if (id > 0 && !isNaN(id) && cms.global.USER_DATA.id) {
-                nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
-                    userId: cms.global.USER_DATA.id
-                }), null, function (data) {
-                    var channelIds = [];
-                    if (data.length > 0) {
-                        $.each(data, function (i, list) {
-                            channelIds.push(list.id);
-                        });
-                    }
-                    if (-1 === $.inArray(parseInt(id, 10), channelIds)) {
+                nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                    channelId: id
+                }), null, function (channel) {
+                    if (channel.userIdStr !== cms.global.USER_DATA.idStr) {
                         $common.showSystemErrorOverlayAndHookError('You are not authorized to edit this program.');
                         return;
                     }
-                    nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                    if (channel.contentType === cms.config.YOUR_FAVORITE) {
+                        $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
+                        return;
+                    }
+                    // youtube live channel check
+                    if (13 == channel.contentType) {
+                        cms.global.vIsYoutubeLive = true;
+                    } else if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                        // youtube sync channel check
+                        cms.global.vIsYoutubeSync = true;
+                    }
+
+                    $common.showProcessingOverlay();
+                    $('#func-nav ul').html('');
+                    $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
+                    $('#content-main').html('');
+                    $('#content-main-tmpl').tmpl(channel).appendTo('#content-main');
+
+                    $page.youtubeYyncOnOff(channel.autoSync);
+                    $page.storePoolOnOff("init");
+
+                    if (cms.global.vIsYoutubeLive) {
+                        var tmpSourceUrl = $common.ytUrlLiveParser(channel.sourceUrl);
+                        if (3 === tmpSourceUrl.ytType) {
+                            $("#ytUrlLive").val(channel.sourceUrl);
+                            $("#ytUrlLive").trigger("change");
+                        } else {
+                            $page.fetchLiveUrl(channel.id);
+                        }
+                    }
+
+                    if (cms.global.vIsYoutubeSync === true) {
+                        var ytUrlParse = $common.ytUrlParser(channel.sourceUrl),
+                            ytObj = {};
+                        if (ytUrlParse.ytType > 0) {
+                            ytObj = {
+                                url: ytUrlParse.ytUrlApi,
+                                dataType: "json",
+                                context: self,
+                                success: function(res) {
+                                    if (ytUrlParse.ytType === 1) {
+                                        $("#ytUrl").val((res).entry.link[0].href);
+                                    }
+                                }
+                            }
+                            $.ajax(ytObj);
+                        }
+                    }
+
+                    // sharing url
+                    nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
                         channelId: id
-                    }), null, function (channel) {
-                        if (channel.contentType === cms.config.YOUR_FAVORITE) {
-                            $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
-                            return;
-                        }
-                        // youtube live channel check
-                        if (13 == channel.contentType) {
-                            cms.global.vIsYoutubeLive = true;
-                        } else if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
-                            // youtube sync channel check
-                            cms.global.vIsYoutubeSync = true;
-                        }
-
-                        $common.showProcessingOverlay();
-                        $('#func-nav ul').html('');
-                        $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
-                        $('#content-main').html('');
-                        $('#content-main-tmpl').tmpl(channel).appendTo('#content-main');
-
-                        $page.youtubeYyncOnOff(channel.autoSync);
-                        $page.storePoolOnOff("init");
-
-                        if (cms.global.vIsYoutubeLive) {
-                            var tmpSourceUrl = $common.ytUrlLiveParser(channel.sourceUrl);
-                            if (3 === tmpSourceUrl.ytType) {
-                                $("#ytUrlLive").val(channel.sourceUrl);
-                                $("#ytUrlLive").trigger("change");
-                            } else {
-                                $page.fetchLiveUrl(channel.id);
-                            }
-                        }
-
-                        if (cms.global.vIsYoutubeSync === true) {
-                            var ytUrlParse = $common.ytUrlParser(channel.sourceUrl),
-                                ytObj = {};
-                            if (ytUrlParse.ytType > 0) {
-                                ytObj = {
-                                    url: ytUrlParse.ytUrlApi,
-                                    dataType: "json",
-                                    context: self,
-                                    success: function(res) {
-                                        if (ytUrlParse.ytType === 1) {
-                                            $("#ytUrl").val((res).entry.link[0].href);
-                                        }
-                                    }
-                                }
-                                $.ajax(ytObj);
-                            }
-                        }
-
-                        // sharing url
-                        nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
+                    }), null, function (cBrand) {
+                        $("#surl-text").text(cBrand.brand);
+                    }).then(function (ccBrand) {
+                        nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
                             channelId: id
-                        }), null, function (cBrand) {
-                            $("#surl-text").text(cBrand.brand);
-                        }).then(function (ccBrand) {
-                            nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
-                                channelId: id
-                            }), null, function (cBrands) {
-                                $('#surl-ul').html('');
-                                $('#surl-tmpl-item').tmpl(cBrands, {
-                                    selBrand: ccBrand.brand
-                                }).appendTo('#surl-ul');
-                            });
+                        }), null, function (cBrands) {
+                            $('#surl-ul').html('');
+                            $('#surl-tmpl-item').tmpl(cBrands, {
+                                selBrand: ccBrand.brand
+                            }).appendTo('#surl-ul');
                         });
+                    });
 
-                        $('#name').charCounter(20, {
-                            container: '#name-charcounter',
-                            format: '%1',
-                            delay: 0,
-                            clear: false,
-                            countDown: false
-                        });
-                        $('#intro').charCounter(200, {
-                            container: '#intro-charcounter',
-                            format: '%1',
-                            delay: 0,
-                            clear: true,
-                            countDown: false
-                        });
-                        if ($('#uploadThumbnail').length > 0) {
-                            $page.uploadImage();
+                    $('#name').charCounter(20, {
+                        container: '#name-charcounter',
+                        format: '%1',
+                        delay: 0,
+                        clear: false,
+                        countDown: false
+                    });
+                    $('#intro').charCounter(200, {
+                        container: '#intro-charcounter',
+                        format: '%1',
+                        delay: 0,
+                        clear: true,
+                        countDown: false
+                    });
+                    if ($('#uploadThumbnail').length > 0) {
+                        $page.uploadImage();
+                    }
+                    if ($('.connected input').length > 0) {
+                        $('.connected input').uniform();
+                    }
+                    $common.initFacebookJavaScriptSdk();
+                    $('#channel-name').data('width', $('#channel-name').width());
+                    // setup channel data
+                    if ('' !== $.trim(channel.imageUrl)) {
+                        $('#thumbnail-imageUrl').attr('src', channel.imageUrl + '?n=' + Math.random());
+                    }
+                    if ('' !== channel.lang && cms.config.LANG_MAP[channel.lang]) {
+                        $('#lang-select-txt').text(cms.config.LANG_MAP[channel.lang]);
+                    }
+                    if ('' !== channel.sphere && cms.config.SPHERE_MAP[channel.sphere]) {
+                        $('#sphere-select-txt').text(cms.config.SPHERE_MAP[channel.sphere]);
+                        $('.category').removeClass('disable').addClass('enable');
+                        var sphere = channel.sphere;
+                        if ('other' === sphere) {
+                            sphere = 'en';
                         }
-                        if ($('.connected input').length > 0) {
-                            $('.connected input').uniform();
-                        }
-                        $common.initFacebookJavaScriptSdk();
-                        $('#channel-name').data('width', $('#channel-name').width());
-                        // setup channel data
-                        if ('' !== $.trim(channel.imageUrl)) {
-                            $('#thumbnail-imageUrl').attr('src', channel.imageUrl + '?n=' + Math.random());
-                        }
-                        if ('' !== channel.lang && cms.config.LANG_MAP[channel.lang]) {
-                            $('#lang-select-txt').text(cms.config.LANG_MAP[channel.lang]);
-                        }
-                        if ('' !== channel.sphere && cms.config.SPHERE_MAP[channel.sphere]) {
-                            $('#sphere-select-txt').text(cms.config.SPHERE_MAP[channel.sphere]);
-                            $('.category').removeClass('disable').addClass('enable');
-                            var sphere = channel.sphere;
-                            if ('other' === sphere) {
-                                sphere = 'en';
-                            }
-                            nn.api('GET', cms.reapi('/api/categories'), {
-                                lang: sphere
-                            }, function (categories) {
-                                $('#browse-category').data('realCateCnt', categories.length);
-                                $.each(categories, function (i, list) {
-                                    cms.config.CATEGORY_MAP[list.id] = list.name;
-                                });
-                                var rowNum = ($(window).width() > 1356) ? 4 : 3,
-                                    modCatLen = categories.length % rowNum,
-                                    i = 0;
-                                if (modCatLen > 0) {
-                                    modCatLen = rowNum - modCatLen;
-                                    for (i = 0; i < modCatLen; i += 1) {
-                                        categories.push({
-                                            id: 0,
-                                            name: ''
-                                        });
-                                    }
-                                }
-                                $('#browse-category').html('');
-                                $('#category-list-tmpl-item').tmpl(categories, {
-                                    dataArrayIndex: function (item) {
-                                        return $.inArray(item, categories);
-                                    }
-                                }).appendTo('#browse-category');
-                                $('#browse-category li[data-meta=0]').addClass('none');
-                                if ('' !== channel.categoryId && cms.config.CATEGORY_MAP[channel.categoryId]) {
-                                    $('.tag-list').removeClass('hide');
-                                    $('#categoryId-select-txt').text(cms.config.CATEGORY_MAP[channel.categoryId]);
-                                    nn.api('GET', cms.reapi('/api/tags'), {
-                                        categoryId: channel.categoryId,
-                                        lang: sphere
-                                    }, function (tags) {
-                                        $('#tag-list').html('');
-                                        if (tags && tags.length > 0) {
-                                            $('.tag-list').removeClass('hide');
-                                            var currentTags = $('#tag').val();
-                                            currentTags = currentTags.split(',');
-                                            if (!currentTags) {
-                                                currentTags = [];
-                                            }
-                                            $('#tag-list-tmpl-item').tmpl({
-                                                tags: tags
-                                            }).appendTo('#tag-list');
-                                            if (currentTags.length > 0) {
-                                                $('#tag-list li span a').each(function () {
-                                                    if (-1 !== $.inArray($(this).text(), currentTags)) {
-                                                        $(this).parent().parent().addClass('on');
-                                                    }
-                                                });
-                                            }
-                                        } else {
-                                            $('.tag-list').addClass('hide');
-                                        }
+                        nn.api('GET', cms.reapi('/api/categories'), {
+                            lang: sphere
+                        }, function (categories) {
+                            $('#browse-category').data('realCateCnt', categories.length);
+                            $.each(categories, function (i, list) {
+                                cms.config.CATEGORY_MAP[list.id] = list.name;
+                            });
+                            var rowNum = ($(window).width() > 1356) ? 4 : 3,
+                                modCatLen = categories.length % rowNum,
+                                i = 0;
+                            if (modCatLen > 0) {
+                                modCatLen = rowNum - modCatLen;
+                                for (i = 0; i < modCatLen; i += 1) {
+                                    categories.push({
+                                        id: 0,
+                                        name: ''
                                     });
                                 }
-                            });
-                        }
-                        $page.truncateFormTitle();
-                        // ON PURPOSE to wait api (async)
-                        $('#overlay-s').fadeOut(5000, function () {
-                            $('#content-main-wrap').perfectScrollbar({marginBottom:63});
-                            $common.hideFbPageList();
-                            $('#settingForm .btn-save').removeClass('disable').addClass('enable');
-                            $page.handleButtonPosition();
+                            }
+                            $('#browse-category').html('');
+                            $('#category-list-tmpl-item').tmpl(categories, {
+                                dataArrayIndex: function (item) {
+                                    return $.inArray(item, categories);
+                                }
+                            }).appendTo('#browse-category');
+                            $('#browse-category li[data-meta=0]').addClass('none');
+                            if ('' !== channel.categoryId && cms.config.CATEGORY_MAP[channel.categoryId]) {
+                                $('.tag-list').removeClass('hide');
+                                $('#categoryId-select-txt').text(cms.config.CATEGORY_MAP[channel.categoryId]);
+                                nn.api('GET', cms.reapi('/api/tags'), {
+                                    categoryId: channel.categoryId,
+                                    lang: sphere
+                                }, function (tags) {
+                                    $('#tag-list').html('');
+                                    if (tags && tags.length > 0) {
+                                        $('.tag-list').removeClass('hide');
+                                        var currentTags = $('#tag').val();
+                                        currentTags = currentTags.split(',');
+                                        if (!currentTags) {
+                                            currentTags = [];
+                                        }
+                                        $('#tag-list-tmpl-item').tmpl({
+                                            tags: tags
+                                        }).appendTo('#tag-list');
+                                        if (currentTags.length > 0) {
+                                            $('#tag-list li span a').each(function () {
+                                                if (-1 !== $.inArray($(this).text(), currentTags)) {
+                                                    $(this).parent().parent().addClass('on');
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        $('.tag-list').addClass('hide');
+                                    }
+                                });
+                            }
                         });
+                    }
+                    $page.truncateFormTitle();
+                    // ON PURPOSE to wait api (async)
+                    $('#overlay-s').fadeOut(5000, function () {
+                        $('#content-main-wrap').perfectScrollbar({marginBottom:63});
+                        $common.hideFbPageList();
+                        $('#settingForm .btn-save').removeClass('disable').addClass('enable');
+                        $page.handleButtonPosition();
                     });
                 });
             } else {
