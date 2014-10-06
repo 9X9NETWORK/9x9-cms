@@ -209,7 +209,7 @@
             "Click the notification to go to": "點擊通知後的行為",
             "Run app": "開啟App",
             "Playback for a program or episode": "播放特定節目或劇集",
-            "Input FLIPr program or episode URL...": "輸入FLIPr節目或劇集連結...",
+            "Input Curated program or episode URL...": "輸入策展節目或劇集連結...",
             "Please fill in all required fields.": "請輸入必填項目",
             "Invalid URL, please try again.": "失效的連結，請重新輸入。",
             "Unsaved changes will be lost, are you sure want to leave?": "未儲存資料將遺失，確定離開？",
@@ -218,7 +218,7 @@
             "Cancel": "取消",
             "Notification history list (20 notifications displayed at the most.)": "已發送通知列表(顯示最近20筆):",
             "Input notification message...": "輸入通知內容...",
-            "Input FLIPr program or episode URL...": "輸入 FLIPr 節目或劇集網址..."
+            "Input Curated program or episode URL...": "輸入策展節目或劇集網址..."
         },
         "schedule-form":{
             "Schedule": "發送時間"
@@ -510,7 +510,7 @@
             "Create a new program": "創建節目",
             "Filtered by:": "分類條件:",
             "All": "全部",
-            "FLIPr programs": "FLIPr節目",
+            "Curated programs": "策展節目",
             "Sync programs": "同步節目",
             "Live programs": "直播節目"
         },
@@ -546,7 +546,7 @@
             "Add online videos into episode and start to <strong>curate your own program.</strong>": "在一集劇集中策展多個單元，開始<strong>策展你的專屬節目</strong>",
             "Sync with <strong>channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
             "Sync": "立即同步",
-            "You don't have any FLIPr programs yet.": "你尚無任何FLIPr節目",
+            "You don't have any Curated programs yet.": "你尚無任何策展節目",
             "You don't have any Sync programs yet.": "你尚無任何同步節目",
             "You don't have any live programs yet.": "你尚無任何直播節目",
             "Invalid auto-sync, please sync again and reset in settings.": "自動同步已失效，請再次同步並重新設定。",
@@ -560,7 +560,7 @@
             "Create a New Program": "建立一個新的節目",
             "Choose a type": "選一個類型",
             "Sync<br />Program": "同步節目",
-            "FLIPr<br />Program": "FLIPr節目",
+            "Curated<br />Program": "策展節目",
             "Live<br />Program": "直播節目",
             "Terms of use": "使用條款",
             "Agree": "同意",
@@ -621,7 +621,7 @@
         },
         "title-func": {
             "My Programs": "節目管理",
-            "Create a new FLIPr Program": "創建 FLIPr 節目",
+            "Create a new Curated Program": "創建策展節目",
             "Create a new Sync Program": "創建同步節目",
             "Create a new Live Program": "創建直播節目",
             "Settings": "節目設定",
