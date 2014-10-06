@@ -631,7 +631,6 @@
         	"Please input YouTube or Vimeo URL.": "請輸入 YouTube 或 Vimeo 連結。",
         	"URL sample": "範例連結",
             "Add channel or playlist URL": "輸入頻道或播放清單連結",
-            "Playlist or channel order": "播放清單或頻道順序排列",
             "Playlist or channel reverse order": "播放清單或頻道反序排列",
             "Auto sync with video source": "影片自動同步",
             "Program will auto-sync with video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上0點、8點、中午12點、下午2點、晚上6點、9點，與影片來源自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
