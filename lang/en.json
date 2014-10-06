@@ -444,7 +444,7 @@
             "Create a New Program": "Create a New Program",
             "Choose a type": "Choose a type",
             "YouTube Sync<br />Program": "YouTube Sync<br />Program",
-            "FLIPr<br />Program": "FLIPr<br />Program",
+            "Curated<br />Program": "Curated<br />Program",
             "Terms of use": "Terms of use",
             "Agree": "Agree",
             "Disagree": "Disagree",
@@ -503,7 +503,7 @@
         },
         "title-func": {
             "My Programs": "My Programs",
-            "Create a new FLIPr Program": "Create a new FLIPr Program",
+            "Create a new Curated Program": "Create a new Curated Program",
             "Create a new YouTube Sync Program": "Create a new YouTube Sync Program",
             "Settings": "Settings",
             "Required field": "Required field"
@@ -785,7 +785,7 @@
             "Button text": "Button text",
             "Input button text": "Input button text",
             "Hyper link": "Hyper link",
-            "Input FLIPr program or episode URL": "Input FLIPr program or episode URL",
+            "Input Curated program or episode URL": "Input Curated program or episode URL",
             "Invalid FLIPr URL, please try again.": "Invalid FLIPr URL, please try again.",
             "Mobile Notification and Time": "Mobile Notification and Time",
             "iOS": "iOS",
