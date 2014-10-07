@@ -334,6 +334,11 @@
                 $('#overlay-s').fadeOut();
             }
 
+            if(1 === $page.paging.currentPage && cntChannel !== $page.paging.cntItems && cntChannel !== $page.paging.pageLimit){
+                $page.paging.pageLimit = cntChannel;
+                $page.paging.cntPages = Math.ceil($page.paging.cntItems / $page.paging.pageLimit);
+            }
+
             if ($page.paging.cntPages === $page.paging.currentPage) {
                 // last page
                 // channel list sorting
