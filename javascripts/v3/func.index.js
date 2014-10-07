@@ -19,7 +19,7 @@
     $page.channelYouLiveAddUrl = "channel-add.html#ytlive";
     $page.channelEmptyMsg = [{
         'msg_name': '9x9',
-        'msg_body': "You don't have any FLIPr programs yet."
+        'msg_body': "You don't have any Curated programs yet."
     }, {
         'msg_name': 'YoutubeSync',
         'msg_body': "You don't have any Sync programs yet."

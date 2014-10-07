@@ -463,87 +463,78 @@
 
         var id = cms.global.USER_URL.param('id');
         if (id > 0 && !isNaN(id) && cms.global.USER_DATA.id) {
-            nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
-                userId: cms.global.USER_DATA.id
-            }), null, function (data) {
-                var channelIds = [],
-                    channelPoi = {},
-                    poiPage = [],
-                    poiItem = [];
-                if (data.length > 0) {
-                    $.each(data, function (i, list) {
-                        channelIds.push(list.id);
-                    });
-                }
-                if (-1 === $.inArray(parseInt(id, 10), channelIds)) {
-                    $common.showSystemErrorOverlayAndHookError('You are not authorized to edit this program.');
+            var channelPoi = {},
+                poiPage = [],
+                poiItem = [];
+
+            nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                channelId: id
+            }), null, function (channel) {
+                if (channel.userIdStr !== cms.global.USER_DATA.idStr) {
+                    $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
                     return;
                 }
-                nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                if (channel.contentType === cms.config.YOUR_FAVORITE) {
+                    $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
+                    return;
+                }
+                $common.showProcessingOverlay();
+                nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
                     channelId: id
-                }), null, function (channel) {
-                    if (channel.contentType === cms.config.YOUR_FAVORITE) {
-                        $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
-                        return;
-                    }
-                    $common.showProcessingOverlay();
-                    nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
+                }), null, function (epList) {
+                    nn.api('GET', cms.reapi('/api/channels/{channelId}/poi_points', {
                         channelId: id
-                    }), null, function (epList) {
-                        nn.api('GET', cms.reapi('/api/channels/{channelId}/poi_points', {
-                            channelId: id
-                        }), null, function (poiList) {
-                            channelPoi = $.extend(channelPoi, channel);
-                            channelPoi.epList = epList;
-                            channelPoi.poiList = poiList;
-                            $('#poi-event-overlay .wrap').html('');     // reset for language switch
-                            $('#func-nav ul').html('');
-                            $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
-                            $('#content-main').html('');
-                            $('#content-main-tmpl').tmpl(channelPoi).appendTo('#content-main');
-                            if (epList && epList.length <= 0) {
-                                $('#poi-list .btn-create-poi').removeClass('enable').addClass('disable');
-                                $('#poi-list .no-episode').removeClass('hide');
-                            }
-                            if (poiList && poiList.length > 0) {
-                                $('#poi-list .btn-create-poi').removeClass('enable').addClass('disable');
-                                $('#poi-list .has-poi').removeClass('hide');
-                                $('#poi-list .poi-info').removeClass('hide');
-                                $.each(poiList, function (i, item) {
-                                    poiItem.push(item);
-                                });
-                                if (poiItem.length > 0) {
-                                    poiPage.push({
-                                        poiItem: poiItem
-                                    });
-                                    poiItem = [];
-                                }
-                            }
-                            $('#poi-list-page').html('');
-                            $('#poi-list-page-tmpl').tmpl(poiPage).prependTo('#poi-list-page');
+                    }), null, function (poiList) {
+                        channelPoi = $.extend(channelPoi, channel);
+                        channelPoi.epList = epList;
+                        channelPoi.poiList = poiList;
+                        $('#poi-event-overlay .wrap').html('');     // reset for language switch
+                        $('#func-nav ul').html('');
+                        $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
+                        $('#content-main').html('');
+                        $('#content-main-tmpl').tmpl(channelPoi).appendTo('#content-main');
+                        if (epList && epList.length <= 0) {
+                            $('#poi-list .btn-create-poi').removeClass('enable').addClass('disable');
+                            $('#poi-list .no-episode').removeClass('hide');
+                        }
+                        if (poiList && poiList.length > 0) {
+                            $('#poi-list .btn-create-poi').removeClass('enable').addClass('disable');
+                            $('#poi-list .has-poi').removeClass('hide');
+                            $('#poi-list .poi-info').removeClass('hide');
                             $.each(poiList, function (i, item) {
-                                nn.api('GET', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
-                                    poiCampaignId: cms.global.CAMPAIGN_ID
-                                }), {
-                                    poiPointId: item.id
-                                }, function (pois) {
-                                    if (pois && pois.length > 0 && pois[0] && pois[0].eventId && !isNaN(pois[0].eventId)) {
-                                        $page.setPoiIcon(pois[0].pointId, pois[0].eventId);
-                                    } else {
-                                        $('#overlay-s').fadeOut(0);
-                                    }
+                                poiItem.push(item);
+                            });
+                            if (poiItem.length > 0) {
+                                poiPage.push({
+                                    poiItem: poiItem
                                 });
+                                poiItem = [];
+                            }
+                        }
+                        $('#poi-list-page').html('');
+                        $('#poi-list-page-tmpl').tmpl(poiPage).prependTo('#poi-list-page');
+                        $.each(poiList, function (i, item) {
+                            nn.api('GET', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
+                                poiCampaignId: cms.global.CAMPAIGN_ID
+                            }), {
+                                poiPointId: item.id
+                            }, function (pois) {
+                                if (pois && pois.length > 0 && pois[0] && pois[0].eventId && !isNaN(pois[0].eventId)) {
+                                    $page.setPoiIcon(pois[0].pointId, pois[0].eventId);
+                                } else {
+                                    $('#overlay-s').fadeOut(0);
+                                }
                             });
+                        });
 
-                            $('#overlay-s').fadeOut('fast', function () {
-                                $('#title-func h2.poi-list em').data('width', $('#title-func h2.poi-list em').width());
-                                $('#title-func h2.poi-create em').data('width', $('#title-func h2.poi-create em').width());
-                                $('#title-func h2.poi-edit em').data('width', $('#title-func h2.poi-edit em').width());
-                                $('#title-func h2').hide();
-                                $('#title-func h2.poi-list').show();
-                                $page.setFormHeight();
-                                $page.preloadChannelVideo();
-                            });
+                        $('#overlay-s').fadeOut('fast', function () {
+                            $('#title-func h2.poi-list em').data('width', $('#title-func h2.poi-list em').width());
+                            $('#title-func h2.poi-create em').data('width', $('#title-func h2.poi-create em').width());
+                            $('#title-func h2.poi-edit em').data('width', $('#title-func h2.poi-edit em').width());
+                            $('#title-func h2').hide();
+                            $('#title-func h2.poi-list').show();
+                            $page.setFormHeight();
+                            $page.preloadChannelVideo();
                         });
                     });
                 });

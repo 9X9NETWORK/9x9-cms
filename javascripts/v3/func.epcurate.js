@@ -278,129 +278,119 @@
                 return;
             }
             $('#channelId').val(episode.channelId);
-            nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
-                userId: cms.global.USER_DATA.id
-            }), null, function (data) {
-                var channelIds = [];
-                if (data.length > 0) {
-                    $.each(data, function (i, list) {
-                        channelIds.push(list.id);
-                    });
-                }
-                if (-1 === $.inArray(parseInt(episode.channelId, 10), channelIds)) {
+            nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                channelId: episode.channelId
+            }), null, function (channel) {
+                if (channel.userIdStr !== cms.global.USER_DATA.idStr) {
                     $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
                     return;
                 }
-                nn.api('GET', cms.reapi('/api/channels/{channelId}', {
-                    channelId: episode.channelId
-                }), null, function (channel) {
-                    if (channel.contentType === cms.config.YOUR_FAVORITE) {
-                        $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
-                        return;
-                    }
-                    $common.showProcessingOverlay();
-                    $('#epcurateForm .constrain').html('');
-                    $('#epcurate-form-tmpl').tmpl(episode, {
-                        publishLabel: (true === episode.isPublic) ? 'Published' : 'Publish Now'
-                    }).appendTo('#epcurateForm .constrain');
-                    $('#content-main-wrap').perfectScrollbar('update');
-                    if ($('#uploadThumbnail').length > 0) {
-                        $page.uploadImage();
-                    }
-                    $('#origin_status').val('Draft');
-                    $('#status_draft').prop('checked', true);
-                    $('p.radio-list input').uniform();
+                if (channel.contentType === cms.config.YOUR_FAVORITE) {
+                    $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
+                    return;
+                }
+                $common.showProcessingOverlay();
+                $('#epcurateForm .constrain').html('');
+                $('#epcurate-form-tmpl').tmpl(episode, {
+                    publishLabel: (true === episode.isPublic) ? 'Published' : 'Publish Now'
+                }).appendTo('#epcurateForm .constrain');
+                $('#content-main-wrap').perfectScrollbar('update');
+                if ($('#uploadThumbnail').length > 0) {
+                    $page.uploadImage();
+                }
+                $('#origin_status').val('Draft');
+                $('#status_draft').prop('checked', true);
+                $('p.radio-list input').uniform();
+                if (true === episode.isPublic) {
+                    $('#origin_status').val('Published');
+                    $('p.radio-list').removeClass('draft');
+                    $('#schedule-publish-label').addClass('hide');
+                    $('#schedule-publish').addClass('hide');
+                    $('#schedule-rerun-label').removeClass('hide');
+                    $('#schedule-rerun').removeClass('hide');
+                    $('#status_published').prop('checked', true);
+                } else {
+                    $('p.radio-list').addClass('draft');
+                    $('#schedule-publish-label').removeClass('hide');
+                    $('#schedule-publish').removeClass('hide');
+                    $('#schedule-rerun-label').addClass('hide');
+                    $('#schedule-rerun').addClass('hide');
+                }
+                if (episode.scheduleDate) {
                     if (true === episode.isPublic) {
-                        $('#origin_status').val('Published');
-                        $('p.radio-list').removeClass('draft');
-                        $('#schedule-publish-label').addClass('hide');
-                        $('#schedule-publish').addClass('hide');
-                        $('#schedule-rerun-label').removeClass('hide');
-                        $('#schedule-rerun').removeClass('hide');
-                        $('#status_published').prop('checked', true);
+                        $('#origin_status').val('Scheduled to rerun');
+                        $('#rerun_y').prop('checked', true);
                     } else {
-                        $('p.radio-list').addClass('draft');
-                        $('#schedule-publish-label').removeClass('hide');
-                        $('#schedule-publish').removeClass('hide');
-                        $('#schedule-rerun-label').addClass('hide');
-                        $('#schedule-rerun').addClass('hide');
+                        $('#origin_status').val('Scheduled to publish');
+                        $('#status_scheduled').prop('checked', true);
                     }
-                    if (episode.scheduleDate) {
-                        if (true === episode.isPublic) {
-                            $('#origin_status').val('Scheduled to rerun');
-                            $('#rerun_y').prop('checked', true);
-                        } else {
-                            $('#origin_status').val('Scheduled to publish');
-                            $('#status_scheduled').prop('checked', true);
-                        }
-                        scheduleDateTime = $common.formatTimestamp(episode.scheduleDate, '/', ':').split(' ');
-                        $('#publishDate').val(scheduleDateTime[0]);
-                        $('#publishHour').val(scheduleDateTime[1]);
-                    } else {
-                        // default schedule
-                        tomorrow = new Date((new Date()).getTime() + (24 * 60 * 60 * 1000));
-                        $('#publishDate').val(tomorrow.getFullYear() + '/' + (tomorrow.getMonth() + 1) + '/' + tomorrow.getDate());
-                        $('#publishHour').val('20:00');
-                    }
-                    $page.switchPublishStatus($('input[name=status]:checked').val(), $('input[name=status]:checked').attr('name'));
-                    $page.switchRerunCheckbox();
-                    $.uniform.update();
-                    nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
-                        episodeId: $('#id').val()
-                    }), null, function (programs) {
-                        $('#img-list').html('');
-                        $('#img-list-tmpl-item').tmpl(programs).appendTo('#img-list');
-                        if ('' !== episode.imageUrl) {
-                            var hasMatch = false;
-                            $('#imageUrl').val(episode.imageUrl);
-                            $('#imageUrlOld').val(episode.imageUrl);
-                            $('#img-list li').each(function () {
-                                if (episode.imageUrl === $(this).children('.img').children('img').attr('src')) {
-                                    hasMatch = true;
-                                    $(this).clone().prependTo('#img-list');
-                                    $(this).remove();
-                                }
-                            });
-                            if (!hasMatch) {
-                                $('#img-list-new-tmpl-item').tmpl({
-                                    imageUrl: episode.imageUrl,
-                                    name: episode.name
-                                }).prependTo('#img-list');
-                            }
-                        }
-                        $('#thumbnail-list ul').cycle({
-                            fx: 'scrollHorz',
-                            prev: '#thumbnail-list .img-prev',
-                            next: '#thumbnail-list .img-next',
-                            speed: 1000,
-                            timeout: 0,
-                            cleartypeNoBg: true,
-                            before: function () {
-                                $('body').addClass('has-change');                   // NOTE: must to remove change hook after first load
-                                $('#imageUrl').val($('img', this).attr('src'));
+                    scheduleDateTime = $common.formatTimestamp(episode.scheduleDate, '/', ':').split(' ');
+                    $('#publishDate').val(scheduleDateTime[0]);
+                    $('#publishHour').val(scheduleDateTime[1]);
+                } else {
+                    // default schedule
+                    tomorrow = new Date((new Date()).getTime() + (24 * 60 * 60 * 1000));
+                    $('#publishDate').val(tomorrow.getFullYear() + '/' + (tomorrow.getMonth() + 1) + '/' + tomorrow.getDate());
+                    $('#publishHour').val('20:00');
+                }
+                $page.switchPublishStatus($('input[name=status]:checked').val(), $('input[name=status]:checked').attr('name'));
+                $page.switchRerunCheckbox();
+                $.uniform.update();
+                nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
+                    episodeId: $('#id').val()
+                }), null, function (programs) {
+                    $('#img-list').html('');
+                    $('#img-list-tmpl-item').tmpl(programs).appendTo('#img-list');
+                    if ('' !== episode.imageUrl) {
+                        var hasMatch = false;
+                        $('#imageUrl').val(episode.imageUrl);
+                        $('#imageUrlOld').val(episode.imageUrl);
+                        $('#img-list li').each(function () {
+                            if (episode.imageUrl === $(this).children('.img').children('img').attr('src')) {
+                                hasMatch = true;
+                                $(this).clone().prependTo('#img-list');
+                                $(this).remove();
                             }
                         });
-                        $('#epcurate-nav-curation, #form-btn-save, #form-btn-back').click(function (e) {
-                            $(fm).trigger('submit', e);
-                            return false;
-                        });
-                        $('#name').charCounter(100, {
-                            container: '#name-charcounter',
-                            format: '%1',
-                            delay: 0,
-                            clear: true,
-                            countDown: false
-                        });
-                        $('#intro').charCounter(200, {
-                            container: '#intro-charcounter',
-                            format: '%1',
-                            delay: 0,
-                            clear: true,
-                            countDown: false
-                        });
-                        $('body').removeClass('has-change');                        // NOTE: remove change hook after first load
-                        $('#overlay-s').fadeOut();
+                        if (!hasMatch) {
+                            $('#img-list-new-tmpl-item').tmpl({
+                                imageUrl: episode.imageUrl,
+                                name: episode.name
+                            }).prependTo('#img-list');
+                        }
+                    }
+                    $('#thumbnail-list ul').cycle({
+                        fx: 'scrollHorz',
+                        prev: '#thumbnail-list .img-prev',
+                        next: '#thumbnail-list .img-next',
+                        speed: 1000,
+                        timeout: 0,
+                        cleartypeNoBg: true,
+                        before: function () {
+                            $('body').addClass('has-change');                   // NOTE: must to remove change hook after first load
+                            $('#imageUrl').val($('img', this).attr('src'));
+                        }
                     });
+                    $('#epcurate-nav-curation, #form-btn-save, #form-btn-back').click(function (e) {
+                        $(fm).trigger('submit', e);
+                        return false;
+                    });
+                    $('#name').charCounter(100, {
+                        container: '#name-charcounter',
+                        format: '%1',
+                        delay: 0,
+                        clear: true,
+                        countDown: false
+                    });
+                    $('#intro').charCounter(200, {
+                        container: '#intro-charcounter',
+                        format: '%1',
+                        delay: 0,
+                        clear: true,
+                        countDown: false
+                    });
+                    $('body').removeClass('has-change');                        // NOTE: remove change hook after first load
+                    $('#overlay-s').fadeOut();
                 });
             });
         });

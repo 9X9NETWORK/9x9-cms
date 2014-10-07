@@ -5,6 +5,7 @@
 <meta http-equiv="cache-control" content="no-cache" />
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="expires" content="0" />
+<link rel="shortcut icon" type="image/ico" href="favicon_flipr_pg.ico" />
 <link rel="stylesheet" href="stylesheets/perfect-scrollbar.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/overlay.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/style.css?v=411104" />
@@ -14,14 +15,14 @@
 <link rel="stylesheet" href="stylesheets/cms-component.css?v=431625">
 <title>FLIPr.tv - Create a new program</title>
 </head>
-<body>
+<body data-mso="flipr">
 <div id="fb-root"></div>
 
 <!-- Header Layer Begin -->
 <div id="header">
-    <a href="../" target="_blank" id="logo"></a>
+    <img src="images/logo_flipr_pg.png" style="width:103px; height:29px; margin-left:6px; margin-top:6px" />
     <ul id="nav">
-        <li id="tv"><span><a href="../" target="_blank">Link to FLIPr.tv</a></span></li>
+        <li id="tv"><span class="fliprOptions hide"><a href="../" target="_blank">Link to FLIPr.tv</a></span></li>
         <li id="profile">
             <p id="btn-profile"></p>
             <p id="selected-profile">Guest</p>
@@ -65,7 +66,7 @@
 <!-- Footer Layer Begin -->
 <p id="footer-control" class="on"></p>
 <div id="footer">
-    <span>© 2014 FLIPr.tv. All rights reserved.</span>
+    <span>© 2014 <fliprElm class="fliprOptions hide">FLIPr.tv.</fliprElm> All rights reserved.</span>
 </div>
 <!-- Footer Layer End -->
 
@@ -187,7 +188,7 @@
     {{else cms.global.vIsYoutubeLive === true}}
         {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new Live Program'])}}
     {{else}}
-        {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new FLIPr Program'])}}
+        {{html nn._([cms.global.PAGE_ID, 'title-func', 'Create a new Curated Program'])}}
     {{/if}}
     </h2>
     <p class="required"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'title-func', 'Required field'])}</p>
