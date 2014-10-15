@@ -25,6 +25,7 @@
             duration: 0,
             isPublic: false,
             contentType: 5,
+            publishDate: '',
             name: epName
         }, function (epObj) {
             nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
