@@ -528,7 +528,7 @@
         "channel-list": {
             "Get URL": "網址",
             "Brand": "品牌",
-            "URL": "網址",
+            "Share URL": "分享連結",
             "Episodes": "劇集",
             "Followers": "粉絲",
             "Views": "觀看次數",
@@ -802,7 +802,7 @@
             "Delete": "刪除",
             "Get URL": "網址",
             "Brand": "品牌",
-            "URL": "網址",
+            "Share URL": "分享連結",
             "Draft": "草稿",
             "Curate new episode to tell a story": "策展新劇集",
             "<strong>Curate online videos</strong> into each single episode.": "在一集劇集中<strong>輕鬆策展多個影片</strong>。",
