@@ -69,8 +69,13 @@ if (false !== strpos($_hosts, "livestream.com")) {
 
 		$apiContent = json_decode(file_get_contents($idList["apiUrl"]), true);
 
-		$idList["caption"] = $apiContent["caption"];
-		$idList["thumbnail_url"] = $apiContent["thumbnail_url"];
+		if ("" != $idList["videos"]) {
+			$idList["caption"] = $apiContent["caption"];
+			$idList["thumbnail_url"] = $apiContent["thumbnail_url"];
+		} else {
+			$idList["caption"] = $apiContent["full_name"];
+			$idList["thumbnail_url"] = $apiContent["logo"]["thumb_url"];
+		}
 
 		if ("" != $idList["url"] && "" != $idList["caption"]) {
 			$retValue = array($idList);
