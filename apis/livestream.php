@@ -36,51 +36,55 @@ if (false !== strpos($_hosts, "livestream.com")) {
 
 	$html = file_get_html($inUrl);
 
-	@$htmlSelect = $html->find('meta[content^=app-id]');
+	if ($html) {
 
-	if ("" != $htmlSelect[0]->content) {
-		$arrTmp = explode(",", $htmlSelect[0]->content);
-		foreach ($arrTmp as $eKey => $eValue) {
-			if (false !== strpos($eValue, "app-argument")) {
-				$idList["url"] = explode("=", $eValue)[1];
+		@$htmlSelect = $html->find('meta[content^=app-id]');
 
-				$tmpPath = explode("/", $idList["url"]);
+		if ("" != $htmlSelect[0]->content) {
+			$arrTmp = explode(",", $htmlSelect[0]->content);
+			foreach ($arrTmp as $eKey => $eValue) {
+				if (false !== strpos($eValue, "app-argument")) {
+					$idList["url"] = explode("=", $eValue)[1];
 
-				foreach ($tmpPath as $eKey => $eValue) {
+					$tmpPath = explode("/", $idList["url"]);
 
-					if ("accounts" == $eValue) {
-						$idList["accounts"] = $tmpPath[$eKey + 1];
-					} else if ("events" == $eValue) {
-						$idList["events"] = $tmpPath[$eKey + 1];
+					foreach ($tmpPath as $eKey => $eValue) {
+
+						if ("accounts" == $eValue) {
+							$idList["accounts"] = $tmpPath[$eKey + 1];
+						} else if ("events" == $eValue) {
+							$idList["events"] = $tmpPath[$eKey + 1];
+						}
 					}
-				}
 
+				}
+			}
+
+			if ("" != $idList["accounts"] && "" != $idList["events"]) {
+				$idList["apiUrl"] = sprintf("http://api.new.livestream.com/accounts/%s/events/%s", $idList["accounts"], $idList["events"]);
+			}
+
+			if ("" != $idList["videos"]) {
+				$idList["url"] .= "/videos/" . $idList["videos"];
+				$idList["apiUrl"] .= "/videos/" . $idList["videos"];
+			}
+
+			$apiContent = json_decode(file_get_contents($idList["apiUrl"]), true);
+
+			if ("" != $idList["videos"]) {
+				$idList["caption"] = $apiContent["caption"];
+				$idList["thumbnail_url"] = $apiContent["thumbnail_url"];
+			} else {
+				$idList["caption"] = $apiContent["full_name"];
+				$idList["thumbnail_url"] = $apiContent["logo"]["thumb_url"];
+			}
+
+			if ("" != $idList["url"] && "" != $idList["caption"]) {
+				$retValue = array($idList);
 			}
 		}
-
-		if ("" != $idList["accounts"] && "" != $idList["events"]) {
-			$idList["apiUrl"] = sprintf("http://api.new.livestream.com/accounts/%s/events/%s", $idList["accounts"], $idList["events"]);
-		}
-
-		if ("" != $idList["videos"]) {
-			$idList["url"] .= "/videos/" . $idList["videos"];
-			$idList["apiUrl"] .= "/videos/" . $idList["videos"];
-		}
-
-		$apiContent = json_decode(file_get_contents($idList["apiUrl"]), true);
-
-		if ("" != $idList["videos"]) {
-			$idList["caption"] = $apiContent["caption"];
-			$idList["thumbnail_url"] = $apiContent["thumbnail_url"];
-		} else {
-			$idList["caption"] = $apiContent["full_name"];
-			$idList["thumbnail_url"] = $apiContent["logo"]["thumb_url"];
-		}
-
-		if ("" != $idList["url"] && "" != $idList["caption"]) {
-			$retValue = array($idList);
-		}
 	}
+
 }
 
 header('Content-Type: application/json; charset=utf-8');
