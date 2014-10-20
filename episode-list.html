@@ -200,7 +200,7 @@
 <script id="get-url-tmpl" type="text/x-jquery-tmpl">
 <ul class="tooltip-content-list">
     <li>
-        <label class="title">${nn._([cms.global.PAGE_ID, 'episode-list', "URL"])}</label>
+        <label class="title">${nn._([cms.global.PAGE_ID, 'episode-list', "Share URL"])}</label>
         <input data-mso_name="${brand}" class="input-gray srul-text" value="http://www.FLIPr.tv/view?mso={msoId}&ch=xxxx&ep=xxxx" onclick="this.select()" />
     </li>
 </ul>
@@ -323,7 +323,7 @@
                 <div class="btn" id="yuchk-btn-${id}"></div>
                 <div class="tip-white">
                     <p class="left"></p>
-                    <p class="center" id="yuchk-msg-${id}">${nn._([cms.global.PAGE_ID, 'episode-list', 'Video check'])}</p>
+                    <p class="center" id="yuchk-msg-${id}">${nn._([cms.global.PAGE_ID, 'episode-list', "Check the video of the episode if it's invalid."])}</p>
                     <p class="right"></p>    
                 </div>
                 <div class="tip-bottom"></div>
@@ -344,7 +344,7 @@
                 <div id="get-url-${id}" class="get-url tooltip-wrap" data-metach="${$.url().param('id')}" data-metaep="${id}">
                     <ul class="tooltip-content-list">
                         <li>
-                            <label class="title">URL</label>
+                            <label class="title">Share URL</label>
                             <input class="input-gray srul-text" value="http://www.FLIPr.tv/" onclick="this.select()" />
                         </li>
                     </ul>
@@ -371,7 +371,7 @@
             {{/if}}
         </div>
     </div>
-    <p class="drag"><span>move</span></p>
+    <p class="drag{{if true === cms.global.vIsYoutubeSync}} hide{{/if}}"><span>move</span></p>
 </div>
 </div>
 </div>
