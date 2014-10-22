@@ -321,12 +321,6 @@
                 }).appendTo('#channel-list');
 
             }
-            if (cntChannel <= 0 || (1 === cntChannel && hasFavoriteChannel)) {
-                if (!$.cookie('cms-cct')) {
-                    $.cookie('cms-cct', 'seen');
-                    $page.showCreateChannelTutorial();
-                }
-            }
 
             $('#content-main-wrap').perfectScrollbar("update");
             if ($page.paging.currentPage === 1) {
@@ -412,7 +406,14 @@
                 $('#func-nav ul li.btns').addClass("hide");
                 $(".radio-list").addClass("hide");
 
-                $('#overlay-s').fadeOut();
+                if (!$.cookie('cms-cct')) {
+                    $.cookie('cms-cct', 'seen');
+                	$('#overlay-s').fadeOut();
+                    $page.showCreateChannelTutorial();
+                }else{
+                	$('#overlay-s').fadeOut();
+                }
+
             }
         } else {
             location.href = '../';
