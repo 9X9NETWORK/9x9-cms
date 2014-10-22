@@ -79,6 +79,12 @@ body.mac #title-func h2 {
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
+#title-func a{
+    color: #555;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
 #channel-name {
     display: block;
 }
