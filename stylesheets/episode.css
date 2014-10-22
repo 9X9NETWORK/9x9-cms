@@ -23,6 +23,12 @@ div.constrain {
     -ms-text-overflow: ellipsis;
     -moz-binding: url('ellipsis.xml#ellipsis');
 }
+#title-func a{
+    color: #555;
+    text-decoration: underline;
+    font-weight: bold;
+
+}
 
 #channel-name {
     float: left;
