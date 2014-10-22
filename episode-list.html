@@ -163,8 +163,9 @@
 <!-- title-func-tmpl Begin -->
 <script id="title-func-tmpl" type="text/x-jquery-tmpl">
 <h2>
-    <span id="channel-name" data-width="">${name}</span>
-    <span class="title-crumb">&gt; ${nn._([cms.global.PAGE_ID, 'title-func', 'Episode list'])} (<span id="episode-counter">${$item.cntEpisode}</span>)</span>
+    <span id="channel-name" data-width="">
+        <a href="index.html">${nn._([cms.global.PAGE_ID, 'title-func', 'Program list'])}</a>  &gt; ${name}</span>
+    <span class="title-crumb">: ${nn._([cms.global.PAGE_ID, 'title-func', 'Episode list'])} (<span id="episode-counter">${$item.cntEpisode}</span>)</span>
 </h2>
 {{if contentType != cms.config.YOUR_FAVORITE && $item.cntEpisode > 0}}
     <ul>

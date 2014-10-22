@@ -620,6 +620,7 @@
             "Settings": "節目設定"
         },
         "title-func": {
+            "Program list": "節目列表",
             "My Programs": "節目管理",
             "Create a new Curated Program": "創建策展節目",
             "Create a new Sync Program": "創建同步節目",
@@ -766,6 +767,7 @@
             "Settings": "節目設定"
         },
         "title-func": {
+            "Program list": "節目列表",
             "Episode list": "劇集列表",
             "'s Favorite": "的最愛",
             "Curate a new episode": "策展新劇集",
