@@ -113,7 +113,7 @@
     };
 
     $common.ytUrlLiveParser = function (inUrl) {
-        // ytType = 0 : unknow, 1: yturl, 2: m3u8, 3: ustream.tv
+        // ytType = 0 : unknow, 1: yturl, 2: m3u8, 3: ustream.tv, 4: livestream.com
         var inURL = $.url(inUrl),
             ytUrlPattern = ["http://www.youtube.com/watch?v="],
             retValue = {
@@ -143,6 +143,12 @@
             retValue.ytUrlFormat = inUrl;
             // retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").split("/").pop() + "/getValueOf/id?callback=?";
             retValue.ytUrlApi = "/api/ustream";
+        } else if (inURL.attr("host").indexOf("livestream.com") > -1) {
+            // 4: livestream.com
+            $("#ytUrlLive").attr("name", "sourceUrl");
+            retValue.ytType = 4;
+            retValue.ytUrlFormat = inUrl;
+            retValue.ytUrlApi = "/apis/livestream.php";
         }
 
         return retValue;

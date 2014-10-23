@@ -173,7 +173,7 @@ $(function () {
         }
 
         if (isVideoAuth) {
-            // flipr program && with isVideoAuth , can choose add yt episode or upload video
+            // curated program && with isVideoAuth , can choose add yt episode or upload video
             $('#new-Episode-Option').empty();
             $('#new-Episode-Option-tmpl').tmpl({
                 oid: objId
@@ -183,7 +183,7 @@ $(function () {
             });
             return false;
         } else {
-            // flipr program && without isVideoAuth , only add yt episode
+            // curated program && without isVideoAuth , only add yt episode
             $(this).attr("href", "epcurate-curation.html?cid=" + objId);
         }
     });

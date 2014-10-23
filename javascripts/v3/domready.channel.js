@@ -213,6 +213,38 @@ $(function () {
                     $("#ytSyncMsg").removeClass("hide");
                 }
             });
+        } else if (4 === ytUrlParse.ytType) {
+            // http://api.new.livestream.com/accounts/5057055/events/3448924
+            // [{id: {accounts: 5057055, events:3448924}}]
+
+            // http://api.new.livestream.com/accounts/5057055/events/3394212/videos/63036075
+            // [{id: {accounts: 1714160, events:1614682, videos:63036075}}]
+
+            $("#intro").val("");
+            $("#name").val("");
+
+            nn.api('GET', 'apis/livestream.php', {
+                url: thisUrl
+            }, function (ursreamObj) {
+                var opObj = {},
+                    retiveUrl = "";
+
+                if (ursreamObj.length > 0) {
+                    opObj = ursreamObj[0];
+                    $("#ytUrlLive").val(opObj.url);
+                    $("#name").val(opObj.caption);
+
+                    if ("" !== opObj.thumbnail_url) {
+                        $("#thumbnail-imageUrl").attr("src", opObj.thumbnail_url);
+                    }
+
+                    $("#ytUrlLive").data("status", "processing");
+
+                } else {
+                    $("#ytSyncMsg").html(strDefErr);
+                    $("#ytSyncMsg").removeClass("hide");
+                }
+            });
         } else {
             $("#ytSyncMsg").html(strDefErr);
             $("#ytSyncMsg").removeClass("hide");
@@ -654,6 +686,7 @@ $(function () {
     // channel form button
     $('#content-main').on('click', '#settingForm .btn-save.enable', function () {
         // update mode
+        nn.log('哈哈 !!!['+$page.chkData(document.settingForm) +']');
         if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable') && cms.global.USER_URL.param('id') > 0) {
             $common.showSavingOverlay();
             nn.on(400, function (jqXHR, textStatus) {
