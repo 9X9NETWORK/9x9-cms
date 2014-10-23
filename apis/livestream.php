@@ -44,7 +44,9 @@ if (false !== strpos($_hosts, "livestream.com")) {
 			$arrTmp = explode(",", $htmlSelect[0]->content);
 			foreach ($arrTmp as $eKey => $eValue) {
 				if (false !== strpos($eValue, "app-argument")) {
-					$idList["url"] = explode("=", $eValue)[1];
+					// $idList["url"] = explode("=", $eValue)[1];
+					$tmpArr = explode("=", $eValue);
+					$idList["url"] = $tmpArr[1];
 
 					$tmpPath = explode("/", $idList["url"]);
 
