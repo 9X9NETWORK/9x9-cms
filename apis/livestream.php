@@ -76,9 +76,13 @@ if (false !== strpos($_hosts, "livestream.com")) {
 			if ("" != $idList["videos"]) {
 				$idList["caption"] = $apiContent["caption"];
 				$idList["thumbnail_url"] = $apiContent["thumbnail_url"];
+				$idList["short_name"] = "";// can't find any thing about this
+				$idList["created_at"] = $apiContent["created_at"];
 			} else {
-				$idList["caption"] = $apiContent["full_name"];
+				$idList["caption"] = $apiContent["full_name"];// can't find any thing about this, so fill full_name
 				$idList["thumbnail_url"] = $apiContent["logo"]["thumb_url"];
+				$idList["short_name"] = $apiContent["short_name"];
+				$idList["created_at"] = $apiContent["created_at"];
 			}
 
 			if ("" != $idList["url"] && "" != $idList["caption"]) {

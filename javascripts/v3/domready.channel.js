@@ -220,6 +220,8 @@ $(function () {
             // http://api.new.livestream.com/accounts/5057055/events/3394212/videos/63036075
             // [{id: {accounts: 1714160, events:1614682, videos:63036075}}]
 
+            // http://new.livestream.com/accounts/5057055/events/3448924
+
             $("#intro").val("");
             $("#name").val("");
 
@@ -236,7 +238,18 @@ $(function () {
 
                     if ("" !== opObj.thumbnail_url) {
                         $("#thumbnail-imageUrl").attr("src", opObj.thumbnail_url);
+                        $('#imageUrl').val(opObj.thumbnail_url);
+
                     }
+
+                    cms.global.vYoutubeLiveIn.fileUrl = opObj.url;
+                    cms.global.vYoutubeLiveIn.imageUrl = opObj.thumbnail_url;
+                    cms.global.vYoutubeLiveIn.name = opObj.caption;
+                    cms.global.vYoutubeLiveIn.intro = $("#intro").val();
+
+                    cms.global.vYoutubeLiveIn.uploader = opObj.short_name;
+                    cms.global.vYoutubeLiveIn.uploadDate = opObj.created_at;
+                    cms.global.vYoutubeLiveIn.ytId = "";
 
                     $("#ytUrlLive").data("status", "processing");
 
@@ -686,7 +699,6 @@ $(function () {
     // channel form button
     $('#content-main').on('click', '#settingForm .btn-save.enable', function () {
         // update mode
-        nn.log('哈哈 !!!['+$page.chkData(document.settingForm) +']');
         if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable') && cms.global.USER_URL.param('id') > 0) {
             $common.showSavingOverlay();
             nn.on(400, function (jqXHR, textStatus) {
