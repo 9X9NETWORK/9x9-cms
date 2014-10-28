@@ -382,7 +382,7 @@
                         clear: true,
                         countDown: false
                     });
-                    $('#intro').charCounter(200, {
+                    $('#intro').charCounter(300, {
                         container: '#intro-charcounter',
                         format: '%1',
                         delay: 0,

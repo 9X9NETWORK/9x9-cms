@@ -546,7 +546,7 @@
                         clear: false,
                         countDown: false
                     });
-                    $('#intro').charCounter(200, {
+                    $('#intro').charCounter(1000, {
                         container: '#intro-charcounter',
                         format: '%1',
                         delay: 0,
@@ -671,7 +671,7 @@
                 clear: false,
                 countDown: false
             });
-            $('#intro').charCounter(200, {
+            $('#intro').charCounter(1000, {
                 container: '#intro-charcounter',
                 format: '%1',
                 delay: 0,

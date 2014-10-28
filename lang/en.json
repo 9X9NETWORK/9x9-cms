@@ -517,7 +517,7 @@
             "Better results with 300x300 or higher resolution image": "Better results with 300x300 or higher resolution image",
             "Please upload jpeg, png, or gif files.": "Please upload jpeg, png, or gif files.",
             "Description": "Description",
-            "Best within 52 characters": "Best within 52 characters",
+            "Best within 1000 characters": "Best within 1000 characters",
             "Program language": "Program language",
             "Select a language": "Select a language",
             "English": "English",
@@ -687,7 +687,7 @@
             "Save": "Save",
             "Please fill in all required fields.": "Please fill in all required fields.",
             "Best within 20 characters.": "Best within 20 characters.",
-            "Best within 52 characters.": "Best within 52 characters."
+            "Best within 300 characters.": "Best within 300 characters."
         }
     },
     "epcurate-curation": {

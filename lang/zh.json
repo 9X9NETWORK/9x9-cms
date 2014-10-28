@@ -647,7 +647,7 @@
             "Better results with 640x480 or higher resolution image": "建議圖片解析度為640x480或以上",
             "Please upload jpeg, png, or gif files.": "請上傳jpeg, png或gif檔。",
             "Description": "介紹",
-            "Best within 52 characters": "建議52字以內",
+            "Best within 1000 characters": "建議 1000 字以內",
             "Program language": "節目語言",
             "Select a language": "選擇語言",
             "English": "English",
@@ -850,7 +850,7 @@
             "Save": "儲存",
             "Please fill in all required fields.": "請輸入必填項目。",
             "Best within 20 characters.": "建議20字以內",
-            "Best within 52 characters.": "建議52字以內"
+            "Best within 300 characters.": "建議 300 字以內"
         }
     },
     "epcurate-curation": {
