@@ -4,6 +4,15 @@
 (function ($common) {
     'use strict';
 
+    $common.isImportEpisode = function (inOid) {
+        var ids = [40347, 57626],
+            retValue = false;
+        if ($.inArray(inOid, ids) > -1) {
+            retValue = true;
+        }
+        return retValue;
+    };
+
     $common.isFliprBlock = function () {
         var bodyMSO = $("body").data("mso"),
             retValue = false;
