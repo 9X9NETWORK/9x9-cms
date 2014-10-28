@@ -69,7 +69,7 @@ $(function () {
         var isVideoAuth = cms.global.USER_PRIV.isVideoAuth,
             objId = $(this).data("meta");
 
-        if (40347 === cms.global.USER_DATA.id) {
+        if ($common.isImportEpisode(parseInt(cms.global.USER_DATA.id, 10))) {
             cms.global.USER_PRIV.isImportEpisode = true;
             $page.actEpisode = objId;
         }
