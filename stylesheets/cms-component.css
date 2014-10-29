@@ -667,7 +667,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   height: auto;
 }
 
-/* line 521, ../sass/cms-component.sass */
+/* line 523, ../sass/cms-component.sass */
 .form-control.input-gray {
   font-size: 14px;
   color: #555;
@@ -690,16 +690,52 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-/* line 535, ../sass/cms-component.sass */
+/* line 538, ../sass/cms-component.sass */
 .form-control.input-gray.with-left-icon {
   padding: 4px 24px 4px 8px;
 }
-/* line 538, ../sass/cms-component.sass */
+/* line 541, ../sass/cms-component.sass */
 .form-control.input-gray + .select-btn {
   right: 12px;
 }
 
-/* line 543, ../sass/cms-component.sass */
+/* line 545, ../sass/cms-component.sass */
+.style-select {
+  float: left;
+  width: 100px;
+  overflow: hidden;
+  border-radius: 2px;
+  position: relative;
+}
+/* line 551, ../sass/cms-component.sass */
+.style-select:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  background: url(../images/btns.png) 0 -400px no-repeat;
+  right: 3px;
+  top: 3px;
+  z-index: 10;
+  cursor: pointer;
+  -moz-pointer-events: none;
+  pointer-events: none;
+}
+/* line 566, ../sass/cms-component.sass */
+.style-select:hover:after {
+  background-position: 0 -451px;
+}
+/* line 570, ../sass/cms-component.sass */
+.style-select select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 0.01px;
+  text-overflow: "";
+  width: 120px;
+}
+
+/* line 585, ../sass/cms-component.sass */
 .edit-icon {
   background-image: url("../images/btns.png");
   background-position: 0 -1060px;
@@ -713,7 +749,13 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   z-index: 55;
 }
 
-/* line 554, ../sass/cms-component.sass */
+/* line 596, ../sass/cms-component.sass */
 .edit-icon:hover, .edit-icon.on {
   background-position: -23px -1060px;
+}
+
+/* line 601, ../sass/cms-component.sass */
+.fminput .charcounter {
+  position: absolute;
+  white-space: nowrap;
 }
