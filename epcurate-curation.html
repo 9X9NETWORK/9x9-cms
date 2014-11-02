@@ -655,12 +655,27 @@
             </div>
             <div class="event-input">
                 <div class="fminput">
-                    <label for="hyper_display_text"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'poi-event', 'Display text'])}:</label>
-                    <p class="text"><span><input type="text" name="displayText" id="hyper_display_text" value="${message}" placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input display text'])}" class="text" /></span></p>
+                    <label for="hyper_display_text"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'poi-event', 'Display'])}:</label>
+<!-- poi image mode -->
+                    <input type="text" name="displayText" id="hyper_display_text" 
+                        value="${message}{{if '' == message}}text{{/if}}" class="hide" />
+                    <div class="style-select">
+                        <select id="poiDisplayType" class="form-control input-gray with-left-icon ">
+                            <option {{if "text" == message}}selected {{/if}} value="text">Text</option>
+                            <option {{if "image" == message}}selected {{/if}} value="image">Image</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="fminput even">
-                    <label for="hyper_button_text"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'poi-event', 'Button text'])}:</label>
-                    <p class="text"><span><input type="text" name="btnText" id="hyper_button_text" maxlength="20" value="${button}" placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text'])}" class="text" /></span></p>
+<!-- poi image mode -->
+                    <p class="text">
+                        <span>
+                            <input type="file" class="hide" id="fup" />
+                            <input type="text" name="btnText" id="hyper_button_text" maxlength="20" value="${button}" placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text'])}" class="text" />
+                                <p class="edit-icon btnUploadImage {{if 'image' != message}} hide{{/if}}"></p>
+                        </span>
+                    </p>
+                    <span class="hide charcounter">11 characters to go!</span>
                 </div>
                 <div class="fminput">
                     <label for="hyper_link"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'poi-event', 'Hyper link'])}:</label>

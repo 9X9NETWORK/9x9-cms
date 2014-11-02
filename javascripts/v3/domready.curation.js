@@ -9,6 +9,64 @@ $(function () {
         $common = cms.common,
         videoDeleteIdList = [];
 
+    $(document).on('keyup', '#hyper_button_text', function (e) {
+        var hyButtonText = $("#hyper_button_text"),
+            hyDisplayText = $("#hyper_display_text");
+        if ("image" === hyDisplayText.val()) {
+            $("#poi-btn").css("background-image", "url(" + hyButtonText.val() + ")");
+
+        }
+    });
+
+
+    $(document).on('change', '#poiDisplayType', function (e) {
+        var that = $(this),
+            dtype = that.val(),
+            hyDisplayText = $("#hyper_display_text"),
+            hyButtonText = $("#hyper_button_text"),
+            defImage = "http://9x9tmp.s3.amazonaws.com/cms-thumbnail-1414724608432-258215.jpg",
+            varImage = "",
+            fm = document.forms["eventHyperForm"];
+
+        switch (dtype) {
+            case "text":
+                hyButtonText.data("image", hyButtonText.val());
+                hyButtonText.val(hyButtonText.data("text"));
+                $(".poi-button-input-text").text(hyButtonText.val());
+
+                $("#hyper_button_text").attr("maxlength", 20);
+                $("#hyper_button_text").attr("placeholder", "Input button text");
+
+                hyDisplayText.val(dtype);
+                $(".btnUploadImage").addClass("hide");
+                $("#poi-btn-holder").removeClass("hide");
+                $("#poi-btn").removeClass("poi-image");
+                $("#poi-btn").css('background-image', 'none');
+                break;
+
+            case "image":
+                hyButtonText.data("text", hyButtonText.val());
+                hyButtonText.val(hyButtonText.data("image"));
+
+                $("#hyper_button_text").attr("maxlength", 500);
+                $("#hyper_button_text").attr("placeholder", "Upload image");
+
+                varImage = $("#hyper_button_text").val();
+                if ("" === varImage) {
+                    $("#poi-btn").css("background-image", "url(" + defImage + ")");
+                }
+                hyDisplayText.val(dtype);
+
+                $(".btnUploadImage").removeClass("hide");
+                $("#poi-btn-holder").addClass("hide");
+                $("#poi-btn").addClass("poi-image");
+                $("#hyper_button_text").val(varImage);
+
+                break;
+        }
+
+    });
+
     // $page.setVideoMeasure();
     // $page.setSpace();
     // $common.scrollbarX('#storyboard-wrap', '#storyboard-list', '#storyboard-slider');
