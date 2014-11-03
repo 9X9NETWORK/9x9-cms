@@ -1548,7 +1548,9 @@
         $.blockUI({
             message: $('#poi-event-overlay'),
             onBlock: function () {
-                var currentFrameMonth = '';
+                var currentFrameMonth = '',
+                    maxLength = 20,
+                    tmpMaxlength = 0;
                 $('body').addClass('from-poi-overlay-edit-mode');
                 $('#poi-event-overlay .event').addClass('hide');
                 if ($('#cur-poi-edit').hasClass('edit')) {
@@ -1567,7 +1569,13 @@
                         $('#event-select').removeClass('hide');
                     }
                 }
-                $('#poi-event-overlay input[name=btnText]').charCounter(20, {
+
+                tmpMaxlength = parseInt($("#poi-event-overlay input[name=btnText]").attr("maxlength"), 10);
+                if (tmpMaxlength > 0) {
+                    maxLength = tmpMaxlength;
+                }
+
+                $('#poi-event-overlay input[name=btnText]').charCounter(maxLength, {
                     container: '<span class="hide"><\/span>',
                     format: '%1 characters to go!',
                     delay: 0,
