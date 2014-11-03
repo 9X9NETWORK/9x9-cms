@@ -6,6 +6,76 @@
 
     var $common = cms.common;
 
+    $page.s3Info = {
+        isGet: false,
+        parameter: {},
+        s3attr: {},
+        gt: (new Date()).getTime()
+    };
+
+    $page.imageUpload = function (fileObj, eKey) {
+
+        var formData = new FormData(),
+            xhr = new XMLHttpRequest(),
+            loadingImg = "images/loading.gif",
+            timestamp = (new Date()).getTime(),
+            filenamePreFix = timestamp + eKey,
+            tmpS3attr = $page.s3Info.s3attr,
+            upFileName = $page.s3Info.parameter.prefix + filenamePreFix + ".jpg",
+            s3Url = "http://" + tmpS3attr.bucket + ".s3.amazonaws.com/",
+            s3FileName = s3Url + upFileName,
+            procBody = $("#hyper_button_text");
+
+
+        procBar.val("Uploading ...");
+
+        formData.append('AWSAccessKeyId', tmpS3attr.id);
+        formData.append('key', upFileName);
+        formData.append('acl', 'public-read');
+        formData.append('policy', tmpS3attr.policy);
+        formData.append('signature', tmpS3attr.signature);
+        formData.append('content-type', $page.s3Info.parameter.type);
+        formData.append('filename', upFileName);
+        formData.append('success_action_status', "201");
+        formData.append('file', fileObj);
+
+        var cntTotal = $common.fileSizeUnit(0, fileObj.size);
+
+        xhr.open('POST', s3Url);
+        xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+                var complete = (event.loaded / event.total * 100 | 0);
+                procBody.val("Uploading ... " + complete);
+            }
+        }
+        xhr.onload = function() {
+            $("#poi-btn").css("background-image", "url(" + s3FileName + ")");
+            procBody.val(s3FileName);
+        };
+
+        xhr.send(formData);
+    };
+
+    $page.prepareS3Attr = function () {
+        var timeCheck = (new Date()).getTime() + (50 * 60 * 1000);
+
+        if (!$page.s3Info.isGet || ($page.s3Info.gt > timeCheck)) {
+            $page.s3Info.parameter = {
+                'prefix': 'up-poi-ad-' + $("#poi-event-overlay-wrap").data("program-id") + '-',
+                'type': 'image',
+                'size': 11267000,
+                'acl': 'public-read'
+            };
+
+            nn.api('GET', cms.reapi('/api/s3/attributes'), $page.s3Info.parameter, function (s3attr) {
+                $page.s3Info.isGet = true;
+                $page.s3Info.s3attr = s3attr;
+                $page.s3Info.isGet = (new Date()).getTime();
+            });
+        }
+    };
+
+
     $page.chkDuration = function () {
         var duration = $('.set-time').data('originDuration'),
             startH = parseInt($('input[name=startH]').val(), 10) * 60 * 60,

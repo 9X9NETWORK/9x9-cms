@@ -18,6 +18,23 @@ $(function () {
         }
     });
 
+    $(document).on('click', '.btnUploadImage', function() {
+        if (!$page.s3Info.isGet) {
+            $page.prepareS3Attr();
+        }
+        $("#fup").trigger("click");
+    });
+
+    $(document).on('change', '#fup', function() {
+        var cntFiles = this.files.length,
+            arrUpFiles = [];
+        if ($page.s3Info.isGet && cntFiles > 0) {
+            $.each(this.files, function(eKey, eValue) {
+                // nn.log("eValue.type ["+eValue.type+"]");
+                $page.imageUpload(eValue, eKey);
+            });
+        }
+    });
 
     $(document).on('change', '#poiDisplayType', function (e) {
         var that = $(this),
