@@ -28,6 +28,16 @@
         'msg_body': "You don't have any live programs yet."
     }];
 
+    $page.edFilter = function (inSH) {
+        // inSH {true:enalbe, false:disabled}
+        if (inSH) {
+            $(".lbTypeItem").prop("disabled", !inSH);
+            $(".filterType").removeClass("disabled");
+        } else {
+            $(".lbTypeItem").prop("disabled", !inSH);
+            $(".filterType").addClass("disabled");
+        }
+    };
 
     $page.createFromEpisode = function(episode, programs) {
         var chId = $page.actEpisode;
@@ -350,9 +360,11 @@
 
                 // if has readonly
                 $page.syncingOnLoad();
+                $page.edFilter(true);
 
             }else{
                 $page.getPrograms();
+                $page.edFilter(false);
             }
         });
     };

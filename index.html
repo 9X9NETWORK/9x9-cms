@@ -332,7 +332,7 @@
     <li class="last"><p class="order btns"><span><a href="javascript:void(0);" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder programs'])}</a></span></p></li>
 </ul>
 {{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
-<p class="radio-list filterType hide">
+<p class="radio-list filterType">
     <span>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</span>
     <label for="filter_all" class="lbTypeLists checked">
         <input type="radio" name="filter" value="all" id="filter_all" class="lbTypeItem" checked> {{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</label>
