@@ -734,12 +734,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   text-overflow: "";
   width: 120px;
 }
-/* line 576, ../sass/cms-component.sass */
-.style-select select > * {
-  padding: 5px;
-}
 
-/* line 587, ../sass/cms-component.sass */
+/* line 585, ../sass/cms-component.sass */
 .edit-icon {
   background-image: url("../images/btns.png");
   background-position: 0 -1060px;
@@ -753,12 +749,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   z-index: 55;
 }
 
-/* line 598, ../sass/cms-component.sass */
+/* line 596, ../sass/cms-component.sass */
 .edit-icon:hover, .edit-icon.on {
   background-position: -23px -1060px;
 }
 
-/* line 603, ../sass/cms-component.sass */
+/* line 601, ../sass/cms-component.sass */
 .fminput .charcounter {
   position: absolute;
   white-space: nowrap;
