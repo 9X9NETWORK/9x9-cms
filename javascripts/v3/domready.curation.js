@@ -1828,6 +1828,28 @@ $(function () {
                         notifyMsg: notifyMsg,
                         notifyScheduler: notifyScheduler
                     };
+
+                if (1 === poiEventType) {
+                    // fix hyper data 
+                    nn.log("displayText ["+displayText+"]");
+                    if ("text" === displayText) {
+                        nn.log("in text");
+                        poiEventContext.message = "";
+                        poiEventData.context = JSON.stringify(poiEventContext);
+                    } else if("image" === displayText){
+                        nn.log("in image");
+                        poiEventContext = null;
+                        poiEventContext = {
+                            "message": "",
+                            "button": [{
+                                "imageUrl": btnText,
+                                "actionUrl": channelUrl
+                            }]
+                        };
+                        poiEventData.context = JSON.stringify(poiEventContext);
+                    }
+                }
+
                 if ($('#cur-poi-edit').hasClass('edit') && poiPointId) {
                     // update mode
                     if (poiPointId > 0 && !isNaN(poiPointId)) {
