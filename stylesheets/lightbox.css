@@ -1185,6 +1185,14 @@ body.from-poi-edit-mode #poi-event-overlay .wrap .content .func ul li.notice {
     padding: 0 3px 0 0;
     background-position: right -30px;
 }
+.fminput .charcounter{
+    background: none;
+    background: none;
+    line-height: 2.2;
+    padding-left: 1em;
+    color: #555;
+    font-size: 13px;
+}
 
 #poi-event-overlay .wrap .content .event-input .fminput p.text span .text {
     width: 279px;
