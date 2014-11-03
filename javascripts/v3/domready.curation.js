@@ -71,6 +71,8 @@ $(function () {
                 varImage = $("#hyper_button_text").val();
                 if ("" === varImage) {
                     $("#poi-btn").css("background-image", "url(" + defImage + ")");
+                }else{
+                    $("#poi-btn").css("background-image", "url(" + varImage + ")");
                 }
                 hyDisplayText.val(dtype);
 
