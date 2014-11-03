@@ -1414,17 +1414,30 @@ $(function () {
                                         nn.api('GET', cms.reapi('/api/poi_events/{poiEventId}', {
                                             poiEventId: poiEventId
                                         }), null, function (poi_event) {
+                                            var tmpMessage = "",
+                                                tmpBotton = "";
                                             poiEventContext = $.parseJSON(poi_event.context);
+                                            if (undefined !== poiEventContext.button[0].imageUrl) {
+                                                tmpMessage = "image";
+                                                tmpBotton = poiEventContext.button[0].imageUrl;
+                                            } else if (undefined !== poiEventContext.button[0].text) {
+                                                tmpMessage = "text";
+                                                tmpBotton = poiEventContext.button[0].text;
+                                            } else {
+                                                tmpMessage = poiEventContext.message;
+                                                tmpBotton = poiEventContext.button[0].text;
+                                            }
+
                                             poiEventData = {
                                                 eventId: poi_event.id,
                                                 eventType: poi_event.type,
-                                                message: poiEventContext.message,
-                                                button: poiEventContext.button[0].text,
+                                                message: tmpMessage,
+                                                button: tmpBotton,
                                                 link: poiEventContext.button[0].actionUrl,
                                                 notifyMsg: poi_event.notifyMsg,
                                                 notifyScheduler: poi_event.notifyScheduler
                                             };
-
+                                            
                                             // For poll event
                                             poiEventData.pollButtons = [];
                                             $.each(poiEventContext.button, function (i, item) {
@@ -1828,6 +1841,28 @@ $(function () {
                         notifyMsg: notifyMsg,
                         notifyScheduler: notifyScheduler
                     };
+
+                if (1 === poiEventType) {
+                    // fix hyper data 
+                    nn.log("displayText ["+displayText+"]");
+                    if ("text" === displayText) {
+                        nn.log("in text");
+                        poiEventContext.message = "";
+                        poiEventData.context = JSON.stringify(poiEventContext);
+                    } else if("image" === displayText){
+                        nn.log("in image");
+                        poiEventContext = null;
+                        poiEventContext = {
+                            "message": "",
+                            "button": [{
+                                "imageUrl": btnText,
+                                "actionUrl": channelUrl
+                            }]
+                        };
+                        poiEventData.context = JSON.stringify(poiEventContext);
+                    }
+                }
+
                 if ($('#cur-poi-edit').hasClass('edit') && poiPointId) {
                     // update mode
                     if (poiPointId > 0 && !isNaN(poiPointId)) {
