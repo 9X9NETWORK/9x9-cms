@@ -45,6 +45,13 @@ div.constrain {
     font-weight: bold;
 }
 
+.radio-list.disabled label,.radio-list.disabled span{
+    color: #aaa;
+    opacity: 0.65;
+}
+
+
+
 #channel-name {
     display: block;
     overflow: hidden;
