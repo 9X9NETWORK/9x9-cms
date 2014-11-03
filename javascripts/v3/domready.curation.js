@@ -1459,7 +1459,7 @@ $(function () {
                                                         $("#hyper_button_text").attr("placeholder", "Upload image");
 
                                                         $("#hyper_button_text").data("image", $("#hyper_button_text").val());
-                                                    }, 200);
+                                                    }, 500);
                                                 }
                                             });
                                         });
