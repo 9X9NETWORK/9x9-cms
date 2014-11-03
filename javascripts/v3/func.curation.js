@@ -45,7 +45,7 @@
         xhr.upload.onprogress = function (event) {
             if (event.lengthComputable) {
                 var complete = (event.loaded / event.total * 100 | 0);
-                procBody.val("Uploading ... " + complete);
+                procBody.val("Uploading ... " + complete + " %");
             }
         }
         xhr.onload = function() {
