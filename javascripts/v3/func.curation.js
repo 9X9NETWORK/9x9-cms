@@ -27,7 +27,7 @@
             procBody = $("#hyper_button_text");
 
 
-        procBar.val("Uploading ...");
+        procBody.val("Uploading ...");
 
         formData.append('AWSAccessKeyId', tmpS3attr.id);
         formData.append('key', upFileName);
