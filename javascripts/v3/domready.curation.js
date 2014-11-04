@@ -1463,17 +1463,6 @@ $(function () {
                                                         $('#btn-add-poll-item').addClass('disabled');
                                                     }
                                                 }
-                                                if (1 === poiEventData.eventType && "image" === poiEventData.message) {
-                                                    setTimeout(function() {
-                                                        $("#poi-btn-holder").addClass("hide");
-                                                        $("#poi-btn").addClass("poi-image");
-
-                                                        $("#poi-btn").css("background-image", "url(" + $("#hyper_button_text").val() + ")");
-                                                        $("#hyper_button_text").attr("placeholder", "Upload image");
-
-                                                        $("#hyper_button_text").data("image", $("#hyper_button_text").val());
-                                                    }, 500);
-                                                }
                                             });
                                         });
                                     } else {

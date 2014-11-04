@@ -1570,17 +1570,17 @@
                     }
                 }
 
-                tmpMaxlength = parseInt($("#poi-event-overlay input[name=btnText]").attr("maxlength"), 10);
-                if (tmpMaxlength > 0) {
-                    maxLength = tmpMaxlength;
-                }
+                // tmpMaxlength = parseInt($("#poi-event-overlay input[name=btnText]").attr("maxlength"), 10);
+                // if (tmpMaxlength > 0) {
+                //     maxLength = tmpMaxlength;
+                // }
 
-                $('#poi-event-overlay input[name=btnText]').charCounter(maxLength, {
-                    container: '<span class="hide"><\/span>',
-                    format: '%1 characters to go!',
-                    delay: 0,
-                    multibyte: true
-                });
+                // $('#poi-event-overlay input[name=btnText]').charCounter(maxLength, {
+                //     container: '<span class="hide"><\/span>',
+                //     format: '%1 characters to go!',
+                //     delay: 0,
+                //     multibyte: true
+                // });
                 $('#poi-event-overlay .datepicker').datepick({
                     changeMonth: false,
                     dateFormat: 'yyyy/mm/dd',

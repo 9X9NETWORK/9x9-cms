@@ -52,6 +52,27 @@ var POI = {
         }
     };
 
+    var hyperChannelT2I = function() {
+        var tmpTorI = $("#poiDisplayType").val();
+        
+        switch (tmpTorI) {
+            case "text":
+                // default is text , do no thing
+
+                break;
+
+            case "image":
+                $("#poi-btn-holder").addClass("hide");
+                $("#poi-btn").addClass("poi-image");
+
+                $("#poi-btn").css("background-image", "url(" + $("#hyper_button_text").val() + ")");
+                $("#hyper_button_text").attr("placeholder", "Upload image");
+
+                $("#hyper_button_text").data("image", $("#hyper_button_text").val());
+                break;
+        }
+    };
+
     var isSingleBtn = function() {
         return $("#poi-enter").length > 0;
     };
@@ -148,6 +169,10 @@ var POI = {
                 }).delay(opt.duration * 1000).animate({
                     bottom: -$("#poi-layer").height() - 50
                 }, 300);
+            }
+
+            if ("hyperChannel" === opt.type) {
+                hyperChannelT2I();
             }
         },
         displayText: function(txt) {
