@@ -52,7 +52,7 @@
         var getParm = {
             page: inPage,
             rows: 40,
-            playable: true
+            mso: cms.global.MSOINFO.name
         };
 
         nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
