@@ -4,6 +4,99 @@
 (function ($common) {
     'use strict';
 
+    $common.prepareChannelsFilter = function (inList) {
+        var retValue = [],
+            countList = inList.length,
+            allowStatus = 0,
+            tmpObj = {},
+            i = 0;
+        for (i = 0; i < countList; i += 1) {
+            tmpObj = inList[i];
+            if (allowStatus === tmpObj.status) {
+                retValue.push(tmpObj);
+            }
+        }
+        return retValue;
+    };
+
+    $common.prepareChannels = function (inList, currentList) {
+        var retValue = [],
+            temp = [],
+            tmpId = 0,
+            tmpMsoName = cms.global.MSOINFO.name || "9x9";
+
+        $.each(inList, function (i, channel) {
+            temp = [];
+            if ('' === channel.imageUrl) {
+                channel.imageUrl = 'images/ch_default.png';
+                if (channel.moreImageUrl && '' !== $.trim(channel.moreImageUrl)) {
+                    temp = channel.moreImageUrl.split('|');
+                    if (temp[0] && temp[0] !== cms.config.EPISODE_DEFAULT_IMAGE) {
+                        channel.imageUrl = temp[0];
+                    }
+                }
+            }
+            tmpId = parseInt(channel.id, 10);
+            if (-1 === $.inArray(tmpId, currentList)) {
+                channel.alreadyAdd = false;
+            } else {
+                channel.alreadyAdd = true;
+            }
+            channel.msoName = tmpMsoName;
+            retValue.push(channel);
+        });
+        return retValue;
+    };
+
+    $common.pcsGetPlayableChannels = function (inPage, currentList) {
+        var getParm = {
+            page: inPage,
+            rows: 40,
+            playable: true
+        };
+
+        nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
+            userId: cms.global.USER_DATA.id
+        }), getParm, function (channels) {
+            var cntChannel = channels.length,
+                items = [],
+                nextPage = inPage + 1,
+                cntChannelAll = 0,
+                cntChannelPage = 0;
+
+            items = channels;
+            items = $common.prepareChannelsFilter(items);
+            items = $common.prepareChannels(items, currentList);
+            cntChannel = items.length;
+
+            $('#portal-search-item-tmpl').tmpl(items).appendTo('#search-channel-list');
+
+            cntChannelAll = $("#search-channel-list li").length;
+
+            $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "My programs:"]));
+
+            if (cntChannelAll > 0) {
+                $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannelAll]));
+            } else {
+                $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Your didn't have any programs."]));
+            }
+
+            if (1 === inPage) {
+                cntChannelPage = Math.floor($(".list-holder").width() / 117) * 2;
+                if (cntChannel > cntChannelPage) {
+                    $("#searchNext").show();
+                }
+                $("#portal-add-layer").fadeIn();
+                $('#overlay-s').fadeOut("slow");
+            }
+
+            if (cntChannel > 0) {
+                $common.pcsGetPlayableChannels(nextPage, currentList);
+            }
+
+        });
+    };
+
     $common.isImportEpisode = function (inOid) {
         var ids = [40347, 57626],
             retValue = false;
