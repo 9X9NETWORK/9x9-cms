@@ -122,47 +122,6 @@
         return retValue;
     };
 
-    $page.prepareChannelsFilter = function (inList) {
-        var retValue = [],
-            countList = inList.length,
-            allowStatus = 0,
-            tmpObj = {};
-
-        for (var i = 0; i < countList; i++) {
-            tmpObj = inList[i];
-            if (allowStatus === tmpObj.status) {
-                retValue.push(tmpObj);
-            }
-        };
-        return retValue;
-    };
-
-    $page.prepareChannels = function (inList) {
-        var retValue = [], temp = [], tmpId = 0, tmpMsoName = cms.global.MSOINFO.name || "9x9";
-
-        $.each(inList, function (i, channel) {
-            temp = [];
-            if (channel.imageUrl == '') {
-                channel.imageUrl = 'images/ch_default.png';
-                if (channel.moreImageUrl && '' !== $.trim(channel.moreImageUrl)) {
-                    temp = channel.moreImageUrl.split('|');
-                    if (temp[0] && temp[0] !== cms.config.EPISODE_DEFAULT_IMAGE) {
-                        channel.imageUrl = temp[0];
-                    }
-                }
-            }
-            tmpId = parseInt(channel.id, 10);
-            if (-1 === $.inArray(tmpId, $page.currentList)) {
-                channel.alreadyAdd = false;
-            } else {
-                channel.alreadyAdd = true;
-            }
-            channel.msoName = tmpMsoName;
-            retValue.push(channel);
-        });
-        return retValue;
-    };
-
     $page._getNowOrder = function () {
         var this_id = 0,
             tmpDiv = null,
