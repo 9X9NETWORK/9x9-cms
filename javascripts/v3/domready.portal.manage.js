@@ -720,7 +720,7 @@ $(function () {
             switch (searchType) {
             case "init":
                 $common.pcsGetPlayableChannels(1, $page.currentList);
-                // nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
+                // nn.api('GET', cms.reapi('/api/users/{userId}/playableChannels', {
                 // userId: cms.global.USER_DATA.id
                 // }), {
                 // mso: cms.global.MSOINFO.name
