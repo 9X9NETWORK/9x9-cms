@@ -706,8 +706,12 @@ $(function () {
                     nn.log(textStatus + ': ' + jqXHR.responseText, 'error');
                 });
             });
+
+            $("#intro").val($("#intro").val().replace(/\n/g, '{BR}'));
             var qrystring = $('#settingForm').serialize(),
                 parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
+            $("#intro").val($("#intro").val().replace(/\{BR\}/g, '\n'));
+
             // sharing url
             nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
                 channelId: cms.global.USER_URL.param('id')

@@ -470,6 +470,7 @@
                 nn.api('GET', cms.reapi('/api/channels/{channelId}', {
                     channelId: id
                 }), null, function (channel) {
+                    channel.intro = channel.intro.replace(/\{BR\}/g, '\n');
                     if (channel.userIdStr !== cms.global.USER_DATA.idStr) {
                         $common.showSystemErrorOverlayAndHookError('You are not authorized to edit this program.');
                         return;
