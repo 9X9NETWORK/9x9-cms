@@ -204,7 +204,7 @@ $(function () {
                 }
                 params = {
                     name: $('#name').val(),
-                    intro: $('#intro').val(),
+                    intro: $('#intro').val().replace(/\n/g, '{BR}'),
                     imageUrl: $('#imageUrl').val()
                 };
                 $.extend(params, status_params);

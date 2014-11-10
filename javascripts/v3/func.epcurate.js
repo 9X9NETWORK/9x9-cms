@@ -273,6 +273,7 @@
         nn.api('GET', cms.reapi('/api/episodes/{episodeId}', {
             episodeId: $('#id').val()
         }), null, function (episode) {
+            episode.intro = episode.intro.replace(/\{BR\}/g, '\n');
             if (cid > 0 && parseInt(cid, 10) !== episode.channelId) {
                 $common.showSystemErrorOverlayAndHookError('You are not authorized to edit this episode.');
                 return;
