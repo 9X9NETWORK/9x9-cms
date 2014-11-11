@@ -267,7 +267,7 @@ $(function () {
                         var cntChannel = channels.length,
                             items = [];
 
-                        items = $page.prepareChannels(channels);
+                        items = $common.prepareChannels(channels);
                         cntChannel = items.length;
                         if (cntChannel > 0) {
                             nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
@@ -315,7 +315,7 @@ $(function () {
                     var cntChannel = channels.length,
                         items = [];
 
-                    items = $page.prepareChannels(channels);
+                    items = $common.prepareChannels(channels);
                     cntChannel = items.length;
                     if (cntChannel > 0) {
                         $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannel]));
