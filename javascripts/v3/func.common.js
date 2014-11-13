@@ -48,11 +48,12 @@
         return retValue;
     };
 
-    $common.pcsGetPlayableChannels = function (inPage, currentList) {
+    $common.pcsGetPlayableChannels = function (inPage, currentList, inPublic) {
         var getParm = {
             page: inPage,
             rows: 40,
-            mso: cms.global.MSOINFO.name
+            mso: cms.global.MSOINFO.name,
+            isPublic: inPublic
         };
 
         nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
@@ -91,7 +92,7 @@
             }
 
             if (cntChannel > 0) {
-                $common.pcsGetPlayableChannels(nextPage, currentList);
+                $common.pcsGetPlayableChannels(nextPage, currentList, inPublic);
             }
 
         });
