@@ -565,7 +565,7 @@
         },
         "overlay": {
             "Create a New Program": "建立一個新的節目",
-            "Choose a type": "選一個類型",
+            "You can set it as a PAID or FREE program!": "你可以把節目設定成付費或是免費!",
             "Sync<br />Program": "同步節目",
             "Curated<br />Program": "策展節目",
             "Live<br />Program": "直播節目",

@@ -238,7 +238,7 @@
     <div class="overlay-h316-center">
         <p class="overlay-button-close"></p>
         <h2 class="overlay-title langkey">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Create a New Program'])}}</h2>
-        <h3 class="overlay-subtitle">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Choose a type'])}}</h3>
+        <h3 class="overlay-subtitle">{{html nn._([cms.global.PAGE_ID, 'overlay', 'You can set it as a PAID or FREE program!'])}}</h3>
         {{if !cms.global.USER_PRIV.isYoutuber}}
             <div id="create-9x9-program" class="btn-large btn-create">
                 <div class="left"></div>
@@ -440,7 +440,13 @@
                 <a href="{{if true === isYoutubeLive}}javascript:void(0);{{else}}episode-list.html?id=${id}{{/if}}">${name}</a>
             </h3>
             <div class="badge-list">
-                <span class="badge outline">{{if isPublic}}${nn._([cms.global.PAGE_ID, 'channel-list', 'Publish'])}{{else}}${nn._([cms.global.PAGE_ID, 'channel-list', 'Unpublish'])}{{/if}}</span>
+                {{if status === 0}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Publish'])}</span>
+                {{else}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Unpublish'])}</span>
+                {{/if}}
+
+                
                 {{if true === isYoutubeSync}}
                     <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Sync programe'])}</span>
                 {{else true === isYoutubeLive}}
