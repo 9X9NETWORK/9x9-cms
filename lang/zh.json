@@ -443,6 +443,8 @@
             "Processing...": "處理中..."
         },
         "channel-list": {
+            "UNDER REVIEW": "UNDER REVIEW",
+            "Paid": "付費",
             "Sorted by": "預設排序",
             "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.": "您將變更節目排序至\"更新時間\"，系統將依節目\"更新時間\"自動排序，除推薦節目外，其餘您將無法手動進行變更順序。",
             "Updated time": "依更新時間 ",
