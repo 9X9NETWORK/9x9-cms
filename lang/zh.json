@@ -526,6 +526,11 @@
             "By curation": "策展編輯"
         },
         "channel-list": {
+            "Paid": "付費",
+            "Publish": "發佈",
+            "Unpublish": "未發佈",
+            "Sync programe": "同步節目",
+            "Live programe": "直播節目",
             "Get URL": "網址",
             "Brand": "品牌",
             "Share URL": "分享連結",

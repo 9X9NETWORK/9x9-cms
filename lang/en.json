@@ -417,6 +417,11 @@
             "Save order": "Save order"
         },
         "channel-list": {
+            "Paid": "Paid",
+            "Publish": "Publish",
+            "Unpublish": "Unpublish",
+            "Sync programe": "Sync programe",
+            "Live programe": "Live programe",
             "Get URL": "Get URL",
             "Brand": "Brand",
             "Share URL": "Share URL",
