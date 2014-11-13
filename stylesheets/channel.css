@@ -406,7 +406,9 @@ body.mac #title-func h2 {
 }
 
 #channel-list li .func-wrap .func-btns .btn-wrap ul li a.channel-poi.disable,
-#channel-list li .func-wrap .func-btns .btn-wrap ul li a.channel-poi.disable:hover {
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.channel-poi.disabled,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.channel-poi.disable:hover,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.channel-poi.disabled:hover {
     background-position: -46px -22px;
     cursor: default;
 }
@@ -420,7 +422,9 @@ body.mac #title-func h2 {
 }
 
 #channel-list li .func-wrap .func-btns .btn-wrap ul li a.add.disable,
-#channel-list li .func-wrap .func-btns .btn-wrap ul li a.add.disable:hover {
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.add.disabled,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.add.disable:hover,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.add.disabled:hover {
     background-position: -46px 3px;
     cursor: default;
 }
@@ -434,7 +438,9 @@ body.mac #title-func h2 {
 }
 
 #channel-list li .func-wrap .func-btns .btn-wrap ul li a.detail.disable,
-#channel-list li .func-wrap .func-btns .btn-wrap ul li a.detail.disable:hover {
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.detail.disabled,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.detail.disable:hover,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.detail.disabled:hover {
     background-position: -46px -47px;
     cursor: default;
 }
@@ -448,7 +454,9 @@ body.mac #title-func h2 {
 }
 
 #channel-list li .func-wrap .func-btns .btn-wrap ul li a.setting.disable,
-#channel-list li .func-wrap .func-btns .btn-wrap ul li a.setting.disable:hover {
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.setting.disabled,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.setting.disable:hover,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.setting.disabled:hover {
     background-position: -46px -72px;
     cursor: default;
 }
@@ -462,7 +470,9 @@ body.mac #title-func h2 {
 }
 
 #channel-list li .func-wrap .func-btns .btn-wrap ul li a.del.disable,
-#channel-list li .func-wrap .func-btns .btn-wrap ul li a.del.disable:hover {
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.del.disabled,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.del.disable:hover, 
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.del.disabled:hover {
     background-position: -46px -97px;
     cursor: default;
 }
@@ -476,7 +486,9 @@ body.mac #title-func h2 {
 }
 
 #channel-list li .func-wrap .func-btns .btn-wrap ul li a.url.disable,
-#channel-list li .func-wrap .func-btns .btn-wrap ul li a.url.disable:hover {
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.url.disabled,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.url.disable:hover,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.url.disabled:hover {
     background-position: -46px -122px;
     cursor: default;
 }
@@ -490,7 +502,9 @@ body.mac #title-func h2 {
 }
 
 #channel-list li .func-wrap .func-btns .btn-wrap ul li a.sync.disable,
-#channel-list li .func-wrap .func-btns .btn-wrap ul li a.sync.disable:hover {
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.sync.disabled,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.sync.disable:hover,
+#channel-list li .func-wrap .func-btns .btn-wrap ul li a.sync.disabled:hover {
     background-position: -46px -197px;
     cursor: default;
 }
@@ -797,7 +811,8 @@ body.mac #title-func h2 {
     padding-left: 3px;
 }
 
-#content-main-wrap form .fminput .fmfield .select.disable {
+#content-main-wrap form .fminput .fmfield .select.disable,
+#content-main-wrap form .fminput .fmfield .select.disabled {
     background-position: 0 -90px;
 }
 
@@ -808,7 +823,8 @@ body.mac #title-func h2 {
 }
 
 #content-main-wrap form .fminput .fmfield .select .select-btn,
-#content-main-wrap form .fminput .fmfield .select.disable .select-btn {
+#content-main-wrap form .fminput .fmfield .select.disable .select-btn,
+#content-main-wrap form .fminput .fmfield .select.disabled .select-btn {
     background: url(../images/btns.png) no-repeat 0 0;
 }
 
@@ -824,7 +840,8 @@ body.mac #title-func h2 {
     cursor: pointer;
 }
 
-#content-main-wrap form .fminput .fmfield .select.disable .select-btn {
+#content-main-wrap form .fminput .fmfield .select.disable .select-btn,
+#content-main-wrap form .fminput .fmfield .select.disabled .select-btn {
     top: 5px;
 }
 
@@ -833,7 +850,8 @@ body.mac #title-func h2 {
     background-position: 0 -451px;
 }
 
-#content-main-wrap form .fminput .fmfield .select.disable .select-btn {
+#content-main-wrap form .fminput .fmfield .select.disable .select-btn,
+#content-main-wrap form .fminput .fmfield .select.disabled .select-btn {
     background-position: 0 -501px;
 }
 
@@ -852,7 +870,8 @@ body.mac #title-func h2 {
     -moz-binding: url('ellipsis.xml#ellipsis');
 }
 
-#content-main-wrap form .fminput .fmfield .select.disable .select-txt {
+#content-main-wrap form .fminput .fmfield .select.disable .select-txt,
+#content-main-wrap form .fminput .fmfield .select.disabled .select-txt {
     background-position: right -120px;
 }
 
@@ -866,7 +885,8 @@ body.mac #title-func h2 {
     text-decoration: none;
 }
 
-#content-main-wrap form .fminput .fmfield .select.disable .select-txt a {
+#content-main-wrap form .fminput .fmfield .select.disable .select-txt a,
+#content-main-wrap form .fminput .fmfield .select.disabled .select-txt a {
     background-position: 0 -150px;
     color: #999;
 }
@@ -1084,7 +1104,8 @@ body.mac #title-func h2 {
     background: url(../images/multi_choose_middle.png) repeat-x;
 }
 
-#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-middle a {
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-middle a,
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disabled .page-list-middle a {
     cursor: default;
 }
 
@@ -1103,15 +1124,18 @@ body.mac #title-func h2 {
     background: url(../images/multi_choose_middle_on.png) repeat-x;
 }
 
-#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable {
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable,
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disabled {
     background: url(../images/multi_choose_left_disable.png) no-repeat 0 0;
 }
 
-#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-right {
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-right,
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disabled .page-list-right {
     background: url(../images/multi_choose_right_disable.png) no-repeat right 0;
 }
 
-#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-middle {
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-middle,
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disabled .page-list-middle {
     background: url(../images/multi_choose_middle_disable.png) repeat-x;
 }
 
@@ -1133,11 +1157,13 @@ body.mac #title-func h2 {
     text-decoration: none;
 }
 
-#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-middle a.select-page {
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-middle a.select-page,
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disabled .page-list-middle a.select-page {
     background: url(../images/multi_choose_plus_disable.png) no-repeat right 8px;
 }
 
-#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-middle a.select-page span {
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disable .page-list-middle a.select-page span,
+#content-main-wrap form .fminput .fmfield .connected .share-item .page-list.disabled .page-list-middle a.select-page span {
     color:#999;
 }
 

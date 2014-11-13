@@ -8,7 +8,7 @@
   padding: 4px 8px;
 }
 /* line 23, ../sass/cms-component.sass */
-.form-group input.disable[type="text"], .form-group textarea.disable {
+.form-group input.disabled[type="text"], .form-group textarea.disabled {
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjEuMCIgeDI9IjAuNSIgeTI9IjAuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U2ZTZlNiIvPjxzdG9wIG9mZnNldD0iNTElIiBzdG9wLWNvbG9yPSIjZTllOWU5Ii8+PHN0b3Agb2Zmc2V0PSI4MSUiIHN0b3AtY29sb3I9IiNlYmViZWIiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlMmUyZTIiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
   background-size: 100%;
   background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #e6e6e6), color-stop(51%, #e9e9e9), color-stop(81%, #ebebeb), color-stop(100%, #e2e2e2));
@@ -72,7 +72,7 @@
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
 }
 /* line 50, ../sass/cms-component.sass */
-.normal-btn.disable {
+.normal-btn.disabled {
   background-color: rgba(210, 210, 210, 0.8);
   -moz-box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
   -webkit-box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25);
@@ -225,12 +225,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-color: #fff;
 }
 /* line 168, ../sass/cms-component.sass */
-.form-group .radio-btn.disable {
+.form-group .radio-btn.disabled {
   color: #999;
   cursor: default;
 }
 /* line 171, ../sass/cms-component.sass */
-.form-group .radio-btn.disable:before {
+.form-group .radio-btn.disabled:before {
   background-color: #e9e9e9 !important;
   border: 0.19rem solid #e9e9e9;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -337,13 +337,19 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 /* line 249, ../sass/cms-component.sass */
+.icon-exclamation {
+  background: transparent url("../images/icon_exclamation.png") no-repeat 0 10px;
+  padding: 10px 20px;
+}
+
+/* line 257, ../sass/cms-component.sass */
 .nav-tabs {
   overflow: hidden;
   *zoom: 1;
   position: relative;
   padding-bottom: 20px;
 }
-/* line 255, ../sass/cms-component.sass */
+/* line 263, ../sass/cms-component.sass */
 .nav-tabs:after {
   content: "";
   display: block;
@@ -359,12 +365,12 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   -webkit-box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
   box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.15);
 }
-/* line 269, ../sass/cms-component.sass */
+/* line 277, ../sass/cms-component.sass */
 .nav-tabs .tab-item {
   float: left;
   margin-bottom: -1px;
 }
-/* line 272, ../sass/cms-component.sass */
+/* line 280, ../sass/cms-component.sass */
 .nav-tabs .tab-item a {
   text-decoration: none;
   color: #555;
@@ -376,22 +382,22 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   padding: 8px 25px;
   background-color: #fff;
 }
-/* line 283, ../sass/cms-component.sass */
+/* line 291, ../sass/cms-component.sass */
 .nav-tabs .tab-item a:hover {
   color: #999;
 }
-/* line 286, ../sass/cms-component.sass */
+/* line 294, ../sass/cms-component.sass */
 .nav-tabs .tab-item.on a {
   background-color: #e2e2e2;
   border-bottom: 1px solid #e2e2e2;
   cursor: default;
 }
-/* line 290, ../sass/cms-component.sass */
+/* line 298, ../sass/cms-component.sass */
 .nav-tabs .tab-item.on a:hover {
   color: #555;
 }
 
-/* line 294, ../sass/cms-component.sass */
+/* line 302, ../sass/cms-component.sass */
 .func-btns .del {
   display: block;
   width: 22px;
@@ -402,17 +408,17 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   text-indent: -100000px;
   background-position: 0 -97px;
 }
-/* line 303, ../sass/cms-component.sass */
+/* line 311, ../sass/cms-component.sass */
 .func-btns .del:hover {
   background-position: -23px -97px;
 }
 
-/* line 306, ../sass/cms-component.sass */
+/* line 314, ../sass/cms-component.sass */
 .btn-item {
   display: inline-block;
 }
 
-/* line 310, ../sass/cms-component.sass */
+/* line 318, ../sass/cms-component.sass */
 .central-l {
   top: 50%;
   left: 50%;
@@ -422,24 +428,24 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   transform: translate3D(-50%, -50%, 0);
 }
 
-/* line 315, ../sass/cms-component.sass */
+/* line 323, ../sass/cms-component.sass */
 .fixed-l {
   position: fixed;
 }
 
-/* line 317, ../sass/cms-component.sass */
+/* line 325, ../sass/cms-component.sass */
 .align-center {
   text-align: center;
 }
 
-/* line 322, ../sass/cms-component.sass */
+/* line 330, ../sass/cms-component.sass */
 .progress {
   position: absolute;
   width: 100%;
   top: 0;
 }
 
-/* line 329, ../sass/cms-component.sass */
+/* line 337, ../sass/cms-component.sass */
 .progress-bar {
   float: left;
   width: 0;
@@ -456,7 +462,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   transition: width 0.6s ease;
 }
 
-/* line 345, ../sass/cms-component.sass */
+/* line 353, ../sass/cms-component.sass */
 .progress-striped .progress-bar, .progress-bar-striped {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
@@ -465,7 +471,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   background-size: 40px 40px;
 }
 
-/* line 353, ../sass/cms-component.sass */
+/* line 361, ../sass/cms-component.sass */
 .btn-upload-flash {
   width: 100%;
   height: 100%;
@@ -474,13 +480,13 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   cursor: pointer;
 }
 
-/* line 360, ../sass/cms-component.sass */
+/* line 368, ../sass/cms-component.sass */
 .btn-dash {
   cursor: pointer;
   border: 3px dashed #fff;
 }
 
-/* line 365, ../sass/cms-component.sass */
+/* line 373, ../sass/cms-component.sass */
 .title-func {
   position: relative;
   position: relative;
@@ -488,7 +494,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   z-index: 99;
   padding: 26px 0 17px;
 }
-/* line 371, ../sass/cms-component.sass */
+/* line 379, ../sass/cms-component.sass */
 .title-func h2 {
   float: left;
   font-weight: 500;
@@ -504,24 +510,24 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   right: 350px;
 }
 
-/* line 386, ../sass/cms-component.sass */
+/* line 394, ../sass/cms-component.sass */
 .intro {
   margin: 0 30px 0 0;
   font-size: 13px;
   height: 41px;
   line-height: 41px;
 }
-/* line 391, ../sass/cms-component.sass */
+/* line 399, ../sass/cms-component.sass */
 .intro span {
   float: left;
 }
 
-/* line 395, ../sass/cms-component.sass */
+/* line 403, ../sass/cms-component.sass */
 .upload-progress-wrap {
   margin-bottom: 1.5em;
   position: relative;
 }
-/* line 398, ../sass/cms-component.sass */
+/* line 406, ../sass/cms-component.sass */
 .upload-progress-wrap .progress {
   position: relative;
   height: 30px;
@@ -533,56 +539,56 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
   width: calc(100% - 35px);
 }
-/* line 408, ../sass/cms-component.sass */
+/* line 416, ../sass/cms-component.sass */
 .upload-progress-wrap .progress-bar {
   line-height: 30px;
 }
-/* line 410, ../sass/cms-component.sass */
+/* line 418, ../sass/cms-component.sass */
 .upload-progress-wrap .overlay-button-close {
   right: 0;
   top: 4px;
 }
-/* line 414, ../sass/cms-component.sass */
+/* line 422, ../sass/cms-component.sass */
 .upload-progress-wrap.is-success .overlay-button-close {
   text-indent: 0;
   background-image: none;
   cursor: default;
 }
-/* line 418, ../sass/cms-component.sass */
+/* line 426, ../sass/cms-component.sass */
 .upload-progress-wrap.is-success .overlay-button-close:before {
   content: "✔";
   color: green;
   position: absolute;
 }
 
-/* line 425, ../sass/cms-component.sass */
+/* line 433, ../sass/cms-component.sass */
 .upload-video-btn {
   line-height: 40px;
   text-align: center;
   border-radius: 4px;
   margin-bottom: 1em;
 }
-/* line 434, ../sass/cms-component.sass */
+/* line 442, ../sass/cms-component.sass */
 .upload-video-btn:hover {
   background-color: rgba(255, 255, 255, 0.4);
 }
-/* line 436, ../sass/cms-component.sass */
+/* line 444, ../sass/cms-component.sass */
 .upload-video-btn .title {
   position: relative;
   line-height: 40px;
   vertical-align: middle;
 }
-/* line 440, ../sass/cms-component.sass */
+/* line 448, ../sass/cms-component.sass */
 .upload-video-btn .title img {
   vertical-align: middle;
   transform: scale(0.7);
 }
 
-/* line 457, ../sass/cms-component.sass */
+/* line 465, ../sass/cms-component.sass */
 .edit-episode-infomation .overlay-h316-center {
   padding: 24px 10px 0px;
 }
-/* line 460, ../sass/cms-component.sass */
+/* line 468, ../sass/cms-component.sass */
 .edit-episode-infomation .thumb-wrap {
   width: 25%;
   float: left;
@@ -592,47 +598,47 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   max-height: 165px;
   overflow: hidden;
 }
-/* line 470, ../sass/cms-component.sass */
+/* line 478, ../sass/cms-component.sass */
 .edit-episode-infomation .thumb-wrap:hover .thumb-hover-wrap {
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
 }
-/* line 474, ../sass/cms-component.sass */
+/* line 482, ../sass/cms-component.sass */
 .edit-episode-infomation .img-wrap {
   background-color: #fff;
   width: 100%;
   padding: 5px;
   box-sizing: border-box;
 }
-/* line 479, ../sass/cms-component.sass */
+/* line 487, ../sass/cms-component.sass */
 .edit-episode-infomation .img-wrap img {
   width: 100%;
 }
-/* line 481, ../sass/cms-component.sass */
+/* line 489, ../sass/cms-component.sass */
 .edit-episode-infomation .form-group {
   margin-bottom: 1em;
   padding-left: 0.5em;
 }
-/* line 484, ../sass/cms-component.sass */
+/* line 492, ../sass/cms-component.sass */
 .edit-episode-infomation .form-wrap {
   width: 70%;
   float: left;
 }
-/* line 487, ../sass/cms-component.sass */
+/* line 495, ../sass/cms-component.sass */
 .edit-episode-infomation .form-elements {
   margin-left: 1em;
   width: 100%;
 }
-/* line 490, ../sass/cms-component.sass */
+/* line 498, ../sass/cms-component.sass */
 .edit-episode-infomation .form-elements textarea, .edit-episode-infomation .form-elements input[type="text"] {
   width: 100%;
 }
-/* line 492, ../sass/cms-component.sass */
+/* line 500, ../sass/cms-component.sass */
 .edit-episode-infomation .form-label {
   padding-left: 1.2em;
   text-align: left;
 }
-/* line 495, ../sass/cms-component.sass */
+/* line 503, ../sass/cms-component.sass */
 .edit-episode-infomation .thumb-hover-wrap {
   font-size: 0.75rem;
   position: absolute;
@@ -644,7 +650,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   background: transparent url("../images/baenner-upload.gif") no-repeat 8px 6px;
   transition: all 0.5s ease;
 }
-/* line 505, ../sass/cms-component.sass */
+/* line 513, ../sass/cms-component.sass */
 .edit-episode-infomation .notice {
   color: #f00;
   font-size: 13px;
@@ -652,22 +658,22 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   margin-bottom: 5px;
 }
 
-/* line 511, ../sass/cms-component.sass */
+/* line 519, ../sass/cms-component.sass */
 .is-right {
   float: right;
 }
 
-/* line 514, ../sass/cms-component.sass */
+/* line 522, ../sass/cms-component.sass */
 .fminput {
   position: relative;
 }
 
-/* line 517, ../sass/cms-component.sass */
+/* line 525, ../sass/cms-component.sass */
 .input-gray {
   height: auto;
 }
 
-/* line 523, ../sass/cms-component.sass */
+/* line 531, ../sass/cms-component.sass */
 .form-control.input-gray {
   font-size: 14px;
   color: #555;
@@ -690,16 +696,16 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-/* line 538, ../sass/cms-component.sass */
+/* line 546, ../sass/cms-component.sass */
 .form-control.input-gray.with-left-icon {
   padding: 4px 24px 4px 8px;
 }
-/* line 541, ../sass/cms-component.sass */
+/* line 549, ../sass/cms-component.sass */
 .form-control.input-gray + .select-btn {
   right: 12px;
 }
 
-/* line 545, ../sass/cms-component.sass */
+/* line 553, ../sass/cms-component.sass */
 .style-select {
   float: left;
   width: 100px;
@@ -707,7 +713,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   border-radius: 2px;
   position: relative;
 }
-/* line 551, ../sass/cms-component.sass */
+/* line 559, ../sass/cms-component.sass */
 .style-select:after {
   content: "";
   display: block;
@@ -722,11 +728,11 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   -moz-pointer-events: none;
   pointer-events: none;
 }
-/* line 566, ../sass/cms-component.sass */
+/* line 574, ../sass/cms-component.sass */
 .style-select:hover:after {
   background-position: 0 -451px;
 }
-/* line 570, ../sass/cms-component.sass */
+/* line 578, ../sass/cms-component.sass */
 .style-select select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -735,7 +741,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   width: 120px;
 }
 
-/* line 585, ../sass/cms-component.sass */
+/* line 593, ../sass/cms-component.sass */
 .edit-icon {
   background-image: url("../images/btns.png");
   background-position: 0 -1060px;
@@ -749,13 +755,167 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   z-index: 55;
 }
 
-/* line 596, ../sass/cms-component.sass */
+/* line 604, ../sass/cms-component.sass */
 .edit-icon:hover, .edit-icon.on {
   background-position: -23px -1060px;
 }
 
-/* line 601, ../sass/cms-component.sass */
+/* line 609, ../sass/cms-component.sass */
 .fminput .charcounter {
   position: absolute;
   white-space: nowrap;
+}
+
+/* line 615, ../sass/cms-component.sass */
+.fmfield {
+  position: relative;
+}
+/* line 617, ../sass/cms-component.sass */
+.fmfield .select {
+  position: relative;
+  float: left;
+  width: 180px;
+  height: 30px;
+  margin-right: 10px;
+  padding-left: 3px;
+  background: url(../images/input_white.png) no-repeat 0 0;
+}
+/* line 625, ../sass/cms-component.sass */
+.fmfield .select.disabled {
+  background-position: 0 -90px;
+  opacity: 0.7;
+}
+/* line 628, ../sass/cms-component.sass */
+.fmfield .select-btn {
+  padding: 0;
+  width: 22px;
+  height: 23px;
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  z-index: 55;
+  cursor: pointer;
+  background: url(../images/btns.png) no-repeat 0 -400px;
+}
+/* line 638, ../sass/cms-component.sass */
+.fmfield .select-btn:hover {
+  background-position: 0 -451px;
+}
+/* line 643, ../sass/cms-component.sass */
+.fmfield .select-txt {
+  overflow: hidden;
+  height: 30px;
+  padding: 0 3px 0 0;
+  font-size: 13px;
+  line-height: 29px;
+  white-space: nowrap;
+  text-indent: 5px;
+  text-overflow: ellipsis;
+  background: url(../images/input_white.png) no-repeat right -30px;
+}
+/* line 655, ../sass/cms-component.sass */
+.fmfield .select-txt a {
+  display: block;
+  height: 30px;
+  padding-right: 4px;
+  color: #555;
+  text-decoration: none !important;
+  background: url(../images/input_white.png) repeat-x 0 -60px;
+}
+/* line 662, ../sass/cms-component.sass */
+.fmfield .select-list {
+  position: absolute;
+  top: 27px;
+  left: 0;
+  z-index: 60;
+  width: 181px;
+  border: 1px solid #b2b2b2;
+  border-bottom: none;
+  border-radius: 0 0 5px 5px;
+  opacity: 0.9;
+}
+/* line 674, ../sass/cms-component.sass */
+.fmfield .select-list li {
+  width: 162px;
+  height: 28px;
+  margin: 0;
+  padding: 0 13px 0 6px;
+  border-top: 1px solid #f5f5f5;
+  border-bottom: 1px solid #c9c9c9;
+  background: none;
+  background-color: #d2d2d2;
+  color: #555;
+  font-size: 13px;
+  line-height: 28px;
+  cursor: pointer;
+}
+/* line 687, ../sass/cms-component.sass */
+.fmfield .select-list li:first-child {
+  border-top: none;
+}
+/* line 689, ../sass/cms-component.sass */
+.fmfield .select-list li:hover {
+  background-color: #e4e4e4;
+  color: #999;
+}
+/* line 693, ../sass/cms-component.sass */
+.fmfield .disabled .select-btn {
+  background-position: 0 -501px;
+  cursor: default;
+}
+/* line 697, ../sass/cms-component.sass */
+.fmfield .disabled .select-txt {
+  background-position: right -120px;
+}
+/* line 700, ../sass/cms-component.sass */
+.fmfield .disabled .select-txt a {
+  background-position: 0 -150px;
+  cursor: default;
+  color: #999 !important;
+}
+
+/* line 706, ../sass/cms-component.sass */
+.fminput label {
+  float: left;
+  width: 140px;
+  padding: 7px 0 0 10px;
+  color: #555;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* line 715, ../sass/cms-component.sass */
+.badge {
+  z-index: 10;
+  bottom: 7px;
+  left: 7px;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #777;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+/* line 733, ../sass/cms-component.sass */
+.badge.danger {
+  background-color: #ef4913;
+}
+/* line 735, ../sass/cms-component.sass */
+.badge.outline {
+  background-color: transparent;
+  border: #777 1px solid;
+  color: #777;
+}
+
+/* line 739, ../sass/cms-component.sass */
+.badge-list {
+  margin-top: -1em;
+  margin-bottom: 1em;
 }
