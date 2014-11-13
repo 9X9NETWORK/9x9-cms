@@ -333,15 +333,23 @@
 </ul>
 {{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
 <p class="radio-list filterType">
-    <span>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</span>
-    <label for="filter_all" class="lbTypeLists checked">
-        <input type="radio" name="filter" value="all" id="filter_all" class="lbTypeItem" checked> {{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</label>
-    <label for="filter_9x9" class="lbTypeLists">
-        <input type="radio" name="filter" value="9x9" id="filter_9x9" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Curated programs'])}}</label>
-    <label for="filter_youtube" class="lbTypeLists">
-        <input type="radio" name="filter" value="YoutubeSync" id="filter_youtube" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Sync programs'])}}</label>
-    <label for="filter_youtubelive" class="lbTypeLists">
-        <input type="radio" name="filter" value="YoutubeLive" id="filter_youtubelive" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Live programs'])}}</label>
+
+    <div id="filterProgram" class="fminput clearfix">
+        <label>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</label>
+        <div class="fmfield">
+            <div class="select enable disabled">
+                <p class="select-btn on"></p>
+                <p class="select-txt"><a href="#" onclick="return false;">All</a></p>
+                <ul class="select-list" style="display: none;">
+                    <li data-meta="all"        >{{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</li>
+                    <li data-meta="9x9"        >{{html nn._([cms.global.PAGE_ID, 'title-func', 'Curated programs'])}}</li>
+                    <li data-meta="YoutubeSync">{{html nn._([cms.global.PAGE_ID, 'title-func', 'Sync programs'])}}</li>
+                    <li data-meta="YoutubeLive">{{html nn._([cms.global.PAGE_ID, 'title-func', 'Live programs'])}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </p>
 {{/if}}
 </script>
