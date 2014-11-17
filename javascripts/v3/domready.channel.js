@@ -460,14 +460,17 @@ $(function () {
             sphere = '',
             rowNum = 0,
             modCatLen = 0,
-            i = 0;
+            i = 0,
+            actObjId = $(this).parent().attr('id');
+            
+          nn.log("我又找到了............" +actObjId);  
         // sharing url
         if ($(this).hasClass('surl-li')) {
             $('#surl-ul .surl-li').removeClass('on');
             $(this).addClass('on');
         }
         // region (sphere) relate to category
-        if ('sphere-select-list' === $(this).parent().attr('id')) {
+        if ('sphere-select-list' === actObjId) {
             srcname = $(this).parent().parent().children('.select-txt').children().text();
             if (srcname !== selectOption) {
                 $('.category').removeClass('enable').addClass('disable');
@@ -508,7 +511,7 @@ $(function () {
             }
         }
         // category relate to tags
-        if ('browse-category' === $(this).parent().attr('id')) {
+        if ('browse-category' === actObjId) {
             nn.api('GET', cms.reapi('/api/tags'), {
                 categoryId: metadata,
                 lang: $('#sphere').val()

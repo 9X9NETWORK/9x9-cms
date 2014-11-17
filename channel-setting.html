@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/uniform.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/channel.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/old-channel.css?v=431625"/>
 <link rel="stylesheet" href="stylesheets/cms-component.css?v=431625">
 <title>FLIPr.tv - Program settings</title>
 </head>
@@ -175,6 +176,35 @@
 <div id="content-main-wrap" class="footer-on">
 <div class="constrain">
 <form name="settingForm" id="settingForm" method="get" action="" data-height="400">
+
+
+<!-- IAP Start -->
+
+                        <div class="fminput clearfix">
+                            <label for="name">
+                                <acronym title="Required field" class="mark-required">*</acronym>Promotion banner</label>
+                            <div class="fmfield upload-img banner-thumb">
+                                <div class="thumbnail ">
+                                    <div class="img-wrap">
+                                    </div>
+                                    <img src="images/loading.gif" alt="" class="loading">
+                                </div>
+                                <p>Upload</p>
+                                <p class="notice img-upload">Better results with 640 x 360 resolution image</p>
+                                <p class="notice upload-notice hide">Please upload jpeg, png, or gif files.</p>
+                                <input type="hidden" name="imageUrl" id="imageUrl" value="">
+                                <input type="hidden" name="imageUrlOld" id="imageUrlOld" value="">
+                                <a href="" class="icon-question is-with-tooltip">
+                                    <div class="tooltip-wrap">
+                                        This banner will be used in some information pages, such as paid program preview page.
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+<!-- IAP end -->
+
+
     {{if cms.global.vIsYoutubeSync === true}}
     <div class="fminput clearfix">
         <label for="name">
@@ -297,6 +327,107 @@
             </div>
         </div>
     </div>
+
+
+<!-- IAP Start -->
+
+    <div class="fminput clearfix">
+        <label>Program price</label>
+        <div class="fmfield clearfix">
+            <div class="select enable">
+                <p class="select-btn"></p>
+                <p class="select-txt"><a href="#">Free programe</a>
+                </p>
+                <ul id="paid-select-list" class="select-list">
+                    <li data-meta="free">Free programe</li>
+                    <li data-meta="paid">Paid programe</li>
+                </ul>
+                <input id="paidChannel" type="hidden" name="paidChannel" value="${paidChannel}" class="select-meta">
+            </div>
+        </div>
+        <div id="paidBlock" class="fmfield clearfix hide">
+            <div class="fminput clearfix">
+                <label>Program price</label>
+            </div>
+            <div class="fminput clearfix">
+                <label>1. Price</label>
+                <div class="fmfield">
+                    <div class="select enable">
+                        <p class="select-btn"></p>
+                        <p class="select-txt"><a href="#">Select a price</a>
+                        </p>
+                        <ul id="price-select-list" class="select-list">
+                            <li data-meta="0.99">$ 0.99 USD</li>
+                            <li data-meta="1.99">$ 1.99 USD</li>
+                            <li data-meta="2.99">$ 2.99 USD</li>
+                            <li data-meta="3.99">$ 3.99 USD</li>
+                            <li data-meta="4.99">$ 4.99 USD</li>
+                            <li data-meta="5.99">$ 5.99 USD</li>
+                            <li data-meta="6.99">$ 6.99 USD</li>
+                            <li data-meta="7.99">$ 7.99 USD</li>
+                            <li data-meta="8.99">$ 8.99 USD</li>
+                            <li data-meta="9.99">$ 9.99 USD</li>
+                            <li data-meta="10.99">$ 10.99 USD</li>
+                        </ul>
+                        <input type="hidden" name="price" value="" class="select-meta">
+                    </div>
+                </div>
+            </div>
+            <div class="fminput clearfix">
+                <label>2. Publication name</label>
+                <div class="fmfield">
+                    <p class="text">
+                        <span>
+                            <input type="text" maxlength="100" value="" class="text">
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="fminput clearfix">
+                <label>3. Description</label>
+                <div class="fmfield">
+                    <p class="textarea">
+                        <span>
+                            <span>
+                                <textarea name="intro" cols="80" class="textarea"></textarea>
+                            </span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="fminput clearfix">
+                <label>4. Picture for review</label>
+                <div class="fmfield upload-img banner-thumb review-thumb">
+                    <div class="thumbnail ">
+                        <div class="img-wrap">
+
+                        </div>
+                        <img src="images/loading.gif" alt="" class="loading">
+                    </div>
+                    <p>Upload</p>
+                    <p class="notice img-upload">Better results with 640 x 360 resolution image</p>
+                    <p class="notice upload-notice hide">Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.</p>
+                    <input type="hidden"   value="">
+                    <input type="hidden"   value="">
+                    <a href="" class="icon-question is-with-tooltip">
+                        <div class="tooltip-wrap">
+                            Upload a screenshot of the product as it appears on the device. This screenshot is used for Apple’s review only and is not displayed on the App Store.
+                        </div>
+                    </a>
+
+                </div>
+
+            </div>
+        </div>
+        <a href="" class="fmfield clearfix icon-exclamation">
+            <span>If you want to delete the product from App store or Google play please contact with us before a month.</span>
+
+        </a>
+    </div>
+
+<!-- IAP end -->
+
+
     {{if cms.global.vIsYoutubeSync === true}}
     <div class="fminput clearfix">
         <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Episode sort by'])}</label>
