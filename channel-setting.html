@@ -187,7 +187,7 @@
                                 <div class="thumbnail">
                                     <div class="img-wrap">
                                         <div class="img">
-                                            <img src="" class="photo imgUpShow" />
+                                            <img src="${bannerImageUrl}" class="photo imgUpShow" />
                                         </div>
                                     </div>
                                     <img src="images/loading.gif" alt="" class="loading">
@@ -197,8 +197,8 @@
 
                                 <p class="notice img-upload">Better results with 640 x 360 resolution image</p>
                                 <p class="notice upload-notice hide">Please upload jpeg, png, or gif files.</p>
-                                <input type="hidden" class="imageUrl"    name="imageUrlPromo"    id="imageUrlPromo"    value="">
-                                <input type="hidden" class="imageUrlOld" name="imageUrlOldPromo" id="imageUrlOldPromo" value="">
+                                <input type="hidden" class="imageUrl"    name="bannerImageUrl"    id="bannerImageUrl"    value="${bannerImageUrl}">
+                                <input type="hidden" class="imageUrlOld" name="bannerImageUrlOld" id="bannerImageUrlOld" value="${bannerImageUrl}">
                                 <a href="" class="icon-question is-with-tooltip">
                                     <div class="tooltip-wrap">
                                         This banner will be used in some information pages, such as paid program preview page.
