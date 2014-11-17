@@ -210,25 +210,26 @@
         nn.api('GET', cms.reapi('/api/s3/attributes'), parameter, function (s3attr) {
             var timestamp = (new Date()).getTime(),
                 handlerFileDialogStart = function () {
-                    $('.upload-img .upload-notice').addClass('hide');
+                    $(this.customSettings.idscope + '.upload-img .upload-notice').addClass('hide');
                 },
                 handlerUploadProgress = function (file, completed, total) {
-                    $('.upload-img .loading').show();
+                    $(this.customSettings.idscope + '.upload-img .loading').show();
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Uploading...']) + '</span>');
                 },
                 handlerUploadSuccess = function (file, serverData, recievedResponse) {
-                    $('.upload-img .loading').hide();
+                    $(this.customSettings.idscope + '.upload-img .loading').hide();
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     if (!file.type) {
                         file.type = nn.getFileTypeByName(file.name);
                     }
                     this.setButtonDisabled(false); // enable upload button again
-                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase();
-                    $('#thumbnail-imageUrl').attr('src', url + '?n=' + Math.random());
-                    $('#imageUrl').val(url);
+                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + "-" + this.customSettings.imgFix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase();
+                    // nn.log("set == " +settings.idscope);
+                    $(this.customSettings.idscope + ' .imgUpShow').attr('src', url + '?n=' + Math.random());
+                    $(this.customSettings.idscope + ' .imageUrl').val(url);
                 },
                 handlerUploadError = function (file, code, message) {
-                    $('.upload-img .loading').hide();
+                    $(this.customSettings.idscope + '.upload-img .loading').hide();
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     this.setButtonDisabled(false);
                     if (code === -280) { // user cancel upload
@@ -243,7 +244,7 @@
                     }
                     var postParams = {
                         "AWSAccessKeyId": s3attr.id,
-                        "key":            parameter.prefix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase(),
+                        "key":            parameter.prefix + "-" + this.customSettings.imgFix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase(),
                         "acl":            parameter.acl,
                         "policy":         s3attr.policy,
                         "signature":      s3attr.signature,
@@ -256,7 +257,7 @@
                 },
                 handlerFileQueueError = function (file, code, message) {
                     if (code === -130) { // error file type
-                        $('.upload-img .upload-notice').removeClass('hide');
+                        $(settings.idscope + '.upload-img .upload-notice').removeClass('hide');
                     }
                 },
                 settings = {
@@ -285,8 +286,29 @@
                     file_queue_error_handler:   handlerFileQueueError,
                     debug:                      false
                 },
+                swfu,
+                swfuPromotion,
+                swfuPaid;
+
+                settings.button_placeholder = $('#uploadThumbnail').get(0);
                 swfu = new SWFUpload(settings);
-            swfu.debug = cms.config.IS_DEBUG;
+                swfu.debug = cms.config.IS_DEBUG;
+                swfu.customSettings.idscope = '#iupLogo';
+                swfu.customSettings.imgFix = 'logo';
+
+                settings.button_placeholder = $('#uploadPromotion').get(0);
+                swfuPromotion = new SWFUpload(settings);
+                swfuPromotion.debug = cms.config.IS_DEBUG;
+                swfuPromotion.customSettings.idscope = '#iupPromotion';
+                swfuPromotion.customSettings.imgFix = 'promotion';
+
+                settings.button_placeholder = $('#uploadPaid').get(0);
+                swfuPaid = new SWFUpload(settings);
+                swfuPaid.debug = cms.config.IS_DEBUG;
+                swfuPaid.customSettings.idscope = '#iupPaid';
+                swfuPaid.customSettings.imgFix = 'paid';
+
+
         });
     };
 

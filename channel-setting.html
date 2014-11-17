@@ -183,17 +183,22 @@
                         <div class="fminput clearfix">
                             <label for="name">
                                 <acronym title="Required field" class="mark-required">*</acronym>Promotion banner</label>
-                            <div class="fmfield upload-img banner-thumb">
-                                <div class="thumbnail ">
+                            <div id="iupPromotion" class="fmfield upload-img banner-thumb">
+                                <div class="thumbnail">
                                     <div class="img-wrap">
+                                        <div class="img">
+                                            <img src="" class="photo imgUpShow" />
+                                        </div>
                                     </div>
                                     <img src="images/loading.gif" alt="" class="loading">
                                 </div>
-                                <p>Upload</p>
+
+                                <p id="uploadPromotion">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
+
                                 <p class="notice img-upload">Better results with 640 x 360 resolution image</p>
                                 <p class="notice upload-notice hide">Please upload jpeg, png, or gif files.</p>
-                                <input type="hidden" name="imageUrl" id="imageUrl" value="">
-                                <input type="hidden" name="imageUrlOld" id="imageUrlOld" value="">
+                                <input type="hidden" class="imageUrl"    name="imageUrlPromo"    id="imageUrlPromo"    value="">
+                                <input type="hidden" class="imageUrlOld" name="imageUrlOldPromo" id="imageUrlOldPromo" value="">
                                 <a href="" class="icon-question is-with-tooltip">
                                     <div class="tooltip-wrap">
                                         This banner will be used in some information pages, such as paid program preview page.
@@ -247,11 +252,11 @@
     </div>
     <div class="fminput clearfix">
         <label><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Program logo'])}</label>
-        <div class="fmfield upload-img">
+        <div id="iupLogo" class="fmfield upload-img">
             <div class="thumbnail">
                 <div class="img-wrap">
                     <div class="img">
-                        <img id="thumbnail-imageUrl" src="images/ch_default.png" alt="" class="photo" />
+                        <img id="thumbnail-imageUrl" src="images/ch_default.png" alt="" class="photo imgUpShow" />
                     </div>
                 </div>
                 <img src="images/loading.gif" alt="" class="loading" />
@@ -259,8 +264,8 @@
             <p id="uploadThumbnail">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
             <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640x480 or higher resolution image'])}</p>
             <p class="notice upload-notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload jpeg, png, or gif files.'])}</p>
-            <input type="hidden" name="imageUrl" id="imageUrl" value="${imageUrl}" />
-            <input type="hidden" name="imageUrlOld" id="imageUrlOld" value="${imageUrl}" />
+            <input type="hidden" class="imageUrl"    name="imageUrl"    id="imageUrl"    value="${imageUrl}" />
+            <input type="hidden" class="imageUrlOld" name="imageUrlOld" id="imageUrlOld" value="${imageUrl}" />
         </div>
     </div>
     <div class="fminput clearfix">
@@ -345,7 +350,7 @@
                 <input id="paidChannel" type="hidden" name="paidChannel" value="${paidChannel}" class="select-meta">
             </div>
         </div>
-        <div id="paidBlock" class="fmfield clearfix hide">
+        <div id="paidBlock" class="fmfield clearfix ">
             <div class="fminput clearfix">
                 <label>Program price</label>
             </div>
@@ -397,18 +402,20 @@
             </div>
             <div class="fminput clearfix">
                 <label>4. Picture for review</label>
-                <div class="fmfield upload-img banner-thumb review-thumb">
-                    <div class="thumbnail ">
+                <div id="iupPaid" class="fmfield upload-img banner-thumb review-thumb">
+                    <div class="thumbnail">
                         <div class="img-wrap">
-
+                            <div class="img">
+                                <img src="" class="photo imgUpShow" />
+                            </div>
                         </div>
                         <img src="images/loading.gif" alt="" class="loading">
                     </div>
-                    <p>Upload</p>
+                    <p id="uploadPaid">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
                     <p class="notice img-upload">Better results with 640 x 360 resolution image</p>
                     <p class="notice upload-notice hide">Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.</p>
-                    <input type="hidden"   value="">
-                    <input type="hidden"   value="">
+                    <input type="hidden" class="imageUrl"    name="imageUrlPaid"    id="imageUrlPaid"    value="">
+                    <input type="hidden" class="imageUrlOld" name="imageUrlOldPaid" id="imageUrlOldPaid" value="">
                     <a href="" class="icon-question is-with-tooltip">
                         <div class="tooltip-wrap">
                             Upload a screenshot of the product as it appears on the device. This screenshot is used for Apple’s review only and is not displayed on the App Store.
