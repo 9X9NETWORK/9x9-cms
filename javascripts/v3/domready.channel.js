@@ -19,6 +19,19 @@ $(function () {
         }
     });
 
+    $(document).on('change', '#tmpSocialFeeds', function () {
+        var thisObj = $(this),
+            opObj = $("#socialFeeds"),
+            inURL = $.url(thisObj.val());
+        if ("https://www.facebook.com" === inURL.attr("base") && "" !== inURL.attr("file")) {
+            thisObj.val(inURL.attr("base") + "/" + inURL.attr("file"));
+            opObj.val("facebook " + inURL.attr("file") + ";");
+        } else {
+            thisObj.val("");
+            opObj.val("");
+        }
+    });
+
     $(document).on('click', '#add-store-switch', function () {
         if ($(this).hasClass("switch-on")) {
             $page.storePoolOnOff("off");
@@ -745,7 +758,25 @@ $(function () {
             nn.api('PUT', cms.reapi('/api/channels/{channelId}', {
                 channelId: cms.global.USER_URL.param('id')
             }), parameter, function (channel) {
-                if (true === cms.global.vIsYoutubeLive) {
+                var isPaidSend = $page.isPaidSend(),
+                infoPaid = $page.getPaidInfo();
+                if(isPaidSend && infoPaid.isVailed){
+                    // send 
+                    nn.api('POST', cms.reapi('/api/billing/channels/{channelId}/iap_info', {
+                        channelId: channel.id
+                    }), infoPaid, function(iapInfo) {
+                        nn.api('POST', cms.reapi('/api/billing/channels/{channelId}/iap_items', {
+                            channelId: channel.id
+                        }), {
+                            msoId: cms.global.USER_DATA.msoId
+                        }, function(iapItem) {
+                            $('#overlay-s').fadeOut(1000, function() {
+                                $('body').removeClass('has-change');
+                                $page.paidChannelInit();
+                            });
+                        });
+                    });
+                }else if (true === cms.global.vIsYoutubeLive) {
                     if ("processing" === $("#ytUrlLive").data("status")){
                         nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
                             channelId: channel.id

@@ -11,6 +11,42 @@
     cms.global.vIsYoutubeLive = false;
     cms.global.vYoutubeLiveIn = {};
 
+    $page.setSocialFeeds = function () {
+        var tmpArr = $("#socialFeeds").val().split(';'),
+            tmpItem = {};
+        $.each(tmpArr, function(i, item) {
+            tmpItem = item.split(' ');
+            if (2 === tmpItem.length && "facebook" === tmpItem[0]) {
+                $("#tmpSocialFeeds").val("https://www.facebook.com/" + tmpItem[1]);
+            }
+        });
+    }
+
+    $page.getPaidInfo = function () {
+        var fm = document.settingForm,
+            retValue = {
+                title: $.trim(fm.iap_title.value),
+                price: $.trim(fm.iap_price.value),
+                description: $.trim(fm.iap_description.value),
+                thumbnail: $.trim(fm.iap_thumbnail.value),
+                isVailed: false
+            };
+        if ("" !== retValue.title && "" !== retValue.price && "" !== retValue.description && "" !== retValue.thumbnail) {
+            retValue.isVailed = true;
+        }
+        return retValue;
+    }
+
+    $page.isPaidSend = function () {
+        var isOriPaid = $("#paidChannel").data("oristatus") || false,
+            retValue = false;
+
+        if ("false" === String(isOriPaid) && "true" === String($("#paidChannel").val())) {
+            retValue = true;
+        }
+        return retValue;
+    }
+
     $page.paidChannelInit = function() {
         var isPaid = $("#paidChannel").val(),
             objPaid = $("#paidChannel").parent(),
@@ -24,7 +60,6 @@
             isPaid = true;
         } else {
             isPaid = false;
-
         }
         if (true === isPaid) {
             objPaid.removeClass("enable").addClass("disabled");
@@ -48,7 +83,8 @@
                 objTitle.val(iapInfo.title);
                 objDesc.val(iapInfo.description);
                 objPaidImg.attr("src", iapInfo.thumbnail);
-                $("#iap_thumbnail").val(iapInfo.thumbnail)
+                $("#iap_thumbnail").val(iapInfo.thumbnail);
+                $("#iupPaid .swfupload").addClass("hide");
             });
         } else {
 
@@ -192,14 +228,9 @@
         fm.sphere.value = $.trim(fm.sphere.value);
         fm.categoryId.value = $.trim(fm.categoryId.value);
 
-        var isOriPaid = $("#paidChannel").data("oristatus") || false;
-
-        if (true !== isOriPaid && ('true' === fm.paidChannel.value || true === fm.paidChannel.value)) {
-            var iap_title = $.trim(fm.iap_title.value),
-                iap_price = $.trim(fm.iap_price.value),
-                iap_description = $.trim(fm.iap_description.value),
-                iap_thumbnail = $.trim(fm.iap_thumbnail.value);
-            if ("" === iap_title || "" === iap_price || "" === iap_description || "" === iap_thumbnail) {
+        if ($page.isPaidSend()) {
+            var iapInfo = $page.getPaidInfo();
+            if (!iapInfo.isVailed) {
                 $('.form-btn .notice').removeClass('hide');
                 return false;
             }
@@ -653,6 +684,7 @@
                         $('#lang-select-txt').text(cms.config.LANG_MAP[channel.lang]);
                     }
                     $page.paidChannelInit();
+                    $page.setSocialFeeds();
                     if ('' !== channel.sphere && cms.config.SPHERE_MAP[channel.sphere]) {
                         $('#sphere-select-txt').text(cms.config.SPHERE_MAP[channel.sphere]);
                         $('.category').removeClass('disable').addClass('enable');

@@ -547,6 +547,15 @@
         </div>
     </div>
     {{/if}}
+    <div class="fminput clearfix">
+        <label for="name">${nn._([cms.global.PAGE_ID, 'setting-form', 'Facebook page'])}</label>
+        <div class="fmfield">
+            <p class="text"><span>
+            <input type="text" name="tmpSocialFeeds" id="tmpSocialFeeds" maxlength="100" value="" class="text" /></span></p>
+            <input type="hidden" name="socialFeeds" id="socialFeeds" maxlength="100" value="" class="text" /></span></p>
+            <span class="notice "></span>
+        </div>
+    </div>
     <div class="form-btn">
         <div class="form-btn-wrap">
             <p class="notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please fill in all required fields.'])}</p>
