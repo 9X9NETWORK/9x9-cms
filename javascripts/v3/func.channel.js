@@ -192,6 +192,19 @@
         fm.sphere.value = $.trim(fm.sphere.value);
         fm.categoryId.value = $.trim(fm.categoryId.value);
 
+        var isOriPaid = $("#paidChannel").data("oristatus") || false;
+
+        if (true !== isOriPaid && ('true' === fm.paidChannel.value || true === fm.paidChannel.value)) {
+            var iap_title = $.trim(fm.iap_title.value),
+                iap_price = $.trim(fm.iap_price.value),
+                iap_description = $.trim(fm.iap_description.value),
+                iap_thumbnail = $.trim(fm.iap_thumbnail.value);
+            if ("" === iap_title || "" === iap_price || "" === iap_description || "" === iap_thumbnail) {
+                $('.form-btn .notice').removeClass('hide');
+                return false;
+            }
+        }
+
         if ('' === fm.bannerImageUrl.value) {
             $('.form-btn .notice').removeClass('hide');
             return false;
