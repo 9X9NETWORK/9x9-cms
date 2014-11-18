@@ -463,84 +463,97 @@ $(function () {
             i = 0,
             actObjId = $(this).parent().attr('id');
             
-          nn.log("我又找到了............" +actObjId);  
         // sharing url
         if ($(this).hasClass('surl-li')) {
             $('#surl-ul .surl-li').removeClass('on');
             $(this).addClass('on');
         }
-        // region (sphere) relate to category
-        if ('sphere-select-list' === actObjId) {
-            srcname = $(this).parent().parent().children('.select-txt').children().text();
-            if (srcname !== selectOption) {
-                $('.category').removeClass('enable').addClass('disable');
-                $('#categoryId').val(0);
-                $('#browse-category').html('');
-                sphere = metadata;
-                if ('other' === sphere) {
-                    sphere = 'en';
-                }
-                nn.api('GET', cms.reapi('/api/categories'), {
-                    lang: sphere
-                }, function (categories) {
-                    $('#browse-category').data('realCateCnt', categories.length);
-                    $.each(categories, function (i, list) {
-                        cms.config.CATEGORY_MAP[list.id] = list.name;
+
+        switch (actObjId) {
+            case "sphere-select-list":
+                // region (sphere) relate to category
+                srcname = $(this).parent().parent().children('.select-txt').children().text();
+                if (srcname !== selectOption) {
+                    $('.category').removeClass('enable').addClass('disable');
+                    $('#categoryId').val(0);
+                    $('#browse-category').html('');
+                    sphere = metadata;
+                    if ('other' === sphere) {
+                        sphere = 'en';
+                    }
+                    nn.api('GET', cms.reapi('/api/categories'), {
+                        lang: sphere
+                    }, function(categories) {
+                        $('#browse-category').data('realCateCnt', categories.length);
+                        $.each(categories, function(i, list) {
+                            cms.config.CATEGORY_MAP[list.id] = list.name;
+                        });
+                        rowNum = ($(window).width() > 1356) ? 4 : 3;
+                        modCatLen = categories.length % rowNum;
+                        if (modCatLen > 0) {
+                            modCatLen = rowNum - modCatLen;
+                            for (i = 0; i < modCatLen; i += 1) {
+                                categories.push({
+                                    id: 0,
+                                    name: ''
+                                });
+                            }
+                        }
+                        $('#category-list-tmpl-item').tmpl(categories, {
+                            dataArrayIndex: function(item) {
+                                return $.inArray(item, categories);
+                            }
+                        }).appendTo('#browse-category');
+                        $('#browse-category li[data-meta=0]').addClass('none');
+                        $page.scrollToBottom();
+                        $('.category').removeClass('disable').addClass('enable');
+                        $('#categoryId-select-txt').text(nn._([cms.global.PAGE_ID, 'setting-form', 'Select a category']));
                     });
-                    rowNum = ($(window).width() > 1356) ? 4 : 3;
-                    modCatLen = categories.length % rowNum;
-                    if (modCatLen > 0) {
-                        modCatLen = rowNum - modCatLen;
-                        for (i = 0; i < modCatLen; i += 1) {
-                            categories.push({
-                                id: 0,
-                                name: ''
+                }
+                break;
+
+            case "browse-category":
+                // category relate to tags
+                nn.api('GET', cms.reapi('/api/tags'), {
+                    categoryId: metadata,
+                    lang: $('#sphere').val()
+                }, function(tags) {
+                    $('#tag-list').html('');
+                    if (tags && tags.length > 0) {
+                        $('.tag-list').removeClass('hide');
+                        var currentTags = $('#tag').val();
+                        currentTags = currentTags.split(',');
+                        if (!currentTags) {
+                            currentTags = [];
+                        }
+                        $('#tag-list-tmpl-item').tmpl({
+                            tags: tags
+                        }).appendTo('#tag-list');
+                        if (currentTags.length > 0) {
+                            $('#tag-list li span a').each(function() {
+                                if (-1 !== $.inArray($(this).text(), currentTags)) {
+                                    $(this).parent().parent().addClass('on');
+                                }
                             });
                         }
+                    } else {
+                        $('.tag-list').addClass('hide');
                     }
-                    $('#category-list-tmpl-item').tmpl(categories, {
-                        dataArrayIndex: function (item) {
-                            return $.inArray(item, categories);
-                        }
-                    }).appendTo('#browse-category');
-                    $('#browse-category li[data-meta=0]').addClass('none');
-                    $page.scrollToBottom();
-                    $('.category').removeClass('disable').addClass('enable');
-                    $('#categoryId-select-txt').text(nn._([cms.global.PAGE_ID, 'setting-form', 'Select a category']));
-                });
-            }
-        }
-        // category relate to tags
-        if ('browse-category' === actObjId) {
-            nn.api('GET', cms.reapi('/api/tags'), {
-                categoryId: metadata,
-                lang: $('#sphere').val()
-            }, function (tags) {
-                $('#tag-list').html('');
-                if (tags && tags.length > 0) {
-                    $('.tag-list').removeClass('hide');
-                    var currentTags = $('#tag').val();
-                    currentTags = currentTags.split(',');
-                    if (!currentTags) {
-                        currentTags = [];
-                    }
-                    $('#tag-list-tmpl-item').tmpl({
-                        tags: tags
-                    }).appendTo('#tag-list');
-                    if (currentTags.length > 0) {
-                        $('#tag-list li span a').each(function () {
-                            if (-1 !== $.inArray($(this).text(), currentTags)) {
-                                $(this).parent().parent().addClass('on');
-                            }
-                        });
-                    }
-                } else {
-                    $('.tag-list').addClass('hide');
-                }
 
-                $page.scrollToBottom();
-            });
+                    $page.scrollToBottom();
+                });
+                break;
+
+            case "paid-select-list":
+                if (metadata) {
+                    $("#paidBlock").removeClass("hide");
+                } else {
+                    $("#paidBlock").addClass("hide");
+                }
+                break;
+
         }
+
         $(this).parent().parent().children('.select-meta').val(metadata);
         $(this).parent().parent().children('.select-btn').removeClass('on');
         $(this).parent().parent().children('.select-txt').children().text(selectOption);
