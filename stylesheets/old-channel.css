@@ -4,29 +4,43 @@
   height: 160px !important;
 }
 /* line 6, ../sass/old-channel.sass */
-.banner-thumb .img-wrap {
+.banner-thumb .notice {
+  position: static !important;
+}
+/* line 9, ../sass/old-channel.sass */
+.banner-thumb.review-thumb .thumbnail {
+  width: 80px !important;
+  height: 115px !important;
+}
+
+/* line 13, ../sass/old-channel.sass */
+.img-wrap {
   background-color: #aaa;
   width: 100% !important;
   height: 100% !important;
   background-image: url("../images/thumbnail_icon.png");
   background-repeat: no-repeat;
   background-position: 50% 50%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
 }
-/* line 13, ../sass/old-channel.sass */
-.banner-thumb .notice {
-  position: static !important;
+/* line 23, ../sass/old-channel.sass */
+.img-wrap.no-image {
+  background-image: url("../images/thumbnail_icon.png") !important;
+  background-size: auto;
 }
-/* line 16, ../sass/old-channel.sass */
-.banner-thumb.review-thumb .thumbnail {
-  width: 80px !important;
-  height: 115px !important;
+/* line 26, ../sass/old-channel.sass */
+.img-wrap.is-loading {
+  background-image: url("../images/loading.gif") !important;
+  background-size: auto;
 }
 
-/* line 20, ../sass/old-channel.sass */
+/* line 32, ../sass/old-channel.sass */
 .tip-anchor {
   position: relative;
 }
-/* line 22, ../sass/old-channel.sass */
+/* line 34, ../sass/old-channel.sass */
 .tip-anchor .tip {
   display: none;
   position: absolute;
@@ -37,13 +51,13 @@
   padding-left: 4px;
   background: url(../images/bg_bubble_left_l.png) no-repeat 0 0;
 }
-/* line 31, ../sass/old-channel.sass */
+/* line 43, ../sass/old-channel.sass */
 .tip-anchor .tip-right {
   display: block;
   padding-right: 4px;
   background: url(../images/bg_bubble_right_l.png) no-repeat right 0;
 }
-/* line 35, ../sass/old-channel.sass */
+/* line 47, ../sass/old-channel.sass */
 .tip-anchor .tip-middle {
   display: block;
   width: 233px;
@@ -54,7 +68,7 @@
   font: 13px/17px Arial, Helvetica;
   text-align: justify;
 }
-/* line 45, ../sass/old-channel.sass */
+/* line 57, ../sass/old-channel.sass */
 .tip-anchor:hover .tip {
   display: block;
 }
