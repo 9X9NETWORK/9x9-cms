@@ -306,23 +306,23 @@
                     $(this.customSettings.idscope + '.upload-img .upload-notice').addClass('hide');
                 },
                 handlerUploadProgress = function (file, completed, total) {
-                    $(this.customSettings.idscope + '.upload-img .loading').show();
+                    $(this.customSettings.idscope + ' .imgUpShow').addClass("is-loading");
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Uploading...']) + '</span>');
                 },
                 handlerUploadSuccess = function (file, serverData, recievedResponse) {
-                    $(this.customSettings.idscope + '.upload-img .loading').hide();
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     if (!file.type) {
                         file.type = nn.getFileTypeByName(file.name);
                     }
                     this.setButtonDisabled(false); // enable upload button again
-                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + "-" + this.customSettings.imgFix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase();
+                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + "-" + this.customSettings.imgFix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase() + '?n=' + Math.random();
                     // nn.log("set == " +settings.idscope);
-                    $(this.customSettings.idscope + ' .imgUpShow').attr('src', url + '?n=' + Math.random());
+                    $(this.customSettings.idscope + ' .imgUpShow').css('background-image', "url('"+ url +"')");
                     $(this.customSettings.idscope + ' .imageUrl').val(url);
+                    $(this.customSettings.idscope + ' .imgUpShow').removeClass("no-image").removeClass("is-loading");
                 },
                 handlerUploadError = function (file, code, message) {
-                    $(this.customSettings.idscope + '.upload-img .loading').hide();
+                    $(this.customSettings.idscope + ' .imgUpShow').removeClass("is-loading");
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     this.setButtonDisabled(false);
                     if (code === -280) { // user cancel upload
