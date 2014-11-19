@@ -182,7 +182,7 @@
 
                         <div class="fminput clearfix">
                             <label for="name">
-                                <acronym title="Required field" class="mark-required">*</acronym>Promotion banner</label>
+                                <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Promotion banner'])}</label>
                             <div id="iupPromotion" class="fmfield upload-img banner-thumb">
                                 <div class="thumbnail">
                                     <div class="img-wrap imgUpShow {{if '' === bannerImageUrl}}no-image{{/if}}" 
@@ -192,13 +192,14 @@
 
                                 <p id="uploadPromotion">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
 
-                                <p class="notice img-upload">Better results with 640 x 360 resolution image</p>
+                                <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640 x 360 resolution image'])}</p>
                                 <p class="notice upload-notice hide">Please upload jpeg, png, or gif files.</p>
                                 <input type="hidden" class="imageUrl"    name="bannerImageUrl"    id="bannerImageUrl"    value="${bannerImageUrl}">
                                 <input type="hidden" class="imageUrlOld" name="bannerImageUrlOld" id="bannerImageUrlOld" value="${bannerImageUrl}">
                                 <a href="" class="icon-question is-with-tooltip">
                                     <div class="tooltip-wrap">
-                                        This banner will be used in some information pages, such as paid program preview page.
+                                        ${nn._([cms.global.PAGE_ID, 'setting-form', 'This banner will be used in some information pages, such as paid program preview page.'])}
+                                        
                                     </div>
                                 </a>
                             </div>
@@ -331,29 +332,29 @@
 <!-- IAP Start -->
 
     <div class="fminput clearfix">
-        <label>Program price</label>
+        <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Program price'])}</label>
         <div class="fmfield clearfix">
             <div class="select enable">
                 <p class="select-btn"></p>
-                <p class="select-txt"><a href="#">Free programe</a>
+                <p class="select-txt"><a href="#">${nn._([cms.global.PAGE_ID, 'setting-form', 'Free programe'])}</a>
                 </p>
                 <ul id="paid-select-list" class="select-list">
-                    <li data-meta="false">Free programe</li>
-                    <li data-meta="true">Paid programe</li>
+                    <li data-meta="false">${nn._([cms.global.PAGE_ID, 'setting-form', 'Free programe'])}</li>
+                    <li data-meta="true">${nn._([cms.global.PAGE_ID, 'setting-form', 'Paid programe'])}</li>
                 </ul>
                 <input id="paidChannel" type="hidden" name="paidChannel" value="${paidChannel}" data-oristatus="${paidChannel}" class="select-meta">
             </div>
         </div>
         <div id="paidBlock" class="fmfield clearfix hide">
             <div class="fminput clearfix">
-                <label>Program price</label>
+                <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Program price'])}</label>
             </div>
             <div class="fminput clearfix">
-                <label>1. Price</label>
+                <label>1. ${nn._([cms.global.PAGE_ID, 'setting-form', 'Price'])}</label>
                 <div class="fmfield">
                     <div class="select enable">
                         <p class="select-btn"></p>
-                        <p class="select-txt"><a href="#">Select a price</a>
+                        <p class="select-txt"><a href="#">${nn._([cms.global.PAGE_ID, 'setting-form', 'Select a price'])}</a>
                         </p>
                         <ul id="price-select-list" class="select-list">
                             <li data-meta="0.99">$ 0.99 USD</li>
@@ -373,7 +374,7 @@
                 </div>
             </div>
             <div class="fminput clearfix">
-                <label>2. Publication name</label>
+                <label>2. ${nn._([cms.global.PAGE_ID, 'setting-form', 'Publication name'])}</label>
                 <div class="fmfield">
                     <p class="text">
                         <span>
@@ -383,7 +384,7 @@
                 </div>
             </div>
             <div class="fminput clearfix">
-                <label>3. Description</label>
+                <label>3. ${nn._([cms.global.PAGE_ID, 'setting-form', 'Description'])}</label>
                 <div class="fmfield">
                     <p class="textarea">
                         <span>
@@ -395,20 +396,20 @@
                 </div>
             </div>
             <div class="fminput clearfix">
-                <label>4. Picture for review</label>
+                <label>4. ${nn._([cms.global.PAGE_ID, 'setting-form', 'Picture for review'])}</label>
                 <div id="iupPaid" class="fmfield upload-img banner-thumb review-thumb">
                     <div class="thumbnail">
                         <div class="img-wrap imgUpShow no-image">
                         </div>
                     </div>
                     <p id="uploadPaid">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
-                    <p class="notice img-upload">Better results with 640 x 360 resolution image</p>
+                    <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640 x 360 resolution image'])}</p>
                     <p class="notice upload-notice hide">Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.</p>
                     <input type="hidden" class="imageUrl"    name="iap_thumbnail"    id="iap_thumbnail"    value="">
                     <input type="hidden" class="imageUrlOld" name="iap_thumbnailOld" id="iap_thumbnailOld" value="">
                     <a href="" class="icon-question is-with-tooltip">
                         <div class="tooltip-wrap">
-                            Upload a screenshot of the product as it appears on the device. This screenshot is used for Apple’s review only and is not displayed on the App Store.
+                            ${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload a screenshot of the product as it appears on the device. This screenshot is used for Apple’s review only and is not displayed on the App Store.'])}
                         </div>
                     </a>
 
