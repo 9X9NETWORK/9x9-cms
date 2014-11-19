@@ -443,7 +443,7 @@
             "Processing...": "處理中..."
         },
         "channel-list": {
-            "UNDER REVIEW": "UNDER REVIEW",
+            "UNDER REVIEW": "審核中",
             "Paid": "付費",
             "Sorted by": "預設排序",
             "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.": "您將變更節目排序至\"更新時間\"，系統將依節目\"更新時間\"自動排序，除推薦節目外，其餘您將無法手動進行變更順序。",
@@ -529,8 +529,9 @@
         },
         "channel-list": {
             "Paid": "付費",
-            "Publish": "發佈",
-            "Unpublish": "未發佈",
+            "Publish": "上架",
+            "Unpublish": "未上架",
+            "UNDER REVIEW": "審核中",
             "Sync programe": "同步節目",
             "Live programe": "直播節目",
             "Get URL": "網址",
