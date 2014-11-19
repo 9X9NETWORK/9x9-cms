@@ -82,7 +82,8 @@
                 objPrice.find(".iap_price").val(iapInfo.price);
                 objTitle.val(iapInfo.title);
                 objDesc.val(iapInfo.description);
-                objPaidImg.attr("src", iapInfo.thumbnail);
+
+                objPaidImg.css("background-image", "url('"+ iapInfo.thumbnail +"')").removeClass("no-image");
                 $("#iap_thumbnail").val(iapInfo.thumbnail);
                 $("#iupPaid .swfupload").addClass("hide");
             });
