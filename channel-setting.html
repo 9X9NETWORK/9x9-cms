@@ -403,7 +403,7 @@
                         </div>
                     </div>
                     <p id="uploadPaid">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
-                    <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640 x 360 resolution image'])}</p>
+                    <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.'])}</p>
                     <p class="notice upload-notice hide">Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.</p>
                     <input type="hidden" class="imageUrl"    name="iap_thumbnail"    id="iap_thumbnail"    value="">
                     <input type="hidden" class="imageUrlOld" name="iap_thumbnailOld" id="iap_thumbnailOld" value="">
@@ -418,7 +418,9 @@
             </div>
 
         <a href="mailto:iapsupport@flipr.tv" id='paidRemove' class="fmfield clearfix icon-exclamation hide">
-            <span>If you want to delete the product from App store or Google play please contact with us before a month.</span>
+            <span>
+            ${nn._([cms.global.PAGE_ID, 'setting-form', 'If you want to delete the product from App store or Google play please contact with us before a month.'])}
+            </span>
 
         </a>
         </div>
