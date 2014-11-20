@@ -448,9 +448,11 @@
 
                 
                 {{if true === isYoutubeSync}}
-                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Sync programe'])}</span>
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Sync program'])}</span>
                 {{else true === isYoutubeLive}}
-                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Live programe'])}</span>
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Live program'])}</span>
+                {{else}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Curated program'])}</span>
                 {{/if}}
             </div>
             <p><span>${cntEpisode}</span>${nn._([cms.global.PAGE_ID, 'channel-list', 'Episodes'])}</p>
