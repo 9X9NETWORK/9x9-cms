@@ -720,7 +720,7 @@ $(function () {
             switch (searchType) {
             case "init":
 
-                $common.pcsGetPlayableChannels(1, $page.currentList);
+                $common.pcsGetPlayableChannels(1, $page.currentList, false);
 
                 break;
             case "url":
@@ -773,7 +773,8 @@ $(function () {
             case "keywords":
                 nn.api('GET', cms.reapi('/api/channels'), {
                     keyword: strInput,
-                    mso: cms.global.MSOINFO.name
+                    mso: cms.global.MSOINFO.name,
+                    inPublic: false
                 }, function (channels) {
                     var cntChannel = channels.length,
                         items = [];

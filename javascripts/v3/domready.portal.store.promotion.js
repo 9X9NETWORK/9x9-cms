@@ -254,7 +254,7 @@ $(function () {
             switch (searchType) {
             case "init":
 
-                $common.pcsGetPlayableChannels(1, $page.currentList);
+                $common.pcsGetPlayableChannels(1, $page.currentList, true);
 
                 break;
             case "url":
@@ -310,7 +310,8 @@ $(function () {
                 // search_keyword();
                 nn.api('GET', cms.reapi('/api/channels'), {
                     keyword: strInput,
-                    mso: cms.global.MSOINFO.name
+                    mso: cms.global.MSOINFO.name,
+                    isPublic: true
                 }, function (channels) {
                     var cntChannel = channels.length,
                         items = [];

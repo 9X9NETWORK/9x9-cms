@@ -194,32 +194,53 @@ $(function () {
         }
     });
 
+
     // program type filter
-    $(document).on('click', '.lbTypeItem', function () {
-        var thisObj = this,
-            selectType = $(thisObj).val(),
-            selectTypeTxt = ".ctype" + $(thisObj).val();
+    $(document).on('click', '#filterProgram .enable .select-btn, #filterProgram .enable .select-txt', function (event) {
+        if(!$("#filterProgram .enable").hasClass("disabled")){
+            $('.select-list').hide();
+            $(this).parent('li').siblings().children('.on').removeClass('on');
+            $(this).parent().children('.select-btn').toggleClass('on');
+            if ($(this).parent().children('.select-btn').hasClass('on')) {
+                $(this).parent().children('.select-list').slideDown();
+            } else {
+                $(this).parent().children('.select-list').hide();
+            }
+        }
+        event.stopPropagation();
+        return false;
+    });
 
-        $(".lbTypeLists").removeClass("checked");
-        $(thisObj).parent().addClass("checked");
-        $("#title-func .order").removeClass("disable");
-        $(".group-tmpty-msg").addClass("hide");
+    $('#content-main').on('click', '#filterProgram .select .select-list li', function () {
+        var thsiObj = this,
+            selectType = $(thsiObj).data("meta"),
+            selectTypeTxt = $(thsiObj).text(),
+            selectTypeClass = ".ctype" + selectType;
 
-        $(".chLi").addClass("hide").fadeOut(500);
+        $(".chLi").addClass("hide");
+
         if ("all" !== selectType) {
-            $(selectTypeTxt).removeClass("hide");
-            $("#channel-counter").text($(selectTypeTxt).length);
+            $("#channel-counter").text($(selectTypeClass).length);
+
+            $(selectTypeClass).removeClass("hide");
             $("#title-func .order").addClass("disable");
-            if ($(selectTypeTxt).length < 1) {
+            if ($(selectTypeClass).length < 1) {
                 $(".msg-" + selectType).removeClass("hide");
             }
-        } else {
-            $(".chLi").removeClass("hide");
+        } else {        
             $("#channel-counter").text($(".chLi").length);
+            $(".chLi").removeClass("hide");
+            $("#title-func .order").removeClass("disable");
         }
         $("#content-main-wrap").scrollTop(0);
         $("#content-main-wrap").perfectScrollbar('update');
+
+        $(this).parent().parent().children('.select-btn').removeClass('on');
+        $(this).parent().parent().children('.select-txt').children().text(selectTypeTxt);
+        $(this).parent().hide();
+        return false;
     });
+
 
     // you tube sync , sync direct
     $(document).on('click', '.sync', function () {

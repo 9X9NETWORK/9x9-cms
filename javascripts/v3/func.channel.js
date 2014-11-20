@@ -11,6 +11,87 @@
     cms.global.vIsYoutubeLive = false;
     cms.global.vYoutubeLiveIn = {};
 
+    $page.setSocialFeeds = function () {
+        var tmpArr = $("#socialFeeds").val().split(';'),
+            tmpItem = {};
+        $.each(tmpArr, function(i, item) {
+            tmpItem = item.split(' ');
+            if (2 === tmpItem.length && "facebook" === tmpItem[0]) {
+                $("#tmpSocialFeeds").val("https://www.facebook.com/" + tmpItem[1]);
+            }
+        });
+    }
+
+    $page.getPaidInfo = function () {
+        var fm = document.settingForm,
+            retValue = {
+                title: $.trim(fm.iap_title.value),
+                price: $.trim(fm.iap_price.value),
+                description: $.trim(fm.iap_description.value),
+                thumbnail: $.trim(fm.iap_thumbnail.value),
+                isVailed: false
+            };
+        if ("" !== retValue.title && "" !== retValue.price && "" !== retValue.description && "" !== retValue.thumbnail) {
+            retValue.isVailed = true;
+        }
+        return retValue;
+    }
+
+    $page.isPaidSend = function () {
+        var isOriPaid = $("#paidChannel").data("oristatus") || false,
+            retValue = false;
+
+        if ("false" === String(isOriPaid) && "true" === String($("#paidChannel").val())) {
+            retValue = true;
+        }
+        return retValue;
+    }
+
+    $page.paidChannelInit = function() {
+        var isPaid = $("#paidChannel").val(),
+            objPaid = $("#paidChannel").parent(),
+            objPrice = $("#paidBlock .select"),
+            objTitle = $("#paidBlock .iap_title"),
+            objDesc = $("#paidBlock .iap_description"),
+            objPaidImg = $("#iupPaid .imgUpShow"),
+            objPaidImgVal = $("#iupPaid .imageUrl");
+
+        if (true === isPaid || "true" === isPaid) {
+            isPaid = true;
+        } else {
+            isPaid = false;
+        }
+        if (true === isPaid) {
+            objPaid.removeClass("enable").addClass("disabled");
+            $(objPaid.find("li")).each(function(i, item) {
+                if (true == $(item).data("meta")) {
+                    objPaid.find(".select-txt a").text($(item).text());
+                }
+            });
+            $("#paidBlock").removeClass("hide");
+            objPrice.removeClass("enable").addClass("disabled");
+            objTitle.attr('disabled', true).parent().parent().addClass("disabled");
+            objDesc.attr('disabled', true).parent().parent().parent().addClass("disabled");
+            $("#iupPaid .swfupload").addClass("hide");
+            $("#paidRemove").removeClass("hide");
+
+            nn.api('GET', cms.reapi('/api/billing/channels/{channelId}/iap_info', {
+                channelId: cms.global.USER_URL.param('id')
+            }), null, function (iapInfo) {
+                objPrice.find(".select-txt a").text("$ " + iapInfo.price + " USD");
+                objPrice.find(".iap_price").val(iapInfo.price);
+                objTitle.val(iapInfo.title);
+                objDesc.val(iapInfo.description);
+
+                objPaidImg.css("background-image", "url('"+ iapInfo.thumbnail +"')").removeClass("no-image");
+                $("#iap_thumbnail").val(iapInfo.thumbnail);
+                $("#iupPaid .swfupload").addClass("hide");
+            });
+        } else {
+
+        }
+    }
+
     $page.fetchLiveUrl = function(channelId) {
         nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
             channelId: channelId
@@ -148,6 +229,18 @@
         fm.sphere.value = $.trim(fm.sphere.value);
         fm.categoryId.value = $.trim(fm.categoryId.value);
 
+        if ($page.isPaidSend()) {
+            var iapInfo = $page.getPaidInfo();
+            if (!iapInfo.isVailed) {
+                $('.form-btn .notice').removeClass('hide');
+                return false;
+            }
+        }
+
+        if ('' === fm.bannerImageUrl.value) {
+            $('.form-btn .notice').removeClass('hide');
+            return false;
+        }
         if(true === cms.global.vIsYoutubeLive && "processing" !== $("#ytUrlLive").data("status") && "editing" !== $("#ytUrlLive").data("status")){
             $('.form-btn .notice').removeClass('hide');
             return false;
@@ -210,25 +303,26 @@
         nn.api('GET', cms.reapi('/api/s3/attributes'), parameter, function (s3attr) {
             var timestamp = (new Date()).getTime(),
                 handlerFileDialogStart = function () {
-                    $('.upload-img .upload-notice').addClass('hide');
+                    $(this.customSettings.idscope + '.upload-img .upload-notice').addClass('hide');
                 },
                 handlerUploadProgress = function (file, completed, total) {
-                    $('.upload-img .loading').show();
+                    $(this.customSettings.idscope + ' .imgUpShow').addClass("is-loading");
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Uploading...']) + '</span>');
                 },
                 handlerUploadSuccess = function (file, serverData, recievedResponse) {
-                    $('.upload-img .loading').hide();
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     if (!file.type) {
                         file.type = nn.getFileTypeByName(file.name);
                     }
                     this.setButtonDisabled(false); // enable upload button again
-                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase();
-                    $('#thumbnail-imageUrl').attr('src', url + '?n=' + Math.random());
-                    $('#imageUrl').val(url);
+                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + "-" + this.customSettings.imgFix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase() + '?n=' + Math.random();
+                    // nn.log("set == " +settings.idscope);
+                    $(this.customSettings.idscope + ' .imgUpShow').css('background-image', "url('"+ url +"')");
+                    $(this.customSettings.idscope + ' .imageUrl').val(url);
+                    $(this.customSettings.idscope + ' .imgUpShow').removeClass("no-image").removeClass("is-loading");
                 },
                 handlerUploadError = function (file, code, message) {
-                    $('.upload-img .loading').hide();
+                    $(this.customSettings.idscope + ' .imgUpShow').removeClass("is-loading");
                     this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
                     this.setButtonDisabled(false);
                     if (code === -280) { // user cancel upload
@@ -243,7 +337,7 @@
                     }
                     var postParams = {
                         "AWSAccessKeyId": s3attr.id,
-                        "key":            parameter.prefix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase(),
+                        "key":            parameter.prefix + "-" + this.customSettings.imgFix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase(),
                         "acl":            parameter.acl,
                         "policy":         s3attr.policy,
                         "signature":      s3attr.signature,
@@ -256,7 +350,7 @@
                 },
                 handlerFileQueueError = function (file, code, message) {
                     if (code === -130) { // error file type
-                        $('.upload-img .upload-notice').removeClass('hide');
+                        $(settings.idscope + '.upload-img .upload-notice').removeClass('hide');
                     }
                 },
                 settings = {
@@ -285,8 +379,29 @@
                     file_queue_error_handler:   handlerFileQueueError,
                     debug:                      false
                 },
+                swfu,
+                swfuPromotion,
+                swfuPaid;
+
+                settings.button_placeholder = $('#uploadThumbnail').get(0);
                 swfu = new SWFUpload(settings);
-            swfu.debug = cms.config.IS_DEBUG;
+                swfu.debug = cms.config.IS_DEBUG;
+                swfu.customSettings.idscope = '#iupLogo';
+                swfu.customSettings.imgFix = 'logo';
+
+                settings.button_placeholder = $('#uploadPromotion').get(0);
+                swfuPromotion = new SWFUpload(settings);
+                swfuPromotion.debug = cms.config.IS_DEBUG;
+                swfuPromotion.customSettings.idscope = '#iupPromotion';
+                swfuPromotion.customSettings.imgFix = 'promotion';
+
+                settings.button_placeholder = $('#uploadPaid').get(0);
+                swfuPaid = new SWFUpload(settings);
+                swfuPaid.debug = cms.config.IS_DEBUG;
+                swfuPaid.customSettings.idscope = '#iupPaid';
+                swfuPaid.customSettings.imgFix = 'paid';
+
+
         });
     };
 
@@ -569,6 +684,8 @@
                     if ('' !== channel.lang && cms.config.LANG_MAP[channel.lang]) {
                         $('#lang-select-txt').text(cms.config.LANG_MAP[channel.lang]);
                     }
+                    $page.paidChannelInit();
+                    $page.setSocialFeeds();
                     if ('' !== channel.sphere && cms.config.SPHERE_MAP[channel.sphere]) {
                         $('#sphere-select-txt').text(cms.config.SPHERE_MAP[channel.sphere]);
                         $('.category').removeClass('disable').addClass('enable');

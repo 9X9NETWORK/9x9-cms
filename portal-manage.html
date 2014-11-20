@@ -367,12 +367,16 @@
 
 <!-- portal-search-item-tmpl Begin -->
 <script id="portal-search-item-tmpl" type="text/x-jquery-tmpl">
-<li id="sch_${id}">
+<li id="sch_${id}" class="{{if paidChannel}}isPaid{{/if}}">
     <div class="thumb">
         <div id="schk_${id}" class="checkbox{{if alreadyAdd === true}} hide{{/if}}"></div>
         <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank">
             <img src="images/icon_playlist.png" alt="" class="watermark" />
         </a>
+        {{if paidChannel}}
+            <span class="cover-text hide"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></span>
+            <span class="badge danger">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
+        {{/if}}
         <div class="ch">
             <div class="img">
                 <img src="${imageUrl}" alt="" />
@@ -433,6 +437,7 @@ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Sorted by'])} :
 <script id="portal-set-chanels-tmpl" type="text/x-jquery-tmpl">
     <li id="set_${id}" class="itemList notSortable">
         <div class="thumb">
+            {{if !paidChannel}}
             <div class="btn-top{{if alwaysOnTop == true}} on{{/if}}">
                 <div class="icon-holder"></div>
                 <div class="tip-white">
@@ -463,6 +468,7 @@ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Sorted by'])} :
                 </div>
                 <div class="tip-top"></div>
             </div>
+            {{/if}}
             <div class="btn-remove">
                 <div class="icon-holder"></div>
                 <div class="tip-white">
@@ -472,6 +478,10 @@ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Sorted by'])} :
                 </div>
                 <div class="tip-top"></div>
             </div>
+            {{if paidChannel}}
+                <span class="cover-text hide"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></span>
+                <span class="badge danger">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
+            {{/if}}
             <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank">
                 <img class="watermark" alt="" src="images/icon_playlist.png" />
             </a>

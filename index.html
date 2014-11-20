@@ -238,7 +238,7 @@
     <div class="overlay-h316-center">
         <p class="overlay-button-close"></p>
         <h2 class="overlay-title langkey">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Create a New Program'])}}</h2>
-        <h3 class="overlay-subtitle">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Choose a type'])}}</h3>
+        <h3 class="overlay-subtitle">{{html nn._([cms.global.PAGE_ID, 'overlay', 'You can set it as a PAID or FREE program!'])}}</h3>
         {{if !cms.global.USER_PRIV.isYoutuber}}
             <div id="create-9x9-program" class="btn-large btn-create">
                 <div class="left"></div>
@@ -333,15 +333,23 @@
 </ul>
 {{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
 <p class="radio-list filterType">
-    <span>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</span>
-    <label for="filter_all" class="lbTypeLists checked">
-        <input type="radio" name="filter" value="all" id="filter_all" class="lbTypeItem" checked> {{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</label>
-    <label for="filter_9x9" class="lbTypeLists">
-        <input type="radio" name="filter" value="9x9" id="filter_9x9" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Curated programs'])}}</label>
-    <label for="filter_youtube" class="lbTypeLists">
-        <input type="radio" name="filter" value="YoutubeSync" id="filter_youtube" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Sync programs'])}}</label>
-    <label for="filter_youtubelive" class="lbTypeLists">
-        <input type="radio" name="filter" value="YoutubeLive" id="filter_youtubelive" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Live programs'])}}</label>
+
+    <div id="filterProgram" class="fminput clearfix">
+        <label>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</label>
+        <div class="fmfield">
+            <div class="select enable disabled">
+                <p class="select-btn on"></p>
+                <p class="select-txt"><a href="#" onclick="return false;">{{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</a></p>
+                <ul class="select-list" style="display: none;">
+                    <li data-meta="all"        >{{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</li>
+                    <li data-meta="9x9"        >{{html nn._([cms.global.PAGE_ID, 'title-func', 'Curated programs'])}}</li>
+                    <li data-meta="YoutubeSync">{{html nn._([cms.global.PAGE_ID, 'title-func', 'Sync programs'])}}</li>
+                    <li data-meta="YoutubeLive">{{html nn._([cms.global.PAGE_ID, 'title-func', 'Live programs'])}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 </p>
 {{/if}}
 </script>
@@ -425,27 +433,32 @@
             <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank"><img src="images/icon_playlist.png" alt="" class="watermark" /></a>
         </div>
         <div class="info">
-            <h3><a href="{{if true === isYoutubeLive}}javascript:void(0);{{else}}episode-list.html?id=${id}{{/if}}">${name}</a></h3>
+            <h3>
+                {{if paidChannel}}
+                    <span class="badge danger ">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
+                {{/if}}
+                <a href="{{if true === isYoutubeLive}}javascript:void(0);{{else}}episode-list.html?id=${id}{{/if}}">${name}</a>
+            </h3>
+            <div class="badge-list">
+                {{if status === 0}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Publish'])}</span>
+                {{else}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Unpublish'])}</span>
+                {{/if}}
+
+                
+                {{if true === isYoutubeSync}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Sync programe'])}</span>
+                {{else true === isYoutubeLive}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Live programe'])}</span>
+                {{/if}}
+            </div>
             <p><span>${cntEpisode}</span>${nn._([cms.global.PAGE_ID, 'channel-list', 'Episodes'])}</p>
             <p><span>${cntSubscribe}</span>${nn._([cms.global.PAGE_ID, 'channel-list', 'Followers'])}</p>
         </div>
         <div class="func-wrap">
             <p class="time">
                 ${nn._([cms.global.PAGE_ID, 'channel-list', 'Update:'])} ${cms.common.formatTimestamp(updateDate)} 
-                {{if true === isYoutubeSync}}
-                    <img id="ytSync_${id}" class="fucnYtSync" data-meta="${autoSync}"  data-program="${id}"
-                         title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sync program'])}}"
-                         src="images/icon_sync_${autoSync}.png">
-                    <img title="{{if 4 === sorting}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by order'])}}{{else}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by reverse order'])}}{{/if}}"
-                         src="images/icon_youtube_order_${sorting}.png">
-                {{else true === isYoutubeLive}}
-                    <img title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Live program'])}}"
-                             src="images/icon_live_program_sm.png">
-                {{/if}}
-                {{if cms.global.USER_PRIV.isAutoOn === true && status === 0}}
-                    <img title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'In my app'])}}"
-                         src="images/icon_program_store.png">
-                {{/if}}
             </p>
             <div class="func-btns">
                 <div class="btn-wrap enable">
