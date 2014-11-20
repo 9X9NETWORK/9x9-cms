@@ -22,10 +22,17 @@ $(function () {
     $(document).on('change', '#tmpSocialFeeds', function () {
         var thisObj = $(this),
             opObj = $("#socialFeeds"),
-            inURL = $.url(thisObj.val());
-        if ("https://www.facebook.com" === inURL.attr("base") && "" !== inURL.attr("file")) {
-            thisObj.val(inURL.attr("base") + "/" + inURL.attr("file"));
-            opObj.val("facebook " + inURL.attr("file") + ";");
+            inURL = $.url(thisObj.val()),
+            tmpPath = inURL.attr("path").split("/"),
+            fbPage = "";
+
+        if (2 === tmpPath.length) {
+            fbPage = tmpPath.pop();
+        }
+
+        if ("https://www.facebook.com" === inURL.attr("base") && "" !== fbPage) {
+            thisObj.val(inURL.attr("base") + "/" + fbPage);
+            opObj.val("facebook " + fbPage + ";");
         } else {
             thisObj.val("");
             opObj.val("");
