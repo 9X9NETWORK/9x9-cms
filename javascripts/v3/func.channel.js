@@ -142,7 +142,7 @@
     $page.liveType2Prepare = function(ytUrlParse) {
         // ytLive 上網至 m3u8，但有些資料本來就沒有或不足
         cms.global.vYoutubeLiveIn.fileUrl = ytUrlParse.ytUrlFormat;
-        cms.global.vYoutubeLiveIn.imageUrl = $("#thumbnail-imageUrl").attr("src");
+        cms.global.vYoutubeLiveIn.imageUrl = $("#imageUrl").val();
         cms.global.vYoutubeLiveIn.name = $("#name").val();
         cms.global.vYoutubeLiveIn.intro = $("#intro").val();
         cms.global.vYoutubeLiveIn.uploader = "";
@@ -679,7 +679,8 @@
                     $('#channel-name').data('width', $('#channel-name').width());
                     // setup channel data
                     if ('' !== $.trim(channel.imageUrl)) {
-                        $('#thumbnail-imageUrl').attr('src', channel.imageUrl + '?n=' + Math.random());
+                    	$("#imageUrl").val(channel.imageUrl);
+                    	$("#iupLogo .imgUpShow").css('background-image', "url('"+ channel.imageUrl +"')").removeClass("no-image").removeClass("is-loading");
                     }
                     if ('' !== channel.lang && cms.config.LANG_MAP[channel.lang]) {
                         $('#lang-select-txt').text(cms.config.LANG_MAP[channel.lang]);

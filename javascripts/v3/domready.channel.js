@@ -154,8 +154,8 @@ $(function () {
                                 }
 
                                 if ("images/ch_default.png" !== ytImg) {
-                                    $("#thumbnail-imageUrl").attr("src", ytImg);
                                     $('#imageUrl').val(ytImg);
+                    				$("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
                                 }
                             },
                             error: function() {
@@ -215,8 +215,8 @@ $(function () {
                             cms.global.vYoutubeLiveIn.ytId = datas.channel.url; //
 
                             if ("images/ch_default.png" !== ytImg) {
-                                $("#thumbnail-imageUrl").attr("src", ytImg);
                                 $('#imageUrl').val(ytImg);
+                    			$("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
                             }
                             $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
                             $("#name").val(ytTitle);
@@ -257,9 +257,8 @@ $(function () {
                     $("#name").val(opObj.caption);
 
                     if ("" !== opObj.thumbnail_url) {
-                        $("#thumbnail-imageUrl").attr("src", opObj.thumbnail_url);
                         $('#imageUrl').val(opObj.thumbnail_url);
-
+                    	$("#iupLogo .imgUpShow").css('background-image', "url('"+ opObj.thumbnail_url +"')").removeClass("no-image").removeClass("is-loading");
                     }
 
                     cms.global.vYoutubeLiveIn.fileUrl = opObj.url;
@@ -368,8 +367,8 @@ $(function () {
                     $("#name").val(ytTitle);
                     $("#intro").val(ytDesc);
                     if("images/ch_default.png" !== ytImg){
-                        $("#thumbnail-imageUrl").attr("src", ytImg);
                         $('#imageUrl').val(ytImg);
+                    	$("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
                     }
 
                 },
