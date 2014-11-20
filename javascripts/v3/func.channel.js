@@ -73,7 +73,7 @@
             objTitle.attr('disabled', true).parent().parent().addClass("disabled");
             objDesc.attr('disabled', true).parent().parent().parent().addClass("disabled");
             $("#iupPaid .swfupload").addClass("hide");
-            $("#paidRemove").removeClass("hide");
+            $("#paidRemove").attr("href", "mailto:paidsupport@flipr.tv");
 
             nn.api('GET', cms.reapi('/api/billing/channels/{channelId}/iap_info', {
                 channelId: cms.global.USER_URL.param('id')
