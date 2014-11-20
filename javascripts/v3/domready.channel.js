@@ -567,8 +567,10 @@ $(function () {
             case "paid-select-list":
                 if (metadata) {
                     $("#paidBlock").removeClass("hide");
+                    $("#isPublic").val(false);
                 } else {
                     $("#paidBlock").addClass("hide");
+                    $("#isPublic").val(true);
                 }
                 break;
 
