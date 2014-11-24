@@ -19,6 +19,21 @@ $(function () {
         }
     });
 
+    $(document).on('click', '.imgUploadBtn', function () {
+        var btnClick = $(this),
+            blockUpload = btnClick.parent(),
+            fileUpload = blockUpload.find(".toUploadImage");
+        if(!btnClick.hasClass("disabled")){
+            fileUpload.click();
+        }
+    });
+
+    $(document).on('change', '.toUploadImage', function () {
+        if(this.files.length >0){
+            $page.doImageUpload($(this), this.files[0]);
+        }
+    });
+
     $(document).on('click', '.system-confirm-btn', function () {
         var msgOverlay = $('#system-confirm-alert-overlay'),
             btnAct = $(this).data("act");
