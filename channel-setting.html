@@ -131,6 +131,30 @@
 </div>
 <!-- Facebook Connect Failed2 Layer End -->
 
+<!-- System confirm alert overlay -->
+<div id="system-confirm-alert-overlay" class="overlay-h172 youtube-sync-alert">
+    <div class="overlay-h172-left"></div>
+    <div class="overlay-h172-center">
+        <p class="btn-close"></p>
+        <img src="images/icon_warning_lg.png" alt="">
+        <p class="vMsg"></p>
+        <div class="overlay-button-holder">
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p class="center system-confirm-btn scov-no" data-act="no">No</p>
+                <p class="right"></p>
+            </div>
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p class="center system-confirm-btn scov-yes" data-act="yes">Yes</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-h172-right"></div>
+</div>
+<!-- System confirm alert overlay End-->
+
 <!-- Youtube sync alert overlay -->
 <div id="youtube-sync-alert-overlay" class="overlay-h172 youtube-sync-alert">
     <div class="overlay-h172-left"></div>
@@ -190,7 +214,8 @@
                                     </div>
                                 </div>
 
-                                <p id="uploadPromotion">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
+                                <a class="normal-btn imgUploadBtn" href="javascript:void(0);" data-ori="${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}" data-uploading="${nn._([cms.global.PAGE_ID, 'setting-form', 'Uploading...'])}">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</a>
+                                <input type="file" class="hide toUploadImage" accept="image/*" />
 
                                 <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640 x 360 resolution image'])}</p>
                                 <p class="notice upload-notice hide">Please upload jpeg, png, or gif files.</p>
@@ -256,7 +281,8 @@
                     style="{{if '' !== imageUrl}}background-image: url('${imageUrl}'){{/if}}">
                 </div>
             </div>
-            <p id="uploadThumbnail">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
+            <a class="normal-btn imgUploadBtn" href="javascript:void(0);" data-ori="${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}" data-uploading="${nn._([cms.global.PAGE_ID, 'setting-form', 'Uploading...'])}">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</a>
+            <input type="file" class="hide toUploadImage" accept="image/*" />
             <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640x480 or higher resolution image'])}</p>
             <p class="notice upload-notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload jpeg, png, or gif files.'])}</p>
             <input type="hidden" class="imageUrl"    name="imageUrl"    id="imageUrl"    value="${imageUrl}" />
@@ -407,7 +433,8 @@
                         <div class="img-wrap imgUpShow no-image">
                         </div>
                     </div>
-                    <p id="uploadPaid">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
+                    <a class="normal-btn imgUploadBtn" href="javascript:void(0);" data-ori="${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}" data-uploading="${nn._([cms.global.PAGE_ID, 'setting-form', 'Uploading...'])}">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</a>
+                    <input type="file" class="hide toUploadImage" accept="image/*" />
                     <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.'])}</p>
                     <p class="notice upload-notice hide">Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.</p>
                     <input type="hidden" class="imageUrl"    name="iap_thumbnail"    id="iap_thumbnail"    value="">

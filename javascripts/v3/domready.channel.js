@@ -19,6 +19,47 @@ $(function () {
         }
     });
 
+    $(document).on('click', '.imgUploadBtn', function () {
+        var btnClick = $(this),
+            blockUpload = btnClick.parent(),
+            fileUpload = blockUpload.find(".toUploadImage");
+        if(!btnClick.hasClass("disabled")){
+            fileUpload.click();
+        }
+    });
+
+    $(document).on('change', '.toUploadImage', function () {
+        if(this.files.length >0){
+            $page.doImageUpload($(this), this.files[0]);
+        }
+    });
+
+    $(document).on('click', '.system-confirm-btn', function () {
+        var msgOverlay = $('#system-confirm-alert-overlay'),
+            btnAct = $(this).data("act");
+
+        if ($(msgOverlay).hasClass("isPaidAgree")) {
+            // paid confirm
+            $(msgOverlay).removeClass("isPaidAgree");
+            if ("yes" === btnAct) {
+                $("#settingForm").data("isPaidAgree", "yes");
+                $.unblockUI();
+                $("#settingForm .btn-save.enable").trigger("click");
+            } else if ("no" === btnAct) {
+                $.unblockUI();
+            }
+        }else if($(msgOverlay).hasClass("isStoreSwitch")) {
+            // store switch to off
+            $(msgOverlay).removeClass("isStoreSwitch");
+            if ("yes" === btnAct) {
+                $page.storePoolOnOff("off");
+                $.unblockUI();
+            } else if ("no" === btnAct) {
+                $.unblockUI();
+            }
+        }
+    });
+
     $(document).on('change', '#tmpSocialFeeds', function () {
         var thisObj = $(this),
             opObj = $("#socialFeeds"),
@@ -41,7 +82,15 @@ $(function () {
 
     $(document).on('click', '#add-store-switch', function () {
         if ($(this).hasClass("switch-on")) {
-            $page.storePoolOnOff("off");
+            var msgOverlay = $('#system-confirm-alert-overlay');
+            $(msgOverlay).addClass("isStoreSwitch");
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'The subscribers and paid users can‘t watch the program after you change to unpublished. Are you sure to change to unpublish?']));
+            $(msgOverlay).find('.scov-yes').text(nn._(['overlay', 'button', 'Yes']));
+            $(msgOverlay).find('.scov-no').text(nn._(['overlay', 'button', 'No']));
+
+            $.blockUI({
+                message: msgOverlay
+            });
         } else {
             $page.storePoolOnOff("on");
         }
@@ -737,6 +786,18 @@ $(function () {
     $('#content-main').on('click', '#settingForm .btn-save.enable', function () {
         // update mode
         if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable') && cms.global.USER_URL.param('id') > 0) {
+            if ("true" === String($("#paidChannel").val()) && "yes" !== $("#settingForm").data("isPaidAgree")) {
+                var msgOverlay = $('#system-confirm-alert-overlay');
+                $(msgOverlay).addClass("isPaidAgree");
+                $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'You can‘t change “program price” after click “Yes”. Are you sure you want to save?']));
+                $(msgOverlay).find('.scov-yes').text(nn._(['overlay', 'button', 'Yes']));
+                $(msgOverlay).find('.scov-no').text(nn._(['overlay', 'button', 'No']));
+
+                $.blockUI({
+                    message: msgOverlay
+                });
+                return false;
+            }
             $common.showSavingOverlay();
             nn.on(400, function (jqXHR, textStatus) {
                 $('#overlay-s').fadeOut(0, function () {
