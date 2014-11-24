@@ -786,18 +786,6 @@ $(function () {
     $('#content-main').on('click', '#settingForm .btn-save.enable', function () {
         // update mode
         if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable') && cms.global.USER_URL.param('id') > 0) {
-            if ("true" === String($("#paidChannel").val()) && "yes" !== $("#settingForm").data("isPaidAgree")) {
-                var msgOverlay = $('#system-confirm-alert-overlay');
-                $(msgOverlay).addClass("isPaidAgree");
-                $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'You can‘t change “program price” after click “Yes”. Are you sure you want to save?']));
-                $(msgOverlay).find('.scov-yes').text(nn._(['overlay', 'button', 'Yes']));
-                $(msgOverlay).find('.scov-no').text(nn._(['overlay', 'button', 'No']));
-
-                $.blockUI({
-                    message: msgOverlay
-                });
-                return false;
-            }
             $common.showSavingOverlay();
             nn.on(400, function (jqXHR, textStatus) {
                 $('#overlay-s').fadeOut(0, function () {

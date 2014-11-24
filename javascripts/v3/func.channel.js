@@ -350,6 +350,18 @@
             $('.form-btn .notice').removeClass('hide');
             return false;
         }
+        if ("true" === String($("#paidChannel").val()) && "yes" !== $("#settingForm").data("isPaidAgree")) {
+            var msgOverlay = $('#system-confirm-alert-overlay');
+            $(msgOverlay).addClass("isPaidAgree");
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'You can‘t change “program price” after click “Yes”. Are you sure you want to save?']));
+            $(msgOverlay).find('.scov-yes').text(nn._(['overlay', 'button', 'Yes']));
+            $(msgOverlay).find('.scov-no').text(nn._(['overlay', 'button', 'No']));
+
+            $.blockUI({
+                message: msgOverlay
+            });
+            return false;
+        }
         return true;
     };
 
