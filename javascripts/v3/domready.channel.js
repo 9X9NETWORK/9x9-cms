@@ -1056,69 +1056,15 @@ $(function () {
                 parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
             }
 
-            nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
-                userId: cms.global.USER_DATA.id
-            }), parameter, function (channel) {
-                if(channel.id > 0 && cms.global.vIsYoutubeSync === true){
-                    nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
-                        channelId: channel.id
-                    }), null, function (msg) {
-                        nn.log("message --- " + msg);
-                    });
-                }
-
-                if (true === cms.global.vIsYoutubeLive) {
-                    // live program
-                    $page.ytLiveCreate(channel.id);
-
-                } else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
-                    var userIds = [],
-                        accessTokens = [];
-                    if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {
-                        userIds = $.trim($('#pageId').val()).split(',');
-                        $.each(userIds, function (i, userId) {
-                            accessTokens.push(cms.global.FB_PAGES_MAP[userId]);
-                        });
-                    }
-                    if ($('#fbTimeline').is(':checked')) {
-                        userIds.push(cms.global.USER_SNS_AUTH.userId);
-                        accessTokens.push(cms.global.USER_SNS_AUTH.accessToken);
-                    }
-                    nn.api('DELETE', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
-                        channelId: channel.id
-                    }), null, function () {
-                        if (userIds.length > 0) {
-                            parameter = {
-                                userId: userIds.join(','),
-                                accessToken: accessTokens.join(',')
-                            };
-                            nn.api('POST', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
-                                channelId: channel.id
-                            }), parameter, function () {
-                                $('#overlay-s').fadeOut(1000, function () {
-                                    $('body').removeClass('has-change');
-                                    $('#imageUrlOld').val(channel.imageUrl);
-                                    $page.saveAfter();
-                                });
-                            });
-                        } else {
-                            $('#overlay-s').fadeOut(1000, function () {
-                                $('body').removeClass('has-change');
-                                $('#imageUrlOld').val(channel.imageUrl);
-                                $page.saveAfter();
-                            });
-                        }
-                    });
-                } else {
-                    $('#overlay-s').fadeOut(1000, function () {
-                        $('body').removeClass('has-change');
-                        $('#imageUrlOld').val(channel.imageUrl);
-                        
-                        $page.saveAfter();
-                    });
-                }
-            });
+            procInsertStart()
+                .then(channelAdd)
+                .then(procIAP)
+                .then(doAutoShare)
+                .then(procSyncProgram)
+                .then(procLiveProgram)
+                .then(procInsertEnd);
         }
+
         return false;
     });
     $('#content-main').on('click', '.fminput', function () {
