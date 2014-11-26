@@ -911,8 +911,135 @@ $(function () {
     });
 
     $('#content-main').on('click', '#settingForm .btn-create.enable', function () {
-        // insert mode
+        // program add
+        function channelAdd() {
+            var deferred = $.Deferred();
+            nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
+                userId: cms.global.USER_DATA.id
+            }), parameter, function (channel) {
+                deferred.resolve(channel);
+            });
 
+            return deferred.promise();
+        }
+
+        // IAP add
+        function procIAP(channel) {
+            var deferred = $.Deferred(),
+                isPaidSend = $page.isPaidSend(),
+                infoPaid = $page.getPaidInfo();
+            if (isPaidSend && infoPaid.isVailed) {
+                nn.api('POST', cms.reapi('/api/billing/channels/{channelId}/iap_info', {
+                    channelId: channel.id
+                }), infoPaid, function (iapInfo) {
+                    nn.api('POST', cms.reapi('/api/billing/channels/{channelId}/iap_items', {
+                        channelId: channel.id
+                    }), {
+                        msoId: cms.global.USER_DATA.msoId
+                    }, function (iapItem) {
+                        if (cms.global.USER_URL.attr('file') === 'channel-setting.html') {
+                            $page.paidChannelInit();
+                        }
+                        deferred.resolve(channel);
+                    });
+                });
+            } else {
+                deferred.resolve(channel);
+            }
+
+            return deferred.promise();
+        }
+
+        // auto share
+        function doAutoShare(channel) {
+            var deferred = $.Deferred();
+            if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
+                var userIds = [],
+                    accessTokens = [];
+                if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {
+                    userIds = $.trim($('#pageId').val()).split(',');
+                    $.each(userIds, function(i, userId) {
+                        accessTokens.push(cms.global.FB_PAGES_MAP[userId]);
+                    });
+                }
+                if ($('#fbTimeline').is(':checked')) {
+                    userIds.push(cms.global.USER_SNS_AUTH.userId);
+                    accessTokens.push(cms.global.USER_SNS_AUTH.accessToken);
+                }
+                nn.api('DELETE', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
+                    channelId: channel.id
+                }), null, function () {
+                    if (userIds.length > 0) {
+                        parameter = {
+                            userId: userIds.join(','),
+                            accessToken: accessTokens.join(',')
+                        };
+                        nn.api('POST', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
+                            channelId: channel.id
+                        }), parameter, function () {
+                            deferred.resolve(channel);
+                        });
+                    } else {
+                        deferred.resolve(channel);
+                    }
+                });
+            } else {
+                deferred.resolve(channel);
+            }
+
+            return deferred.promise();
+        }
+
+        // Sync Program
+        function procSyncProgram(channel) {
+            var deferred = $.Deferred();
+            if (channel.id > 0 && cms.global.vIsYoutubeSync === true) {
+                nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
+                    channelId: channel.id
+                }), null, function (msg) {
+                    deferred.resolve(channel);
+                });
+            } else {
+                deferred.resolve(channel);
+            }
+
+            return deferred.promise();
+        }
+
+        // Live program
+        function procLiveProgram(channel) {
+            var deferred = $.Deferred();
+            if (true === cms.global.vIsYoutubeLive) {
+                // live program
+                $page.ytLiveCreate(channel.id);
+                deferred.resolve(channel);
+            } else {
+                deferred.resolve(channel);
+            }
+
+            return deferred.promise();
+        }
+
+        function procInsertEnd(channel) {
+            var deferred = $.Deferred();
+            $('#overlay-s').fadeOut(1000, function() {
+                $('body').removeClass('has-change');
+                $('#imageUrlOld').val(channel.imageUrl);
+                $page.saveAfter();
+                deferred.resolve();
+            });
+            return deferred.promise();
+        }
+
+        function procInsertStart() {
+            var deferred = $.Deferred();
+            $common.showProcessingOverlay();
+            deferred.resolve();
+            return deferred.promise();
+        }
+
+
+        // insert mode
         if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable')) {
             $common.showSavingOverlay();
             nn.on(400, function (jqXHR, textStatus) {
