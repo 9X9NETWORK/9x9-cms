@@ -350,7 +350,7 @@
             $('.form-btn .notice').removeClass('hide');
             return false;
         }
-        if ("true" === String($("#paidChannel").val()) && "yes" !== $("#settingForm").data("isPaidAgree")) {
+        if ($page.isPaidSend() && "yes" !== $("#settingForm").data("isPaidAgree")) {
             var msgOverlay = $('#system-confirm-alert-overlay');
             $(msgOverlay).addClass("isPaidAgree");
             $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'You can‘t change “program price” after click “Yes”. Are you sure you want to save?']));

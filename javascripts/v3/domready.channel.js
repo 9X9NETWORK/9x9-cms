@@ -787,7 +787,7 @@ $(function () {
     });
 
     // channel form button
-    $('#content-main').on('click', '#settingForm .btn-save.enable', function () {
+    $('#content-main').on('click', '#settingForm .btn-save-old.enable', function () {
         // update mode
         if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable') && cms.global.USER_URL.param('id') > 0) {
             $common.showSavingOverlay();
@@ -910,15 +910,30 @@ $(function () {
         location.href = 'index.html';
     });
 
-    $('#content-main').on('click', '#settingForm .btn-create.enable', function () {
-        // program add
-        function channelAdd() {
+    $('#content-main').on('click', '#settingForm .btn-create.enable, #settingForm .btn-save.enable', function () {
+        var isEnable = $(this).hasClass('enable'),
+            isCreate = $(this).hasClass('btn-create'),
+            qrystring = "",
+            parameter = {};
+
+        // program proc [add | edit]
+        function procChannel() {
             var deferred = $.Deferred();
-            nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
-                userId: cms.global.USER_DATA.id
-            }), parameter, function (channel) {
-                deferred.resolve(channel);
-            });
+            if (isCreate) {
+                // insert mode
+                nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
+                    userId: cms.global.USER_DATA.id
+                }), parameter, function (channel) {
+                    deferred.resolve(channel);
+                });
+            } else {
+                // edit mode
+                nn.api('PUT', cms.reapi('/api/channels/{channelId}', {
+                    channelId: cms.global.USER_URL.param('id')
+                }), parameter, function (channel) {
+                    deferred.resolve(channel);
+                });
+            }
 
             return deferred.promise();
         }
@@ -937,7 +952,7 @@ $(function () {
                     }), {
                         msoId: cms.global.USER_DATA.msoId
                     }, function (iapItem) {
-                        if (cms.global.USER_URL.attr('file') === 'channel-setting.html') {
+                        if (!isCreate) {
                             $page.paidChannelInit();
                         }
                         deferred.resolve(channel);
@@ -951,7 +966,7 @@ $(function () {
         }
 
         // auto share
-        function doAutoShare(channel) {
+        function procAutoShare(channel) {
             var deferred = $.Deferred();
             if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
                 var userIds = [],
@@ -1006,13 +1021,33 @@ $(function () {
             return deferred.promise();
         }
 
-        // Live program
+        // Live program [add | edit]
         function procLiveProgram(channel) {
             var deferred = $.Deferred();
             if (true === cms.global.vIsYoutubeLive) {
-                // live program
-                $page.ytLiveCreate(channel.id);
-                deferred.resolve(channel);
+                if(isCreate){
+                    // insert mode
+                    $page.ytLiveCreate(channel.id);
+                    deferred.resolve(channel);
+                }else{
+                    // edit mode
+                    nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
+                        channelId: channel.id
+                    }), null, function (episodes) {
+                        var cntEpisode = episodes.length;
+                        if (cntEpisode > 0) {
+                            nn.api('DELETE', cms.reapi('/api/episodes/{episodeId}', {
+                                episodeId: episodes[0].id
+                            }), null, function(programs) {
+                                $page.ytLiveCreate(channel.id);
+                                deferred.resolve(channel);
+                            });
+                        } else {
+                            $page.ytLiveCreate(channel.id);
+                            deferred.resolve(channel);
+                        }
+                    });
+                }
             } else {
                 deferred.resolve(channel);
             }
@@ -1020,7 +1055,7 @@ $(function () {
             return deferred.promise();
         }
 
-        function procInsertEnd(channel) {
+        function procEnd(channel) {
             var deferred = $.Deferred();
             $('#overlay-s').fadeOut(1000, function() {
                 $('body').removeClass('has-change');
@@ -1028,41 +1063,40 @@ $(function () {
                 $page.saveAfter();
                 deferred.resolve();
             });
+
             return deferred.promise();
         }
 
-        function procInsertStart() {
+        function procStart() {
             var deferred = $.Deferred();
-            $common.showProcessingOverlay();
+            $common.showSavingOverlay();
             deferred.resolve();
+
             return deferred.promise();
         }
 
 
         // insert mode
-        if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable')) {
-            $common.showSavingOverlay();
+        if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && isEnable) {
             nn.on(400, function (jqXHR, textStatus) {
                 $('#overlay-s').fadeOut(0, function () {
                     nn.log(textStatus + ': ' + jqXHR.responseText, 'error');
                 });
             });
-            // note: channel-add.html hard code hidden field isPublic=true
-            var qrystring = $('#settingForm').serialize(),
-                parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
 
-            if (cms.global.vIsYoutubeSync === true) {
-                qrystring = $('#settingForm').serialize();
-                parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
-            }
+            $("#intro").val($("#intro").val().replace(/\n/g, '{BR}'));
+            qrystring = $('#settingForm').serialize();
+            parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
+            $("#intro").val($("#intro").val().replace(/\{BR\}/g, '\n'));
 
-            procInsertStart()
-                .then(channelAdd)
+
+            procStart()
+                .then(procChannel)
                 .then(procIAP)
-                .then(doAutoShare)
+                .then(procAutoShare)
                 .then(procSyncProgram)
                 .then(procLiveProgram)
-                .then(procInsertEnd);
+                .then(procEnd);
         }
 
         return false;
