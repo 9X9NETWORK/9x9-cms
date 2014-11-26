@@ -44,7 +44,11 @@ $(function () {
             if ("yes" === btnAct) {
                 $("#settingForm").data("isPaidAgree", "yes");
                 $.unblockUI();
-                $("#settingForm .btn-save.enable").trigger("click");
+                if (cms.global.USER_URL.attr('file') === 'channel-setting.html') {
+                    $("#settingForm .btn-save.enable").trigger("click");
+                } else {
+                    $("#settingForm .btn-create.enable").trigger("click");
+                }
             } else if ("no" === btnAct) {
                 $.unblockUI();
             }
@@ -853,7 +857,7 @@ $(function () {
                     } else {
                         $page.saveAfter();
                     }
-               }else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
+                }else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
                     var userIds = [],
                         accessTokens = [];
                     if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {
