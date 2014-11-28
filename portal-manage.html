@@ -484,7 +484,7 @@ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Sorted by'])} :
             {{if paidChannel}}
                 <span class="badge danger">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
             {{else}}
-                {{if cntItem == 0}}
+                {{if cntItem > 0}}
                     <div class="cover-text"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></div>
                 {{/if}}
             {{/if}}
