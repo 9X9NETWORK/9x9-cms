@@ -434,8 +434,8 @@
         </div>
         <div class="info">
             <h3>
-                {{if paidChannel}}
-                    <span class="badge danger ">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
+                {{if paidChannel || cntItem > 0}}
+                    <span class="badge {{if paidChannel}}danger{{else}}warning{{/if}}">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
                 {{/if}}
                 <a href="{{if true === isYoutubeLive}}javascript:void(0);{{else}}episode-list.html?id=${id}{{/if}}">${name}</a>
             </h3>

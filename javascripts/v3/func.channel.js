@@ -136,6 +136,11 @@
             isPaid = true;
         } else {
             isPaid = false;
+            // for special case under review
+            if($("#cntItem").val() > 0){
+            	isPaid = true;
+            	$("#paidChannel").val(isPaid);
+            }
         }
         if (true === isPaid) {
             objPaid.removeClass("enable").addClass("disabled");

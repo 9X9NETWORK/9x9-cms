@@ -800,19 +800,29 @@ $(function () {
 
         // program proc [add | edit]
         function procChannel() {
-            var deferred = $.Deferred();
+            var deferred = $.Deferred(),
+                parameterChannel = {},
+                filterFields = ["paidChannel", "cntItem"];
+
+            // for special case under review
+            $.each(parameter, function (eKey, eValue) {
+                if (-1 === $.inArray(eKey, filterFields)) {
+                    parameterChannel[eKey] = eValue;
+                }
+            });
+
             if (isCreate) {
                 // insert mode
                 nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
                     userId: cms.global.USER_DATA.id
-                }), parameter, function (channel) {
+                }), parameterChannel, function (channel) {
                     deferred.resolve(channel);
                 });
             } else {
                 // edit mode
                 nn.api('PUT', cms.reapi('/api/channels/{channelId}', {
                     channelId: cms.global.USER_URL.param('id')
-                }), parameter, function (channel) {
+                }), parameterChannel, function (channel) {
                     deferred.resolve(channel);
                 });
             }
