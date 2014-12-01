@@ -183,7 +183,7 @@
             "History": "已發送通知"
 
         },
-         "notification": {
+        "notification": {
             "Schedule": "排程通知",
             "History": "已發送",
             "Are you sure you want to delete this notification? All data will be removed permanently.": "所有資料將永久刪除，確定刪除此推撥通知？",
@@ -220,7 +220,7 @@
             "Input notification message...": "輸入通知內容...",
             "Input Curated program or episode URL...": "輸入策展節目或劇集網址..."
         },
-        "schedule-form":{
+        "schedule-form": {
             "Schedule": "發送時間"
         }
     },
@@ -443,6 +443,8 @@
             "Processing...": "處理中..."
         },
         "channel-list": {
+            "UNDER REVIEW": "審核中",
+            "Paid": "付費",
             "Sorted by": "預設排序",
             "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.": "您將變更節目排序至\"更新時間\"，系統將依節目\"更新時間\"自動排序，除推薦節目外，其餘您將無法手動進行變更順序。",
             "Updated time": "依更新時間 ",
@@ -526,6 +528,13 @@
             "By curation": "策展編輯"
         },
         "channel-list": {
+            "Paid": "付費",
+            "Publish": "上架",
+            "Unpublish": "未上架",
+            "UNDER REVIEW": "審核中",
+            "Curated program": "策展節目",
+            "Sync program": "同步節目",
+            "Live program": "直播節目",
             "Get URL": "網址",
             "Brand": "品牌",
             "Share URL": "分享連結",
@@ -550,15 +559,13 @@
             "You don't have any Sync programs yet.": "你尚無任何同步節目",
             "You don't have any live programs yet.": "你尚無任何直播節目",
             "Invalid auto-sync, please sync again and reset in settings.": "自動同步已失效，請再次同步並重新設定。",
-            "Sync program": "同步節目",
-            "Live program": "直播節目",
             "Sort by order": "依順序排列",
             "Sort by reverse order": "依反序排列",
             "In my app": "已上架"
         },
         "overlay": {
             "Create a New Program": "建立一個新的節目",
-            "Choose a type": "選一個類型",
+            "You can set it as a PAID or FREE program!": "你可以把節目設定成付費或是免費!",
             "Sync<br />Program": "同步節目",
             "Curated<br />Program": "策展節目",
             "Live<br />Program": "直播節目",
@@ -629,14 +636,32 @@
             "Required field": "必填項目"
         },
         "setting-form": {
-        	"Please input YouTube or Vimeo URL.": "請輸入 YouTube 或 Vimeo 連結。",
-        	"URL sample": "範例連結",
+            "Promotion banner": "宣傳封面",
+            "Better results with 640 x 360 resolution image": "建議圖片解析度為 640 x 360",
+            "Program price": "節目價格",
+            "Free program": "免付費節目",
+            "Paid program": "付費節目",
+            "Price": "定價",
+            "Select a price": "選擇定價",
+            "Publication name": "產品名稱",
+            "Description": "產品描述",
+            "Picture for review": "審核用圖",
+            "If you want to delete the product from App store or Google play please contact with us before a month.": "請於一個月前來信提出要將付費節目從 App store 或 Google play 的下架通知！",
+            "This banner will be used in some information pages, such as paid program preview page.": "此圖將會用於部分內容介紹頁，例如付費節目的預覽頁面。",
+            "Upload a screenshot of the product as it appears on the device. This screenshot is used for Apple’s review only and is not displayed on the App Store.": "該產品截圖只用於 Apple 的審核，不會出現在App Store。",
+            "Facebook page": "Facebook粉絲團",
+            "Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.": "請上傳解析度至少 640×920 的產品截圖",
+            "You can‘t change “program price” after click “Yes”. Are you sure you want to save?": "點擊「是」後，將無法再次修改節目定價。您確定要儲存？",
+            "The subscribers and paid users can‘t watch the program after you change to unpublished. Are you sure to change to unpublish?": "將節目下架，將導致訂閱用戶與付費用戶無法觀看此節目。您確定要將該節目下架？",
+
+            "Please input YouTube or Vimeo URL.": "請輸入 YouTube 或 Vimeo 連結。",
+            "URL sample": "範例連結",
             "Add channel or playlist URL": "輸入頻道或播放清單連結",
             "Playlist or channel reverse order": "播放清單或頻道反序排列",
             "Auto sync with video source": "影片自動同步",
             "Program will auto-sync with video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上0點、8點、中午12點、下午2點、晚上6點、9點，與影片來源自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
             "This program will automatically synchronize videos from video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?": "影片同步功能開啟後，系統會在每天早上0點、8點、中午12點、下午2點、晚上6點、9點，自動同步影片，確定要進行同步?",
-        	"Playlist or channel order": "播放清單或頻道順序排列",
+            "Playlist or channel order": "播放清單或頻道順序排列",
             "Playlist or channel reverse order": "播放清單或頻道反序排列",
 
             "Title": "名稱",
@@ -676,7 +701,7 @@
             "Save": "儲存",
             "Add live video URL": "輸入直播網址",
             "Episode sort by": "劇集排序依照",
-            "Add to My App": "上架到App",
+            "Publish to App": "上架到App",
             "Invalid URL, please check the URL and try again.": "網址輸入錯誤，請檢查網址後重新輸入。",
             "Input live video URL...": "輸入直播網址...",
             "You can search the programs which has been added to \"Main Channels\" and \"Program store\" of My App.": "上架到App的節目，將能在「App管理」的「主頻道」與「類別」中被找到。"

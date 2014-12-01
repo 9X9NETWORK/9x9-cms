@@ -360,6 +360,8 @@
             "Processing...": "Processing..."
         },
         "channel-list": {
+            "UNDER REVIEW": "UNDER REVIEW",
+            "Paid": "Paid",
             "Sorted by": "Sorted by",
             "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.": "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.",
             "Updated time": "Updated time ",
@@ -417,6 +419,11 @@
             "Save order": "Save order"
         },
         "channel-list": {
+            "Paid": "Paid",
+            "Publish": "Publish",
+            "Unpublish": "Unpublish",
+            "Sync programe": "Sync programe",
+            "Live programe": "Live programe",
             "Get URL": "Get URL",
             "Brand": "Brand",
             "Share URL": "Share URL",

@@ -31,11 +31,9 @@
     $page.edFilter = function (inSH) {
         // inSH {true:enalbe, false:disabled}
         if (inSH) {
-            $(".lbTypeItem").prop("disabled", !inSH);
-            $(".filterType").removeClass("disabled");
+            $("#filterProgram .enable").removeClass("disabled");
         } else {
-            $(".lbTypeItem").prop("disabled", !inSH);
-            $(".filterType").addClass("disabled");
+            $("#filterProgram .enable").addClass("disabled");
         }
     };
 

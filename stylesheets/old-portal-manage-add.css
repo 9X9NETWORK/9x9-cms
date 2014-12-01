@@ -1,4 +1,23 @@
-/* line 20, ../sass/old-portal-manage-add.sass */
+/* line 9, ../sass/old-portal-manage-add.sass */
+#portal-constrain {
+  top: 220px;
+}
+
+/* line 11, ../sass/old-portal-manage-add.sass */
+#portal-list {
+  position: static;
+}
+/* line 13, ../sass/old-portal-manage-add.sass */
+#portal-list .channel-list {
+  padding-top: 40px;
+}
+
+/* line 15, ../sass/old-portal-manage-add.sass */
+#store-layer {
+  position: static;
+}
+
+/* line 18, ../sass/old-portal-manage-add.sass */
 .banner-wrap {
   position: relative;
   width: 45%;
@@ -10,42 +29,42 @@
   cursor: pointer;
 }
 
-/* line 30, ../sass/old-portal-manage-add.sass */
+/* line 28, ../sass/old-portal-manage-add.sass */
 .banner-text {
   padding: 5px;
 }
 
-/* line 32, ../sass/old-portal-manage-add.sass */
+/* line 30, ../sass/old-portal-manage-add.sass */
 .thumb-wrap {
-  border: 4px solid white;
+  border: 4px solid #fff;
   position: relative;
   background-color: rgba(173, 173, 173, 0.8);
-  background-image: -webkit-gradient(linear, to bottom, to top, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(255, 255, 255, 0.1)));
-  background-image: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
-  background-image: -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
-  background-image: -o-linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJvYmplY3RCb3VuZGluZ0JveCIgeDE9IjAuNSIgeTE9IjAuMCIgeDI9IjAuNSIgeTI9IjEuMCI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIwLjEiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiIHN0b3Atb3BhY2l0eT0iMC4xIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmFkKSIgLz48L3N2Zz4g');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 0, 0, 0.1)), color-stop(100%, rgba(255, 255, 255, 0.1)));
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
   min-height: 150px;
 }
-/* line 38, ../sass/old-portal-manage-add.sass */
+/* line 36, ../sass/old-portal-manage-add.sass */
 .thumb-wrap img {
   width: 100%;
 }
 
-/* line 40, ../sass/old-portal-manage-add.sass */
+/* line 38, ../sass/old-portal-manage-add.sass */
 .thumb-inner-text {
   font-size: 18px;
   position: absolute;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-/* line 44, ../sass/old-portal-manage-add.sass */
+/* line 42, ../sass/old-portal-manage-add.sass */
 .thumb-hover-wrap {
   position: absolute;
   bottom: 0;
@@ -53,113 +72,70 @@
   height: 40px;
   line-height: 40px;
   color: transparent;
-  text-align: center;
-  z-index: 20;
   background: transparent url("../images/baenner-upload.gif") no-repeat 8px 8px;
   transition: all 0.5s ease;
-
 }
-/* line 53, ../sass/old-portal-manage-add.sass */
+/* line 51, ../sass/old-portal-manage-add.sass */
 .banner-wrap:hover .thumb-hover-wrap {
   background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-}
-.banner-wrap .swfupload{
-  opacity: 0;
-}
-.banner-wrap:hover .swfupload{
-  opacity: 1;
+  color: #fff;
 }
 
-/* line 57, ../sass/old-portal-manage-add.sass */
+/* line 55, ../sass/old-portal-manage-add.sass */
 .thumb-inner-warning {
   position: absolute;
   color: red;
   top: 70%;
   left: 50%;
   width: 90%;
-  -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
-
-.centre-image{
-  width: 100%;
-  height: 150px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  position: relative;
-  /*z-index: 10;*/
-
-}
-.centre-image img{
-
-
-  transform: translateY(-50%);
-  margin-top: 75px;
-}
-
-
-/*progress bar*/
-.progress{
+/* line 67, ../sass/old-portal-manage-add.sass */
+.itemList .badge, .list-holder .badge {
   position: absolute;
-  width: 100%;
-  top: 0;
-  
-}
-
-.progress-bar {
-  float: left;
-  width: 0;
-  height: 100%;
+  z-index: 10;
+  bottom: 7px;
+  left: 7px;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
   font-size: 12px;
-  line-height: 20px;
+  font-weight: 700;
+  line-height: 1;
   color: #fff;
   text-align: center;
-  background-color: #428bca;
-  -webkit-box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,.15);
-  -webkit-transition: width .6s ease;
-  -o-transition: width .6s ease;
-  transition: width .6s ease;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #777;
+  border-radius: 5px;
 }
-
-.progress-striped .progress-bar, .progress-bar-striped {
-  background-image: -webkit-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
-  background-image: -o-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
-  background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
-  -webkit-background-size: 40px 40px;
-  background-size: 40px 40px;
+/* line 84, ../sass/old-portal-manage-add.sass */
+.itemList .badge.danger, .list-holder .badge.danger {
+  background-color: #ef4913;
 }
-
-.progress.active .progress-bar, .progress-bar.active {
-    -webkit-animation: progress-bar-stripes 2s linear infinite;
-    -o-animation: progress-bar-stripes 2s linear infinite;
-    animation: progress-bar-stripes 2s linear infinite;
-}
-
-.btn-upload-flash{
-  width: 100%;
-  height: 100%;
+/* line 86, ../sass/old-portal-manage-add.sass */
+.itemList .cover-text, .list-holder .cover-text {
   position: absolute;
-  z-index: 30;
-  cursor: pointer;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 15px;
 }
-
-@-webkit-keyframes progress-bar-stripes{
-  from{ background-position:40px 0  }
-  to{background-position:0 0}
-}
-@-o-keyframes progress-bar-stripes{
-  from{background-position:40px 0}
-  to{background-position:0 0}
-}
-@keyframes progress-bar-stripes{
-  from{background-position:40px 0}
-  to{background-position:0 0}
+/* line 96, ../sass/old-portal-manage-add.sass */
+.itemList .cover-text .inner-text, .list-holder .cover-text .inner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translate3d(-50%, -50%, 0);
+  -ms-transform: translate3d(-50%, -50%, 0);
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
 }

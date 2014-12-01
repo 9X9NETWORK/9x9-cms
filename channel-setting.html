@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/uniform.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/channel.css?v=411104" />
+<link rel="stylesheet" href="stylesheets/old-channel.css?v=431625"/>
 <link rel="stylesheet" href="stylesheets/cms-component.css?v=431625">
 <title>FLIPr.tv - Program settings</title>
 </head>
@@ -130,6 +131,30 @@
 </div>
 <!-- Facebook Connect Failed2 Layer End -->
 
+<!-- System confirm alert overlay -->
+<div id="system-confirm-alert-overlay" class="overlay-h172 youtube-sync-alert">
+    <div class="overlay-h172-left"></div>
+    <div class="overlay-h172-center">
+        <p class="btn-close"></p>
+        <img src="images/icon_warning_lg.png" alt="">
+        <p class="vMsg"></p>
+        <div class="overlay-button-holder">
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p class="center system-confirm-btn scov-no" data-act="no">No</p>
+                <p class="right"></p>
+            </div>
+            <div class="btn-gray">
+                <p class="left"></p>
+                <p class="center system-confirm-btn scov-yes" data-act="yes">Yes</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    <div class="overlay-h172-right"></div>
+</div>
+<!-- System confirm alert overlay End-->
+
 <!-- Youtube sync alert overlay -->
 <div id="youtube-sync-alert-overlay" class="overlay-h172 youtube-sync-alert">
     <div class="overlay-h172-left"></div>
@@ -175,6 +200,39 @@
 <div id="content-main-wrap" class="footer-on">
 <div class="constrain">
 <form name="settingForm" id="settingForm" method="get" action="" data-height="400">
+
+
+<!-- IAP Start -->
+
+                        <div class="fminput clearfix">
+                            <label for="name">
+                                <acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Promotion banner'])}</label>
+                            <div id="iupPromotion" class="fmfield upload-img banner-thumb">
+                                <div class="thumbnail">
+                                    <div class="img-wrap imgUpShow {{if '' === bannerImageUrl}}no-image{{/if}}" 
+                                        style="{{if '' !== bannerImageUrl}}background-image: url('${bannerImageUrl}'){{/if}}">
+                                    </div>
+                                </div>
+
+                                <a class="normal-btn imgUploadBtn" href="javascript:void(0);" data-ori="${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}" data-uploading="${nn._([cms.global.PAGE_ID, 'setting-form', 'Uploading...'])}">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</a>
+                                <input type="file" class="hide toUploadImage" accept="image/*" />
+
+                                <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640 x 360 resolution image'])}</p>
+                                <p class="notice upload-notice hide">Please upload jpeg, png, or gif files.</p>
+                                <input type="hidden" class="imageUrl"    name="bannerImageUrl"    id="bannerImageUrl"    value="${bannerImageUrl}">
+                                <input type="hidden" class="imageUrlOld" name="bannerImageUrlOld" id="bannerImageUrlOld" value="${bannerImageUrl}">
+                                <a href="" class="icon-question is-with-tooltip">
+                                    <div class="tooltip-wrap">
+                                        ${nn._([cms.global.PAGE_ID, 'setting-form', 'This banner will be used in some information pages, such as paid program preview page.'])}
+                                        
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+<!-- IAP end -->
+
+
     {{if cms.global.vIsYoutubeSync === true}}
     <div class="fminput clearfix">
         <label for="name">
@@ -217,20 +275,18 @@
     </div>
     <div class="fminput clearfix">
         <label><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'setting-form', 'Program logo'])}</label>
-        <div class="fmfield upload-img">
+        <div id="iupLogo" class="fmfield upload-img">
             <div class="thumbnail">
-                <div class="img-wrap">
-                    <div class="img">
-                        <img id="thumbnail-imageUrl" src="images/ch_default.png" alt="" class="photo" />
-                    </div>
+                <div class="img-wrap imgUpShow {{if '' === imageUrl}}no-image{{/if}}" 
+                    style="{{if '' !== imageUrl}}background-image: url('${imageUrl}'){{/if}}">
                 </div>
-                <img src="images/loading.gif" alt="" class="loading" />
             </div>
-            <p id="uploadThumbnail">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</p>
+            <a class="normal-btn imgUploadBtn" href="javascript:void(0);" data-ori="${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}" data-uploading="${nn._([cms.global.PAGE_ID, 'setting-form', 'Uploading...'])}">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</a>
+            <input type="file" class="hide toUploadImage" accept="image/*" />
             <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Better results with 640x480 or higher resolution image'])}</p>
             <p class="notice upload-notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload jpeg, png, or gif files.'])}</p>
-            <input type="hidden" name="imageUrl" id="imageUrl" value="${imageUrl}" />
-            <input type="hidden" name="imageUrlOld" id="imageUrlOld" value="${imageUrl}" />
+            <input type="hidden" class="imageUrl"    name="imageUrl"    id="imageUrl"    value="${imageUrl}" />
+            <input type="hidden" class="imageUrlOld" name="imageUrlOld" id="imageUrlOld" value="${imageUrl}" />
         </div>
     </div>
     <div class="fminput clearfix">
@@ -297,6 +353,114 @@
             </div>
         </div>
     </div>
+
+
+<!-- IAP Start -->
+
+    <div class="fminput clearfix">
+        <label><acronym class="mark-required" title="Required field">*</acronym>
+                ${nn._([cms.global.PAGE_ID, 'setting-form', 'Program price'])}</label>
+        <div class="fmfield clearfix">
+            <div class="select enable">
+                <p class="select-btn"></p>
+                <p class="select-txt"><a href="#">${nn._([cms.global.PAGE_ID, 'setting-form', 'Free program'])}</a>
+                </p>
+                <ul id="paid-select-list" class="select-list">
+                    <li data-meta="false">${nn._([cms.global.PAGE_ID, 'setting-form', 'Free program'])}</li>
+                    <li data-meta="true">${nn._([cms.global.PAGE_ID, 'setting-form', 'Paid program'])}</li>
+                </ul>
+                <input id="paidChannel" type="hidden" name="paidChannel" value="${paidChannel}" data-oristatus="${paidChannel}" class="select-meta">
+                <input id="cntItem" type="hidden" name="cntItem" value="${cntItem}" >
+            </div>
+            <input type="hidden" id="isPublic" name="isPublic" value="${isPublic}">
+        </div>
+        <div id="paidBlock" class="fmfield clearfix hide">
+            <div class="fminput clearfix">
+                <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Program price'])}</label>
+            </div>
+            <div class="fminput clearfix">
+                <label><acronym class="mark-required" title="Required field">*</acronym>
+                        1. ${nn._([cms.global.PAGE_ID, 'setting-form', 'Price'])}</label>
+                <div class="fmfield">
+                    <div class="select enable">
+                        <p class="select-btn"></p>
+                        <p class="select-txt"><a href="#">${nn._([cms.global.PAGE_ID, 'setting-form', 'Select a price'])}</a>
+                        </p>
+                        <ul id="price-select-list" class="select-list">
+                            <li data-meta="0.99">$ 0.99 USD</li>
+                            <li data-meta="1.99">$ 1.99 USD</li>
+                            <li data-meta="2.99">$ 2.99 USD</li>
+                            <li data-meta="3.99">$ 3.99 USD</li>
+                            <li data-meta="4.99">$ 4.99 USD</li>
+                            <li data-meta="5.99">$ 5.99 USD</li>
+                            <li data-meta="6.99">$ 6.99 USD</li>
+                            <li data-meta="7.99">$ 7.99 USD</li>
+                            <li data-meta="8.99">$ 8.99 USD</li>
+                            <li data-meta="9.99">$ 9.99 USD</li>
+                        </ul>
+                        <input type="hidden" name="iap_price" value="" class="select-meta price">
+                    </div>
+                </div>
+            </div>
+            <div class="fminput clearfix">
+                <label><acronym class="mark-required" title="Required field">*</acronym>
+                        2. ${nn._([cms.global.PAGE_ID, 'setting-form', 'Publication name'])}</label>
+                <div class="fmfield">
+                    <p class="text">
+                        <span>
+                            <input type="text" name="iap_title" maxlength="100" value="" class="text iap_title">
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="fminput clearfix">
+                <label><acronym class="mark-required" title="Required field">*</acronym>
+                        3. ${nn._([cms.global.PAGE_ID, 'setting-form', 'Description'])}</label>
+                <div class="fmfield">
+                    <p class="textarea">
+                        <span>
+                            <span>
+                                <textarea name="iap_description" cols="80" class="textarea iap_description"></textarea>
+                            </span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="fminput clearfix">
+                <label><acronym class="mark-required" title="Required field">*</acronym>
+                        4. ${nn._([cms.global.PAGE_ID, 'setting-form', 'Picture for review'])}</label>
+                <div id="iupPaid" class="fmfield upload-img banner-thumb review-thumb">
+                    <div class="thumbnail">
+                        <div class="img-wrap imgUpShow no-image">
+                        </div>
+                    </div>
+                    <a class="normal-btn imgUploadBtn" href="javascript:void(0);" data-ori="${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}" data-uploading="${nn._([cms.global.PAGE_ID, 'setting-form', 'Uploading...'])}">${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload'])}</a>
+                    <input type="file" class="hide toUploadImage" accept="image/*" />
+                    <p class="notice img-upload">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.'])}</p>
+                    <p class="notice upload-notice hide">Please upload a screenshot which is at least 640 x 920 pixels and at least 72 dpi.</p>
+                    <input type="hidden" class="imageUrl"    name="iap_thumbnail"    id="iap_thumbnail"    value="">
+                    <input type="hidden" class="imageUrlOld" name="iap_thumbnailOld" id="iap_thumbnailOld" value="">
+                    <a href="" class="icon-question is-with-tooltip">
+                        <div class="tooltip-wrap">
+                            ${nn._([cms.global.PAGE_ID, 'setting-form', 'Upload a screenshot of the product as it appears on the device. This screenshot is used for Apple’s review only and is not displayed on the App Store.'])}
+                        </div>
+                    </a>
+
+                </div>
+
+            </div>
+
+        <a href="javascript:void(0)" id='paidRemove' class="fmfield clearfix icon-exclamation">
+            <span>
+            ${nn._([cms.global.PAGE_ID, 'setting-form', 'If you want to delete the product from App store or Google play please contact with us before a month.'])}
+            </span>
+        </a>
+        </div>
+    </div>
+
+<!-- IAP end -->
+
+
     {{if cms.global.vIsYoutubeSync === true}}
     <div class="fminput clearfix">
         <label>${nn._([cms.global.PAGE_ID, 'setting-form', 'Episode sort by'])}</label>
@@ -313,7 +477,7 @@
     </div>
     {{/if}}
     {{if cms.global.IS_REMARK !== true}}
-    <div class="fminput clearfix">
+    <div class="fminput clearfix hide">
         <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Select brand to auto share'])}}</label>
         <div class="fmfield">
             <div class="connect-switch">
@@ -386,7 +550,7 @@
     {{if cms.global.USER_PRIV.isAutoOn === true}}
     <div class="fminput clearfix">
         <input type="hidden" id="StorePool" name="status" value="${status}" />
-        <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Add to My App'])}}</label>
+        <label>{{html nn._([cms.global.PAGE_ID, 'setting-form', 'Publish to App'])}}</label>
         <div class="fmfield">
             <div class="connected add-store">
                 <div class="share-item first">
@@ -408,6 +572,16 @@
         </div>
     </div>
     {{/if}}
+    <div class="fminput clearfix">
+        <label for="name">${nn._([cms.global.PAGE_ID, 'setting-form', 'Facebook page'])}</label>
+        <div class="fmfield">
+            <img src="images/icon_fb.png" alt="facebook" class="icon" />
+            <p class="text"><span>
+            <input type="text" name="tmpSocialFeeds" id="tmpSocialFeeds" maxlength="100" value="" class="text" /></span></p>
+            <input type="hidden" name="socialFeeds" id="socialFeeds" maxlength="100" value="${socialFeeds}" class="text" /></span></p>
+            <span class="notice "></span>
+        </div>
+    </div>
     <div class="form-btn">
         <div class="form-btn-wrap">
             <p class="notice hide">${nn._([cms.global.PAGE_ID, 'setting-form', 'Please fill in all required fields.'])}</p>
@@ -466,7 +640,6 @@
 <script src="javascripts/libs/jquery.cookie.min.js?v=411104"></script>
 <script src="javascripts/libs/json2.min.js?v=411104"></script>
 <script src="javascripts/libs/purl.min.js?v=411104"></script>
-<script src="javascripts/libs/swfupload/swfupload.js?v=411104"></script>
 <script src="javascripts/libs/perfect-scrollbar.js?v=411104"></script>
 <script src="javascripts/v3/config.js?v=411104"></script>
 <script src="javascripts/v3/func.common.js?v=411104"></script>
