@@ -116,9 +116,10 @@
     $page.isPaidSend = function () {
         var isOriPaid = $("#paidChannel").data("oristatus") || false,
             cntItem = parseInt($("#cntItem").val(), 10),
+            hasDisabled = $("#paidChannel").parent().parent().hasClass("disabled")
             retValue = false;
 
-        if ("false" === String(isOriPaid) && ("true" === String($("#paidChannel").val()) || cntItem > 0)) {
+        if ("false" === String(isOriPaid) && "true" === String($("#paidChannel").val()) && !hasDisabled) {
             retValue = true;
         }
         return retValue;
@@ -161,7 +162,7 @@
                 channelId: cms.global.USER_URL.param('id')
             }), null, function (iapInfo) {
                 objPrice.find(".select-txt a").text("$ " + iapInfo.price + " USD");
-                objPrice.find(".iap_price").val(iapInfo.price);
+                objPrice.find(".price").val(iapInfo.price);
                 objTitle.val(iapInfo.title);
                 objDesc.val(iapInfo.description);
 
