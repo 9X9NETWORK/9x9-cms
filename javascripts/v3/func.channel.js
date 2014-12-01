@@ -115,9 +115,10 @@
 
     $page.isPaidSend = function () {
         var isOriPaid = $("#paidChannel").data("oristatus") || false,
+            cntItem = parseInt($("#cntItem").val(), 10),
             retValue = false;
 
-        if ("false" === String(isOriPaid) && "true" === String($("#paidChannel").val())) {
+        if ("false" === String(isOriPaid) && ("true" === String($("#paidChannel").val()) || cntItem > 0)) {
             retValue = true;
         }
         return retValue;
