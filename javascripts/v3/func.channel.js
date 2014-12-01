@@ -116,7 +116,7 @@
     $page.isPaidSend = function () {
         var isOriPaid = $("#paidChannel").data("oristatus") || false,
             cntItem = parseInt($("#cntItem").val(), 10),
-            hasDisabled = $("#paidChannel").parent().parent().hasClass("disabled"),
+            hasDisabled = $("#paidChannel").parent().hasClass("disabled"),
             retValue = false;
 
         if ("false" === String(isOriPaid) && "true" === String($("#paidChannel").val()) && !hasDisabled) {
