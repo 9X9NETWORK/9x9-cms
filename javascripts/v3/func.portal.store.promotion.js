@@ -134,6 +134,7 @@
             $("#store-list .channel-list .Sortable").css("cursor", "move");
         }
         if (cntChanels < 1) {
+            $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [cntChanels]));
             $("#cntChannelEmpty").removeClass("hide");
         } else {
             $("div.info .form-title").html(nn._([cms.global.PAGE_ID, 'channel-list', "Program List : ? Programs"], [cntChanels]));
