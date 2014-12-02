@@ -320,10 +320,6 @@
             }
         }
 
-        if ('' === fm.bannerImageUrl.value) {
-            $('.form-btn .notice').removeClass('hide');
-            return false;
-        }
         if(true === cms.global.vIsYoutubeLive && "processing" !== $("#ytUrlLive").data("status") && "editing" !== $("#ytUrlLive").data("status")){
             $('.form-btn .notice').removeClass('hide');
             return false;
