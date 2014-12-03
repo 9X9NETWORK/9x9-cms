@@ -28,13 +28,19 @@
   padding: 4px;
   cursor: pointer;
 }
-
 /* line 28, ../sass/old-portal-manage-add.sass */
+.banner-wrap .thumbnail {
+  width: 100%;
+  height: 143px;
+  margin-bottom: 8px;
+}
+
+/* line 32, ../sass/old-portal-manage-add.sass */
 .banner-text {
   padding: 5px;
 }
 
-/* line 30, ../sass/old-portal-manage-add.sass */
+/* line 34, ../sass/old-portal-manage-add.sass */
 .thumb-wrap {
   border: 4px solid #fff;
   position: relative;
@@ -47,12 +53,12 @@
   background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
   min-height: 150px;
 }
-/* line 36, ../sass/old-portal-manage-add.sass */
+/* line 40, ../sass/old-portal-manage-add.sass */
 .thumb-wrap img {
   width: 100%;
 }
 
-/* line 38, ../sass/old-portal-manage-add.sass */
+/* line 42, ../sass/old-portal-manage-add.sass */
 .thumb-inner-text {
   font-size: 18px;
   position: absolute;
@@ -64,24 +70,25 @@
   transform: translate(-50%, -50%);
 }
 
-/* line 42, ../sass/old-portal-manage-add.sass */
+/* line 46, ../sass/old-portal-manage-add.sass */
 .thumb-hover-wrap {
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: calc(100% - 14px);
   height: 40px;
+  margin-bottom: 5px;
   line-height: 40px;
   color: transparent;
   background: transparent url("../images/baenner-upload.gif") no-repeat 8px 8px;
   transition: all 0.5s ease;
 }
-/* line 51, ../sass/old-portal-manage-add.sass */
+/* line 56, ../sass/old-portal-manage-add.sass */
 .banner-wrap:hover .thumb-hover-wrap {
   background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
 }
 
-/* line 55, ../sass/old-portal-manage-add.sass */
+/* line 60, ../sass/old-portal-manage-add.sass */
 .thumb-inner-warning {
   position: absolute;
   color: red;
@@ -94,7 +101,7 @@
   transform: translate(-50%, -50%);
 }
 
-/* line 67, ../sass/old-portal-manage-add.sass */
+/* line 72, ../sass/old-portal-manage-add.sass */
 .itemList .badge, .list-holder .badge {
   position: absolute;
   z-index: 10;
@@ -113,11 +120,11 @@
   background-color: #777;
   border-radius: 5px;
 }
-/* line 84, ../sass/old-portal-manage-add.sass */
+/* line 89, ../sass/old-portal-manage-add.sass */
 .itemList .badge.danger, .list-holder .badge.danger {
   background-color: #ef4913;
 }
-/* line 86, ../sass/old-portal-manage-add.sass */
+/* line 91, ../sass/old-portal-manage-add.sass */
 .itemList .cover-text, .list-holder .cover-text {
   position: absolute;
   z-index: 20;
@@ -129,7 +136,7 @@
   color: #fff;
   font-size: 15px;
 }
-/* line 96, ../sass/old-portal-manage-add.sass */
+/* line 101, ../sass/old-portal-manage-add.sass */
 .itemList .cover-text .inner-text, .list-holder .cover-text .inner-text {
   position: absolute;
   top: 50%;
