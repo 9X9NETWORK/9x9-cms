@@ -663,7 +663,7 @@
                         $('#lang-select-txt').text(cms.config.LANG_MAP[channel.lang]);
                     }
                     $page.paidChannelInit();
-                    $page.setSocialFeeds();
+                    // $page.setSocialFeeds();
                     if ('' !== channel.sphere && cms.config.SPHERE_MAP[channel.sphere]) {
                         $('#sphere-select-txt').text(cms.config.SPHERE_MAP[channel.sphere]);
                         $('.category').removeClass('disable').addClass('enable');
