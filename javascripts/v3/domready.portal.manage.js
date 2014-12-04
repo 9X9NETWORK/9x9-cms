@@ -8,6 +8,22 @@ $(function () {
     var $page = cms['portal-manage'],
         $common = cms.common;
 
+    $(document).on('click', '.imgUploadBtn', function () {
+        var btnClick = $(this),
+            blockUpload = btnClick.parent(),
+            fileUpload = blockUpload.find(".toUploadImage");
+
+        if(!btnClick.hasClass("disabled")){
+            fileUpload.click();
+        }
+    });
+
+    $(document).on('change', '.toUploadImage', function () {
+        if(this.files.length >0){
+            $page.doImageUpload($(this), this.files[0]);
+        }
+    });
+
     // add / edit channel set - action button
     $(document).on("click", "#change-category-overlay .btn-chg-category", function (event) {
         // 用到
@@ -305,16 +321,14 @@ $(function () {
                         seq: eValue.seq
                     };
                     if(eValue.isOn ){
-                        var tmpObj = $("#keyCardiOS");
-                        if(tmpObj.data("meta")!== ""){
-                            tmpSetInfo.iosBannerUrl = tmpObj.data("meta");
-                            tmpObj.data("meta", "");
+                        var tmpObj = $("#iosBannerUrl");
+                        if(tmpObj.val() !== ""){
+                            tmpSetInfo.iosBannerUrl = tmpObj.val();
                         }
 
-                        tmpObj = $("#keyCardAndroid");
-                        if(tmpObj.data("meta")!== ""){
-                            tmpSetInfo.androidBannerUrl = tmpObj.data("meta");
-                            tmpObj.data("meta", "");
+                        tmpObj = $("#androidBannerUrl");
+                        if(tmpObj.val() !== ""){
+                            tmpSetInfo.androidBannerUrl = tmpObj.val();
                         }
                     }
                     
@@ -364,16 +378,14 @@ $(function () {
                         seq: tmpSeq
                     };
                     if(eValue.isOn ){
-                        var tmpObj = $("#keyCardiOS");
-                        if(tmpObj.data("meta")!== ""){
-                            tmpSetInfo.iosBannerUrl = tmpObj.data("meta");
-                            tmpObj.data("meta", "");
+                        var tmpObj = $("#iosBannerUrl");
+                        if(tmpObj.val() !== ""){
+                            tmpSetInfo.iosBannerUrl = tmpObj.val();
                         }
 
-                        tmpObj = $("#keyCardAndroid");
-                        if(tmpObj.data("meta")!== ""){
-                            tmpSetInfo.androidBannerUrl = tmpObj.data("meta");
-                            tmpObj.data("meta", "");
+                        tmpObj = $("#androidBannerUrl");
+                        if(tmpObj.val() !== ""){
+                            tmpSetInfo.androidBannerUrl = tmpObj.val();
                         }
                     }
 
