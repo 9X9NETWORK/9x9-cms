@@ -23,6 +23,87 @@
 
     $page.ChannelSetRemoveList = [];
 
+    $page.s3Info = {
+        isGet: false,
+        parameter: {},
+        s3attr: {},
+        gt: (new Date()).getTime()
+    };
+
+    $page.doImageUpload = function (fileIntpu, fileObj) {
+
+        if('pcs-' === $page.s3Info.parameter.prefix){
+            $page.s3Info.parameter.prefix += cms.global.MSOINFO.id + '-';
+        }
+        var formData = new FormData(),
+            blockUpload = $(fileIntpu).parent(),
+            imageDiv = blockUpload.find(".imgUpShow"),
+            imageBtnUp = blockUpload.find(".imgUploadBtn.imgUploadBtnFocus span"),
+            strBtnOri = imageBtnUp.data("ori"),
+            strBtnUploading = imageBtnUp.data("uploading"),
+            xhr = new XMLHttpRequest(),
+            timestamp = (new Date()).getTime(),
+            filenamePreFix = blockUpload.attr("id").toLowerCase() + "-" + timestamp,
+            tmpS3attr = $page.s3Info.s3attr,
+            upFileName = $page.s3Info.parameter.prefix + filenamePreFix + nn.getFileTypeByName(fileObj.name),
+            s3Url = "http://" + tmpS3attr.bucket + ".s3.amazonaws.com/",
+            s3FileName = s3Url + upFileName,
+            timeRand = '?n=' + Math.random();
+
+        imageBtnUp.text(strBtnUploading + " (0%)");
+        imageBtnUp.addClass("disabled");
+        imageDiv.addClass("is-loading");
+
+        formData.append('AWSAccessKeyId', tmpS3attr.id);
+        formData.append('key', upFileName);
+        formData.append('acl', 'public-read');
+        formData.append('policy', tmpS3attr.policy);
+        formData.append('signature', tmpS3attr.signature);
+        formData.append('content-type', $page.s3Info.parameter.type);
+        formData.append('filename', upFileName);
+        formData.append('success_action_status', "201");
+        formData.append('file', fileObj);
+
+        var cntTotal = $common.fileSizeUnit(0, fileObj.size);
+
+        xhr.open('POST', s3Url);
+        xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+                var complete = (event.loaded / event.total * 100 | 0);
+                imageBtnUp.text(strBtnUploading + " (" + complete + "%)");
+           }
+        }
+        xhr.onload = function() {
+            imageDiv.css('background-image', "url('"+ s3FileName + timeRand +"')");
+            blockUpload.find(".imageUrl").val(s3FileName);
+            imageBtnUp.text(strBtnOri);
+            imageBtnUp.removeClass("disabled");
+            imageDiv.removeClass("is-loading").removeClass("no-image");
+            $('body').addClass('has-change')
+        };
+
+        xhr.send(formData);
+    };
+
+    $page.prepareS3Attr = function () {
+        var timeCheck = (new Date()).getTime() + (50 * 60 * 1000);
+
+        if (!$page.s3Info.isGet || ($page.s3Info.gt > timeCheck)) {
+            $page.s3Info.parameter = {
+                'prefix': 'pcs-',
+                'type': 'image',
+                'size': 11267000,
+                'acl': 'public-read'
+            };
+
+            nn.api('GET', cms.reapi('/api/s3/attributes'), $page.s3Info.parameter, function (s3attr) {
+                $page.s3Info.isGet = true;
+                $page.s3Info.s3attr = s3attr;
+                $page.s3Info.isGet = (new Date()).getTime();
+            });
+        }
+    };
+
     $page.catGetNonNew = function () {
         var retValue = 0,
             catList = $("#store-category-ul .catLi"),
@@ -429,222 +510,27 @@
             }
         });
     };
-    $page.imageUpload = function (inObj, parameter) {
-
-        var loadingImg = "images/loading.gif",
-            opObj = inObj.opObj,
-            acObj = inObj.acObj,
-            progressObj = acObj.parent().find("div.progress"),
-            progressObjStatus = progressObj.find("div.progress-bar.progress-bar-striped.active"),
-            imgTitleObj = acObj.parent().find("span.imgTitle"),
-            oldImg = "",
-            objMsg = {
-                "bTxtUploading": '<span class="uploadstyle">' + nn._(['upload', 'Uploading...']) + "</span>",
-                "bTxtUpload": '<span class="uploadstyle">' + nn._(['upload', 'Upload image']) + "</span>"
-            };
-        nn.api('GET', cms.reapi('/api/s3/attributes'), parameter, function(s3attr) {
-            var timestamp = (new Date()).getTime(),
-                handlerUploadProgress = function (file, completed, total) {
-                    var percent = Math.floor(completed / total * 100);
-                    this.setButtonText(objMsg.bTxtUploading);
-
-                    if(percent >90){
-                        percent = percent -2;
-                    }
-                    // nn.log(progressObjStatus);
-                    progressObjStatus.css("width", percent+"%");
-                },
-                handlerUploadSuccess = function (file, serverData, recievedResponse) {
-                    var tmpImg = new Image();
-                    this.setButtonText(objMsg.bTxtUpload);
-                    if (!file.type) {
-                        file.type = nn.getFileTypeByName(file.name);
-                    }
-
-                    // enable upload button again
-                    this.setButtonDisabled(false);
-
-                    // image url
-                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + timestamp + '-' + file.size + file.type.toLowerCase();
-                    // action after upload
-                    acObj.css("background-image", "url(" + url + ") " );
-
-                    tmpImg.src = url;
-                    $page.onImgLoad(tmpImg, function () {
-                        imgTitleObj.addClass("hide");
-                        progressObj.addClass("hide");
-                        tmpImg = "";
-                    });
-
-                    oldImg = "";
-                    acObj.addClass("has-change");
-                    acObj.data("meta", url);
-                    $('body').addClass("has-change");
-                },
-                handlerUploadError = function (file, code, message) {
-                    this.setButtonText(objMsg.bTxtUpload);
-                    this.setButtonDisabled(false);
-
-                    imgTitleObj.addClass("hide");
-                    progressObj.addClass("hide");
-                    if(oldImg !== ""){
-                        acObj.css("background-image", oldImg);
-                        oldImg = "";
-                    }
-
-                    if (code === -280) { // user cancel upload
-                        alert(message);
-                        // show some error prompt
-                    } else {
-                        alert(message);
-                        // show some error prompt
-                    }
-                },
-                handlerFileQueue = function (file) {
-                    if (file.size > parameter.size) {
-                        alert("upload failed");
-                        return false;
-                    }
-                    if (!file.type) {
-                        file.type = nn.getFileTypeByName(file.name);
-                        // Mac Chrome compatible
-                    }
-                    var postParams = {
-                        "AWSAccessKeyId": s3attr.id,
-                        "key": parameter.prefix + timestamp + '-' + file.size + file.type.toLowerCase(),
-                        "acl": parameter.acl,
-                        "policy": s3attr.policy,
-                        "signature": s3attr.signature,
-                        "content-type": parameter.type,
-                        "success_action_status": "201"
-                    };
-                    this.setPostParams(postParams);
-                    this.startUpload(file.id);
-                    this.setButtonDisabled(true);
-
-                    imgTitleObj.removeClass("hide");
-                    progressObj.removeClass("hide");
-                    progressObjStatus.css("width", "1%");
-                    oldImg = acObj.css("background-image");
-                    setTimeout( function(){
-                        acObj.css("background-image", "");
-                    }, 600 );
-               },
-                handlerFileQueueError = function (file, code, message) {
-                    if (code === -130) { // error file type
-
-                        // $('#brand-logo').removeClass('hide');
-                        // $('.img .loading').hide();
-                    }
-                },
-                settings = {
-                    flash_url: 'javascripts/libs/swfupload/swfupload.swf',
-                    upload_url: 'http://' + s3attr.bucket + '.s3.amazonaws.com/', // http://9x9tmp-ds.s3.amazonaws.com/
-                    file_size_limit: parameter.size,
-                    file_types: '*.png; *.jpg',
-                    file_types_description: 'Thumbnail',
-                    file_post_name: 'file',
-                    button_placeholder: opObj.get(0),
-                    button_image_url: '',
-                    button_width: '490',
-                    button_height: '150',
-                    button_text: objMsg.bTxtUpload,
-                    button_text_style: '.uploadstyle { color: #ffffff; font-family: Arial, Helvetica; font-size: 16px; text-align: center; } .uploadstyle:hover { color: #ffffff; }',
-                    button_text_top_padding: 120,
-                    button_action: SWFUpload.BUTTON_ACTION.SELECT_FILE,
-                    button_cursor: SWFUpload.CURSOR.HAND,
-                    button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-                    http_success: [201],
-                    upload_progress_handler: handlerUploadProgress,
-                    upload_success_handler: handlerUploadSuccess,
-                    upload_error_handler: handlerUploadError,
-                    file_queued_handler: handlerFileQueue,
-                    file_queue_error_handler: handlerFileQueueError,
-                    debug: false
-                },
-                swfu = new SWFUpload(settings);
-
-            swfu.debug = cms.config.IS_DEBUG;
-        });
-    };
 
     $page._getKeyCard = function (inObj) {
-        var parameter = {}, tmpSetInfo = {
+        var parameter = {},
+            tmpSetInfo = {
                 iosBannerUrl: "",
                 androidBannerUrl: ""
             };
 
-        if (inObj > 1400000000000) {
+        if ($("#catLi_"+inObj).hasClass("newCat")) {
             $(".key-card-wrap").empty();
             $('#set-key-card-tmpl').tmpl(tmpSetInfo).appendTo(".key-card-wrap");
-
-            parameter = {
-                'prefix': 'app-setBanner-iOS-new-',
-                'type': 'image',
-                'size': 5120000,
-                'acl': 'public-read'
-            };
-            $page.imageUpload({
-                opObj: $("#upImgiOS"),
-                acObj: $("#keyCardiOS")
-            }, parameter);
-
-
-            parameter = {
-                'prefix': 'app-setBanner-android-new-',
-                'type': 'image',
-                'size': 5120000,
-                'acl': 'public-read'
-            };
-            $page.imageUpload({
-                opObj: $("#upImgAndroid"),
-                acObj: $("#keyCardAndroid")
-            }, parameter);
-
         } else {
             nn.api('GET', cms.reapi('/api/sets/{setId}', {
                 setId: inObj
             }), null, function (setInfo) {
-                // setInfo.androidBannerUrl = "https://i1.ytimg.com/vi/OH1S7OL0jdQ/mqdefault.jpg";
-                // setInfo.iosBannerUrl = "http://i.ytimg.com/vi/rEL7lWfFaWE/mqdefault.jpg";
-
                 $(".key-card-wrap").empty();
                 $('#set-key-card-tmpl').tmpl(setInfo).appendTo(".key-card-wrap");
-
-                parameter = {
-                    'prefix': 'app-setBanner-iOS-' + inObj + "-",
-                    'type': 'image',
-                    'size': 5120000,
-                    'acl': 'public-read'
-                };
-                $page.imageUpload({
-                    opObj: $("#upImgiOS"),
-                    acObj: $("#keyCardiOS")
-                }, parameter);
-
-
-                parameter = {
-                    'prefix': 'app-setBanner-android-' + inObj + "-",
-                    'type': 'image',
-                    'size': 5120000,
-                    'acl': 'public-read'
-                };
-                $page.imageUpload({
-                    opObj: $("#upImgAndroid"),
-                    acObj: $("#keyCardAndroid")
-                }, parameter);
-
-                if(!setInfo.iosBannerUrl){
-                    $("#keyCardiOS").parent().find("span.imgTitle").removeClass("hide");
-                }
-                if(!setInfo.androidBannerUrl){
-                    $("#keyCardAndroid").parent().find("span.imgTitle").removeClass("hide");
-                }
-
             });
         }
-
     };
+
     $page.catLiClick = function (inObj) {
         var msoId = 0;
         msoId = cms.global.MSO;
@@ -749,6 +635,8 @@
             options: options
         }, 'debug');
 
+        $page.prepareS3Attr();
+
         if (options && options.init) {
             $common.showProcessingOverlay();
             $('#yes-no-prompt .content').text(nn._([cms.global.PAGE_ID, 'channel-list', "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set on top programs."]));
@@ -762,10 +650,6 @@
 
         $page.drawChannelSets(msoId, setId);
 
-
-
-
-// $page.imageUpload();
         // portal manage
         $('#portal-add-layer .langkey').each(function () {
             $(this).text(nn._([cms.global.PAGE_ID, 'portal-add-layer', $(this).data('langkey')]));
