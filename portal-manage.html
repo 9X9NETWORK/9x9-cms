@@ -251,24 +251,16 @@
                         </ul>
                     </div>
                 </div>
-                <div class="input-gray">
-                    <p class="left"></p>
-                    <p class="center">
-                        <input id="input-portal-ch" class="textfield langkeyVal" value="Please input program URL" style="width: 100%" />
+
+                <input id="input-portal-ch" class="textfield langkeyVal form-control input-gray" value="Please input program URL" >
+                <a id="portal_search_channel" href="javascript:void(0);" class="normal-btn langkey">Go</a>
+
+                <div class="clearfix" style="margin-top: 13px;">
+                    <p>
+                        <b id="sResultHead">Results:</b> <tit id="sRusult" data-canAdd="0" class="langkeyH"></tit>
+                        <span id="msg-search" class="msg-error"></span>
                     </p>
-                    <p class="right"></p>
                 </div>
-                <div class="btn-white">
-                    <p class="left"></p>
-                    <p id="portal_search_channel" class="center langkey">Go</p>
-                    <p class="right"></p>
-                </div> 
-                <br />
-                <p>
-                    <b id="sResultHead">Results:</b> <tit id="sRusult" data-canAdd="0" class="langkeyH"></tit>
-                    <span id="msg-search" class="msg-error"></span>
-                </p>
-                <br />
             </form>
             <a href="#" id="searchPrev" class="prev" style="display: none">prev</a>
             <a href="#" id="searchNext" class="next" style="display: none">next</a>
