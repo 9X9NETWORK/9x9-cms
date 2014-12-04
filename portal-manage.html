@@ -374,7 +374,7 @@
 <script id="portal-search-item-tmpl" type="text/x-jquery-tmpl">
 <li id="sch_${id}" class="{{if paidChannel}}isPaid{{/if}}">
     <div class="thumb">
-        <div id="schk_${id}" class="checkbox{{if alreadyAdd === true}} hide{{/if}}"></div>
+        <div id="schk_${id}" class="checkbox{{if (alreadyAdd === true) || (!paidChannel && cntItem > 0)}} hide{{/if}}"></div>
         <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank">
             <img src="images/icon_playlist.png" alt="" class="watermark" />
         </a>
