@@ -12,7 +12,8 @@
 <link rel="stylesheet" href="stylesheets/uniform.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/episode.css?v=411104" />
 <link rel="stylesheet" href="stylesheets/portal.css?v=411104" />
-<link rel="stylesheet" href="stylesheets/old-portal-manage-add.css">
+<link rel="stylesheet" href="stylesheets/cms-component.css?v=411104">
+<link rel="stylesheet" href="stylesheets/old-portal-manage-add.css?v=411104">
 <title>FLIPr.tv - Main Channels</title>
 </head>
 <body data-mso="flipr">
@@ -296,21 +297,23 @@
         </div>
         <div class="clearfix">
             <div class="banner-wrap">
-                <div class="thumb-wrap">
-                    <div class="btn-upload-flash"><span id="upImgiOS" /></div>
-                    <div class="progress hide">
-                      <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                        <span class="sr-only">&nbsp;</span>
-                      </div>
+                <div id="keyCardiOS" class="thumbnail">
+                    <div class="img-wrap imgUploadBtn imgUpShow {{if '' === iosBannerUrl}}no-image-text{{/if}}" 
+                         style="background-image: url('${iosBannerUrl}')"></div>
+                    <span class="thumb-inner-text {{if '' != iosBannerUrl}} hide{{/if}}">
+                        ${nn._([cms.global.PAGE_ID, 'channel-list', 'iOS image Upload Now!'])}
+                    </span>
+                    <span class="thumb-inner-warning hide">
+                        ${nn._([cms.global.PAGE_ID, 'channel-list', 'The photo you uploaded is too small! It must be at least 1536 pixels wide and 570 pixels tall.'])}
+                    </span>
+                    <div class="thumb-hover-wrap imgUploadBtn imgUploadBtnFocus">
+                        <span   data-ori="${nn._(['upload', 'Upload image'])}" 
+                                data-uploading="${nn._(['upload', 'Uploading...'])}"
+                        >${nn._(['upload', 'Upload image'])}</span>
                     </div>
-
-                    <div class="centre-image keyCardImg" id="keyCardiOS" data-meta="${iosBannerUrl}" style="background-image: url('${iosBannerUrl}')"></div>
-                    
-                    <span class="thumb-inner-text imgTitle {{if iosBannerUrl !== ''}} hide{{/if}}">${nn._([cms.global.PAGE_ID, 'channel-list', 'iOS image Upload Now!'])}</span>
-                    <span class="thumb-inner-warning errMsg hide">${nn._([cms.global.PAGE_ID, 'channel-list', 'The photo you uploaded is too small! It must be at least 1536 pixels wide and 570 pixels tall.'])}</span>
-                    <div class="thumb-hover-wrap">
-                        <span></sapn>
-                    </div>
+                    <img src="images/loading.gif" alt="" class="loading">
+                    <input type="file" class="hide toUploadImage" accept="image/*" />
+                    <input type="hidden" class="imageUrl" id="iosBannerUrl" name="iosBannerUrl" value="${iosBannerUrl}">
                 </div>
                 <div class="banner-text">
                     ${nn._([cms.global.PAGE_ID, 'channel-list', 'Recommended large channel art size'])}: 1536 x 570
@@ -318,21 +321,23 @@
             </div>
 
             <div class="banner-wrap">
-                <div class="thumb-wrap">
-                    <div class="btn-upload-flash"><span id="upImgAndroid" /></div>
-                    <div class="progress hide">
-                      <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-                        <span class="sr-only">&nbsp;</span>
-                      </div>
+                <div id="keyCardAndroid" class="thumbnail">
+                    <div class="img-wrap imgUploadBtn imgUpShow {{if '' === androidBannerUrl}}no-image-text{{/if}}" 
+                         style="background-image: url('${androidBannerUrl}')"></div>
+                    <span class="thumb-inner-text {{if '' != androidBannerUrl}} hide{{/if}}">
+                        ${nn._([cms.global.PAGE_ID, 'channel-list', 'Andriod image Upload Now!'])}
+                    </span>
+                    <span class="thumb-inner-warning hide">
+                        ${nn._([cms.global.PAGE_ID, 'channel-list', 'The photo you uploaded is too small! It must be at least 800 pixels wide and 244 pixels tall.'])}
+                    </span>
+                    <div class="thumb-hover-wrap imgUploadBtn imgUploadBtnFocus">
+                        <span   data-ori="${nn._(['upload', 'Upload image'])}" 
+                                data-uploading="${nn._(['upload', 'Uploading...'])}"
+                        >${nn._(['upload', 'Upload image'])}</span>
                     </div>
-
-                    <div class="centre-image" id="keyCardAndroid" data-meta="${androidBannerUrl}" style="background-image: url('${androidBannerUrl}')"></div>
-
-                    <span class="thumb-inner-text imgTitle {{if androidBannerUrl !== ''}} hide{{/if}}">${nn._([cms.global.PAGE_ID, 'channel-list', 'Andriod image Upload Now!'])}</span>
-                    <span class="thumb-inner-warning errMsg hide">${nn._([cms.global.PAGE_ID, 'channel-list', 'The photo you uploaded is too small! It must be at least 800 pixels wide and 244 pixels tall.'])}</span>
-                    <div class="thumb-hover-wrap">
-                        <span ></span>
-                    </div>
+                    <img src="images/loading.gif" alt="" class="loading">
+                    <input type="file" class="hide toUploadImage" accept="image/*" />
+                    <input type="hidden" class="imageUrl" id="androidBannerUrl" name="androidBannerUrl" value="${androidBannerUrl}">
                 </div>
                 <div class="banner-text">
                     ${nn._([cms.global.PAGE_ID, 'channel-list', 'Recommended large channel art size'])}: 800 x 244
@@ -535,7 +540,6 @@ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Sorted by'])} :
 <script src="javascripts/libs/json2.min.js?v=411104"></script>
 <script src="javascripts/libs/purl.min.js?v=411104"></script>
 <script src="javascripts/libs/perfect-scrollbar.js?v=411104"></script>
-<script src="javascripts/libs/swfupload/swfupload.js?v=411104"></script>
 <script src="javascripts/v3/config.js?v=411104"></script>
 <script src="javascripts/v3/func.common.js?v=411104"></script>
 <script src="javascripts/v3/func.portal.manage.js?v=411104"></script>
