@@ -367,8 +367,8 @@ div.constrain {
 
 #ep-list ul li .episode .img .img-container .img-wrap {
     position: absolute;
-    width: 320px;
-    height: 45px;
+    width: 320px !important; 
+    height: 45px !important;
     top: 0;
     left: 50%;
     margin: 0 0 0 -160px;

@@ -42,6 +42,10 @@
                 delete programItem.channelId;
                 delete programItem.episodeId;
 
+                // 奇芭規則
+                programItem.endTime = programItem.duration;
+                programItem.endTimeInt = programItem.durationInt;
+
                 // insert program
                 nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
                     episodeId: newEpisodeId
