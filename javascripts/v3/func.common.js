@@ -99,7 +99,7 @@
     };
 
     $common.isImportEpisode = function (inOid) {
-        var ids = [40347, 57626],
+        var ids = [40347, 57626, 59657],
             retValue = false;
         if ($.inArray(inOid, ids) > -1) {
             retValue = true;
