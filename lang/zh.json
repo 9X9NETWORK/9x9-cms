@@ -310,7 +310,7 @@
             "Processing...": "處理中..."
         },
         "channel-list": {
-            "UNDER REVIEW": "UNDER REVIEW",
+            "UNDER REVIEW": "審核中",
             "Paid": "付費",
             "Program List : ? Programs": "節目列表 : {0} 節目",
             "Best within 20 characters": "建議長度不超過20個字元",
