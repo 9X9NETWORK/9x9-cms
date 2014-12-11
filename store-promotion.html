@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="stylesheets/uniform.css?v=431625" />
 <link rel="stylesheet" href="stylesheets/episode.css?v=431625" />
 <link rel="stylesheet" href="stylesheets/portal.css?v=431625" />
+<link rel="stylesheet" href="stylesheets/cms-component.css?v=411104">
+<link rel="stylesheet" href="stylesheets/store-manage.css?v=411104">
 <title>FLIPr.tv - Store Manage</title>
 </head>
 <body data-mso="flipr">
@@ -177,24 +179,15 @@
                         </ul>
                     </div>
                 </div>
-                <div class="input-gray">
-                    <p class="left"></p>
-                    <p class="center">
-                        <input id="input-portal-ch" class="textfield langkeyVal" value="Please input program URL" style="width: 100%" />
+                <input id="input-portal-ch" class="textfield langkeyVal form-control input-gray" value="Please input program URL" >
+                <a id="portal_search_channel" href="javascript:void(0);" class="normal-btn langkey">Go</a>
+
+                <div class="clearfix" style="margin-top: 13px;">
+                    <p>
+                        <b id="sResultHead">Results:</b> <tit id="sRusult" data-canAdd="0" class="langkeyH"></tit>
+                        <span id="msg-search" class="msg-error"></span>
                     </p>
-                    <p class="right"></p>
                 </div>
-                <div class="btn-white">
-                    <p class="left"></p>
-                    <p id="portal_search_channel" class="center langkey">Go</p>
-                    <p class="right"></p>
-                </div> 
-                <br />
-                <p>
-                    <b id="sResultHead">Results:</b> <tit id="sRusult" data-canAdd="0" class="langkeyH"></tit>
-                    <span id="msg-search" class="msg-error"></span>
-                </p>
-                <br />
             </form>
             <a href="#" id="searchPrev" class="prev" style="display: none">prev</a>
             <a href="#" id="searchNext" class="next" style="display: none">next</a>
@@ -217,12 +210,17 @@
 
 <!-- portal-search-item-tmpl Begin -->
 <script id="portal-search-item-tmpl" type="text/x-jquery-tmpl">
-<li id="sch_${id}">
+<li id="sch_${id}" class="{{if paidChannel}}isPaid{{/if}}">
     <div class="thumb">
-        <div id="schk_${id}" class="checkbox{{if alreadyAdd === true}} hide{{/if}}"></div>
+        <div id="schk_${id}" class="checkbox{{if (alreadyAdd === true) || (!paidChannel && cntItem > 0)}} hide{{/if}}"></div>
         <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank">
             <img src="images/icon_playlist.png" alt="" class="watermark" />
         </a>
+        {{if paidChannel}}
+            <span class="badge danger">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
+        {{else cntItem > 0}}
+            <div class="cover-text"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></div>
+        {{/if}}
         <div class="ch">
             <div class="img">
                 <img src="${imageUrl}" alt="" />
@@ -298,6 +296,7 @@
 <script id="store-chanels-li-tmpl" type="text/x-jquery-tmpl">
     <li id="channel_${id}" class="channelItem{{if alwaysOnTop == true}} Sortable{{else}} notSortable{{/if}}">
         <div class="thumb">
+            {{if !paidChannel && cntItem < 1}}
             <div class="btn-top{{if alwaysOnTop == true}} on{{/if}}">
                 <div class="icon-holder"></div>
                 <div class="tip-white">
@@ -322,6 +321,7 @@
                 </div>
                 <div class="tip-top"></div>
             </div>
+            {{/if}}
             <div class="btn-remove">
                 <div class="icon-holder"></div>
                 <div class="tip-white">
@@ -331,6 +331,11 @@
                 </div>
                 <div class="tip-top"></div>
             </div>
+            {{if paidChannel}}
+                <span class="badge danger">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
+            {{else cntItem > 0}}
+                <div class="cover-text"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></div>        
+            {{/if}}
             <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank">
                 <img class="watermark" alt="" src="images/icon_playlist.png" />
             </a>
