@@ -372,10 +372,8 @@
         </a>
         {{if paidChannel}}
             <span class="badge danger">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
-        {{else}}
-            {{if cntItem > 0}}
-                <div class="cover-text"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></div>        
-            {{/if}}
+        {{else cntItem}}
+            <div class="cover-text"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></div>        
         {{/if}}
         <div class="ch">
             <div class="img">
@@ -480,10 +478,8 @@ ${nn._([cms.global.PAGE_ID, 'channel-list', 'Sorted by'])} :
             </div>
             {{if paidChannel}}
                 <span class="badge danger">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
-            {{else}}
-                {{if cntItem > 0}}
-                    <div class="cover-text"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></div>
-                {{/if}}
+            {{else cntItem > 0}}
+                <div class="cover-text"><span class="inner-text">${nn._([cms.global.PAGE_ID, 'channel-list', 'UNDER REVIEW'])}</span></div>
             {{/if}}
             <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank">
                 <img class="watermark" alt="" src="images/icon_playlist.png" />
