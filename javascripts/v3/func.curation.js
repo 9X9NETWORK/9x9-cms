@@ -1392,6 +1392,19 @@
         });
     };
 
+    $page.loadVimeo = function (videoUrl) {
+        $('#poi-event-overlay .wrap .content .video-wrap .video').empty();
+        $page.removeTitleCardPlayingHook();
+        if (videoUrl && '' !== videoUrl) {
+            nn.log(videoUrl);
+            $('#video-player .video').html('<iframe class="videoVimeoFrame" src="'+videoUrl.replace("https:", "")+'" frameborder="0" ></iframe> ');
+            $(".videoVimeoFrame").width($('#video-player .video').width());
+            $(".videoVimeoFrame").height($('#video-player .video').height());
+            $('#video-player #video-control').hide();
+            $('#video-player .video').removeClass('transparent');
+        }
+    };
+
     $page.loadYouTubeFlash = function (videoId, isChromeless, videoWrap) {
         $('#poi-event-overlay .wrap .content .video-wrap .video').empty();
         $page.removeTitleCardPlayingHook();
@@ -1456,7 +1469,11 @@
             }
         } else if (element) {
             $page.buildVideoInfoTmpl(element);
-            $page.loadYouTubeFlash(element.data('ytid'));
+            if(element.data('contenttype') === 7){
+                $page.loadVimeo(element.data('embedurl'));
+            } else {
+                $page.loadYouTubeFlash(element.data('ytid'));
+            }
             $page.removeVideoPlayingHook();
             $page.addVideoPlayingHook(element);
         }
@@ -2002,10 +2019,12 @@
                                 imageUrl: programItem.imageUrl,
                                 //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
                                 ytDuration: programItem.duration, // keep original duration from YouTube
-                                name: programItem.name,
-                                intro: programItem.intro,
-                                uploader: programItem.episodeId,
-                                uploadDate: programItem.updateDate,
+                                name: youtubes.name,
+                                intro: youtubes.intro,
+                                uploader: youtubes.uploader,
+                                uploader_name: youtubes.uploader_name,
+                                uploadDate: youtubes.uploaded,
+                                embedUrl: youtubes.embedUrl,
                             };
                         }else{
                             // youtube video source
@@ -2074,11 +2093,15 @@
 
         function getYoutubes(programItem) {
             var deferred = $.Deferred();
-
-            nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + programItem.fileUrl.slice(-11) + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
-                deferred.resolve(programItem, youtubes);
-            }, 'jsonp');
-
+            if(programItem.contentType === 7){
+                nn.api('GET', '/apis/info_vimoe.php?url=' + programItem.fileUrl, null, function (youtubes) {
+                    deferred.resolve(programItem, youtubes);
+                });
+            } else {
+                nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + programItem.fileUrl.slice(-11) + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
+                    deferred.resolve(programItem, youtubes);
+                }, 'jsonp');
+            }
             return deferred.promise();
         }
 
