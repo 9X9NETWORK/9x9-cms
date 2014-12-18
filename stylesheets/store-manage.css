@@ -1,0 +1,57 @@
+/* line 9, ../sass/store-manage.sass */
+.itemList .badge, .list-holder .badge, .channel-list .badge {
+  position: absolute;
+  z-index: 10;
+  bottom: 7px;
+  left: 7px;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #777;
+  border-radius: 5px;
+}
+/* line 26, ../sass/store-manage.sass */
+.itemList .badge.danger, .list-holder .badge.danger, .channel-list .badge.danger {
+  background-color: #ef4913;
+}
+/* line 28, ../sass/store-manage.sass */
+.itemList .cover-text, .list-holder .cover-text, .channel-list .cover-text {
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 15px;
+}
+/* line 38, ../sass/store-manage.sass */
+.itemList .cover-text .inner-text, .list-holder .cover-text .inner-text, .channel-list .cover-text .inner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translate3d(-50%, -50%, 0);
+  -ms-transform: translate3d(-50%, -50%, 0);
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+/* line 43, ../sass/store-manage.sass */
+#input-portal-ch {
+  width: calc(100% - 250px);
+  float: left;
+  position: relative;
+  margin-top: -4px;
+}
+/* line 48, ../sass/store-manage.sass */
+#input-portal-ch + .normal-btn {
+  margin-left: 8px;
+}

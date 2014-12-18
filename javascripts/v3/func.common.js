@@ -52,8 +52,7 @@
         var getParm = {
             page: inPage,
             rows: 40,
-            mso: cms.global.MSOINFO.name,
-            isPublic: inPublic
+            mso: cms.global.MSOINFO.name
         };
 
         nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
