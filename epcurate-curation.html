@@ -381,8 +381,15 @@
         {{else}}
             ${nn._([cms.global.PAGE_ID, 'video-info', 'Original'])} <span class="duration">${cms.common.formatDuration(ytDuration)}</span>
         {{/if}}
-         | ${nn._([cms.global.PAGE_ID, 'video-info', 'From'])} <a href="${fileUrl}" target="_blank">YouTube.com</a> | 
-        ${nn._([cms.global.PAGE_ID, 'video-info', 'By'])} <a href="http://www.youtube.com/user/${uploader}" class="uploader" target="_blank">${uploader}</a> ${nn._([cms.global.PAGE_ID, 'video-info', 'on'])} <span class="uploaded">${$item.uploadDateConverter(uploadDate)}</span>
+         | ${nn._([cms.global.PAGE_ID, 'video-info', 'From'])} 
+         <a href="${fileUrl}" target="_blank">{{if contentType == 7}}Vimeo.com{{else}}YouTube.com{{/if}}</a> | 
+        ${nn._([cms.global.PAGE_ID, 'video-info', 'By'])}
+        {{if contentType == 7}}
+            <a href="https://vimeo.com/user/${uploader}" class="uploader" target="_blank">${uploader_name}</a>
+        {{else}}
+            <a href="http://www.youtube.com/user/${uploader}" class="uploader" target="_blank">${uploader}</a>
+        {{/if}}
+        ${nn._([cms.global.PAGE_ID, 'video-info', 'on'])} <span class="uploaded">${$item.uploadDateConverter(uploadDate)}</span>
     </p>
     <p class="desc ellipsis multiline">${intro}</p>
     <div class="set-time" data-origin-duration="${ytDuration}">
@@ -410,7 +417,7 @@
         <div class="btn-wrap">
             <p class="notice">${nn._([cms.global.PAGE_ID, 'trim-time', 'Invalid time, please try again.'])}</p>
             <div class="buttons">
-                <p class="btns btn-edit"><span><a href="#">${nn._([cms.global.PAGE_ID, 'trim-time', 'Edit'])}</a></span></p>
+                <p class="btns btn-edit {{if contentType == 7}}hide{{/if}}"><span><a href="#">${nn._([cms.global.PAGE_ID, 'trim-time', 'Edit'])}</a></span></p>
                 <p class="btns btn-cancel hide"><span><a href="#">${nn._([cms.global.PAGE_ID, 'trim-time', 'Cancel'])}</a></span></p>
                 <p class="btns btn-done hide"><span><a href="#">${nn._([cms.global.PAGE_ID, 'trim-time', 'Done'])}</a></span></p>
             </div>
@@ -1183,6 +1190,7 @@
     data-starttime="${startTime}"
     data-endtime="${endTime}"{{if ytDuration === 0 || isRequesterRegionRestricted}} class="invalid"{{/if}}
     data-contenttype="${contentType}"
+    {{if contentType === 7}}data-embedurl="${embedUrl}"{{/if}}
     >
     {{if (isZoneLimited || isSyndicateLimited) && !isRequesterRegionRestricted}}
         {{if isZoneLimited && isSyndicateLimited}}
