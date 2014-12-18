@@ -1177,7 +1177,13 @@
 
 <!-- storyboard-listing-tmpl-item Begin -->
 <script id="storyboard-listing-tmpl-item" type="text/x-jquery-tmpl">
-<li data-ytid="${ytId}" data-ytduration="${ytDuration}" data-starttime="${startTime}" data-endtime="${endTime}"{{if ytDuration === 0 || isRequesterRegionRestricted}} class="invalid"{{/if}}>
+<li 
+    data-ytid="${ytId}"
+    data-ytduration="${ytDuration}"
+    data-starttime="${startTime}"
+    data-endtime="${endTime}"{{if ytDuration === 0 || isRequesterRegionRestricted}} class="invalid"{{/if}}
+    data-contenttype="${contentType}"
+    >
     {{if (isZoneLimited || isSyndicateLimited) && !isRequesterRegionRestricted}}
         {{if isZoneLimited && isSyndicateLimited}}
             <a href="#!pid=${id}&ytid=${ytId}" class="warning2 video_ok"><span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Not playable in some regions & on mobile device'])}</span></span></span></span></a>
@@ -1189,7 +1195,7 @@
                 <a href="#!pid=${id}&ytid=${ytId}" class="warning video_ok"><span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Not playable on mobile device'])}</span></span></span></span></a>
             {{/if}}
         {{/if}}
-    {{else}}
+    {{else contentType === 1}}
         {{if isInvalid || isUnplayableVideo || isEmbedLimited || isPrivateVideo || isRequesterRegionRestricted}}
             <a href="#!pid=${id}&ytid=${ytId}" class="error"></a>
         {{else}}
@@ -1234,10 +1240,10 @@
             <a href="#!pid=${id}&ytid=${ytId}" class="video-play">Video Play</a>
         {{/if}}
         {{if ytDuration > 0 && !isRequesterRegionRestricted && beginTitleCard == null}}
-            <a href="#!pid=${id}&ytid=${ytId}" class="begin-title">Edit<span class="tip"><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Add Title'])}</span></span></span></span></a>
+            <a href="#!pid=${id}&ytid=${ytId}" class="begin-title {{if 7 == contentType}}hide{{/if}}">Edit<span class="tip"><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Add Title'])}</span></span></span></span></a>
         {{/if}}
         {{if ytDuration > 0 && !isRequesterRegionRestricted && endTitleCard == null}}
-            <a href="#!pid=${id}&ytid=${ytId}" class="end-title">Edit<span class="tip"><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Add Title'])}</span></span></span></span></a>
+            <a href="#!pid=${id}&ytid=${ytId}" class="end-title {{if 7 == contentType}}hide{{/if}}">Edit<span class="tip"><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Add Title'])}</span></span></span></span></a>
         {{/if}}
     </p>
 </li>
