@@ -590,6 +590,7 @@ $(function () {
                                     id: 0, // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
                                     ytId: videoObj.id,
                                     fileUrl: videoObj.v_url,
+                                    embedUrl: videoObj.embedUrl,
                                     imageUrl: videoObj.thumbnail,
                                     duration: videoObj.duration, // keep trimmed duration from FLIPr API
                                     ytDuration: videoObj.duration, // keep original duration from YouTube
