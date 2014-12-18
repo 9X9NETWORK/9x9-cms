@@ -1902,7 +1902,16 @@
                 endTitleCard = null;
 
             $.each(programs, function (idx, programItem) {
+                programItem.isYoutube = false;
+                programItem.isVimeo = false;
+                programItem.isTitleEdit = false;
                 if (normalPattern.test(programItem.fileUrl)) {
+                    programItem.isYoutube = true;
+                    programItem.isTitleEdit = true;
+                }else if(7 === programItem.contentType){
+                    programItem.isVimeo = true;
+                }
+                if(programItem.isYoutube || programItem.isVimeo){
                     programList.push(programItem);
                 }
             });
@@ -1981,22 +1990,41 @@
 
                     var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
 
-                    if (youtubes.data && false === checkResult.isEmbedLimited) {
-                        ytData = youtubes.data;
-                        ytItem = {
-                            poiList: poi_points,
-                            beginTitleCard: beginTitleCard,
-                            endTitleCard: endTitleCard,
-                            ytId: ytData.id,
-                            fileUrl: programItem.fileUrl,
-                            imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
-                            //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
-                            ytDuration: ytData.duration,    // keep original duration from YouTube
-                            name: ytData.title,
-                            intro: ytData.description,
-                            uploader: ytData.uploader,
-                            uploadDate: ytData.uploaded,
-                        };
+                    if (youtubes.data && false === checkResult.isEmbedLimited || programItem.isVimeo) {
+                        if(programItem.isVimeo){
+                            // vimeo video source
+                            ytItem = {
+                                poiList: poi_points,
+                                beginTitleCard: beginTitleCard,
+                                endTitleCard: endTitleCard,
+                                // ytId: ytData.id,
+                                fileUrl: programItem.fileUrl,
+                                imageUrl: programItem.imageUrl,
+                                //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
+                                ytDuration: programItem.duration, // keep original duration from YouTube
+                                name: programItem.name,
+                                intro: programItem.intro,
+                                uploader: programItem.episodeId,
+                                uploadDate: programItem.updateDate,
+                            };
+                        }else{
+                            // youtube video source
+                            ytData = youtubes.data;
+                            ytItem = {
+                                poiList: poi_points,
+                                beginTitleCard: beginTitleCard,
+                                endTitleCard: endTitleCard,
+                                ytId: ytData.id,
+                                fileUrl: programItem.fileUrl,
+                                imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
+                                //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
+                                ytDuration: ytData.duration, // keep original duration from YouTube
+                                name: ytData.title,
+                                intro: ytData.description,
+                                uploader: ytData.uploader,
+                                uploadDate: ytData.uploaded,
+                            };
+                        }
                     } else {
                         ytItem = {
                             poiList: poi_points,
