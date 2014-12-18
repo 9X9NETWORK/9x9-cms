@@ -2359,7 +2359,7 @@ $(function () {
                 programList = [],
                 parameter = null;
 
-            $('#storyboard-list li').each(function (idx) {
+            $('#storyboard-list li').each(function (idx, eValue) {
                 programItem = $(this).tmplItem().data;
                 if (parseInt(programItem.ytDuration, 10) > 0) {
                     totalDuration += parseInt(programItem.duration, 10);
@@ -2372,8 +2372,7 @@ $(function () {
                 }
                 $.extend(programItem, {
                     channelId: $('#channelId').val(),   // api readonly
-                    subSeq: idx + 1,
-                    contentType: 1
+                    subSeq: idx + 1
                 });
                 programList.push(programItem);
             });
@@ -2547,8 +2546,7 @@ $(function () {
                         // insert program
                         parameter = $.extend({}, programItem, {
                             channelId: $('#channelId').val(),   // api readonly
-                            subSeq: idx + 1,
-                            contentType: 1
+                            subSeq: idx + 1
                         });
                         nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
                             episodeId: $('#id').val()
