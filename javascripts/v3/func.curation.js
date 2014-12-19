@@ -1396,7 +1396,6 @@
         $('#poi-event-overlay .wrap .content .video-wrap .video').empty();
         $page.removeTitleCardPlayingHook();
         if (videoUrl && '' !== videoUrl) {
-            nn.log(videoUrl);
             $('#video-player .video').html('<iframe class="videoVimeoFrame" src="'+videoUrl.replace("https:", "")+'" frameborder="0" ></iframe> ');
             $(".videoVimeoFrame").width($('#video-player .video').width());
             $(".videoVimeoFrame").height($('#video-player .video').height());
@@ -1937,8 +1936,6 @@
                 nn.on([400, 401, 403, 404], function (jqXHR, textStatus) {
                     committedCnt += 1;
                     invalidList.push(programItem.fileUrl);
-                    nn.log(textStatus + ': ' + jqXHR.responseText, 'warning');
-                    nn.log(programItem.fileUrl, 'debug');
                     $('#videourl').val(invalidList.join('\n'));
                     $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!'])).removeClass('hide').show();
                     if (committedCnt === programList.length) {
@@ -2072,7 +2069,8 @@
                         $page.rebuildVideoNumber();
                         $('.ellipsis').ellipsis();
 
-                        var videoOkCnt = $('#storyboard-list li a.video_ok').length;
+                        var videoOkCnt = $('#storyboard-list li a.video_ok').length,
+                            videoLiCnt = $('#storyboard-list li').length;
                         if (videoOkCnt > 0) {
                             var liIndex = $('#storyboard-list li a.video_ok').parent("li").index(), liShift = 0 ;
                             $('#storyboard-list li').eq(liIndex).find(".hover-func a.video-play").trigger("click");
@@ -2081,13 +2079,12 @@
                             }
                             $("#storyboard-wrap").scrollLeft(liShift);
                             $("#storyboard-wrap").perfectScrollbar('update');
+                        } else if(videoLiCnt > 0){
+                            $('#storyboard-list li').eq(0).find(".hover-func a.video-play").trigger("click");
                         }
-
                         $('#overlay-s').fadeOut();
                     }
                 });
-                // });
-
             });
         }
 
