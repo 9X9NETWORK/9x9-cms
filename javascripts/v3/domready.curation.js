@@ -18,6 +18,58 @@ $(function () {
         }
     });
 
+    $(document).on('keyup', '#videourl', function() {
+        var listLi = $("#storyboard-listing li").eq(0),
+            btnImport = $("#btn-add-videourl").parent().parent(),
+            contentType = "youtube",
+            urlList = $(this).val().split('\n'),
+            testUrl = urlList[0],
+            errMsg = "";
+
+        switch(listLi.data('contenttype')){
+            case 1:
+                contentType = "youtube";
+                errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Only accept YouTube videos in this episode.']);
+                break;
+
+            case 7:
+                contentType = "vimeo";
+                errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Only accept Vimeo videos in this episode.']);
+                break;
+
+            default:
+                contentType = getType(testUrl);
+                break;
+        }
+
+        $('#cur-add .notice').text(errMsg).addClass('hide').hide();
+        btnImport.removeClass("hide");
+        if(getType(testUrl) !== "none" && contentType !== "none"){
+            $.each(urlList, function (eKey, eValue) {
+                if(getType(eValue) !== contentType){
+                    $('#cur-add .notice').text(errMsg).removeClass('hide').show();
+                    btnImport.addClass("hide");
+                    return false;
+                }
+            });
+        }
+
+        function getType(inObj) {
+            var patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
+                patternShort = /^http(?:s)?:\/\/youtu.be\//,
+                patternVimeo = /^http(?:s)?:\/\/vimeo.com\//,
+                retValue = "";
+            if (patternLong.test(inObj) || patternShort.test(inObj)) {
+                retValue = "youtube";
+            } else if (patternVimeo.test(inObj)) {
+                retValue = "vimeo";
+            } else {
+                retValue = "none";
+            }
+            return retValue;
+        }
+    });
+
     $(document).on('click', '.btnUploadImage', function() {
         if (!$page.s3Info.isGet) {
             $page.prepareS3Attr();
@@ -380,9 +432,11 @@ $(function () {
             urlList = videoUrl.split('\n'),
             patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
             patternShort = /^http(?:s)?:\/\/youtu.be\//,
+            patternVimeo = /^http(?:s)?:\/\/vimeo.com\//,
             matchKey = '',
             matchList = [],
             normalList = [],
+            contentTypeList = [],
             existList = [],
             invalidList = [],
             privateVideoList = [],
@@ -398,7 +452,8 @@ $(function () {
             hasLimitedSyndication = null,
             isSyndicateLimited = null,
             isEmbedLimited = null,
-            isUnplayableVideo = null;
+            isUnplayableVideo = null,
+            inContentType = 1;
         if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add (separate with different lines)']) === videoUrl) {
             $('#videourl').get(0).focus();
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add.'])).removeClass('hide').show();
@@ -409,27 +464,39 @@ $(function () {
         });
         $.each(urlList, function (i, url) {
             url = $.trim(url);
+            inContentType = 1;
             if ('' !== url) {
                 if (patternLong.test(url)) {
                     matchKey = $.url(url).param('v');
                 } else if (patternShort.test(url)) {
                     matchKey = $.url(url).segment(1);
+                } else if (patternVimeo.test(url)) {
+                    matchKey = $.url(url).segment(1);
+                    inContentType = 7;
                 } else {
                     matchKey = '';
                 }
-                if (!matchKey || matchKey.length !== 11) {
+                if (!matchKey || (inContentType === 1 && matchKey.length !== 11)) {
                     matchKey = '';
                     invalidList.push(url);
                 }
+
                 if ('' !== matchKey) {
+                    if(inContentType === 7){
+                        normalList.push("https://vimeo.com/" + matchKey);
+                    } else {
+                        normalList.push("http://www.youtube.com/watch?v=" + matchKey);
+                    }
                     matchList.push(matchKey);
+                    contentTypeList.push(inContentType);
                 }
             }
         });
+        // return false;
         if (matchList.length > 0) {
-            normalList = $.map(matchList, function (k, i) {
-                return 'http://www.youtube.com/watch?v=' + k;
-            });
+            // normalList = $.map(matchList, function (k, i) {
+            //     return 'http://www.youtube.com/watch?v=' + k;
+            // });
             if ((existList.length + matchList.length) > cms.config.PROGRAM_MAX) {
                 $('#videourl').val(normalList.join('\n'));
                 $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'You have reached the maximum amount of 50 videos.'])).removeClass('hide').show();
@@ -440,80 +507,114 @@ $(function () {
             $('body').addClass('has-change');
             $common.showProcessingOverlay();
             $.each(matchList, function (idx, key) {
-                nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + key + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
-                    committedCnt += 1;
+                switch(contentTypeList[idx]){
+                    case 1:
+                        // youtube video
+                        nn.log("Yt type");
+                        nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + key + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
+                            committedCnt += 1;
+                            var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
 
-                    var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
-
-                    if (true === checkResult.isEmbedLimited) {
-                        embedLimitedList.push(normalList[idx]);
-                    }
-                    if (youtubes.data && !checkResult.isEmbedLimited && !checkResult.isProcessing && !checkResult.isRequesterRegionRestricted) {
-                        ytData = youtubes.data;
-                        ytItem = {
-                            poiList: [],
-                            beginTitleCard: null,
-                            endTitleCard: null,
-                            id: 0,                          // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
-                            ytId: ytData.id,
-                            fileUrl: normalList[idx],
-                            imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
-                            duration: ytData.duration,      // keep trimmed duration from FLIPr API
-                            ytDuration: ytData.duration,    // keep original duration from YouTube
-                            startTime: 0,
-                            endTime: ytData.duration,
-                            name: ytData.title,
-                            intro: ytData.description,
-                            uploader: ytData.uploader,
-                            uploadDate: ytData.uploaded
-                        };
-                        ytItem = $.extend(ytItem, checkResult);
-                        ytList[idx] = ytItem;
-                    } else {
-                        if (youtubes.error) {
-                            nn.log(youtubes.error, 'warning');
-                            if (youtubes.error.code && 403 === youtubes.error.code) {
-                                privateVideoList.push(normalList[idx]);
+                            if (true === checkResult.isEmbedLimited) {
+                                embedLimitedList.push(normalList[idx]);
                             }
-                        }
-                        nn.log(normalList[idx], 'debug');
-                        invalidList.push(normalList[idx]);
-                        $('#videourl').val(invalidList.join('\n'));
-                        if (true === checkResult.isEmbedLimited && 0 === privateVideoList.length && invalidList.length === embedLimitedList.length) {
-                            $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This video is not playable outside Youtube]'])).removeClass('hide').show();
-                        } else if (true === checkResult.isPrivateVideo && 0 === embedLimitedList.length && invalidList.length === privateVideoList.length) {
-                            $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This is a private video]'])).removeClass('hide').show();
-                        } else if (checkResult.isUnplayableVideo || checkResult.isProcessing || checkResult.isRequesterRegionRestricted) {
-                            $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Unplayable video, please try again!'])).removeClass('hide').show();
-                        } else {
-                            $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!'])).removeClass('hide').show();
-                        }
-                    }
-                    if (committedCnt === matchList.length) {
-                        var videoOkCnt, oriLiCnt = $('#storyboard-list li').length;
-                        committedCnt = -1;   // reset to avoid collision
-                        $page.animateStoryboard(ytList.length);
-                        $('#storyboard-listing-tmpl-item').tmpl(ytList).hide().appendTo('#storyboard-listing').fadeIn(2000);
-                        $page.sumStoryboardInfo();
-                        $page.rebuildVideoNumber(videoNumberBase);
-                        $('.ellipsis').ellipsis();
-
-                        videoOkCnt = $('#storyboard-list li a.video_ok').length ;
-                        if (videoOkCnt > 0) {
-                            var liIndex = $('#storyboard-list li a.video_ok').eq(videoOkCnt-1).parent("li").index(), liShift = 0 ;
-                            if( liIndex >= oriLiCnt ){
-                                $('#storyboard-list li').eq(liIndex).find(".hover-func a.video-play").trigger("click");
-                                $("#storyboard-wrap").scrollLeft('update');
-                                if( liIndex > 0 ){
-                                    liShift = 123 * liIndex - 61 ;
+                            nn.log("checkResult");
+                            nn.log(checkResult);
+                            if (youtubes.data && !checkResult.isEmbedLimited && !checkResult.isProcessing && !checkResult.isRequesterRegionRestricted) {
+                                ytData = youtubes.data;
+                                ytItem = {
+                                    poiList: [],
+                                    beginTitleCard: null,
+                                    endTitleCard: null,
+                                    id: 0,                          // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
+                                    ytId: ytData.id,
+                                    fileUrl: normalList[idx],
+                                    imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
+                                    duration: ytData.duration,      // keep trimmed duration from FLIPr API
+                                    ytDuration: ytData.duration,    // keep original duration from YouTube
+                                    startTime: 0,
+                                    endTime: ytData.duration,
+                                    name: ytData.title,
+                                    intro: ytData.description,
+                                    uploader: ytData.uploader,
+                                    uploadDate: ytData.uploaded,
+                                    contentType: contentTypeList[idx]
+                                };
+                                ytItem = $.extend(ytItem, checkResult);
+                                ytList[idx] = ytItem;
+                            } else {
+                                if (youtubes.error) {
+                                    nn.log(youtubes.error, 'warning');
+                                    if (youtubes.error.code && 403 === youtubes.error.code) {
+                                        privateVideoList.push(normalList[idx]);
+                                    }
                                 }
-                                $("#storyboard-wrap").scrollLeft(liShift);
+                                nn.log(normalList[idx], 'debug');
+                                invalidList.push(normalList[idx]);
+                                
                             }
-                        }
+                            
+                            if (true === checkResult.isEmbedLimited && 0 === privateVideoList.length && invalidList.length === embedLimitedList.length) {
+                                $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This video is not playable outside Youtube]'])).removeClass('hide').show();
+                            } else if (true === checkResult.isPrivateVideo && 0 === embedLimitedList.length && invalidList.length === privateVideoList.length) {
+                                $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This is a private video]'])).removeClass('hide').show();
+                            } else if (checkResult.isUnplayableVideo || checkResult.isProcessing || checkResult.isRequesterRegionRestricted) {
+                                $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Unplayable video, please try again!'])).removeClass('hide').show();
+                            }
 
-                        $('#overlay-s').fadeOut();
-                    }
-                }, 'jsonp');
+                            chkLoop();
+                        }, 'jsonp');
+
+                        break;
+
+                    case 7:
+                        // vimeo video
+                        nn.log("Vimeo type");
+                        nn.api('GET', '/apis/info_vimoe.php?url=' + normalList[idx], null, function (videoObj) {
+                            var checkResult = {
+                                isEmbedLimited: false,
+                                isInvalid: false,
+                                isPrivateVideo: false,
+                                isProcessing: false,
+                                isRequesterRegionRestricted: false,
+                                isSyndicateLimited: false,
+                                isUnplayableVideo: false,
+                                isZoneLimited: false
+                            };
+                            committedCnt += 1;
+                            if(videoObj.v_read > 0){
+                                ytItem = {
+                                    poiList: [],
+                                    beginTitleCard: null,
+                                    endTitleCard: null,
+                                    id: 0, // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
+                                    ytId: videoObj.id,
+                                    fileUrl: videoObj.v_url,
+                                    embedUrl: videoObj.embedUrl,
+                                    imageUrl: videoObj.thumbnail,
+                                    duration: videoObj.duration, // keep trimmed duration from FLIPr API
+                                    ytDuration: videoObj.duration, // keep original duration from YouTube
+                                    startTime: 0,
+                                    endTime: videoObj.duration,
+                                    name: videoObj.title,
+                                    intro: videoObj.description,
+                                    uploader: videoObj.uploader,
+                                    uploadDate: videoObj.uploaded,
+                                    contentType: contentTypeList[idx]
+                                };
+                                ytItem = $.extend(ytItem, checkResult);
+                                ytList[idx] = ytItem;
+                                nn.log("抓到了");
+                            }else{
+                                invalidList.push(normalList[idx]);
+                                $('#videourl').val(invalidList.join('\n'));
+                            }
+                            nn.log(videoObj);
+                            chkLoop();
+                        });
+                        break;
+                }
+
             });
         }
         $('#videourl').val('');
@@ -522,6 +623,44 @@ $(function () {
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again.'])).removeClass('hide').show();
         }
         return false;
+
+        function chkLoop(){
+            if (committedCnt === matchList.length) {
+                var videoOkCnt, oriLiCnt = $('#storyboard-list li').length;
+                committedCnt = -1;   // reset to avoid collision
+                $page.animateStoryboard(ytList.length);
+                $('#storyboard-listing-tmpl-item').tmpl(ytList).hide().appendTo('#storyboard-listing').fadeIn(2000);
+                $page.sumStoryboardInfo();
+                $page.rebuildVideoNumber(videoNumberBase);
+                $('.ellipsis').ellipsis();
+
+                videoOkCnt = $('#storyboard-list li a.video_ok').length ;
+                if (videoOkCnt > 0) {
+                    var liIndex = $('#storyboard-list li a.video_ok').eq(videoOkCnt-1).parent("li").index(), liShift = 0 ;
+                    if( liIndex >= oriLiCnt ){
+                        $('#storyboard-list li').eq(liIndex).find(".hover-func a.video-play").trigger("click");
+                        $("#storyboard-wrap").scrollLeft('update');
+                        if( liIndex > 0 ){
+                            liShift = 123 * liIndex - 61 ;
+                        }
+                        $("#storyboard-wrap").scrollLeft(liShift);
+                    }
+                }
+
+                if (invalidList.length > 0) {
+                    $('#videourl').val(invalidList.join('\n'));
+                    $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!'])).removeClass('hide').show();
+                }
+
+                $('#overlay-s').fadeOut();
+            }
+        }
+
+        function funcT(inKey){
+            nn.log(inKey + " *** " + matchList[inKey]);
+            nn.log(inKey + " *** " + normalList[inKey]);
+            chkLoop();
+        }
     });
 
     $('#cur-add .checkbox a').click(function () {
@@ -2273,7 +2412,7 @@ $(function () {
                 programList = [],
                 parameter = null;
 
-            $('#storyboard-list li').each(function (idx) {
+            $('#storyboard-list li').each(function (idx, eValue) {
                 programItem = $(this).tmplItem().data;
                 if (parseInt(programItem.ytDuration, 10) > 0) {
                     totalDuration += parseInt(programItem.duration, 10);
@@ -2286,8 +2425,7 @@ $(function () {
                 }
                 $.extend(programItem, {
                     channelId: $('#channelId').val(),   // api readonly
-                    subSeq: idx + 1,
-                    contentType: 1
+                    subSeq: idx + 1
                 });
                 programList.push(programItem);
             });
@@ -2461,8 +2599,7 @@ $(function () {
                         // insert program
                         parameter = $.extend({}, programItem, {
                             channelId: $('#channelId').val(),   // api readonly
-                            subSeq: idx + 1,
-                            contentType: 1
+                            subSeq: idx + 1
                         });
                         nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
                             episodeId: $('#id').val()

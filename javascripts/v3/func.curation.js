@@ -1392,6 +1392,18 @@
         });
     };
 
+    $page.loadVimeo = function (videoUrl) {
+        $('#poi-event-overlay .wrap .content .video-wrap .video').empty();
+        $page.removeTitleCardPlayingHook();
+        if (videoUrl && '' !== videoUrl) {
+            $('#video-player .video').html('<iframe class="videoVimeoFrame" src="'+videoUrl.replace("https:", "")+'" frameborder="0" ></iframe> ');
+            $(".videoVimeoFrame").width($('#video-player .video').width());
+            $(".videoVimeoFrame").height($('#video-player .video').height());
+            $('#video-player #video-control').hide();
+            $('#video-player .video').removeClass('transparent');
+        }
+    };
+
     $page.loadYouTubeFlash = function (videoId, isChromeless, videoWrap) {
         $('#poi-event-overlay .wrap .content .video-wrap .video').empty();
         $page.removeTitleCardPlayingHook();
@@ -1456,7 +1468,11 @@
             }
         } else if (element) {
             $page.buildVideoInfoTmpl(element);
-            $page.loadYouTubeFlash(element.data('ytid'));
+            if(element.data('contenttype') === 7){
+                $page.loadVimeo(element.data('embedurl'));
+            } else {
+                $page.loadYouTubeFlash(element.data('ytid'));
+            }
             $page.removeVideoPlayingHook();
             $page.addVideoPlayingHook(element);
         }
@@ -1902,7 +1918,16 @@
                 endTitleCard = null;
 
             $.each(programs, function (idx, programItem) {
+                programItem.isYoutube = false;
+                programItem.isVimeo = false;
+                programItem.isTitleEdit = false;
                 if (normalPattern.test(programItem.fileUrl)) {
+                    programItem.isYoutube = true;
+                    programItem.isTitleEdit = true;
+                }else if(7 === programItem.contentType){
+                    programItem.isVimeo = true;
+                }
+                if(programItem.isYoutube || programItem.isVimeo){
                     programList.push(programItem);
                 }
             });
@@ -1911,8 +1936,6 @@
                 nn.on([400, 401, 403, 404], function (jqXHR, textStatus) {
                     committedCnt += 1;
                     invalidList.push(programItem.fileUrl);
-                    nn.log(textStatus + ': ' + jqXHR.responseText, 'warning');
-                    nn.log(programItem.fileUrl, 'debug');
                     $('#videourl').val(invalidList.join('\n'));
                     $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!'])).removeClass('hide').show();
                     if (committedCnt === programList.length) {
@@ -1981,22 +2004,43 @@
 
                     var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
 
-                    if (youtubes.data && false === checkResult.isEmbedLimited) {
-                        ytData = youtubes.data;
-                        ytItem = {
-                            poiList: poi_points,
-                            beginTitleCard: beginTitleCard,
-                            endTitleCard: endTitleCard,
-                            ytId: ytData.id,
-                            fileUrl: programItem.fileUrl,
-                            imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
-                            //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
-                            ytDuration: ytData.duration,    // keep original duration from YouTube
-                            name: ytData.title,
-                            intro: ytData.description,
-                            uploader: ytData.uploader,
-                            uploadDate: ytData.uploaded,
-                        };
+                    if (youtubes.data && false === checkResult.isEmbedLimited || programItem.isVimeo) {
+                        if(programItem.isVimeo){
+                            // vimeo video source
+                            ytItem = {
+                                poiList: poi_points,
+                                beginTitleCard: beginTitleCard,
+                                endTitleCard: endTitleCard,
+                                // ytId: ytData.id,
+                                fileUrl: programItem.fileUrl,
+                                imageUrl: programItem.imageUrl,
+                                //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
+                                ytDuration: programItem.duration, // keep original duration from YouTube
+                                name: youtubes.name,
+                                intro: youtubes.intro,
+                                uploader: youtubes.uploader,
+                                uploader_name: youtubes.uploader_name,
+                                uploadDate: youtubes.uploaded,
+                                embedUrl: youtubes.embedUrl,
+                            };
+                        }else{
+                            // youtube video source
+                            ytData = youtubes.data;
+                            ytItem = {
+                                poiList: poi_points,
+                                beginTitleCard: beginTitleCard,
+                                endTitleCard: endTitleCard,
+                                ytId: ytData.id,
+                                fileUrl: programItem.fileUrl,
+                                imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
+                                //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
+                                ytDuration: ytData.duration, // keep original duration from YouTube
+                                name: ytData.title,
+                                intro: ytData.description,
+                                uploader: ytData.uploader,
+                                uploadDate: ytData.uploaded,
+                            };
+                        }
                     } else {
                         ytItem = {
                             poiList: poi_points,
@@ -2025,7 +2069,8 @@
                         $page.rebuildVideoNumber();
                         $('.ellipsis').ellipsis();
 
-                        var videoOkCnt = $('#storyboard-list li a.video_ok').length;
+                        var videoOkCnt = $('#storyboard-list li a.video_ok').length,
+                            videoLiCnt = $('#storyboard-list li').length;
                         if (videoOkCnt > 0) {
                             var liIndex = $('#storyboard-list li a.video_ok').parent("li").index(), liShift = 0 ;
                             $('#storyboard-list li').eq(liIndex).find(".hover-func a.video-play").trigger("click");
@@ -2034,23 +2079,26 @@
                             }
                             $("#storyboard-wrap").scrollLeft(liShift);
                             $("#storyboard-wrap").perfectScrollbar('update');
+                        } else if(videoLiCnt > 0){
+                            $('#storyboard-list li').eq(0).find(".hover-func a.video-play").trigger("click");
                         }
-
                         $('#overlay-s').fadeOut();
                     }
                 });
-                // });
-
             });
         }
 
         function getYoutubes(programItem) {
             var deferred = $.Deferred();
-
-            nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + programItem.fileUrl.slice(-11) + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
-                deferred.resolve(programItem, youtubes);
-            }, 'jsonp');
-
+            if(programItem.contentType === 7){
+                nn.api('GET', '/apis/info_vimoe.php?url=' + programItem.fileUrl, null, function (youtubes) {
+                    deferred.resolve(programItem, youtubes);
+                });
+            } else {
+                nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + programItem.fileUrl.slice(-11) + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
+                    deferred.resolve(programItem, youtubes);
+                }, 'jsonp');
+            }
             return deferred.promise();
         }
 
