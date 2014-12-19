@@ -13,6 +13,42 @@
         gt: (new Date()).getTime()
     };
 
+    $page.infoParserVimeo = function (inHtml) {
+        var hElement = $.parseHTML(inHtml),
+            retValue = {
+                v_url: $(hElement).find("link[itemprop=url]").attr('href'),
+                v_read: 0,
+                id: "",
+                embedUrl: "",
+                thumbnail: "",
+                title: "",
+                description: "",
+                uploaded: "",
+                uploader: "",
+                uploader_name: "",
+                duration: ""
+            },
+            dataArea = {};
+
+        if(retValue.v_url && retValue.v_url != ""){
+            dataArea = $(hElement).find('#cols');
+            retValue.v_read = 1;
+            retValue.id = retValue.v_url.split('vimeo.com/')[1];
+            retValue.embedUrl = dataArea.find('link[itemprop=embedUrl]').attr('href');
+            retValue.thumbnail = dataArea.find('link[itemprop=thumbnailUrl]').attr('href');
+
+            retValue.title = $(dataArea).find('meta[itemprop=name]').attr('content');
+            retValue.description = dataArea.find('meta[itemprop=description]').attr('content');
+            retValue.uploaded = dataArea.find('meta[itemprop=uploadDate]').attr('content');
+
+            retValue.uploader = dataArea.find('a[rel=author]').attr("href").replace("/", "");
+            retValue.uploader_name = dataArea.find('a[rel=author]').text();
+
+            retValue.duration = dataArea.find('.js-player').data("duration");
+        }
+        return retValue;
+    }
+
     $page.imageUpload = function (fileObj, eKey) {
 
         var formData = new FormData(),
@@ -2091,9 +2127,14 @@
         function getYoutubes(programItem) {
             var deferred = $.Deferred();
             if(programItem.contentType === 7){
-                nn.api('GET', '/apis/info_vimoe.php?url=' + programItem.fileUrl, null, function (youtubes) {
-                    deferred.resolve(programItem, youtubes);
-                });
+                $.ajax({
+                    type: "GET",
+                    url: cms.config.API_BASE + "/api/cors?url=" + programItem.fileUrl
+                })
+                    .done(function (gHtml) {
+                        var youtubes = $page.infoParserVimeo(gHtml);
+                        deferred.resolve(programItem, youtubes);
+                    });
             } else {
                 nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + programItem.fileUrl.slice(-11) + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
                     deferred.resolve(programItem, youtubes);

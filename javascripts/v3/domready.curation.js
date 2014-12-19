@@ -569,49 +569,52 @@ $(function () {
 
                     case 7:
                         // vimeo video
-                        nn.log("Vimeo type");
-                        nn.api('GET', '/apis/info_vimoe.php?url=' + normalList[idx], null, function (videoObj) {
-                            var checkResult = {
-                                isEmbedLimited: false,
-                                isInvalid: false,
-                                isPrivateVideo: false,
-                                isProcessing: false,
-                                isRequesterRegionRestricted: false,
-                                isSyndicateLimited: false,
-                                isUnplayableVideo: false,
-                                isZoneLimited: false
-                            };
-                            committedCnt += 1;
-                            if(videoObj.v_read > 0){
-                                ytItem = {
-                                    poiList: [],
-                                    beginTitleCard: null,
-                                    endTitleCard: null,
-                                    id: 0, // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
-                                    ytId: videoObj.id,
-                                    fileUrl: videoObj.v_url,
-                                    embedUrl: videoObj.embedUrl,
-                                    imageUrl: videoObj.thumbnail,
-                                    duration: videoObj.duration, // keep trimmed duration from FLIPr API
-                                    ytDuration: videoObj.duration, // keep original duration from YouTube
-                                    startTime: 0,
-                                    endTime: videoObj.duration,
-                                    name: videoObj.title,
-                                    intro: videoObj.description,
-                                    uploader: videoObj.uploader,
-                                    uploadDate: videoObj.uploaded,
-                                    contentType: contentTypeList[idx]
-                                };
-                                ytItem = $.extend(ytItem, checkResult);
-                                ytList[idx] = ytItem;
-                                nn.log("抓到了");
-                            }else{
-                                invalidList.push(normalList[idx]);
-                                $('#videourl').val(invalidList.join('\n'));
-                            }
-                            nn.log(videoObj);
-                            chkLoop();
-                        });
+                        $.ajax({
+                            type: "GET",
+                            url: cms.config.API_BASE + "/api/cors?url=" + normalList[idx]
+                        })
+                            .done(function (gHtml) {
+                                var checkResult = {
+                                    isEmbedLimited: false,
+                                    isInvalid: false,
+                                    isPrivateVideo: false,
+                                    isProcessing: false,
+                                    isRequesterRegionRestricted: false,
+                                    isSyndicateLimited: false,
+                                    isUnplayableVideo: false,
+                                    isZoneLimited: false
+                                },
+                                videoObj = $page.infoParserVimeo(gHtml);
+
+                                committedCnt += 1;
+                                if (videoObj.v_read > 0) {
+                                    ytItem = {
+                                        poiList: [],
+                                        beginTitleCard: null,
+                                        endTitleCard: null,
+                                        id: 0, // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
+                                        ytId: videoObj.id,
+                                        fileUrl: videoObj.v_url,
+                                        embedUrl: videoObj.embedUrl,
+                                        imageUrl: videoObj.thumbnail,
+                                        duration: videoObj.duration, // keep trimmed duration from FLIPr API
+                                        ytDuration: videoObj.duration, // keep original duration from YouTube
+                                        startTime: 0,
+                                        endTime: videoObj.duration,
+                                        name: videoObj.title,
+                                        intro: videoObj.description,
+                                        uploader: videoObj.uploader,
+                                        uploadDate: videoObj.uploaded,
+                                        contentType: contentTypeList[idx]
+                                    };
+                                    ytItem = $.extend(ytItem, checkResult);
+                                    ytList[idx] = ytItem;
+                                } else {
+                                    invalidList.push(normalList[idx]);
+                                    $('#videourl').val(invalidList.join('\n'));
+                                }
+                                chkLoop();
+                            });
                         break;
                 }
 
