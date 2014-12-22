@@ -425,7 +425,6 @@ $(function () {
                                 cleartypeNoBg: true
                             });
                             $('#func-nav ul li.btns').addClass("hide");
-                            $(".radio-list").addClass("hide");
                         }
 
                     });
