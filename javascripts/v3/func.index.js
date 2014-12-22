@@ -353,7 +353,6 @@
                 });
                 $('#channel-list').sortable('disable');
 
-                $(".radio-list").removeClass("hide");
                 $("#title-func .order").removeClass("disable");
 
                 // if has readonly
@@ -414,7 +413,6 @@
                     cleartypeNoBg: true
                 });
                 $('#func-nav ul li.btns').addClass("hide");
-                $(".radio-list").addClass("hide");
 
                 if (!$.cookie('cms-cct')) {
                     $.cookie('cms-cct', 'seen');
