@@ -4,6 +4,137 @@
 (function ($common) {
     'use strict';
 
+    $common.createFromEpisode = function(episode, programs, toChId, inPage) {
+        var chId = toChId;
+
+        episode.storageId = episode.id;
+        episode.isPublic = false;
+        episode.name = "copy from " + episode.name;
+        episode.publishDate = '';
+        episode.scheduleDate = '';
+        episode.updateDate = '';
+        episode.updateDate = '';
+        delete episode.id;
+        delete episode.seq;
+        delete episode.channelId;
+
+        nn.api('POST', cms.reapi('/api/channels/{channelId}/episodes', {
+            channelId: chId
+        }), episode, function (newEpisode) {
+            var newEpisodeId = newEpisode.id,
+                cntPoiPoint = 0,
+                oldProgramId = 0;
+
+            inPage.importPrograms = programs.length;
+
+            $.each(programs, function (eKey, programItem) {
+                oldProgramId = programItem.id;
+                // get points
+                nn.api('GET', cms.reapi('/api/programs/{programId}/poi_points', {
+                    programId: oldProgramId
+                }), null, function (poi_points) {
+
+                    programItem.cntView = 0;
+                    delete programItem.id;
+                    delete programItem.channelId;
+                    delete programItem.episodeId;
+
+                    if(!(parseInt(programItem.endTime, 10) > 0)){
+                        // youtube sync fill endTime for old version
+                        programItem.endTime = programItem.duration;
+                        programItem.endTimeInt = programItem.durationInt;
+                    }
+
+                    // add program
+                    nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
+                        episodeId: newEpisodeId
+                    }), programItem, function (newProgram) {
+
+                        cntPoiPoint = poi_points.length;
+                        if(cntPoiPoint > 0){
+                            $.each(poi_points, function (eeKey, oldPoiPoint) {
+                                nn.api('GET', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
+                                    poiCampaignId: cms.global.CAMPAIGN_ID
+                                }), {poiPointId: oldPoiPoint.id}, function (pois) {
+                                    nn.api('GET', cms.reapi('/api/poi_events/{poiEventId}', {
+                                            poiEventId: pois[0].eventId
+                                        }), null, function (poi_event) {
+                                        // add poi
+                                        addPoi(newProgram.id, oldPoiPoint, poi_event, newEpisodeId, inPage);
+                                    });
+                                });
+                            });
+                        } else {
+                            inPage.importPrograms --;
+                        }
+
+                        if(0 === inPage.importPrograms){
+                            location.href = "epcurate-curation.html?id=" + newEpisodeId;
+                        }
+
+                    });
+                });
+            });
+        });
+
+
+        function addPoi(inProgramIdNew, oldPoiPoint, poi_event, newEpId, inPage) {
+            var procPoiPoint = {
+                eventType: oldPoiPoint.eventType,
+                name: oldPoiPoint.name,
+                tag: oldPoiPoint.tag,
+                startTime: oldPoiPoint.startTime,
+                endTime: oldPoiPoint.endTime
+                },
+                procPoiEvent = {
+                    context: poi_event.context,
+                    name: poi_event.name,
+                    notifyMsg: poi_event.notifyMsg,
+                    notifyScheduler: poi_event.notifyScheduler,
+                    pointType: poi_event.pointType,
+                    type: poi_event.type
+                };
+
+            nn.api('POST', cms.reapi('/api/programs/{programId}/poi_points', {
+                programId: inProgramIdNew
+            }), procPoiPoint, function (add_poi_point) {
+
+                nn.api('POST', cms.reapi('/api/users/{userId}/poi_events', {
+                    userId: cms.global.USER_DATA.id
+                }), procPoiEvent, function (add_poi_event) {
+                    var poiData = {
+                        pointId: add_poi_point.id,
+                        eventId: add_poi_event.id
+                    };
+                    nn.api('POST', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
+                        poiCampaignId: cms.global.CAMPAIGN_ID
+                    }), poiData, function (add_poi) {
+                        inPage.importPrograms--;
+                        if (0 === inPage.importPrograms) {
+                            location.href = "epcurate-curation.html?id=" + newEpId;
+                        }
+                    });
+                });
+            });
+        }
+
+    }
+
+    $common.importEp = function (inObj, toChId, inPage) {
+        // depanden on $common.setupUserCampaignId(); load it at .init
+        nn.api('GET', cms.reapi('/api/episodes/{epId}', {
+            epId: inObj
+        }), null, function (episode) {
+            nn.api('GET', cms.reapi('/api/episodes/{epId}/programs', {
+                epId: inObj
+            }), null, function (programs) {
+                $("#new-Episode-Option").addClass("hide");
+                $common.showProcessingOverlay();
+                $common.createFromEpisode(episode, programs, toChId, inPage);
+            });
+        });
+    };
+
     $common.prepareChannelsFilter = function (inList) {
         var retValue = [],
             countList = inList.length,
