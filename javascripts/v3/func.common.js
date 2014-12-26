@@ -114,7 +114,7 @@
                             setTimeout(function() {
                                 // if not delay last campaigns will not finish
                                 location.href = "epcurate-curation.html?id=" + newEpId;
-                            }, 1500);
+                            }, 500);
                         }
                     });
                 });
