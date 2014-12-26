@@ -37,63 +37,6 @@
         }
     };
 
-    $page.createFromEpisode = function(episode, programs) {
-        var chId = $page.actEpisode;
-
-        episode.storageId = episode.id;
-        episode.isPublic = false;
-        episode.publishDate = '';
-        episode.scheduleDate = '';
-        episode.updateDate = '';
-        episode.updateDate = '';
-        delete episode.id;
-        delete episode.seq;
-        delete episode.channelId;
-
-        nn.api('POST', cms.reapi('/api/channels/{channelId}/episodes', {
-            channelId: chId
-        }), episode, function (newEpisode) {
-            var newEpisodeId = newEpisode.id;
-
-            $page.importPrograms = programs.length;
-
-            $.each(programs, function (idx, programItem) {
-
-                programItem.cntView = 0;
-                delete programItem.id;
-                delete programItem.channelId;
-                delete programItem.episodeId;
-
-                // insert program
-                nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
-                    episodeId: newEpisodeId
-                }), programItem, function (newProgram) {
-                    $page.importPrograms --;
-
-                    if(0 === $page.importPrograms){
-                        location.href = "epcurate-curation.html?id=" + newEpisodeId;
-                    }
-
-                });
-            });
-        });
-    }
-
-    $page.importEp = function (inObj) {
-        nn.api('GET', cms.reapi('/api/episodes/{epId}', {
-            epId: inObj
-        }), null, function (episode) {
-            nn.api('GET', cms.reapi('/api/episodes/{epId}/programs', {
-                epId: inObj
-            }), null, function (programs) {
-                $("#new-Episode-Option").addClass("hide");
-                $common.showProcessingOverlay();
-                $page.createFromEpisode(episode, programs);
-            });
-        });        
-    };
-
-
     // YouTube sync syncing processing
     $page.syncingProcess = function () {
         var theSyncs = $("li.inSyncing"),
