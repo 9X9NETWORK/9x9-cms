@@ -383,7 +383,7 @@
                         clear: true,
                         countDown: false
                     });
-                    $('#intro').charCounter(300, {
+                    $('#intro').charCounter(900, {
                         container: '#intro-charcounter',
                         format: '%1',
                         delay: 0,
