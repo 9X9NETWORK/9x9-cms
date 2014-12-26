@@ -25,11 +25,12 @@ $(function () {
     $(document).on('click', '.btnImportEp', function () {
         var hasDisabled = $(this).hasClass("disabled"),
             arrUrl = $common.playerUrlParser($("#importInText").val()),
-            thisEpId = arrUrl.epId.replace("e", "") || 0;
+            thisEpId = arrUrl.epId.replace("e", "") || 0,
+            chId = $page.actEpisode;
 
         $("#epImportNotice").addClass("hide");
         if (arrUrl.isAllow && thisEpId >0) {
-            $page.importEp(thisEpId);
+            $common.importEp(thisEpId, chId, $page);
         } else {
             // errmsg
             $("#epImportNotice").removeClass("hide");

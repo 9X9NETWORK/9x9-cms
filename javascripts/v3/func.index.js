@@ -374,6 +374,7 @@
             options: options
         }, 'debug');
 
+        $common.setupUserCampaignId();
         var pageId = cms.global.PAGE_ID;
         $page.paging.cntItems = cms.global.USER_DATA.cntChannel;
         $page.paging.cntPages = Math.ceil($page.paging.cntItems / $page.paging.pageLimit);
