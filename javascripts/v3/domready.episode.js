@@ -22,12 +22,11 @@ $(function () {
     });
 
     $(document).on('click', '.btnImportEp', function () {
-        var hasDisabled = $(this).hasClass("disabled"),
-            arrUrl = $common.playerUrlParser($("#importInText").val()),
+        var arrUrl = $common.playerUrlParser($("#importInText").val()),
             thisEpId = arrUrl.epId.replace("e", "") || 0;
 
         $("#epImportNotice").addClass("hide");
-        if (arrUrl.isAllow && thisEpId >0) {
+        if (arrUrl.isAllow && thisEpId > 0) {
             $common.importEp(thisEpId, cms.global.USER_URL.param('id'), $page);
         } else {
             // errmsg
@@ -35,28 +34,27 @@ $(function () {
         }
     });
 
-    $(document).on('click', '#upload-box', function() {
+    $(document).on('click', '#upload-box', function () {
         $("#upImage").trigger("click");
     });
 
-    $(document).on('change', '#upImage', function() {
-        var cntFiles = this.files.length,
-            arrUpFiles = [];
+    $(document).on('change', '#upImage', function () {
+        var cntFiles = this.files.length;
         if ($page.s3Info.isGet && cntFiles > 0) {
-            $.each(this.files, function(eKey, eValue) {
+            $.each(this.files, function (eKey, eValue) {
                 if ("video/mp4" === eValue.type && eValue.size > 0) {
                     $page.imageUpload(eValue, eKey);
                 } else {
 
                     nn.log(eValue);
-                     $page.imageUpload(eValue, eKey);
+                    $page.imageUpload(eValue, eKey);
 
                 }
             });
         }
     });
 
-    $(document).on('click', '.btnEpSave', function() {
+    $(document).on('click', '.btnEpSave', function () {
         var epId = $(this).data("meta"),
             progId = $(this).data("program"),
             oldIsPublic = $(this).data("ispublic"),
@@ -76,19 +74,19 @@ $(function () {
 
         $("#epEditNotice").addClass("hide");
 
-        if(status_params.isPublic === "true"){
+        if (status_params.isPublic === "true") {
             status_params.publishDate = "NOW";
             newIsPublic = true;
-        }else{
+        } else {
             status_params.publishDate = "";
         }
 
         inputInfoEp = {
-                "name": inputInfo.name,
-                "intro": inputInfo.intro,
-                "imageUrl": inputInfo.imageUrl
-            };
-        if(oldIsPublic != newIsPublic){
+            "name": inputInfo.name,
+            "intro": inputInfo.intro,
+            "imageUrl": inputInfo.imageUrl
+        };
+        if (oldIsPublic !== newIsPublic) {
             $.extend(inputInfoEp, status_params);
         }
 
@@ -96,7 +94,7 @@ $(function () {
             isFormCheck = true;
         }
 
-        if(isFormCheck){
+        if (isFormCheck) {
             $.unblockUI();
             $common.showSavingOverlay();
             nn.api('PUT', cms.reapi('/api/episodes/{episodesId}', {
@@ -106,8 +104,8 @@ $(function () {
                 nn.api('PUT', cms.reapi('/api/programs/{programId}', {
                     programId: progId
                 }), inputInfo, function (pgObj) {
-                    var epItemObj = "#li_" +epObj.id, 
-                    epLists = [];
+                    var epItemObj = "#li_" + epObj.id,
+                        epLists = [];
 
                     epObj.seq = $(epItemObj).find("div.seqNumber").text();
                     epLists.push(epObj);
@@ -115,7 +113,7 @@ $(function () {
                     $('#overlay-s').fadeOut();
                 });
             });
-        }else{
+        } else {
             $("#epEditNotice").removeClass("hide");
         }
     });
@@ -131,21 +129,21 @@ $(function () {
             nextUrl = "index.html";
 
         switch (thisOption) {
-            case "func-upvideo":
-                nextUrl = "video-upload.html?cid=" + objId;
-                break;
+        case "func-upvideo":
+            nextUrl = "video-upload.html?cid=" + objId;
+            break;
 
-            case "func-episode":
-                nextUrl = "epcurate-curation.html?cid=" + objId;
-                break;
+        case "func-episode":
+            nextUrl = "epcurate-curation.html?cid=" + objId;
+            break;
 
-            case "func-fromepisode":
-                nextUrl = "";
-                $("#areaOption").addClass("hide");
-                $("#areaImport").removeClass("hide");
-                break;
+        case "func-fromepisode":
+            nextUrl = "";
+            $("#areaOption").addClass("hide");
+            $("#areaImport").removeClass("hide");
+            break;
         }
-        if("" !== nextUrl){
+        if ("" !== nextUrl) {
             location.href = nextUrl;
         }
     });
