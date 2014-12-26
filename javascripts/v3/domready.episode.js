@@ -28,7 +28,7 @@ $(function () {
 
         $("#epImportNotice").addClass("hide");
         if (arrUrl.isAllow && thisEpId >0) {
-            $page.importEp(thisEpId);
+            $common.importEp(thisEpId, cms.global.USER_URL.param('id'), $page);
         } else {
             // errmsg
             $("#epImportNotice").removeClass("hide");

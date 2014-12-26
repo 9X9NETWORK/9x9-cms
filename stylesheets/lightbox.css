@@ -1059,7 +1059,7 @@ a.switch-off {
     bottom: 0;
     left: 15px;
     width: 788px;
-    height: 66px;
+    height: 60px;
     background: url(../images/bg_divider.png) repeat-x top;
 }
 
@@ -1161,8 +1161,8 @@ body.from-poi-edit-mode #poi-event-overlay .wrap .content .func ul li.notice {
 #poi-event-overlay .wrap .content .event-input .fminput label {
     float: left;
     width: 103px;
-    height: 30px;
-    line-height: 30px;
+    /*height: 30px;
+    line-height: 30px;*/
     color: #555;
     font-weight: bold;
     font-size: 13px;

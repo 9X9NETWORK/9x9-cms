@@ -311,6 +311,7 @@
             options: options
         }, 'debug');
 
+        $common.setupUserCampaignId();
         var id = cms.global.USER_URL.param('id');
         if (id > 0 && !isNaN(id) && cms.global.USER_DATA.id) {
             if(cms.global.USER_PRIV.isVideoAuth){
