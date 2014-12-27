@@ -28,7 +28,8 @@
             s3FileName = s3Url + upFileName,
             procBody = $("#edit-Episode-Info").find("div.progress"),
             procBar = procBody.find("div.progress-bar"),
-            procBarText = procBody.find("span.progress-bar-text");
+            procBarText = procBody.find("span.progress-bar-text"),
+            cntTotal = 0;
 
 
         procBar.css("width", "0%");
@@ -45,14 +46,14 @@
         formData.append('success_action_status', "201");
         formData.append('file', fileObj);
 
-        var cntTotal = $common.fileSizeUnit(0, fileObj.size);
+        cntTotal = $common.fileSizeUnit(0, fileObj.size);
 
         xhr.open('POST', s3Url);
         xhr.upload.onprogress = function (event) {
             if (event.lengthComputable) {
-                var complete = (event.loaded / event.total * 100 | 0);
-                procBar.css("width", complete + "%")
-                procBarText.text(" " + complete + "% ")
+                var complete = (event.loaded / event.total * 100 || 0);
+                procBar.css("width", complete + "%");
+                procBarText.text(" " + complete + "% ");
             }
         }
         xhr.onload = function() {

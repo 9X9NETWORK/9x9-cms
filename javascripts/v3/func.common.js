@@ -4,7 +4,50 @@
 (function ($common) {
     'use strict';
 
-    $common.createFromEpisode = function(episode, programs, toChId, inPage) {
+    $common.createFromEpisode = function (episode, programs, toChId, inPage) {
+        function addPoi(inProgramIdNew, oldPoiPoint, poi_event, newEpId, inPage) {
+            var procPoiPoint = {
+                eventType: oldPoiPoint.eventType,
+                name: oldPoiPoint.name,
+                tag: oldPoiPoint.tag,
+                startTime: oldPoiPoint.startTime,
+                endTime: oldPoiPoint.endTime
+            },
+                procPoiEvent = {
+                    context: poi_event.context,
+                    name: poi_event.name,
+                    notifyMsg: poi_event.notifyMsg,
+                    notifyScheduler: poi_event.notifyScheduler,
+                    pointType: poi_event.pointType,
+                    type: poi_event.type
+                };
+
+            nn.api('POST', cms.reapi('/api/programs/{programId}/poi_points', {
+                programId: inProgramIdNew
+            }), procPoiPoint, function (add_poi_point) {
+
+                nn.api('POST', cms.reapi('/api/users/{userId}/poi_events', {
+                    userId: cms.global.USER_DATA.id
+                }), procPoiEvent, function (add_poi_event) {
+                    var poiData = {
+                        pointId: add_poi_point.id,
+                        eventId: add_poi_event.id
+                    };
+                    nn.api('POST', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
+                        poiCampaignId: cms.global.CAMPAIGN_ID
+                    }), poiData, function (add_poi) {
+                        inPage.importPrograms -= 1;
+                        if (0 === inPage.importPrograms) {
+                            setTimeout(function () {
+                                // if not delay last campaigns will not finish
+                                location.href = "epcurate-curation.html?id=" + newEpId;
+                            }, 500);
+                        }
+                    });
+                });
+            });
+        }
+
         var chId = toChId;
 
         episode.storageId = episode.id;
@@ -39,7 +82,7 @@
                     delete programItem.channelId;
                     delete programItem.episodeId;
 
-                    if(!(parseInt(programItem.endTime, 10) > 0)){
+                    if (!(parseInt(programItem.endTime, 10) > 0)) {
                         // youtube sync fill endTime for old version
                         programItem.endTime = programItem.duration;
                         programItem.endTimeInt = programItem.durationInt;
@@ -51,24 +94,26 @@
                     }), programItem, function (newProgram) {
 
                         cntPoiPoint = poi_points.length;
-                        if(cntPoiPoint > 0){
+                        if (cntPoiPoint > 0) {
                             $.each(poi_points, function (eeKey, oldPoiPoint) {
                                 nn.api('GET', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
                                     poiCampaignId: cms.global.CAMPAIGN_ID
-                                }), {poiPointId: oldPoiPoint.id}, function (pois) {
+                                }), {
+                                    poiPointId: oldPoiPoint.id
+                                }, function (pois) {
                                     nn.api('GET', cms.reapi('/api/poi_events/{poiEventId}', {
-                                            poiEventId: pois[0].eventId
-                                        }), null, function (poi_event) {
+                                        poiEventId: pois[0].eventId
+                                    }), null, function (poi_event) {
                                         // add poi
                                         addPoi(newProgram.id, oldPoiPoint, poi_event, newEpisodeId, inPage);
                                     });
                                 });
                             });
                         } else {
-                            inPage.importPrograms --;
+                            inPage.importPrograms -= 1;
                         }
 
-                        if(0 === inPage.importPrograms){
+                        if (0 === inPage.importPrograms) {
                             location.href = "epcurate-curation.html?id=" + newEpisodeId;
                         }
 
@@ -76,52 +121,7 @@
                 });
             });
         });
-
-
-        function addPoi(inProgramIdNew, oldPoiPoint, poi_event, newEpId, inPage) {
-            var procPoiPoint = {
-                eventType: oldPoiPoint.eventType,
-                name: oldPoiPoint.name,
-                tag: oldPoiPoint.tag,
-                startTime: oldPoiPoint.startTime,
-                endTime: oldPoiPoint.endTime
-                },
-                procPoiEvent = {
-                    context: poi_event.context,
-                    name: poi_event.name,
-                    notifyMsg: poi_event.notifyMsg,
-                    notifyScheduler: poi_event.notifyScheduler,
-                    pointType: poi_event.pointType,
-                    type: poi_event.type
-                };
-
-            nn.api('POST', cms.reapi('/api/programs/{programId}/poi_points', {
-                programId: inProgramIdNew
-            }), procPoiPoint, function (add_poi_point) {
-
-                nn.api('POST', cms.reapi('/api/users/{userId}/poi_events', {
-                    userId: cms.global.USER_DATA.id
-                }), procPoiEvent, function (add_poi_event) {
-                    var poiData = {
-                        pointId: add_poi_point.id,
-                        eventId: add_poi_event.id
-                    };
-                    nn.api('POST', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
-                        poiCampaignId: cms.global.CAMPAIGN_ID
-                    }), poiData, function (add_poi) {
-                        inPage.importPrograms--;
-                        if (0 === inPage.importPrograms) {
-                            setTimeout(function() {
-                                // if not delay last campaigns will not finish
-                                location.href = "epcurate-curation.html?id=" + newEpId;
-                            }, 500);
-                        }
-                    });
-                });
-            });
-        }
-
-    }
+    };
 
     $common.importEp = function (inObj, toChId, inPage) {
         // depanden on $common.setupUserCampaignId(); load it at .init
@@ -257,12 +257,12 @@
 
     $common.fileSizeUnit = function (dg, inNum) {
         var dgLists = ["KB", "MB", "GB", "TB"],
-            retNum = inNum / 1000 | 0,
+            retNum = inNum / 1000 || 0,
             retNumRound = Math.round(inNum / 10) / 100,
             retValue = "";
 
         if (retNum > 999) {
-            dg++;
+            dg += 1;
             retValue = $common.fileSizeUnit(dg, retNum);
         } else {
             if (dg < 1) {
@@ -913,12 +913,12 @@
                     $common.checkRestartConnect(facebook, function (facebook, isRestartConnect) {
                         // sync cms settings
                         cms.global.FB_RESTART_CONNECT = isRestartConnect;
-                        if (true === isRestartConnect) {
-                        	// 暫時 - fbconnect 暫時不處理，所以這個訊息顯示先不處理
-                            // $('#studio-nav .reconnect-notice').removeClass('hide');
-                            // $('#studio-nav .reconnect-notice .notice-left').stop(true).delay(2000).slideDown(100).delay(10000).fadeOut(1500);
-                            // $('#cms-setting .connect .notice, #cms-setting .connect .notify').removeClass('hide');
-                        }
+                        // if (true === isRestartConnect) {
+                        //     // 暫時 - fbconnect 暫時不處理，所以這個訊息顯示先不處理
+                        //     // $('#studio-nav .reconnect-notice').removeClass('hide');
+                        //     // $('#studio-nav .reconnect-notice .notice-left').stop(true).delay(2000).slideDown(100).delay(10000).fadeOut(1500);
+                        //     // $('#cms-setting .connect .notice, #cms-setting .connect .notify').removeClass('hide');
+                        // }
                         cms.global.FB_PAGES_MAP = $common.buildFacebookPagesMap(facebook);
                         cms.global.USER_SNS_AUTH = facebook;
                         // sync connect switch
