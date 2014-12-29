@@ -49,6 +49,19 @@
         return retValue;
     }
 
+
+    $page._doEpisodeUpdate = function (inObj, isAct) {
+        // special roll to update episode from louis
+        nn.api('PUT', cms.reapi('/api/episodes/{episodeId}', {
+            episodeId: inObj
+        }), null, function (tmpEpisode) {
+            if (isAct) {
+                $('#overlay-s').fadeOut(0);
+            }
+        });
+    };
+
+
     $page.imageUpload = function (fileObj, eKey) {
 
         var formData = new FormData(),
