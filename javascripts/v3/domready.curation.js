@@ -2000,7 +2000,7 @@ $(function () {
                         nn.api('PUT', cms.reapi('/api/poi_events/{poiEventId}', {
                             poiEventId: poiEventId
                         }), poiEventData, function (poi_event) {
-                            $('#overlay-s').fadeOut(0);
+                            $page._doEpisodeUpdate($("#id").val(), true);
                         });
                     } else {
                         $('#overlay-s').fadeOut(0);
