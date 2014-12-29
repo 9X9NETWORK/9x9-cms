@@ -41,7 +41,7 @@ $(function () {
             dtype = that.val(),
             hyDisplayText = $("#hyper_display_text"),
             hyButtonText = $("#hyper_button_text"),
-            defImage = "http://9x9tmp.s3.amazonaws.com/cms-thumbnail-1414724608432-258215.jpg",
+            defImage = "images/poi_image_default.jpg",
             varImage = "",
             fm = document.forms["eventHyperForm"];
 
@@ -1141,7 +1141,7 @@ $(function () {
                 nn.api('DELETE', cms.reapi('/api/poi_points/{poiPointId}', {
                     poiPointId: poiPointId
                 }), null, function (data) {
-                    $('#overlay-s').fadeOut(0);
+                    $page._doEpisodeUpdate($("#id").val(), true);
                 });
             } else {
                 $('#overlay-s').fadeOut(0);
@@ -1919,7 +1919,7 @@ $(function () {
                                         $('body').removeClass('has-poi-change');
                                         $('#poi-event-overlay .wrap').html('');
                                         $('#epcurate-curation ul.tabs li a.cur-poi').trigger('click');
-                                        $('#overlay-s').fadeOut(0);
+                                        $page._doEpisodeUpdate($("#id").val(), true);
                                     });
                                 });
                             });
@@ -2184,13 +2184,23 @@ $(function () {
                 };
                 // POI event context.
                 if (tmplItemData.poiList[key].eventType !== 4) {
-                    poiEventContext = {
-                        "message": tmplItemData.poiList[key].message,
-                        "button": [{
-                            "text": tmplItemData.poiList[key].button,
-                            "actionUrl": tmplItemData.poiList[key].link
-                        }]
-                    };
+                    if (1 === tmplItemData.poiList[key].eventType && 'image' === tmplItemData.poiList[key].message) {
+                        poiEventContext = {
+                            "message": tmplItemData.poiList[key].message,
+                            "button": [{
+                                "imageUrl": tmplItemData.poiList[key].button,
+                                "actionUrl": tmplItemData.poiList[key].link
+                            }]
+                        };
+                    } else {
+                        poiEventContext = {
+                            "message": tmplItemData.poiList[key].message,
+                            "button": [{
+                                "text": tmplItemData.poiList[key].button,
+                                "actionUrl": tmplItemData.poiList[key].link
+                            }]
+                        };
+                    }
                 } else {
                     poiEventContext = {
                         message: tmplItemData.poiList[key].message,
