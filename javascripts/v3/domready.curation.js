@@ -1141,7 +1141,7 @@ $(function () {
                 nn.api('DELETE', cms.reapi('/api/poi_points/{poiPointId}', {
                     poiPointId: poiPointId
                 }), null, function (data) {
-                    $('#overlay-s').fadeOut(0);
+                    $page._doEpisodeUpdate($("#id").val(), true);
                 });
             } else {
                 $('#overlay-s').fadeOut(0);
@@ -1919,7 +1919,7 @@ $(function () {
                                         $('body').removeClass('has-poi-change');
                                         $('#poi-event-overlay .wrap').html('');
                                         $('#epcurate-curation ul.tabs li a.cur-poi').trigger('click');
-                                        $('#overlay-s').fadeOut(0);
+                                        $page._doEpisodeUpdate($("#id").val(), true);
                                     });
                                 });
                             });
