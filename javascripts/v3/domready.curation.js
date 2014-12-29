@@ -41,7 +41,7 @@ $(function () {
             dtype = that.val(),
             hyDisplayText = $("#hyper_display_text"),
             hyButtonText = $("#hyper_button_text"),
-            defImage = "http://9x9tmp.s3.amazonaws.com/cms-thumbnail-1414724608432-258215.jpg",
+            defImage = "images/poi_image_default.jpg",
             varImage = "",
             fm = document.forms["eventHyperForm"];
 
@@ -2184,13 +2184,23 @@ $(function () {
                 };
                 // POI event context.
                 if (tmplItemData.poiList[key].eventType !== 4) {
-                    poiEventContext = {
-                        "message": tmplItemData.poiList[key].message,
-                        "button": [{
-                            "text": tmplItemData.poiList[key].button,
-                            "actionUrl": tmplItemData.poiList[key].link
-                        }]
-                    };
+                    if (1 === tmplItemData.poiList[key].eventType && 'image' === tmplItemData.poiList[key].message) {
+                        poiEventContext = {
+                            "message": tmplItemData.poiList[key].message,
+                            "button": [{
+                                "imageUrl": tmplItemData.poiList[key].button,
+                                "actionUrl": tmplItemData.poiList[key].link
+                            }]
+                        };
+                    } else {
+                        poiEventContext = {
+                            "message": tmplItemData.poiList[key].message,
+                            "button": [{
+                                "text": tmplItemData.poiList[key].button,
+                                "actionUrl": tmplItemData.poiList[key].link
+                            }]
+                        };
+                    }
                 } else {
                     poiEventContext = {
                         message: tmplItemData.poiList[key].message,
