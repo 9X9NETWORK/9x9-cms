@@ -52,7 +52,7 @@
 
         episode.storageId = episode.id;
         episode.isPublic = false;
-        episode.name = "copy from " + episode.name;
+        episode.name = episode.name;
         episode.publishDate = '';
         episode.scheduleDate = '';
         episode.updateDate = '';
