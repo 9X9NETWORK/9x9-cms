@@ -459,6 +459,11 @@ $(function () {
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add.'])).removeClass('hide').show();
             return false;
         }
+        if(!$page.chkVideoContentTyep()){
+            // episode don't support multiple video sources
+            $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', "We don't support multiple video sources in one episode. Please import the same video source as the first one."])).removeClass('hide').show();
+            return false;
+        }
         $('#storyboard-list li').each(function () {
             existList.push($(this).data('ytid'));
         });

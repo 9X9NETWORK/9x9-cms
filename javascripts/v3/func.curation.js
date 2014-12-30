@@ -13,6 +13,56 @@
         gt: (new Date()).getTime()
     };
 
+    $page.chkVideoContentTyep = function () {
+
+        function getType(inObj) {
+            var patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
+                patternShort = /^http(?:s)?:\/\/youtu.be\//,
+                patternVimeo = /^http(?:s)?:\/\/vimeo.com\//,
+                retValue = "";
+            if (patternLong.test(inObj) || patternShort.test(inObj)) {
+                retValue = "youtube";
+            } else if (patternVimeo.test(inObj)) {
+                retValue = "vimeo";
+            } else {
+                retValue = "none";
+            }
+            return retValue;
+        }
+
+        var listLi = $("#storyboard-listing li").eq(0),
+            contentType = "youtube",
+            urlList = $("#videourl").val().split('\n'),
+            testUrl = urlList[0],
+            retValue = true;
+
+        switch(listLi.data('contenttype')){
+            case 1:
+                contentType = "youtube";
+                break;
+
+            case 7:
+                contentType = "vimeo";
+                break;
+
+            default:
+                contentType = getType(testUrl);
+                break;
+        }
+
+        if(getType(testUrl) !== "none" && contentType !== "none"){
+            $.each(urlList, function (eKey, eValue) {
+                if(getType(eValue) !== contentType){
+                    retValue = false;
+                }
+            });
+        } else {
+            retValue = false;
+        }
+
+        return retValue;
+    };
+
     $page.infoParserVimeo = function (inHtml) {
         var hElement = $.parseHTML(inHtml),
             retValue = {
