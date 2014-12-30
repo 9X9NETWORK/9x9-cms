@@ -18,58 +18,6 @@ $(function () {
         }
     });
 
-    $(document).on('keyup', '#videourl', function() {
-        var listLi = $("#storyboard-listing li").eq(0),
-            btnImport = $("#btn-add-videourl").parent().parent(),
-            contentType = "youtube",
-            urlList = $(this).val().split('\n'),
-            testUrl = urlList[0],
-            errMsg = "";
-
-        switch(listLi.data('contenttype')){
-            case 1:
-                contentType = "youtube";
-                errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Only accept YouTube videos in this episode.']);
-                break;
-
-            case 7:
-                contentType = "vimeo";
-                errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Only accept Vimeo videos in this episode.']);
-                break;
-
-            default:
-                contentType = getType(testUrl);
-                break;
-        }
-
-        $('#cur-add .notice').text(errMsg).addClass('hide').hide();
-        btnImport.removeClass("hide");
-        if(getType(testUrl) !== "none" && contentType !== "none"){
-            $.each(urlList, function (eKey, eValue) {
-                if(getType(eValue) !== contentType){
-                    $('#cur-add .notice').text(errMsg).removeClass('hide').show();
-                    btnImport.addClass("hide");
-                    return false;
-                }
-            });
-        }
-
-        function getType(inObj) {
-            var patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
-                patternShort = /^http(?:s)?:\/\/youtu.be\//,
-                patternVimeo = /^http(?:s)?:\/\/vimeo.com\//,
-                retValue = "";
-            if (patternLong.test(inObj) || patternShort.test(inObj)) {
-                retValue = "youtube";
-            } else if (patternVimeo.test(inObj)) {
-                retValue = "vimeo";
-            } else {
-                retValue = "none";
-            }
-            return retValue;
-        }
-    });
-
     $(document).on('click', '.btnUploadImage', function() {
         if (!$page.s3Info.isGet) {
             $page.prepareS3Attr();
