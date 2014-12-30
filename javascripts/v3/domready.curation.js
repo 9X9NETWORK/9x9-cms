@@ -745,20 +745,19 @@ $(function () {
             deleting.remove();
             $('#storyboard-list > p.notice:eq(0)').show();
         } else {
-            if (length > 1) {
-                if (deleting.hasClass('playing') && (length - eq - 1) === 0) {
-                    // video-info-tmpl (auto turn by del)
-                    // return to first video
-                    elemtli = $('#storyboard-list li:first');
-                    $page.playTitleCardAndVideo(elemtli);
-                }
-                if (tmplItemData.id && tmplItemData.id > 0) {
-                    videoDeleteIdList.push(tmplItemData.id);
-                }
-                deleting.remove();
-                $('#storyboard-list > p.notice:eq(0)').show();
-            } else {
-                $common.showSystemErrorOverlay('There must be at least one video in this episode.');
+            if (deleting.hasClass('playing') && (length - eq - 1) === 0) {
+                // video-info-tmpl (auto turn by del)
+                // return to first video
+                elemtli = $('#storyboard-list li:first');
+                $page.playTitleCardAndVideo(elemtli);
+            }
+            if (tmplItemData.id && tmplItemData.id > 0) {
+                videoDeleteIdList.push(tmplItemData.id);
+            }
+            deleting.remove();
+            $('#storyboard-list > p.notice:eq(0)').show();
+            if(1 === length){
+                $('#epcurate-curation ul.tabs li a.cur-add').trigger("click");
             }
         }
         nn.log({
