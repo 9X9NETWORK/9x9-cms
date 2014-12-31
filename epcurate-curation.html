@@ -385,7 +385,7 @@
          <a href="${fileUrl}" target="_blank">{{if contentType == 7}}Vimeo.com{{else}}YouTube.com{{/if}}</a> | 
         ${nn._([cms.global.PAGE_ID, 'video-info', 'By'])}
         {{if contentType == 7}}
-            <a href="https://vimeo.com/user/${uploader}" class="uploader" target="_blank">${uploader_name}</a>
+            <a href="https://vimeo.com/${uploader}" class="uploader" target="_blank">${uploader_name}</a>
         {{else}}
             <a href="http://www.youtube.com/user/${uploader}" class="uploader" target="_blank">${uploader}</a>
         {{/if}}

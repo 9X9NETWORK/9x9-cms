@@ -557,6 +557,7 @@ $(function () {
                                         name: videoObj.title,
                                         intro: videoObj.description,
                                         uploader: videoObj.uploader,
+                                        uploader_name: videoObj.uploader_name,
                                         uploadDate: videoObj.uploaded,
                                         contentType: contentTypeList[idx]
                                     };
