@@ -402,7 +402,7 @@ $(function () {
             isEmbedLimited = null,
             isUnplayableVideo = null,
             inContentType = 1;
-        if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add (separate with different lines)']) === videoUrl) {
+        if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube or Vimeo video URLs to add (separate with different lines)']) === videoUrl) {
             $('#videourl').get(0).focus();
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add.'])).removeClass('hide').show();
             return false;

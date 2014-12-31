@@ -903,7 +903,7 @@
             "Next to Publish >": "前往發佈設定 >"
         },
         "add-video": {
-            "Paste YouTube video URLs to add (separate with different lines)": "輸入YouTube影片連結 (用換行區隔不同連結)",
+            "Paste YouTube or Vimeo video URLs to add (separate with different lines)": "輸入YouTube 或 Vimeo 影片連結(用換行區隔不同連結)",
             "Paste YouTube video URLs to add.": "請先輸入YouTube影片連結。",
             "You have reached the maximum amount of 50 videos.": "您加入的影片已達50個上限。",
             "Invalid URL, please try again.": "連結有誤，請重新嘗試。",

@@ -1854,7 +1854,7 @@
             eid = fm.id.value,
             cid = fm.channelId.value;
         $('#epcurate-curation ul.tabs li a.cur-add').trigger('click');
-        $('#cur-add textarea').attr('placeholder', nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add (separate with different lines)']));
+        $('#cur-add textarea').attr('placeholder', nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube or Vimeo video URLs to add (separate with different lines)']));
         if (!eid && !cid) {
             $common.showSystemErrorOverlayAndHookError('Invalid program ID and episode ID, please try again.');
             return;
