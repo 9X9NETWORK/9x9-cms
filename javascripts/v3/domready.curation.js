@@ -376,7 +376,7 @@ $(function () {
     });
     $('#btn-add-videourl').click(function () {
         $('#cur-add .notice').addClass('hide').hide();
-        var videoUrl = $.trim($('#videourl').val()),
+        var videoUrl = $page.getTermVideos(),
             urlList = videoUrl.split('\n'),
             patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
             patternShort = /^http(?:s)?:\/\/youtu.be\//,
@@ -567,6 +567,11 @@ $(function () {
                                     invalidList.push(normalList[idx]);
                                     $('#videourl').val(invalidList.join('\n'));
                                 }
+                                chkLoop();
+                            })
+                            .fail(function() {
+                                committedCnt += 1;
+                                invalidList.push(normalList[idx]);
                                 chkLoop();
                             });
                         break;

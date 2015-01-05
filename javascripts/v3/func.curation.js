@@ -13,6 +13,24 @@
         gt: (new Date()).getTime()
     };
 
+
+    $page.getTermVideos = function () {
+        var tmpUrls = $.trim($('#videourl').val()).split('\n'),
+            urlVideos = [],
+            retValue = "";
+
+            $.each(tmpUrls, function (eKey, eValue) {
+                eValue = $.trim(eValue);
+                if("" !== eValue){
+                    urlVideos.push(eValue);
+                }
+            });
+            retValue = urlVideos.join('\n');
+            $('#videourl').val(retValue);
+        return retValue;
+    };
+
+
     $page.chkVideoContentTyep = function () {
 
         function getType(inObj) {
@@ -2110,7 +2128,7 @@
                                 poiList: poi_points,
                                 beginTitleCard: beginTitleCard,
                                 endTitleCard: endTitleCard,
-                                // ytId: ytData.id,
+                                ytId: youtubes.id,
                                 fileUrl: programItem.fileUrl,
                                 imageUrl: programItem.imageUrl,
                                 //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
