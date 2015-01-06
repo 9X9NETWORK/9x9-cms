@@ -13,6 +13,12 @@
         gt: (new Date()).getTime()
     };
 
+    $page.setVimeoPAT = function() {
+        var objPAT = {
+            "Authorization": "bearer 62ad209920dcc670ef50a035f263d595"
+        };
+        cms.config.VIMEO_PAT = objPAT
+    };
 
     $page.getTermVideos = function () {
         var tmpUrls = $.trim($('#videourl').val()).split('\n'),
@@ -81,10 +87,10 @@
         return retValue;
     };
 
-    $page.infoParserVimeo = function (inHtml) {
-        var hElement = $.parseHTML(inHtml),
+    $page.infoParserVimeo = function (inVideo, isVimeoObj) {
+        var hElement = {},
             retValue = {
-                v_url: $(hElement).find("link[itemprop=url]").attr('href'),
+                v_url: "",
                 v_read: 0,
                 id: "",
                 embedUrl: "",
@@ -97,22 +103,43 @@
                 duration: ""
             },
             dataArea = {};
+        if(true === isVimeoObj){
 
-        if(retValue.v_url && retValue.v_url != ""){
-            dataArea = $(hElement).find('#cols');
-            retValue.v_read = 1;
-            retValue.id = retValue.v_url.split('vimeo.com/')[1];
-            retValue.embedUrl = dataArea.find('link[itemprop=embedUrl]').attr('href');
-            retValue.thumbnail = dataArea.find('link[itemprop=thumbnailUrl]').attr('href');
+                retValue.v_url = inVideo.link;
+                retValue.v_read = 1;
+                retValue.id = retValue.v_url.split('vimeo.com/')[1];
+                retValue.embedUrl = "https://player.vimeo.com/video/" + retValue.id;
+                if(null != inVideo.pictures && inVideo.pictures.sizes.length > 0){
+                    retValue.thumbnail = inVideo.pictures.sizes[inVideo.pictures.sizes.length - 1].link
+                }
 
-            retValue.title = $(dataArea).find('meta[itemprop=name]').attr('content');
-            retValue.description = dataArea.find('meta[itemprop=description]').attr('content');
-            retValue.uploaded = dataArea.find('meta[itemprop=uploadDate]').attr('content');
+                retValue.title = inVideo.name;
+                retValue.description = inVideo.description;
+                retValue.uploaded = inVideo.created_time;
 
-            retValue.uploader = dataArea.find('a[rel=author]').attr("href").replace("/", "");
-            retValue.uploader_name = dataArea.find('a[rel=author]').text();
+                retValue.uploader = inVideo.user.link.split('vimeo.com/')[1];
+                retValue.uploader_name = inVideo.user.name;
 
-            retValue.duration = dataArea.find('.js-player').data("duration");
+                retValue.duration = inVideo.duration;
+        } else {
+            hElement = $.parseHTML(inVideo);
+            retValue.v_url = $(hElement).find("link[itemprop=url]").attr('href');
+            if(retValue.v_url && retValue.v_url != ""){
+                dataArea = $(hElement).find('#cols');
+                retValue.v_read = 1;
+                retValue.id = retValue.v_url.split('vimeo.com/')[1];
+                retValue.embedUrl = dataArea.find('link[itemprop=embedUrl]').attr('href');
+                retValue.thumbnail = dataArea.find('link[itemprop=thumbnailUrl]').attr('href');
+
+                retValue.title = $(dataArea).find('meta[itemprop=name]').attr('content');
+                retValue.description = dataArea.find('meta[itemprop=description]').attr('content');
+                retValue.uploaded = dataArea.find('meta[itemprop=uploadDate]').attr('content');
+
+                retValue.uploader = dataArea.find('a[rel=author]').attr("href").replace("/", "");
+                retValue.uploader_name = dataArea.find('a[rel=author]').text();
+
+                retValue.duration = dataArea.find('.js-player').data("duration");
+            }            
         }
         return retValue;
     }
@@ -1877,6 +1904,9 @@
             $common.showSystemErrorOverlayAndHookError('Invalid program ID and episode ID, please try again.');
             return;
         }
+
+        $page.setVimeoPAT();
+
         if (!eid) {
             // insert mode: data from cookie
             if (!crumb.name || '' === $.trim(crumb.name)) {

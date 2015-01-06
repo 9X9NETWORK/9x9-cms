@@ -523,21 +523,27 @@ $(function () {
                     case 7:
                         // vimeo video
                         $.ajax({
-                            type: "GET",
-                            url: cms.config.API_BASE + "/api/cors?url=" + normalList[idx]
-                        })
-                            .done(function (gHtml) {
+                                url: normalList[idx].replace("vimeo.com/", "api.vimeo.com/videos/"),
+                                type: "GET",
+                                cache: false,
+                                beforeSend: function (jqXHR) {
+                                    $.each(cms.config.VIMEO_PAT, function(eKey, eValue) {
+                                        jqXHR.setRequestHeader(eKey, eValue);
+                                    });
+                                }
+                            })
+                            .done(function (vimeoVideo) {
                                 var checkResult = {
-                                    isEmbedLimited: false,
-                                    isInvalid: false,
-                                    isPrivateVideo: false,
-                                    isProcessing: false,
-                                    isRequesterRegionRestricted: false,
-                                    isSyndicateLimited: false,
-                                    isUnplayableVideo: false,
-                                    isZoneLimited: false
-                                },
-                                videoObj = $page.infoParserVimeo(gHtml);
+                                        isEmbedLimited: false,
+                                        isInvalid: false,
+                                        isPrivateVideo: false,
+                                        isProcessing: false,
+                                        isRequesterRegionRestricted: false,
+                                        isSyndicateLimited: false,
+                                        isUnplayableVideo: false,
+                                        isZoneLimited: false
+                                    },
+                                    videoObj = $page.infoParserVimeo(vimeoVideo, true);
 
                                 committedCnt += 1;
                                 if (videoObj.v_read > 0) {
