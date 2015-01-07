@@ -401,7 +401,8 @@ $(function () {
             isSyndicateLimited = null,
             isEmbedLimited = null,
             isUnplayableVideo = null,
-            inContentType = 1;
+            inContentType = 1,
+            cntVimeoPrivacyErr = 0;
         if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube or Vimeo video URLs to add (separate with different lines)']) === videoUrl) {
             $('#videourl').get(0).focus();
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add.'])).removeClass('hide').show();
@@ -463,7 +464,6 @@ $(function () {
                 switch(contentTypeList[idx]){
                     case 1:
                         // youtube video
-                        nn.log("Yt type");
                         nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + key + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
                             committedCnt += 1;
                             var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
@@ -533,20 +533,11 @@ $(function () {
                                 }
                             })
                             .done(function (vimeoVideo) {
-                                var checkResult = {
-                                        isEmbedLimited: false,
-                                        isInvalid: false,
-                                        isPrivateVideo: false,
-                                        isProcessing: false,
-                                        isRequesterRegionRestricted: false,
-                                        isSyndicateLimited: false,
-                                        isUnplayableVideo: false,
-                                        isZoneLimited: false
-                                    },
+                                var checkResult = cms.vimeoUtility.checkVideoValidity(vimeoVideo),
                                     videoObj = $page.infoParserVimeo(vimeoVideo, true);
 
                                 committedCnt += 1;
-                                if (videoObj.v_read > 0) {
+                                if (videoObj.v_read > 0 && !checkResult.isPrivateVideo && !checkResult.isEmbedLimited && !checkResult.isInvalid) {
                                     ytItem = {
                                         poiList: [],
                                         beginTitleCard: null,
@@ -570,6 +561,9 @@ $(function () {
                                     ytItem = $.extend(ytItem, checkResult);
                                     ytList[idx] = ytItem;
                                 } else {
+                                    if(checkResult.isPrivateVideo || checkResult.isEmbedLimited){
+                                        cntVimeoPrivacyErr += 1;
+                                    }
                                     invalidList.push(normalList[idx]);
                                     $('#videourl').val(invalidList.join('\n'));
                                 }
@@ -594,8 +588,11 @@ $(function () {
 
         function chkLoop(){
             if (committedCnt === matchList.length) {
-                var videoOkCnt, oriLiCnt = $('#storyboard-list li').length;
-                committedCnt = -1;   // reset to avoid collision
+                var videoOkCnt = 0,
+                    oriLiCnt = $('#storyboard-list li').length,
+                    errMsg = "";
+
+                committedCnt = -1; // reset to avoid collision
                 $page.animateStoryboard(ytList.length);
                 $('#storyboard-listing-tmpl-item').tmpl(ytList).hide().appendTo('#storyboard-listing').fadeIn(2000);
                 $page.sumStoryboardInfo();
@@ -617,7 +614,12 @@ $(function () {
 
                 if (invalidList.length > 0) {
                     $('#videourl').val(invalidList.join('\n'));
-                    $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!'])).removeClass('hide').show();
+                    if(cntVimeoPrivacyErr > 0){
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.']);
+                    } else {
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!']);
+                    }
+                    $('#cur-add .notice').text(errMsg).removeClass('hide').show();
                 }
 
                 $('#overlay-s').fadeOut();
