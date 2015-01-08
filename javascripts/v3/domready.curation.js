@@ -18,58 +18,6 @@ $(function () {
         }
     });
 
-    $(document).on('keyup', '#videourl', function() {
-        var listLi = $("#storyboard-listing li").eq(0),
-            btnImport = $("#btn-add-videourl").parent().parent(),
-            contentType = "youtube",
-            urlList = $(this).val().split('\n'),
-            testUrl = urlList[0],
-            errMsg = "";
-
-        switch(listLi.data('contenttype')){
-            case 1:
-                contentType = "youtube";
-                errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Only accept YouTube videos in this episode.']);
-                break;
-
-            case 7:
-                contentType = "vimeo";
-                errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Only accept Vimeo videos in this episode.']);
-                break;
-
-            default:
-                contentType = getType(testUrl);
-                break;
-        }
-
-        $('#cur-add .notice').text(errMsg).addClass('hide').hide();
-        btnImport.removeClass("hide");
-        if(getType(testUrl) !== "none" && contentType !== "none"){
-            $.each(urlList, function (eKey, eValue) {
-                if(getType(eValue) !== contentType){
-                    $('#cur-add .notice').text(errMsg).removeClass('hide').show();
-                    btnImport.addClass("hide");
-                    return false;
-                }
-            });
-        }
-
-        function getType(inObj) {
-            var patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
-                patternShort = /^http(?:s)?:\/\/youtu.be\//,
-                patternVimeo = /^http(?:s)?:\/\/vimeo.com\//,
-                retValue = "";
-            if (patternLong.test(inObj) || patternShort.test(inObj)) {
-                retValue = "youtube";
-            } else if (patternVimeo.test(inObj)) {
-                retValue = "vimeo";
-            } else {
-                retValue = "none";
-            }
-            return retValue;
-        }
-    });
-
     $(document).on('click', '.btnUploadImage', function() {
         if (!$page.s3Info.isGet) {
             $page.prepareS3Attr();
@@ -428,7 +376,7 @@ $(function () {
     });
     $('#btn-add-videourl').click(function () {
         $('#cur-add .notice').addClass('hide').hide();
-        var videoUrl = $.trim($('#videourl').val()),
+        var videoUrl = $page.getTermVideos(),
             urlList = videoUrl.split('\n'),
             patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
             patternShort = /^http(?:s)?:\/\/youtu.be\//,
@@ -453,10 +401,16 @@ $(function () {
             isSyndicateLimited = null,
             isEmbedLimited = null,
             isUnplayableVideo = null,
-            inContentType = 1;
-        if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add (separate with different lines)']) === videoUrl) {
+            inContentType = 1,
+            cntVimeoPrivacyErr = 0;
+        if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube or Vimeo video URLs to add (separate with different lines)']) === videoUrl) {
             $('#videourl').get(0).focus();
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add.'])).removeClass('hide').show();
+            return false;
+        }
+        if(!$page.chkVideoContentTyep()){
+            // episode don't support multiple video sources
+            $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', "We don't support multiple video sources in one episode. Please import the same video source as the first one."])).removeClass('hide').show();
             return false;
         }
         $('#storyboard-list li').each(function () {
@@ -510,7 +464,6 @@ $(function () {
                 switch(contentTypeList[idx]){
                     case 1:
                         // youtube video
-                        nn.log("Yt type");
                         nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + key + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
                             committedCnt += 1;
                             var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
@@ -570,24 +523,21 @@ $(function () {
                     case 7:
                         // vimeo video
                         $.ajax({
-                            type: "GET",
-                            url: cms.config.API_BASE + "/api/cors?url=" + normalList[idx]
-                        })
-                            .done(function (gHtml) {
-                                var checkResult = {
-                                    isEmbedLimited: false,
-                                    isInvalid: false,
-                                    isPrivateVideo: false,
-                                    isProcessing: false,
-                                    isRequesterRegionRestricted: false,
-                                    isSyndicateLimited: false,
-                                    isUnplayableVideo: false,
-                                    isZoneLimited: false
-                                },
-                                videoObj = $page.infoParserVimeo(gHtml);
+                                url: normalList[idx].replace("vimeo.com/", "api.vimeo.com/videos/"),
+                                type: "GET",
+                                cache: false,
+                                beforeSend: function (jqXHR) {
+                                    $.each(cms.config.VIMEO_PAT, function(eKey, eValue) {
+                                        jqXHR.setRequestHeader(eKey, eValue);
+                                    });
+                                }
+                            })
+                            .done(function (vimeoVideo) {
+                                var checkResult = cms.vimeoUtility.checkVideoValidity(vimeoVideo),
+                                    videoObj = $page.infoParserVimeo(vimeoVideo, true);
 
                                 committedCnt += 1;
-                                if (videoObj.v_read > 0) {
+                                if (videoObj.v_read > 0 && !checkResult.isPrivateVideo && !checkResult.isEmbedLimited && !checkResult.isInvalid) {
                                     ytItem = {
                                         poiList: [],
                                         beginTitleCard: null,
@@ -604,15 +554,24 @@ $(function () {
                                         name: videoObj.title,
                                         intro: videoObj.description,
                                         uploader: videoObj.uploader,
+                                        uploader_name: videoObj.uploader_name,
                                         uploadDate: videoObj.uploaded,
                                         contentType: contentTypeList[idx]
                                     };
                                     ytItem = $.extend(ytItem, checkResult);
                                     ytList[idx] = ytItem;
                                 } else {
+                                    if(checkResult.isPrivateVideo || checkResult.isEmbedLimited){
+                                        cntVimeoPrivacyErr += 1;
+                                    }
                                     invalidList.push(normalList[idx]);
                                     $('#videourl').val(invalidList.join('\n'));
                                 }
+                                chkLoop();
+                            })
+                            .fail(function() {
+                                committedCnt += 1;
+                                invalidList.push(normalList[idx]);
                                 chkLoop();
                             });
                         break;
@@ -629,8 +588,11 @@ $(function () {
 
         function chkLoop(){
             if (committedCnt === matchList.length) {
-                var videoOkCnt, oriLiCnt = $('#storyboard-list li').length;
-                committedCnt = -1;   // reset to avoid collision
+                var videoOkCnt = 0,
+                    oriLiCnt = $('#storyboard-list li').length,
+                    errMsg = "";
+
+                committedCnt = -1; // reset to avoid collision
                 $page.animateStoryboard(ytList.length);
                 $('#storyboard-listing-tmpl-item').tmpl(ytList).hide().appendTo('#storyboard-listing').fadeIn(2000);
                 $page.sumStoryboardInfo();
@@ -652,7 +614,12 @@ $(function () {
 
                 if (invalidList.length > 0) {
                     $('#videourl').val(invalidList.join('\n'));
-                    $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!'])).removeClass('hide').show();
+                    if(cntVimeoPrivacyErr > 0){
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.']);
+                    } else {
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!']);
+                    }
+                    $('#cur-add .notice').text(errMsg).removeClass('hide').show();
                 }
 
                 $('#overlay-s').fadeOut();
@@ -745,20 +712,19 @@ $(function () {
             deleting.remove();
             $('#storyboard-list > p.notice:eq(0)').show();
         } else {
-            if (length > 1) {
-                if (deleting.hasClass('playing') && (length - eq - 1) === 0) {
-                    // video-info-tmpl (auto turn by del)
-                    // return to first video
-                    elemtli = $('#storyboard-list li:first');
-                    $page.playTitleCardAndVideo(elemtli);
-                }
-                if (tmplItemData.id && tmplItemData.id > 0) {
-                    videoDeleteIdList.push(tmplItemData.id);
-                }
-                deleting.remove();
-                $('#storyboard-list > p.notice:eq(0)').show();
-            } else {
-                $common.showSystemErrorOverlay('There must be at least one video in this episode.');
+            if (deleting.hasClass('playing') && (length - eq - 1) === 0) {
+                // video-info-tmpl (auto turn by del)
+                // return to first video
+                elemtli = $('#storyboard-list li:first');
+                $page.playTitleCardAndVideo(elemtli);
+            }
+            if (tmplItemData.id && tmplItemData.id > 0) {
+                videoDeleteIdList.push(tmplItemData.id);
+            }
+            deleting.remove();
+            $('#storyboard-list > p.notice:eq(0)').show();
+            if(1 === length){
+                $('#epcurate-curation ul.tabs li a.cur-add').trigger("click");
             }
         }
         nn.log({

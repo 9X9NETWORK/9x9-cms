@@ -47,6 +47,7 @@
 <script src="javascripts/v3/domready.common.js?v=411104"></script>
 <script src="javascripts/v3/domready.curation.js?v=411104"></script>
 <script src="javascripts/v3/cms.youtube-utility.js?v=411104"></script>
+<script src="javascripts/v3/cms.vimeo-utility.js?v=411104"></script>
 <script src="javascripts/v3/cms.poi-utility.js?v=411104"></script>
 <title>FLIPr.tv - Episode Curation - Curation</title>
 </head>
@@ -103,7 +104,8 @@
                     <div class="textarea-container">
                     <p class="textarea">
                         <span>
-                            <textarea name="videourl" id="videourl" cols="80" class="textarea" placeholder="Paste YouTube video URLs to add (separate with different lines)"></textarea>
+                            <textarea name="videourl" id="videourl" cols="80" class="textarea" 
+                            placeholder="Paste YouTube or Vimeo video URLs to add (separate with different lines)"></textarea>
                         </span>
                     </p>
                     </div>
@@ -385,7 +387,7 @@
          <a href="${fileUrl}" target="_blank">{{if contentType == 7}}Vimeo.com{{else}}YouTube.com{{/if}}</a> | 
         ${nn._([cms.global.PAGE_ID, 'video-info', 'By'])}
         {{if contentType == 7}}
-            <a href="https://vimeo.com/user/${uploader}" class="uploader" target="_blank">${uploader_name}</a>
+            <a href="https://vimeo.com/${uploader}" class="uploader" target="_blank">${uploader_name}</a>
         {{else}}
             <a href="http://www.youtube.com/user/${uploader}" class="uploader" target="_blank">${uploader}</a>
         {{/if}}
@@ -1203,12 +1205,11 @@
                 <a href="#!pid=${id}&ytid=${ytId}" class="warning video_ok"><span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Not playable on mobile device'])}</span></span></span></span></a>
             {{/if}}
         {{/if}}
-    {{else contentType === 1}}
-        {{if isInvalid || isUnplayableVideo || isEmbedLimited || isPrivateVideo || isRequesterRegionRestricted}}
-            <a href="#!pid=${id}&ytid=${ytId}" class="error"></a>
-        {{else}}
-            <a href="#!pid=${id}&ytid=${ytId}" class="video_ok"></a>
-        {{/if}}
+    {{/if}}
+    {{if isInvalid || isUnplayableVideo || isEmbedLimited || isPrivateVideo || isRequesterRegionRestricted}}
+        <a href="#!pid=${id}&ytid=${ytId}" class="error"></a>
+    {{else}}
+        <a href="#!pid=${id}&ytid=${ytId}" class="video_ok"></a>
     {{/if}}
     <p class="order"><!-- dynamic rebuild video number after template render --></p>
     <p class="img">

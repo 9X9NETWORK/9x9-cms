@@ -361,6 +361,7 @@ var cms = {};
     case 'dev6.flipr.tv':
     case 'beagle.flipr.tv':
         cms.global.IS_REMARK = false;
+        cms.config.API_BASE = 'http://beagle.flipr.tv';
         break;
     case 'www.flipr.tv':
         cms.global.IS_REMARK = true;

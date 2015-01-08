@@ -13,10 +13,84 @@
         gt: (new Date()).getTime()
     };
 
-    $page.infoParserVimeo = function (inHtml) {
-        var hElement = $.parseHTML(inHtml),
+    $page.setVimeoPAT = function() {
+        var objPAT = {
+            "Authorization": "bearer 62ad209920dcc670ef50a035f263d595"
+        };
+        cms.config.VIMEO_PAT = objPAT
+    };
+
+    $page.getTermVideos = function () {
+        var tmpUrls = $.trim($('#videourl').val()).split('\n'),
+            urlVideos = [],
+            retValue = "";
+
+            $.each(tmpUrls, function (eKey, eValue) {
+                eValue = $.trim(eValue);
+                if("" !== eValue){
+                    urlVideos.push(eValue);
+                }
+            });
+            retValue = urlVideos.join('\n');
+            $('#videourl').val(retValue);
+        return retValue;
+    };
+
+
+    $page.chkVideoContentTyep = function () {
+
+        function getType(inObj) {
+            var patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
+                patternShort = /^http(?:s)?:\/\/youtu.be\//,
+                patternVimeo = /^http(?:s)?:\/\/vimeo.com\//,
+                retValue = "";
+            if (patternLong.test(inObj) || patternShort.test(inObj)) {
+                retValue = "youtube";
+            } else if (patternVimeo.test(inObj)) {
+                retValue = "vimeo";
+            } else {
+                retValue = "none";
+            }
+            return retValue;
+        }
+
+        var listLi = $("#storyboard-listing li").eq(0),
+            contentType = "youtube",
+            urlList = $("#videourl").val().split('\n'),
+            testUrl = urlList[0],
+            retValue = true;
+
+        switch(listLi.data('contenttype')){
+            case 1:
+                contentType = "youtube";
+                break;
+
+            case 7:
+                contentType = "vimeo";
+                break;
+
+            default:
+                contentType = getType(testUrl);
+                break;
+        }
+
+        if(getType(testUrl) !== "none" && contentType !== "none"){
+            $.each(urlList, function (eKey, eValue) {
+                if(getType(eValue) !== contentType){
+                    retValue = false;
+                }
+            });
+        } else {
+            retValue = false;
+        }
+
+        return retValue;
+    };
+
+    $page.infoParserVimeo = function (inVideo, isVimeoObj) {
+        var hElement = {},
             retValue = {
-                v_url: $(hElement).find("link[itemprop=url]").attr('href'),
+                v_url: "",
                 v_read: 0,
                 id: "",
                 embedUrl: "",
@@ -29,22 +103,43 @@
                 duration: ""
             },
             dataArea = {};
+        if(true === isVimeoObj){
 
-        if(retValue.v_url && retValue.v_url != ""){
-            dataArea = $(hElement).find('#cols');
-            retValue.v_read = 1;
-            retValue.id = retValue.v_url.split('vimeo.com/')[1];
-            retValue.embedUrl = dataArea.find('link[itemprop=embedUrl]').attr('href');
-            retValue.thumbnail = dataArea.find('link[itemprop=thumbnailUrl]').attr('href');
+                retValue.v_url = inVideo.link;
+                retValue.v_read = 1;
+                retValue.id = retValue.v_url.split('vimeo.com/')[1];
+                retValue.embedUrl = "https://player.vimeo.com/video/" + retValue.id;
+                if(null != inVideo.pictures && inVideo.pictures.sizes.length > 0){
+                    retValue.thumbnail = inVideo.pictures.sizes[inVideo.pictures.sizes.length - 1].link
+                }
 
-            retValue.title = $(dataArea).find('meta[itemprop=name]').attr('content');
-            retValue.description = dataArea.find('meta[itemprop=description]').attr('content');
-            retValue.uploaded = dataArea.find('meta[itemprop=uploadDate]').attr('content');
+                retValue.title = inVideo.name;
+                retValue.description = inVideo.description;
+                retValue.uploaded = inVideo.created_time;
 
-            retValue.uploader = dataArea.find('a[rel=author]').attr("href").replace("/", "");
-            retValue.uploader_name = dataArea.find('a[rel=author]').text();
+                retValue.uploader = inVideo.user.link.split('vimeo.com/')[1];
+                retValue.uploader_name = inVideo.user.name;
 
-            retValue.duration = dataArea.find('.js-player').data("duration");
+                retValue.duration = inVideo.duration;
+        } else {
+            hElement = $.parseHTML(inVideo);
+            retValue.v_url = $(hElement).find("link[itemprop=url]").attr('href');
+            if(retValue.v_url && retValue.v_url != ""){
+                dataArea = $(hElement).find('#cols');
+                retValue.v_read = 1;
+                retValue.id = retValue.v_url.split('vimeo.com/')[1];
+                retValue.embedUrl = dataArea.find('link[itemprop=embedUrl]').attr('href');
+                retValue.thumbnail = dataArea.find('link[itemprop=thumbnailUrl]').attr('href');
+
+                retValue.title = $(dataArea).find('meta[itemprop=name]').attr('content');
+                retValue.description = dataArea.find('meta[itemprop=description]').attr('content');
+                retValue.uploaded = dataArea.find('meta[itemprop=uploadDate]').attr('content');
+
+                retValue.uploader = dataArea.find('a[rel=author]').attr("href").replace("/", "");
+                retValue.uploader_name = dataArea.find('a[rel=author]').text();
+
+                retValue.duration = dataArea.find('.js-player').data("duration");
+            }            
         }
         return retValue;
     }
@@ -1804,11 +1899,14 @@
             eid = fm.id.value,
             cid = fm.channelId.value;
         $('#epcurate-curation ul.tabs li a.cur-add').trigger('click');
-        $('#cur-add textarea').attr('placeholder', nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add (separate with different lines)']));
+        $('#cur-add textarea').attr('placeholder', nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube or Vimeo video URLs to add (separate with different lines)']));
         if (!eid && !cid) {
             $common.showSystemErrorOverlayAndHookError('Invalid program ID and episode ID, please try again.');
             return;
         }
+
+        $page.setVimeoPAT();
+
         if (!eid) {
             // insert mode: data from cookie
             if (!crumb.name || '' === $.trim(crumb.name)) {
@@ -2060,7 +2158,7 @@
                                 poiList: poi_points,
                                 beginTitleCard: beginTitleCard,
                                 endTitleCard: endTitleCard,
-                                // ytId: ytData.id,
+                                ytId: youtubes.id,
                                 fileUrl: programItem.fileUrl,
                                 imageUrl: programItem.imageUrl,
                                 //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
