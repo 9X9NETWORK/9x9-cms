@@ -2149,7 +2149,13 @@
                         endTitleCard = null;
                     }
 
-                    var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
+                    var checkResult = {};
+                    if (7 === programItem.contentType) {
+                        checkResult = cms.vimeoUtility.checkVideoValidity(youtubes);
+                        youtubes = $page.infoParserVimeo(youtubes, true);
+                    } else {
+                        checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
+                    }
 
                     if (youtubes.data && false === checkResult.isEmbedLimited || programItem.isVimeo) {
                         if(programItem.isVimeo){
@@ -2239,12 +2245,17 @@
             var deferred = $.Deferred();
             if(programItem.contentType === 7){
                 $.ajax({
-                    type: "GET",
-                    url: cms.config.API_BASE + "/api/cors?url=" + programItem.fileUrl
-                })
-                    .done(function (gHtml) {
-                        var youtubes = $page.infoParserVimeo(gHtml);
-                        deferred.resolve(programItem, youtubes);
+                        url: programItem.fileUrl.replace("vimeo.com/", "api.vimeo.com/videos/"),
+                        type: "GET",
+                        cache: false,
+                        beforeSend: function (jqXHR) {
+                            $.each(cms.config.VIMEO_PAT, function(eKey, eValue) {
+                                jqXHR.setRequestHeader(eKey, eValue);
+                            });
+                        }
+                    })
+                    .done(function (vimeoVideo) {
+                        deferred.resolve(programItem, vimeoVideo);
                     });
             } else {
                 nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + programItem.fileUrl.slice(-11) + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
