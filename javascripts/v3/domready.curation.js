@@ -571,6 +571,7 @@ $(function () {
                             })
                             .fail(function() {
                                 committedCnt += 1;
+                                cntVimeoPrivacyErr += 1;
                                 invalidList.push(normalList[idx]);
                                 chkLoop();
                             });
@@ -614,12 +615,13 @@ $(function () {
 
                 if (invalidList.length > 0) {
                     $('#videourl').val(invalidList.join('\n'));
+                    nn.log(cntVimeoPrivacyErr + "aaaa");
                     if(cntVimeoPrivacyErr > 0){
-                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.']);
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This video is not playable outside Vimeo]']);
                     } else {
                         errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!']);
                     }
-                    $('#cur-add .notice').text(errMsg).removeClass('hide').show();
+                    $('#cur-add .notice').html(errMsg).removeClass('hide').show();
                 }
 
                 $('#overlay-s').fadeOut();
