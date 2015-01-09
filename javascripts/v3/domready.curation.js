@@ -402,7 +402,8 @@ $(function () {
             isEmbedLimited = null,
             isUnplayableVideo = null,
             inContentType = 1,
-            cntVimeoPrivacyErr = 0;
+            cntVimeoPrivacyErr = 0,
+            cntVimeoEmbedErr = 0;
         if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube or Vimeo video URLs to add (separate with different lines)']) === videoUrl) {
             $('#videourl').get(0).focus();
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add.'])).removeClass('hide').show();
@@ -563,6 +564,9 @@ $(function () {
                                 } else {
                                     if(checkResult.isPrivateVideo || checkResult.isEmbedLimited){
                                         cntVimeoPrivacyErr += 1;
+                                        if(checkResult.isEmbedLimited){
+                                            cntVimeoEmbedErr += 1;
+                                        }
                                     }
                                     invalidList.push(normalList[idx]);
                                     $('#videourl').val(invalidList.join('\n'));
@@ -615,9 +619,10 @@ $(function () {
 
                 if (invalidList.length > 0) {
                     $('#videourl').val(invalidList.join('\n'));
-                    nn.log(cntVimeoPrivacyErr + "aaaa");
-                    if(cntVimeoPrivacyErr > 0){
+                    if(cntVimeoEmbedErr > 0){
                         errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This video is not playable outside Vimeo]']);
+                    } else if(cntVimeoPrivacyErr > 0){
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This is an invalid video]']);
                     } else {
                         errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!']);
                     }
