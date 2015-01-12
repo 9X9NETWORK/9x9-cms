@@ -903,11 +903,14 @@
             "Next to Publish >": "前往發佈設定 >"
         },
         "add-video": {
-            "Paste YouTube video URLs to add (separate with different lines)": "輸入YouTube影片連結 (用換行區隔不同連結)",
+            "We don't support multiple video sources in one episode. Please import the same video source as the first one.": "不支援來自不同影音平台的影片。請輸入相同影音平台的影片。",
+            "Paste YouTube or Vimeo video URLs to add (separate with different lines)": "輸入YouTube 或 Vimeo 影片連結(用換行區隔不同連結)",
             "Paste YouTube video URLs to add.": "請先輸入YouTube影片連結。",
             "You have reached the maximum amount of 50 videos.": "您加入的影片已達50個上限。",
             "Invalid URL, please try again.": "連結有誤，請重新嘗試。",
             "Invalid URL, please try again!": "連結有誤，請重新嘗試！",
+            "Fail to add this video, please try another one.<br />[This is an invalid video]": "無法加入此影片，請嘗試其他影片。<br />[這是失效影片]",
+            "Fail to add this video, please try another one.<br />[This video is not playable outside Vimeo]": "無法加入此影片，請嘗試其他影片。<br />[此影片無法在Vimeo以外的網站播放]",
             "Fail to add this video, please try another one.<br />[This video is not playable outside Youtube]": "無法加入此影片，請嘗試其他影片。<br />[此影片無法在YouTube以外的網站播放]",
             "Fail to add this video, please try another one.<br />[This video is not playable on mobile device]": "無法加入此影片，請嘗試其他影片。<br />[此影片無法於行動裝置播放]",
             "Fail to add this video, please try another one.<br />[This is a private video]": "無法加入此影片，請嘗試其他影片。<br />[此影片為私人影片]",

@@ -47,6 +47,7 @@
 <script src="javascripts/v3/domready.common.js?v=411104"></script>
 <script src="javascripts/v3/domready.curation.js?v=411104"></script>
 <script src="javascripts/v3/cms.youtube-utility.js?v=411104"></script>
+<script src="javascripts/v3/cms.vimeo-utility.js?v=411104"></script>
 <script src="javascripts/v3/cms.poi-utility.js?v=411104"></script>
 <title>FLIPr.tv - Episode Curation - Curation</title>
 </head>
@@ -103,7 +104,8 @@
                     <div class="textarea-container">
                     <p class="textarea">
                         <span>
-                            <textarea name="videourl" id="videourl" cols="80" class="textarea" placeholder="Paste YouTube video URLs to add (separate with different lines)"></textarea>
+                            <textarea name="videourl" id="videourl" cols="80" class="textarea" 
+                            placeholder="Paste YouTube or Vimeo video URLs to add (separate with different lines)"></textarea>
                         </span>
                     </p>
                     </div>
@@ -381,8 +383,15 @@
         {{else}}
             ${nn._([cms.global.PAGE_ID, 'video-info', 'Original'])} <span class="duration">${cms.common.formatDuration(ytDuration)}</span>
         {{/if}}
-         | ${nn._([cms.global.PAGE_ID, 'video-info', 'From'])} <a href="${fileUrl}" target="_blank">YouTube.com</a> | 
-        ${nn._([cms.global.PAGE_ID, 'video-info', 'By'])} <a href="http://www.youtube.com/user/${uploader}" class="uploader" target="_blank">${uploader}</a> ${nn._([cms.global.PAGE_ID, 'video-info', 'on'])} <span class="uploaded">${$item.uploadDateConverter(uploadDate)}</span>
+         | ${nn._([cms.global.PAGE_ID, 'video-info', 'From'])} 
+         <a href="${fileUrl}" target="_blank">{{if contentType == 7}}Vimeo.com{{else}}YouTube.com{{/if}}</a> | 
+        ${nn._([cms.global.PAGE_ID, 'video-info', 'By'])}
+        {{if contentType == 7}}
+            <a href="https://vimeo.com/${uploader}" class="uploader" target="_blank">${uploader_name}</a>
+        {{else}}
+            <a href="http://www.youtube.com/user/${uploader}" class="uploader" target="_blank">${uploader}</a>
+        {{/if}}
+        ${nn._([cms.global.PAGE_ID, 'video-info', 'on'])} <span class="uploaded">${$item.uploadDateConverter(uploadDate)}</span>
     </p>
     <p class="desc ellipsis multiline">${intro}</p>
     <div class="set-time" data-origin-duration="${ytDuration}">
@@ -410,7 +419,7 @@
         <div class="btn-wrap">
             <p class="notice">${nn._([cms.global.PAGE_ID, 'trim-time', 'Invalid time, please try again.'])}</p>
             <div class="buttons">
-                <p class="btns btn-edit"><span><a href="#">${nn._([cms.global.PAGE_ID, 'trim-time', 'Edit'])}</a></span></p>
+                <p class="btns btn-edit {{if contentType == 7}}hide{{/if}}"><span><a href="#">${nn._([cms.global.PAGE_ID, 'trim-time', 'Edit'])}</a></span></p>
                 <p class="btns btn-cancel hide"><span><a href="#">${nn._([cms.global.PAGE_ID, 'trim-time', 'Cancel'])}</a></span></p>
                 <p class="btns btn-done hide"><span><a href="#">${nn._([cms.global.PAGE_ID, 'trim-time', 'Done'])}</a></span></p>
             </div>
@@ -1177,7 +1186,14 @@
 
 <!-- storyboard-listing-tmpl-item Begin -->
 <script id="storyboard-listing-tmpl-item" type="text/x-jquery-tmpl">
-<li data-ytid="${ytId}" data-ytduration="${ytDuration}" data-starttime="${startTime}" data-endtime="${endTime}"{{if ytDuration === 0 || isRequesterRegionRestricted}} class="invalid"{{/if}}>
+<li 
+    data-ytid="${ytId}"
+    data-ytduration="${ytDuration}"
+    data-starttime="${startTime}"
+    data-endtime="${endTime}"{{if ytDuration === 0 || isRequesterRegionRestricted}} class="invalid"{{/if}}
+    data-contenttype="${contentType}"
+    {{if contentType === 7}}data-embedurl="${embedUrl}"{{/if}}
+    >
     {{if (isZoneLimited || isSyndicateLimited) && !isRequesterRegionRestricted}}
         {{if isZoneLimited && isSyndicateLimited}}
             <a href="#!pid=${id}&ytid=${ytId}" class="warning2 video_ok"><span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Not playable in some regions & on mobile device'])}</span></span></span></span></a>
@@ -1189,12 +1205,11 @@
                 <a href="#!pid=${id}&ytid=${ytId}" class="warning video_ok"><span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Not playable on mobile device'])}</span></span></span></span></a>
             {{/if}}
         {{/if}}
+    {{/if}}
+    {{if isInvalid || isUnplayableVideo || isEmbedLimited || isPrivateVideo || isRequesterRegionRestricted}}
+        <a href="#!pid=${id}&ytid=${ytId}" class="error"></a>
     {{else}}
-        {{if isInvalid || isUnplayableVideo || isEmbedLimited || isPrivateVideo || isRequesterRegionRestricted}}
-            <a href="#!pid=${id}&ytid=${ytId}" class="error"></a>
-        {{else}}
-            <a href="#!pid=${id}&ytid=${ytId}" class="video_ok"></a>
-        {{/if}}
+        <a href="#!pid=${id}&ytid=${ytId}" class="video_ok"></a>
     {{/if}}
     <p class="order"><!-- dynamic rebuild video number after template render --></p>
     <p class="img">
@@ -1234,10 +1249,10 @@
             <a href="#!pid=${id}&ytid=${ytId}" class="video-play">Video Play</a>
         {{/if}}
         {{if ytDuration > 0 && !isRequesterRegionRestricted && beginTitleCard == null}}
-            <a href="#!pid=${id}&ytid=${ytId}" class="begin-title">Edit<span class="tip"><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Add Title'])}</span></span></span></span></a>
+            <a href="#!pid=${id}&ytid=${ytId}" class="begin-title {{if 7 == contentType}}hide{{/if}}">Edit<span class="tip"><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Add Title'])}</span></span></span></span></a>
         {{/if}}
         {{if ytDuration > 0 && !isRequesterRegionRestricted && endTitleCard == null}}
-            <a href="#!pid=${id}&ytid=${ytId}" class="end-title">Edit<span class="tip"><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Add Title'])}</span></span></span></span></a>
+            <a href="#!pid=${id}&ytid=${ytId}" class="end-title {{if 7 == contentType}}hide{{/if}}">Edit<span class="tip"><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'episode-storyboard', 'Add Title'])}</span></span></span></span></a>
         {{/if}}
     </p>
 </li>
