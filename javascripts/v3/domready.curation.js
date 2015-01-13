@@ -51,7 +51,6 @@ $(function () {
                 hyButtonText.val(hyButtonText.data("text"));
                 $(".poi-button-input-text").text(hyButtonText.val());
 
-                $("#hyper_button_text").attr("maxlength", 20);
                 $("#hyper_button_text").attr("placeholder", "Input button text");
 
                 hyDisplayText.val(dtype);
@@ -65,7 +64,6 @@ $(function () {
                 hyButtonText.data("text", hyButtonText.val());
                 hyButtonText.val(hyButtonText.data("image"));
 
-                $("#hyper_button_text").attr("maxlength", 500);
                 $("#hyper_button_text").attr("placeholder", "Upload image");
 
                 varImage = $("#hyper_button_text").val();

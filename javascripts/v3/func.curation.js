@@ -502,11 +502,12 @@
             return true;
         }
 
-        if ('' === fm.channelUrl.value) {
-            $('#poi-event-overlay .event .func ul li.notice').show();
-            callback(false);
-            return false;
-        }
+        // pm remove url test allow empty
+        // if ('' === fm.channelUrl.value) {
+        //     $('#poi-event-overlay .event .func ul li.notice').show();
+        //     callback(false);
+        //     return false;
+        // }
         // Check if channel or episode url field is unmodified.
         if (nn._([cms.global.PAGE_ID, 'poi-event', 'Input 9x9 channel or episode URL']) === fm.channelUrl.value) {
             $('#poi-event-overlay .event .event-input .fminput .notice').show();
@@ -518,11 +519,12 @@
             hostAllow.push(cms.global.USER_URL.attr('host'));
         }
         // Check if url format.
-        if (!urlTest.test(fm.channelUrl.value)) {
-            $('#poi-event-overlay .event .event-input .fminput .notice').show();
-            callback(false);
-            return false;
-        }
+        // pm remove url test allow empty
+        // if (!urlTest.test(fm.channelUrl.value)) {
+        //     $('#poi-event-overlay .event .event-input .fminput .notice').show();
+        //     callback(false);
+        //     return false;
+        // }
         // // Check if the host domain of the channel url field is in the hostAllow array.
         // if (-1 === $.inArray(url.attr('host'), hostAllow)) {
         //     $('#poi-event-overlay .event .event-input .fminput .notice').show();
