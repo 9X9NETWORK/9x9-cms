@@ -136,7 +136,8 @@
             nowHour = today.getHours() + 1,
             todayDate = '',
             time = [],
-            hour = '';
+            hour = '',
+            min = '';
 
         if (todayDay.length < 2) {
             todayDay = '0' + todayDay;
@@ -155,7 +156,7 @@
                 $('body').addClass('has-change');
                 var selectDay   = parseInt(inst.currentDay, 10).toString(),
                     selectMonth = parseInt(inst.currentMonth + 1, 10).toString(),
-                    activeHour  = $('#date-time .time ul li.active').index(),
+                    activeHour  = $("#schedule-hour").val() + ":" + $("#schedule-minute").val(),
                     date = '';
                 if (selectDay.length < 2) {
                     selectDay = '0' + selectDay;
@@ -165,49 +166,35 @@
                 }
                 date = inst.currentYear + '/' + selectMonth + '/' + selectDay;
 
+                $("#schedule-hour option").removeProp('disabled');
+                $("#schedule-hour option").removeProp('selected');
+                $("#schedule-hour option:eq(" + nowHour + ")").prop('selected', 'selected');
                 if (date === todayDate) {
-                    if (activeHour <= nowHour) {
-                        $('#date-time .time ul li').removeAttr('class');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').addClass('active').addClass('enable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
-                    } else {
-                        $('#date-time .time ul li').removeClass('enable').removeClass('disable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').addClass('enable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
-                    }
-                } else {
-                    $('#date-time .time ul li').removeClass('enable').removeClass('disable');
-                    $('#date-time .time ul li').addClass('enable');
+                    $("#schedule-hour option:eq(" + nowHour + ")").prevAll().prop('disabled', 'disabled');
                 }
                 $('#publishDate').val(date);
-                $('#publishHour').val($('#date-time .time ul li.active').text());
+                $('#publishHour').val($("#schedule-hour").val() + ":" + $("#schedule-minute").val());
+
             }
         });
         $.datepicker.setDefaults($.datepicker.regional[cms.global.USER_DATA.lang]);
 
-        $('#date-time .time ul li').removeAttr('class');
-        $('#date-time .time ul li:eq(' + nowHour + ')').addClass('active').addClass('enable');
-        $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
-        $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
+        $("#schedule-hour option").removeProp('disabled');
+        $("#schedule-hour option:eq(" + nowHour + ")").prop('selected', 'selected');
+        $("#schedule-hour option:eq(" + nowHour + ")").prevAll().prop('disabled', 'disabled');
 
         if ('' === $('#publishDate').val() || '' === $('#publishHour').val()) {
             $('#publishDate').val(todayDate);
-            $('#publishHour').val($('#date-time .time ul li.active').text());
+            $('#publishHour').val($("#schedule-hour").val() + ":" + $("#schedule-minute").val());
         } else {
             time = $('#publishHour').val().split(':');
             hour = time[0];
-            if ($('#publishDate').val() === todayDate) {
-                $('#date-time .time ul li').removeAttr('class');
-                $('#date-time .time ul li:eq(' + hour + ')').addClass('active').addClass('enable');
-                $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
-                $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
-                $('#date-time .time ul li:eq(' + nowHour + ')').addClass('enable');
-            } else {
+            min = time[1];
+            $("#schedule-hour").val(hour);
+            $("#schedule-minute").val(min);
+            if ($('#publishDate').val() !== todayDate) {
                 $('#date-time .datepicker').datepicker('setDate', $('#publishDate').val());
-                $('#date-time .time ul li').removeClass('active').removeClass('disable').removeClass('enable').addClass('enable');
-                $('#date-time .time ul li:eq(' + hour + ')').addClass('active').addClass('enable');
+                $("#schedule-hour option").removeProp('disabled');
             }
         }
     };
