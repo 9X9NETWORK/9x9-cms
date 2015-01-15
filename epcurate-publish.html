@@ -211,35 +211,41 @@
             </p>
             <div id="date-time" class="hide">
                 <div class="datepicker"></div>
-                <div class="time">
-                    <h5>${nn._([cms.global.PAGE_ID, 'epcurate-form', 'Hour'])}</h5>
-                    <ul>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">00:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">01:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">02:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">03:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">04:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">05:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">06:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">07:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">08:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">09:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">10:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">11:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">12:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">13:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">14:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">15:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">16:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">17:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">18:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">19:00</span></span></a></li>
-                        <li class="enable active"><a href="#"><span class="time-right"><span class="time-middle">20:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">21:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">22:00</span></span></a></li>
-                        <li class="enable"><a href="#"><span class="time-right"><span class="time-middle">23:00</span></span></a></li>
-                        <li class="enable" style="display: none;"><a href="#"><span class="time-right"><span class="time-middle">24:00</span></span></a></li>
-                    </ul>
+
+                <div class="fTimeSelect">
+                    <h3>${nn._([cms.global.PAGE_ID, 'epcurate-form', 'Hour'])}:</h3>
+                    <select id="schedule-hour">
+                        <option value="00">00</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                    </select>
+
+                    <h3>${nn._([cms.global.PAGE_ID, 'epcurate-form', 'Minute'])}:</h3>
+                    <select id="schedule-minute">
+                        <option value="00">00</option>
+                        <option value="30">30</option>
+                    </select>
                 </div>
                 <input type="hidden" name="publishDate" id="publishDate" value="" />
                 <input type="hidden" name="publishHour" id="publishHour" value="" />
