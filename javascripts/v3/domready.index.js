@@ -15,6 +15,8 @@ $(function () {
             tmpObj = {},
             tmpTitle = "",
             cntMatch = 0;
+        $(".keyword-search").val(inKeyWord);
+        $(".msg-programSearch").addClass("hide");
         if (inKeyWord.length > 0) {
             $("#filterProgram p.select-txt a").text($("#filterProgram ul.select-list li:eq(0)").text());
             $("#title-func .order").addClass("disable");
@@ -31,8 +33,11 @@ $(function () {
             });
             $("#channel-counter").text(cntMatch);
             if(0 === cntMatch) {
-
+                $(".msg-programSearch h3").html(nn._([cms.global.PAGE_ID, 'channel-list', "Your search - [xxx] didn't match any programs."], [inKeyWord]));
+                $(".msg-programSearch").removeClass("hide");
             }
+            $("#content-main-wrap").scrollTop(0);
+            $("#content-main-wrap").perfectScrollbar('update');
         }
     });
 
@@ -245,7 +250,11 @@ $(function () {
             selectTypeClass = ".ctype" + selectType;
 
         $(".chLi").addClass("hide");
-        $(".keyword-search").val("");
+
+        if("" !== $(".keyword-search").val()) {
+            $(".keyword-search").val("");
+            $(".msg-programSearch").addClass("hide");
+        }
 
         if ("all" !== selectType) {
             $("#channel-counter").text($(selectTypeClass).length);

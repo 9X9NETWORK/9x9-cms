@@ -560,6 +560,7 @@
             "You don't have any Curated programs yet.": "你尚無任何策展節目",
             "You don't have any Sync programs yet.": "你尚無任何同步節目",
             "You don't have any live programs yet.": "你尚無任何直播節目",
+            "Your search - [xxx] didn't match any programs.": "找不到符合 [<span>{0}</span>] 的節目。",
             "Invalid auto-sync, please sync again and reset in settings.": "自動同步已失效，請再次同步並重新設定。",
             "Sort by order": "依順序排列",
             "Sort by reverse order": "依反序排列",
