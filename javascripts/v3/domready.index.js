@@ -10,6 +10,32 @@ $(function () {
 
     $('#content-main-wrap').perfectScrollbar({marginTop: 10, marginBottom: 60});
 
+    $(document).on('click', '.btn-search', function () {
+        var inKeyWord = $.trim($(".keyword-search").val()).toLowerCase(),
+            tmpObj = {},
+            tmpTitle = "",
+            cntMatch = 0;
+        if (inKeyWord.length > 0) {
+            $("#filterProgram p.select-txt a").text($("#filterProgram ul.select-list li:eq(0)").text());
+            $("#title-func .order").addClass("disable");
+
+            $('#channel-list > li').each(function (eKey, eValue) {
+                tmpObj = $(eValue).find(".info h3 a");
+                tmpTitle = $(tmpObj).text().toLowerCase();
+                if (-1 < tmpTitle.indexOf(inKeyWord)) {
+                    $(eValue).removeClass("hide");
+                    cntMatch += 1;
+                } else {
+                    $(eValue).addClass("hide");
+                }
+            });
+            $("#channel-counter").text(cntMatch);
+            if(0 === cntMatch) {
+
+            }
+        }
+    });
+
     $(document).on('change', '#importInText', function () {
         var arrUrl = $common.playerUrlParser($(this).val());
 
@@ -29,7 +55,7 @@ $(function () {
             chId = $page.actEpisode;
 
         $("#epImportNotice").addClass("hide");
-        if (arrUrl.isAllow && thisEpId >0) {
+        if (arrUrl.isAllow && thisEpId > 0) {
             $common.importEp(thisEpId, chId, $page);
         } else {
             // errmsg
@@ -219,6 +245,7 @@ $(function () {
             selectTypeClass = ".ctype" + selectType;
 
         $(".chLi").addClass("hide");
+        $(".keyword-search").val("");
 
         if ("all" !== selectType) {
             $("#channel-counter").text($(selectTypeClass).length);
