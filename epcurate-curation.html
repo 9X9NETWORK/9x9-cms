@@ -602,7 +602,7 @@
                     <div class="img hyper">
                         <h4>${nn._([cms.global.PAGE_ID, 'poi-event', 'Hyper Link'])}</h4>
                     </div>
-                    <p>${nn._([cms.global.PAGE_ID, 'poi-event', 'User can go to watch another FLIPr.tv program or episode.'])}</p>
+                    <p>${nn._([cms.global.PAGE_ID, 'poi-event', 'You can promote the video content by setting the image or text commercials.'])}</p>
                 </div>
             </li>
             {{if !cms.global.IS_REMARK}}
@@ -664,14 +664,14 @@
             </div>
             <div class="event-input">
                 <div class="fminput">
-                    <label for="hyper_display_text"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'poi-event', 'Display'])}:</label>
+                    <label for="hyper_display_text"><acronym title="Required field" class="mark-required">*</acronym>${nn._([cms.global.PAGE_ID, 'poi-event', 'Type'])}:</label>
 <!-- poi image mode -->
                     <input type="text" name="displayText" id="hyper_display_text" 
                             value="${message}{{if '' == message}}text{{/if}}" class="hide" />
                     <div class="style-select">
                         <select id="poiDisplayType" class="form-control input-gray with-left-icon ">
-                            <option {{if "text" == message}}selected {{/if}} value="text">Text</option>
-                            <option {{if "image" == message}}selected {{/if}} value="image">Image</option>
+                            <option {{if "text" == message}}selected {{/if}} value="text">${nn._([cms.global.PAGE_ID, 'poi-event', 'Text'])}</option>
+                            <option {{if "image" == message}}selected {{/if}} value="image">${nn._([cms.global.PAGE_ID, 'poi-event', 'Image'])}</option>
                         </select>
                     </div>
                 </div>
@@ -682,7 +682,7 @@
                             <input type="file" class="hide" id="fup" />
                             <input type="text" name="btnText" id="hyper_button_text" 
                                     value="${button}" 
-                                    placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input button text'])}" 
+                                    placeholder="${nn._([cms.global.PAGE_ID, 'poi-event', 'Input text'])}" 
                                     class="text" />
                                 <p class="edit-icon btnUploadImage {{if 'image' != message}} hide{{/if}}"></p>
                         </span>
