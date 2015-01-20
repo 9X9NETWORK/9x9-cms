@@ -327,14 +327,15 @@
 
 <script id="title-func-tmpl" type="text/x-jquery-tmpl">
 <h2>${nn._([cms.global.PAGE_ID, 'title-func', 'My Programs'])} (<span id="channel-counter">${$item.cntChannel}</span>)</h2>
-<ul style="height:32px;">
-    <li><p class="curate btns"><span><a class="btn_create_new" >${nn._([cms.global.PAGE_ID, 'title-func', 'Create a new program'])}</a></span></p></li>
-    <li class="last"><p class="order btns"><span><a href="javascript:void(0);" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder programs'])}</a></span></p></li>
-</ul>
-{{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
-<p class="radio-list filterType">
+<div class="form-group search-input ">
+    <input class="keyword-search" type="text" placeholder="${nn._([cms.global.PAGE_ID, 'title-func', 'Search program'])}">
+    <div class="search-button btn-search"></div>
+</div>
 
+<p class="radio-list filterType">
     <div id="filterProgram" class="fminput clearfix">
+
+        {{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
         <label>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</label>
         <div class="fmfield">
             <div class="select enable disabled">
@@ -348,10 +349,14 @@
                 </ul>
             </div>
         </div>
-    </div>
+        {{/if}}
 
+        <ul style="height:32px;">
+            <li><p class="curate btns"><span><a class="btn_create_new" >${nn._([cms.global.PAGE_ID, 'title-func', 'Create a new program'])}</a></span></p></li>
+            <li class="last"><p class="order btns"><span><a href="javascript:void(0);" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder programs'])}</a></span></p></li>
+        </ul>
+    </div>
 </p>
-{{/if}}
 </script>
 
 <script id="get-url-part-tmpl" type="text/x-jquery-tmpl">

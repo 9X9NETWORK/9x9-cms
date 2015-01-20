@@ -26,6 +26,9 @@
     }, {
         'msg_name': 'YoutubeLive',
         'msg_body': "You don't have any live programs yet."
+    }, {
+        'msg_name': 'programSearch',
+        'msg_body': "Your search - [xx] didn't match any programs."
     }];
 
     $page.edFilter = function (inSH) {
