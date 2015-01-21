@@ -1521,3 +1521,29 @@ body.mac #title-func h2 {
     width: 99.4%;
 }
 }
+
+/*program search input*/
+.form-group.search-input{
+    float: right;
+    margin-bottom: 0;
+    position: relative;
+}
+.form-group.search-input input[type="text"]{
+    width: 290px;
+    padding: 7px 8px;
+}
+.form-group .search-button{
+    padding: 0;
+    width: 22px;
+    height: 23px;
+    background: url('../images/btns.png') 0 -303px no-repeat;
+    position: absolute;
+    top: 3px;
+    right: 5px;
+    z-index: 55;
+    cursor: pointer;
+    margin: 0;
+}
+.form-group .search-button:hover,.form-group .search-button:active{
+    background-position: 0 -353px;
+}
