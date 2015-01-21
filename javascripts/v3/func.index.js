@@ -299,6 +299,9 @@
                 $('#channel-list').sortable('disable');
 
                 $("#title-func .order").removeClass("disable");
+                $(".keyword-search").removeClass("disabled");
+                $(".keyword-search").removeProp("disabled");
+                $(".search-button").removeClass("hide");
 
                 // if has readonly
                 $page.syncingOnLoad();
