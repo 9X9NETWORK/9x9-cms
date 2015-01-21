@@ -269,7 +269,6 @@
                     items.push(channel);
                 });
 
-                $('#channel-list-empty-msg-item').tmpl($page.channelEmptyMsg, null).appendTo('#channel-empty-msg');
                 $('#channel-list-tmpl-item').tmpl(items, {
                     userId: cms.global.USER_DATA.id
                 }).appendTo('#channel-list');
@@ -335,6 +334,8 @@
             $('#title-func-tmpl').tmpl(null, {
                 cntChannel: $page.paging.cntItems
             }).appendTo('#title-func');
+            $('#channel-list-empty-msg-item').tmpl($page.channelEmptyMsg, null).appendTo('#channel-empty-msg');
+
             if ($page.paging.cntItems > 0) {
                 // list protgrams
                 $('#channel-list').html('');
