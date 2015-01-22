@@ -968,7 +968,7 @@ $(function () {
         }
 
 
-        // insert mode
+        // insert || edit
         if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && isEnable) {
             nn.on(400, function (jqXHR, textStatus) {
                 $('#overlay-s').fadeOut(0, function () {
