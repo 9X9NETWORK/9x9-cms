@@ -178,11 +178,21 @@
     $page.fetchLiveUrl = function(channelId) {
         nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
             channelId: channelId
-        }), null, function(episodes) {
+        }), null, function (episodes) {
             nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
                     episodeId: episodes[0].id
                 }), null, function (programs) {
-                    $("#ytUrlLive").val(programs[0].fileUrl);
+                    var opProgram = programs[0];
+                    cms.global.vYoutubeLiveIn.fileUrl = opProgram.fileUrl;
+                    cms.global.vYoutubeLiveIn.imageUrl = opProgram.imageUrl;
+                    cms.global.vYoutubeLiveIn.name = opProgram.name;
+                    cms.global.vYoutubeLiveIn.intro = opProgram.intro;
+
+                    cms.global.vYoutubeLiveIn.uploader = "";
+                    cms.global.vYoutubeLiveIn.uploadDate = "";
+                    cms.global.vYoutubeLiveIn.ytId = "";
+
+                    $("#ytUrlLive").val(opProgram.fileUrl);
                 });
         });
     }
