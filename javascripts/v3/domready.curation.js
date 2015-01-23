@@ -1920,6 +1920,7 @@ $(function () {
                         tag: $('#poiTag').val()
                     },
                     poiEventContext = {
+                        "name": poiPointData.name,
                         "message": displayText,
                         "button": [{
                             "text": btnText,
@@ -1955,6 +1956,7 @@ $(function () {
                         nn.log("in image");
                         poiEventContext = null;
                         poiEventContext = {
+                            "name": poiPointData.name,
                             "message": "",
                             "button": [{
                                 "imageUrl": btnText,
