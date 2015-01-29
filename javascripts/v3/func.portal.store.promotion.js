@@ -404,6 +404,7 @@
                         $page._drawChannelLis();
                         $('#overlay-s').fadeOut("slow");
                     }
+                    $('#store-list').perfectScrollbar('update');
                 });
             } else {
                 $page.currentList = [];
@@ -446,7 +447,6 @@
         $('.channel-list li').remove();
         $('#store-list').scrollTop(0);
         $page.listCatChannel(msoId, inObj, $page.channelPageSize);
-        $('#store-list').perfectScrollbar('update');
     };
 
     $page._setHot = function (inObj) {
