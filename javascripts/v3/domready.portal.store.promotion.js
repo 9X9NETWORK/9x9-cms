@@ -253,35 +253,9 @@ $(function () {
 
             switch (searchType) {
             case "init":
-                nn.api('GET', cms.reapi('/api/users/{userId}/playableChannels', {
-                    userId: cms.global.USER_DATA.id
-                }), {
-                    mso: cms.global.MSOINFO.name
-                }, function (channels) {
-                    var cntChannel = channels.length,
-                        items = [];
 
-                    $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "My programs:"]));
+                $common.pcsGetPlayableChannels(1, $page.currentList, true);
 
-                    items = $page.prepareChannelsFilter(channels);
-                    items = $page.prepareChannels(items);
-                    cntChannel = items.length;
-                    if (cntChannel > 0) {
-                        $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannel]));
-                    } else {
-                        $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Your search - [xxx] didn't match any programs."], [strInput]));
-                    }
-
-                    $('#portal-search-item-tmpl').tmpl(items).appendTo('#search-channel-list');
-
-                    var pageChannel = Math.floor($(".list-holder").width() / 117) * 2;
-                    if (cntChannel > pageChannel) {
-                        $("#searchNext").show();
-                    }
-                    $("#portal-add-layer").fadeIn();
-                    $('#overlay-s').fadeOut("slow");
-
-                });
                 break;
             case "url":
                 var objUrl = $common.playerUrlParser(strInput);
@@ -293,7 +267,7 @@ $(function () {
                         var cntChannel = channels.length,
                             items = [];
 
-                        items = $page.prepareChannels(channels);
+                        items = $common.prepareChannels(channels);
                         cntChannel = items.length;
                         if (cntChannel > 0) {
                             nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
@@ -336,12 +310,13 @@ $(function () {
                 // search_keyword();
                 nn.api('GET', cms.reapi('/api/channels'), {
                     keyword: strInput,
-                    mso: cms.global.MSOINFO.name
+                    mso: cms.global.MSOINFO.name,
+                    isPublic: true
                 }, function (channels) {
                     var cntChannel = channels.length,
                         items = [];
 
-                    items = $page.prepareChannels(channels);
+                    items = $common.prepareChannels(channels);
                     cntChannel = items.length;
                     if (cntChannel > 0) {
                         $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannel]));

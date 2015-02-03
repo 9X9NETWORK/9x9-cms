@@ -23,6 +23,12 @@ div.constrain {
     -ms-text-overflow: ellipsis;
     -moz-binding: url('ellipsis.xml#ellipsis');
 }
+#title-func a{
+    color: #555;
+    text-decoration: underline;
+    font-weight: bold;
+
+}
 
 #channel-name {
     float: left;
@@ -361,8 +367,8 @@ div.constrain {
 
 #ep-list ul li .episode .img .img-container .img-wrap {
     position: absolute;
-    width: 320px;
-    height: 45px;
+    width: 320px !important; 
+    height: 45px !important;
     top: 0;
     left: 50%;
     margin: 0 0 0 -160px;
@@ -1158,7 +1164,21 @@ div.constrain {
     left: calc(100% + 10px);
 }
 
-
+/* Create new program */
+.btn-large.btn-create {
+    margin: 20px 15px;
+}
+.btn-large.btn-create .center {
+    font-size: 15px;
+    line-height: 20px;
+    color: #555;
+    width: 160px;
+}
+.btn-large.btn-create img {
+    position: absolute;
+    bottom: 25px;
+    margin-left: -24px;
+}
 /* 1358 */
 @media only screen and (min-width: 1358px) {
 #channel-name {

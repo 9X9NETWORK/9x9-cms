@@ -80,7 +80,8 @@ $(function () {
             }
             parameter = {
                 name: this.username.value,
-                lang: strLang
+                lang: strLang,
+                mso: cms.global.USER_DATA.msoName
             };
 
             nn.api('PUT', cms.reapi('/api/users/{userId}', {

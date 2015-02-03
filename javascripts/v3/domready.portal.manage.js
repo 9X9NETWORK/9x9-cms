@@ -8,6 +8,22 @@ $(function () {
     var $page = cms['portal-manage'],
         $common = cms.common;
 
+    $(document).on('click', '.imgUploadBtn', function () {
+        var btnClick = $(this),
+            blockUpload = btnClick.parent(),
+            fileUpload = blockUpload.find(".toUploadImage");
+
+        if(!btnClick.hasClass("disabled")){
+            fileUpload.click();
+        }
+    });
+
+    $(document).on('change', '.toUploadImage', function () {
+        if(this.files.length >0){
+            $page.doImageUpload($(this), this.files[0]);
+        }
+    });
+
     // add / edit channel set - action button
     $(document).on("click", "#change-category-overlay .btn-chg-category", function (event) {
         // 用到
@@ -305,16 +321,14 @@ $(function () {
                         seq: eValue.seq
                     };
                     if(eValue.isOn ){
-                        var tmpObj = $("#keyCardiOS");
-                        if(tmpObj.data("meta")!== ""){
-                            tmpSetInfo.iosBannerUrl = tmpObj.data("meta");
-                            tmpObj.data("meta", "");
+                        var tmpObj = $("#iosBannerUrl");
+                        if(tmpObj.val() !== ""){
+                            tmpSetInfo.iosBannerUrl = tmpObj.val();
                         }
 
-                        tmpObj = $("#keyCardAndroid");
-                        if(tmpObj.data("meta")!== ""){
-                            tmpSetInfo.androidBannerUrl = tmpObj.data("meta");
-                            tmpObj.data("meta", "");
+                        tmpObj = $("#androidBannerUrl");
+                        if(tmpObj.val() !== ""){
+                            tmpSetInfo.androidBannerUrl = tmpObj.val();
                         }
                     }
                     
@@ -364,16 +378,14 @@ $(function () {
                         seq: tmpSeq
                     };
                     if(eValue.isOn ){
-                        var tmpObj = $("#keyCardiOS");
-                        if(tmpObj.data("meta")!== ""){
-                            tmpSetInfo.iosBannerUrl = tmpObj.data("meta");
-                            tmpObj.data("meta", "");
+                        var tmpObj = $("#iosBannerUrl");
+                        if(tmpObj.val() !== ""){
+                            tmpSetInfo.iosBannerUrl = tmpObj.val();
                         }
 
-                        tmpObj = $("#keyCardAndroid");
-                        if(tmpObj.data("meta")!== ""){
-                            tmpSetInfo.androidBannerUrl = tmpObj.data("meta");
-                            tmpObj.data("meta", "");
+                        tmpObj = $("#androidBannerUrl");
+                        if(tmpObj.val() !== ""){
+                            tmpSetInfo.androidBannerUrl = tmpObj.val();
                         }
                     }
 
@@ -719,35 +731,9 @@ $(function () {
 
             switch (searchType) {
             case "init":
-                nn.api('GET', cms.reapi('/api/users/{userId}/playableChannels', {
-                    userId: cms.global.USER_DATA.id
-                }), {
-                    mso: cms.global.MSOINFO.name
-                }, function (channels) {
-                    var cntChannel = channels.length,
-                        items = [];
 
-                    $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "My programs:"]));
+                $common.pcsGetPlayableChannels(1, $page.currentList, false);
 
-                    items = $page.prepareChannelsFilter(channels);
-                    items = $page.prepareChannels(items);
-                    cntChannel = items.length;
-                    if (cntChannel > 0) {
-                        $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannel]));
-                    } else {
-                        $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Your search - [xxx] didn't match any programs."], [strInput]));
-                    }
-
-                    $('#portal-search-item-tmpl').tmpl(items).appendTo('#search-channel-list');
-
-                    var pageChannel = Math.floor($(".list-holder").width() / 117) * 2;
-                    if (cntChannel > pageChannel) {
-                        $("#searchNext").show();
-                    }
-                    $("#portal-add-layer").fadeIn();
-                    $('#overlay-s').fadeOut("slow");
-
-                });
                 break;
             case "url":
                 var objUrl = $common.playerUrlParser(strInput);
@@ -758,7 +744,7 @@ $(function () {
                         var cntChannel = channels.length,
                             items = [];
 
-                        items = $page.prepareChannels(channels);
+                        items = $common.prepareChannels(channels);
                         cntChannel = items.length;
                         if (cntChannel > 0) {
                             nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
@@ -799,12 +785,13 @@ $(function () {
             case "keywords":
                 nn.api('GET', cms.reapi('/api/channels'), {
                     keyword: strInput,
-                    mso: cms.global.MSOINFO.name
+                    mso: cms.global.MSOINFO.name,
+                    inPublic: false
                 }, function (channels) {
                     var cntChannel = channels.length,
                         items = [];
 
-                    items = $page.prepareChannels(channels);
+                    items = $common.prepareChannels(channels);
                     cntChannel = items.length;
                     if (cntChannel > 0) {
                         $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannel]));

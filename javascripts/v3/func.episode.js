@@ -6,6 +6,111 @@
 
     var $common = cms.common;
 
+    $page.importPrograms = 10;
+    $page.isImportEpisode = false;
+    $page.s3Info = {
+        isGet: false,
+        parameter: {},
+        s3attr: {},
+        gt: (new Date()).getTime()
+    };
+
+    $page.imageUpload = function (fileObj, eKey) {
+
+        var formData = new FormData(),
+            xhr = new XMLHttpRequest(),
+            loadingImg = "images/loading.gif",
+            timestamp = (new Date()).getTime(),
+            filenamePreFix = timestamp + eKey,
+            tmpS3attr = $page.s3Info.s3attr,
+            upFileName = $page.s3Info.parameter.prefix + filenamePreFix + ".jpg",
+            s3Url = "http://" + tmpS3attr.bucket + ".s3.amazonaws.com/",
+            s3FileName = s3Url + upFileName,
+            procBody = $("#edit-Episode-Info").find("div.progress"),
+            procBar = procBody.find("div.progress-bar"),
+            procBarText = procBody.find("span.progress-bar-text"),
+            cntTotal = 0;
+
+
+        procBar.css("width", "0%");
+        procBarText.text("0%");
+        procBody.removeClass("hide");
+
+        formData.append('AWSAccessKeyId', tmpS3attr.id);
+        formData.append('key', upFileName);
+        formData.append('acl', 'public-read');
+        formData.append('policy', tmpS3attr.policy);
+        formData.append('signature', tmpS3attr.signature);
+        formData.append('content-type', $page.s3Info.parameter.type);
+        formData.append('filename', upFileName);
+        formData.append('success_action_status', "201");
+        formData.append('file', fileObj);
+
+        cntTotal = $common.fileSizeUnit(0, fileObj.size);
+
+        xhr.open('POST', s3Url);
+        xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+                var complete = (event.loaded / event.total * 100 || 0);
+                procBar.css("width", complete + "%");
+                procBarText.text(" " + complete + "% ");
+            }
+        }
+        xhr.onload = function() {
+            $("#epImage").attr("src", s3FileName);
+            $("#upload-box").find("span").removeClass("hide");
+            procBody.addClass("hide");
+            procBar.css("width", "0%");
+            procBarText.text("0%");
+        };
+
+        $("#epImage").attr("src", "");
+        $("#upload-box").find("span").addClass("hide");
+        xhr.send(formData);
+    };
+
+    $page.prepareS3Attr = function () {
+        var timeCheck = (new Date()).getTime() + (50 * 60 * 1000);
+
+        if (!$page.s3Info.isGet || ($page.s3Info.gt > timeCheck)) {
+            $page.s3Info.parameter = {
+                'prefix': 'up-video-th-' + cms.global.MSO + '-',
+                'type': 'image',
+                'size': 11267000,
+                'acl': 'public-read'
+            };
+
+            nn.api('GET', cms.reapi('/api/s3/attributes'), $page.s3Info.parameter, function (s3attr) {
+                $page.s3Info.isGet = true;
+                $page.s3Info.s3attr = s3attr;
+                $page.s3Info.isGet = (new Date()).getTime();
+            });
+        }
+    };
+
+    $page.getEpisodeAndProgram = function (inID) {
+        $('#edit-Episode-Info').empty();
+        $('#edit-Episode-Info-def-tmpl').tmpl(null).appendTo('#edit-Episode-Info');
+        $.blockUI({
+            message: $('#edit-Episode-Info')
+        });
+        nn.api('GET', cms.reapi('/api/episodes/{episodesId}', {
+            episodesId: inID
+        }), null, function (epObj) {
+
+            nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
+                episodeId: inID
+            }), null, function (programs) {
+                if (programs.length > 0) {
+                    epObj.progId = programs[0].id;
+                    $('#edit-Episode-Info').empty();
+                    $('#edit-Episode-Info-tmpl').tmpl(epObj).appendTo('#edit-Episode-Info');
+
+                }
+            });
+        });
+    };
+
     $page.epYoutubeCheck = function (inID) {
 
         function _getEpisodeProgram(episodeId) {
@@ -147,186 +252,181 @@
             options: options
         }, 'debug');
 
+        $common.setupUserCampaignId();
         var id = cms.global.USER_URL.param('id');
         if (id > 0 && !isNaN(id) && cms.global.USER_DATA.id) {
-            nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
-                userId: cms.global.USER_DATA.id
-            }), null, function (data) {
-                var channelIds = [];
-                if (data.length > 0) {
-                    $.each(data, function (i, list) {
-                        channelIds.push(list.id);
-                    });
-                }
-                if (-1 === $.inArray(parseInt(id, 10), channelIds)) {
+            if(cms.global.USER_PRIV.isVideoAuth){
+                $page.prepareS3Attr();
+            }
+            if (options && options.init) {
+                $common.showProcessingOverlay();
+            }
+            nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                channelId: id
+            }), null, function (channel) {
+                // autoSync this field only in this api will beused , in other api this field will alway be "false"
+                channel.isYoutubeSync = false;
+                cms.global.vIsYoutubeSync = false;
+                if (channel.userIdStr !== cms.global.USER_DATA.idStr) {
+                    $('#overlay-s').fadeOut();
                     $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
                     return;
                 }
-                if (options && options.init) {
-                    $common.showProcessingOverlay();
+                // youtube live channel check
+                if(13 == channel.contentType){
+                    location.href = "index.html";
+                    return false;
                 }
-                nn.api('GET', cms.reapi('/api/channels/{channelId}', {
-                    channelId: id
-                }), null, function (channel) {
-                    // autoSync this field only in this api will beused , in other api this field will alway be "false"
-                    channel.isYoutubeSync = false;
-                    cms.global.vIsYoutubeSync = false;
-                    // youtube live channel check
-                    if(13 == channel.contentType){
-                        location.href = "index.html";
-                        return false;
-                    }
-                    // youtube sync channel check 
-                    if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
-                        channel.isYoutubeSync = true;
-                        cms.global.vIsYoutubeSync = true;
-                        $("#content-main").addClass("youtube-program");
-                    }
-                    $('#func-nav ul').html('');
-                    $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
-                    if (channel.contentType !== cms.config.YOUR_FAVORITE) {
-                        nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
-                            channelId: id
-                        }), null, function (episodes) {
-                            var cntEpisode = episodes.length,
-                                tmpCntEpisode = cntEpisode,
-                                tmpEpisodes = [],
-                                i = 0,
-                                cntPage = 0,
-                                iPageSize = 30,
-                                cntPageFirstEpisodes = 0,
-                                tmpStart = 0,
-                                tmpEnd = 0,
-                                ii = 0;
-                            $('#title-func').html('');
-                            $('#title-func-tmpl').tmpl(channel, {
-                                cntEpisode: cntEpisode
-                            }).appendTo('#title-func');
-                            $('#channel-name').data('width', $('#channel-name').width());
-                            $('#content-main-wrap .constrain').html('');
-                            cms.global.EPISODES_PAGING = [];
-                            cms.global.EPISODES_PAGING_INFO = [];
-                            if (cntEpisode > 0) {
-                                // for imageUrl === '' 
-                                $.each(episodes, function (eKey, eValue) {
-                                    if('' === eValue.imageUrl){
-                                        episodes[eKey].imageUrl = 'images/ep_invalid.png';
-                                    }
+                // youtube sync channel check 
+                if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                    channel.isYoutubeSync = true;
+                    cms.global.vIsYoutubeSync = true;
+                    $("#content-main").addClass("youtube-program");
+                }
+                $('#func-nav ul').html('');
+                $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
+                if (channel.contentType !== cms.config.YOUR_FAVORITE) {
+                    nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
+                        channelId: id
+                    }), null, function (episodes) {
+                        var cntEpisode = episodes.length,
+                            tmpCntEpisode = cntEpisode,
+                            tmpEpisodes = [],
+                            i = 0,
+                            cntPage = 0,
+                            iPageSize = 30,
+                            cntPageFirstEpisodes = 0,
+                            tmpStart = 0,
+                            tmpEnd = 0,
+                            ii = 0;
+                        $('#title-func').html('');
+                        $('#title-func-tmpl').tmpl(channel, {
+                            cntEpisode: cntEpisode
+                        }).appendTo('#title-func');
+                        $('#channel-name').data('width', $('#channel-name').width());
+                        $('#content-main-wrap .constrain').html('');
+                        cms.global.EPISODES_PAGING = [];
+                        cms.global.EPISODES_PAGING_INFO = [];
+                        if (cntEpisode > 0) {
+                            // for imageUrl === '' 
+                            $.each(episodes, function (eKey, eValue) {
+                                if('' === eValue.imageUrl){
+                                    episodes[eKey].imageUrl = 'images/ep_invalid.png';
+                                }
+                            });
+                            // pagging
+                            if (cntEpisode > iPageSize) {
+                                cntPage = parseInt((cntEpisode / iPageSize), 10);
+                                cntPageFirstEpisodes = cntEpisode % iPageSize;
+                                if (cntPage > 1 && cntPageFirstEpisodes === 0) {
+                                    cntPage -= 1;
+                                    cntPageFirstEpisodes = 30;
+                                }
+                                tmpEpisodes = [];
+                                for (i = 0; i < cntPageFirstEpisodes; i += 1) {
+                                    episodes[i].seq = tmpCntEpisode - i;
+                                    tmpEpisodes.push(episodes[i]);
+                                }
+                                cms.global.EPISODES_PAGING.push(tmpEpisodes);
+                                cms.global.EPISODES_PAGING_INFO.push({
+                                    'pageID': 0,
+                                    'pageStart': tmpCntEpisode,
+                                    'pageEnd': (tmpCntEpisode - cntPageFirstEpisodes + 1)
                                 });
-                                // pagging
-                                if (cntEpisode > iPageSize) {
-                                    cntPage = parseInt((cntEpisode / iPageSize), 10);
-                                    cntPageFirstEpisodes = cntEpisode % iPageSize;
-                                    if (cntPage > 1 && cntPageFirstEpisodes === 0) {
-                                        cntPage -= 1;
-                                        cntPageFirstEpisodes = 30;
-                                    }
+                                for (i = 0; i < cntPage; i += 1) {
                                     tmpEpisodes = [];
-                                    for (i = 0; i < cntPageFirstEpisodes; i += 1) {
-                                        episodes[i].seq = tmpCntEpisode - i;
-                                        tmpEpisodes.push(episodes[i]);
+                                    tmpStart = i * iPageSize + cntPageFirstEpisodes;
+                                    tmpEnd = tmpStart + iPageSize;
+                                    ii = 0;
+                                    for (ii = tmpStart; ii < tmpEnd; ii += 1) {
+                                        // serial DESC
+                                        episodes[ii].seq = cntEpisode - ii;
+                                        tmpEpisodes.push(episodes[ii]);
                                     }
                                     cms.global.EPISODES_PAGING.push(tmpEpisodes);
                                     cms.global.EPISODES_PAGING_INFO.push({
-                                        'pageID': 0,
-                                        'pageStart': tmpCntEpisode,
-                                        'pageEnd': (tmpCntEpisode - cntPageFirstEpisodes + 1)
+                                        'pageID': (i + 1),
+                                        'pageStart': (tmpCntEpisode - tmpStart),
+                                        'pageEnd': (tmpCntEpisode - tmpEnd + 1)
                                     });
-                                    for (i = 0; i < cntPage; i += 1) {
-                                        tmpEpisodes = [];
-                                        tmpStart = i * iPageSize + cntPageFirstEpisodes;
-                                        tmpEnd = tmpStart + iPageSize;
-                                        ii = 0;
-                                        for (ii = tmpStart; ii < tmpEnd; ii += 1) {
-                                            // serial DESC
-                                            episodes[ii].seq = cntEpisode - ii;
-                                            tmpEpisodes.push(episodes[ii]);
-                                        }
-                                        cms.global.EPISODES_PAGING.push(tmpEpisodes);
-                                        cms.global.EPISODES_PAGING_INFO.push({
-                                            'pageID': (i + 1),
-                                            'pageStart': (tmpCntEpisode - tmpStart),
-                                            'pageEnd': (tmpCntEpisode - tmpEnd + 1)
-                                        });
-                                    }
-                                } else {
-                                    tmpEpisodes = [];
-                                    for (i = 0; i < cntEpisode; i += 1) {
-                                        // the number srilal is DESC
-                                        episodes[i].seq = cntEpisode - i;
-                                        tmpEpisodes.push(episodes[i]);
-                                    }
-                                    cms.global.EPISODES_PAGING.push(tmpEpisodes);
                                 }
-
-                                $('#episode-list-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
-                                $('#episode-list-tmpl-item').tmpl(cms.global.EPISODES_PAGING[0]).appendTo('#episode-list');
-                                // folder list
-                                $('#episode-list-tmpl-folder').tmpl(cms.global.EPISODES_PAGING_INFO).appendTo('#episode-list');
-                                // episode list sorting
-                                $('#episode-list').sortable({
-                                    cursor: 'move',
-                                    revert: true,
-                                    cancel: '.isFolder',
-                                    change: function (event, ui) {
-                                        $('body').addClass('has-change');
-                                    }
-                                });
-                                $('#episode-list').sortable('disable');
-
-                                $('#content-main-wrap').perfectScrollbar("update");
-
                             } else {
-                                $('#episode-first-tmpl').tmpl({
-                                    id: id
-                                }).appendTo('#content-main-wrap .constrain');
-                                // episode first cycle
-                                $('#selected-episode p.episode-pager').html('');
-                                $('#selected-episode .wrapper ul.content').cycle({
-                                    pager: '.episode-pager',
-                                    activePagerClass: 'active',
-                                    updateActivePagerLink: null,
-                                    fx: 'scrollHorz',
-                                    speed: 1000,
-                                    timeout: 6000,
-                                    pagerEvent: 'mouseover',
-                                    pause: 1,
-                                    cleartypeNoBg: true
-                                });
-
-                                $('#content-main-wrap').perfectScrollbar({marginTop: 20, marginBottom: 60});
+                                tmpEpisodes = [];
+                                for (i = 0; i < cntEpisode; i += 1) {
+                                    // the number srilal is DESC
+                                    episodes[i].seq = cntEpisode - i;
+                                    tmpEpisodes.push(episodes[i]);
+                                }
+                                cms.global.EPISODES_PAGING.push(tmpEpisodes);
                             }
 
-                            $('#overlay-s').fadeOut();
+                            $('#episode-list-tmpl').tmpl().appendTo('#content-main-wrap .constrain');
+                            $('#episode-list-tmpl-item').tmpl(cms.global.EPISODES_PAGING[0]).appendTo('#episode-list');
+                            // folder list
+                            $('#episode-list-tmpl-folder').tmpl(cms.global.EPISODES_PAGING_INFO).appendTo('#episode-list');
+                            // episode list sorting
+                            $('#episode-list').sortable({
+                                cursor: 'move',
+                                revert: true,
+                                cancel: '.isFolder',
+                                change: function (event, ui) {
+                                    $('body').addClass('has-change');
+                                }
+                            });
+                            $('#episode-list').sortable('disable');
 
-                            // sharing url
-                            nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
-                                    channelId: id
-                                }), null, function (cBrands) {
-                                var iBrandCount = cBrands.length,
-                                    iLoop = 0,
-                                    tmpBrand = [{
-                                        brand: ""
-                                    }];
+                            $('#content-main-wrap').perfectScrollbar("update");
 
-                                for (iLoop = 0; iLoop < iBrandCount; iLoop++) {
-                                    if (cms.global.USER_DATA.msoName === cBrands[iLoop].brand) {
-                                        tmpBrand[0].brand = cms.global.USER_DATA.msoName;
-                                        break;
-                                    }
-                                };
+                        } else {
+                            $('#episode-first-tmpl').tmpl({
+                                id: id
+                            }).appendTo('#content-main-wrap .constrain');
+                            // episode first cycle
+                            $('#selected-episode p.episode-pager').html('');
+                            $('#selected-episode .wrapper ul.content').cycle({
+                                pager: '.episode-pager',
+                                activePagerClass: 'active',
+                                updateActivePagerLink: null,
+                                fx: 'scrollHorz',
+                                speed: 1000,
+                                timeout: 6000,
+                                pagerEvent: 'mouseover',
+                                pause: 1,
+                                cleartypeNoBg: true
+                            });
 
-                                $('#tmpHtml').html('');
-                                $('#get-url-tmpl').tmpl(tmpBrand).appendTo('#tmpHtml');
+                            $('#content-main-wrap').perfectScrollbar({marginTop: 20, marginBottom: 60});
+                        }
 
-                                $('div.get-url').each(function() {
-                                    $(this).children().remove();
-                                    $(this).append($('#tmpHtml').html());
-                                });
+                        $('#overlay-s').fadeOut();
+
+                        // sharing url
+                        nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
+                                channelId: id
+                            }), null, function (cBrands) {
+                            var iBrandCount = cBrands.length,
+                                iLoop = 0,
+                                tmpBrand = [{
+                                    brand: ""
+                                }];
+
+                            for (iLoop = 0; iLoop < iBrandCount; iLoop++) {
+                                if (cms.global.USER_DATA.msoName === cBrands[iLoop].brand) {
+                                    tmpBrand[0].brand = cms.global.USER_DATA.msoName;
+                                    break;
+                                }
+                            };
+
+                            $('#tmpHtml').html('');
+                            $('#get-url-tmpl').tmpl(tmpBrand).appendTo('#tmpHtml');
+
+                            $('div.get-url').each(function() {
+                                $(this).children().remove();
+                                $(this).append($('#tmpHtml').html());
                             });
                         });
-                    }
-                });
+                    });
+                }
             });
         } else {
             $common.showSystemErrorOverlayAndHookError('Invalid program ID, please try again.');

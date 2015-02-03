@@ -35,7 +35,7 @@
 /* line 28, ../sass/cms-notification.sass */
 .notify-list > li.disable {
   cursor: default;
-  color: #999999;
+  color: #999;
 }
 /* line 31, ../sass/cms-notification.sass */
 .notify-list > li.disable:hover {

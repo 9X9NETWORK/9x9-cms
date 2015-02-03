@@ -10,15 +10,189 @@
     cms.global.vIsYoutubeSync = false;
     cms.global.vIsYoutubeLive = false;
     cms.global.vYoutubeLiveIn = {};
+    $page.s3Info = {
+        isGet: false,
+        parameter: {},
+        s3attr: {},
+        gt: (new Date()).getTime()
+    };
+
+    $page.doImageUpload = function (fileIntpu, fileObj) {
+
+        var formData = new FormData(),
+            blockUpload = $(fileIntpu).parent(),
+            imageDiv = blockUpload.find(".imgUpShow"),
+            imageBtnUp = blockUpload.find(".imgUploadBtn"),
+            strBtnOri = imageBtnUp.data("ori"),
+            strBtnUploading = imageBtnUp.data("uploading"),
+            xhr = new XMLHttpRequest(),
+            timestamp = (new Date()).getTime(),
+            filenamePreFix = blockUpload.attr("id").replace("iup", "").toLowerCase() + "-" + timestamp,
+            tmpS3attr = $page.s3Info.s3attr,
+            upFileName = $page.s3Info.parameter.prefix + filenamePreFix + nn.getFileTypeByName(fileObj.name),
+            s3Url = "http://" + tmpS3attr.bucket + ".s3.amazonaws.com/",
+            s3FileName = s3Url + upFileName,
+            timeRand = '?n=' + Math.random();
+
+        imageBtnUp.text(strBtnUploading + " (0%)");
+        imageBtnUp.addClass("disabled");
+        imageDiv.addClass("is-loading");
+
+        formData.append('AWSAccessKeyId', tmpS3attr.id);
+        formData.append('key', upFileName);
+        formData.append('acl', 'public-read');
+        formData.append('policy', tmpS3attr.policy);
+        formData.append('signature', tmpS3attr.signature);
+        formData.append('content-type', $page.s3Info.parameter.type);
+        formData.append('filename', upFileName);
+        formData.append('success_action_status', "201");
+        formData.append('file', fileObj);
+
+        var cntTotal = $common.fileSizeUnit(0, fileObj.size);
+
+        xhr.open('POST', s3Url);
+        xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+                var complete = (event.loaded / event.total * 100 | 0);
+                imageBtnUp.text(strBtnUploading + " (" + complete + "%)");
+           }
+        }
+        xhr.onload = function() {
+            imageDiv.css('background-image', "url('"+ s3FileName + timeRand +"')");
+            blockUpload.find(".imageUrl").val(s3FileName);
+            imageBtnUp.text(strBtnOri);
+            imageBtnUp.removeClass("disabled");
+            imageDiv.removeClass("is-loading").removeClass("no-image");
+        };
+
+        xhr.send(formData);
+    };
+
+    $page.prepareS3Attr = function () {
+        var timeCheck = (new Date()).getTime() + (50 * 60 * 1000);
+
+        if (!$page.s3Info.isGet || ($page.s3Info.gt > timeCheck)) {
+            $page.s3Info.parameter = {
+                'prefix': 'cms-' + cms.global.USER_URL.param('id') + '-',
+                'type': 'image',
+                'size': 11267000,
+                'acl': 'public-read'
+            };
+
+            nn.api('GET', cms.reapi('/api/s3/attributes'), $page.s3Info.parameter, function (s3attr) {
+                $page.s3Info.isGet = true;
+                $page.s3Info.s3attr = s3attr;
+                $page.s3Info.isGet = (new Date()).getTime();
+            });
+        }
+    };
+
+    $page.setSocialFeeds = function () {
+        var tmpArr = $("#socialFeeds").val().split(';'),
+            tmpItem = {};
+        $.each(tmpArr, function(i, item) {
+            tmpItem = item.split(' ');
+            if (2 === tmpItem.length && "facebook" === tmpItem[0]) {
+                $("#tmpSocialFeeds").val("https://www.facebook.com/" + tmpItem[1]);
+            }
+        });
+    }
+
+    $page.getPaidInfo = function () {
+        var fm = document.settingForm,
+            retValue = {
+                title: $.trim(fm.iap_title.value),
+                price: $.trim(fm.iap_price.value),
+                description: $.trim(fm.iap_description.value),
+                thumbnail: $.trim(fm.iap_thumbnail.value),
+                isVailed: false
+            };
+        if ("" !== retValue.title && "" !== retValue.price && "" !== retValue.description && "" !== retValue.thumbnail) {
+            retValue.isVailed = true;
+        }
+        return retValue;
+    }
+
+    $page.isPaidSend = function () {
+        var isOriPaid = $("#paidChannel").data("oristatus") || false,
+            cntItem = parseInt($("#cntItem").val(), 10),
+            hasDisabled = $("#paidChannel").parent().hasClass("disabled"),
+            retValue = false;
+
+        if ("false" === String(isOriPaid) && "true" === String($("#paidChannel").val()) && !hasDisabled) {
+            retValue = true;
+        }
+        return retValue;
+    }
+
+    $page.paidChannelInit = function() {
+        var isPaid = $("#paidChannel").val(),
+            objPaid = $("#paidChannel").parent(),
+            objPrice = $("#paidBlock .select"),
+            objTitle = $("#paidBlock .iap_title"),
+            objDesc = $("#paidBlock .iap_description"),
+            objPaidImg = $("#iupPaid .imgUpShow"),
+            objPaidImgVal = $("#iupPaid .imageUrl");
+
+        if (true === isPaid || "true" === isPaid) {
+            isPaid = true;
+        } else {
+            isPaid = false;
+            // for special case under review
+            if($("#cntItem").val() > 0){
+            	isPaid = true;
+            	$("#paidChannel").val(isPaid);
+            }
+        }
+        if (true === isPaid) {
+            objPaid.removeClass("enable").addClass("disabled");
+            $(objPaid.find("li")).each(function(i, item) {
+                if (true == $(item).data("meta")) {
+                    objPaid.find(".select-txt a").text($(item).text());
+                }
+            });
+            $("#paidBlock").removeClass("hide");
+            objPrice.removeClass("enable").addClass("disabled");
+            objTitle.attr('disabled', true).parent().parent().addClass("disabled");
+            objDesc.attr('disabled', true).parent().parent().parent().addClass("disabled");
+            $("#iupPaid .swfupload").addClass("hide");
+            $("#paidRemove").attr("href", "mailto:paidsupport@flipr.tv");
+
+            nn.api('GET', cms.reapi('/api/billing/channels/{channelId}/iap_info', {
+                channelId: cms.global.USER_URL.param('id')
+            }), null, function (iapInfo) {
+                objPrice.find(".select-txt a").text("$ " + iapInfo.price + " USD");
+                objPrice.find(".price").val(iapInfo.price);
+                objTitle.val(iapInfo.title);
+                objDesc.val(iapInfo.description);
+
+                objPaidImg.css("background-image", "url('"+ iapInfo.thumbnail +"')").removeClass("no-image");
+                $("#iap_thumbnail").val(iapInfo.thumbnail);
+                $("#paidBlock .imgUploadBtn").addClass("hide");
+            });
+        } else {
+
+        }
+    }
 
     $page.fetchLiveUrl = function(channelId) {
         nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
             channelId: channelId
-        }), null, function(episodes) {
+        }), null, function (episodes) {
             nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
                     episodeId: episodes[0].id
                 }), null, function (programs) {
-                    $("#ytUrlLive").val(programs[0].fileUrl);
+                    var opProgram = programs[0];
+                    cms.global.vYoutubeLiveIn.fileUrl = opProgram.fileUrl;
+                    cms.global.vYoutubeLiveIn.imageUrl = opProgram.imageUrl;
+                    cms.global.vYoutubeLiveIn.name = opProgram.name;
+                    cms.global.vYoutubeLiveIn.intro = opProgram.intro;
+
+                    cms.global.vYoutubeLiveIn.uploader = "";
+                    cms.global.vYoutubeLiveIn.uploadDate = "";
+                    cms.global.vYoutubeLiveIn.ytId = "";
+
+                    $("#ytUrlLive").val(opProgram.fileUrl);
                 });
         });
     }
@@ -61,7 +235,7 @@
     $page.liveType2Prepare = function(ytUrlParse) {
         // ytLive 上網至 m3u8，但有些資料本來就沒有或不足
         cms.global.vYoutubeLiveIn.fileUrl = ytUrlParse.ytUrlFormat;
-        cms.global.vYoutubeLiveIn.imageUrl = $("#thumbnail-imageUrl").attr("src");
+        cms.global.vYoutubeLiveIn.imageUrl = $("#imageUrl").val();
         cms.global.vYoutubeLiveIn.name = $("#name").val();
         cms.global.vYoutubeLiveIn.intro = $("#intro").val();
         cms.global.vYoutubeLiveIn.uploader = "";
@@ -148,6 +322,14 @@
         fm.sphere.value = $.trim(fm.sphere.value);
         fm.categoryId.value = $.trim(fm.categoryId.value);
 
+        if ($page.isPaidSend()) {
+            var iapInfo = $page.getPaidInfo();
+            if (!iapInfo.isVailed) {
+                $('.form-btn .notice').removeClass('hide');
+                return false;
+            }
+        }
+
         if(true === cms.global.vIsYoutubeLive && "processing" !== $("#ytUrlLive").data("status") && "editing" !== $("#ytUrlLive").data("status")){
             $('.form-btn .notice').removeClass('hide');
             return false;
@@ -181,6 +363,18 @@
             $('.form-btn .notice').removeClass('hide');
             return false;
         }
+        if ($page.isPaidSend() && "yes" !== $("#settingForm").data("isPaidAgree")) {
+            var msgOverlay = $('#system-confirm-alert-overlay');
+            $(msgOverlay).addClass("isPaidAgree");
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'You can‘t change “program price” after click “Yes”. Are you sure you want to save?']));
+            $(msgOverlay).find('.scov-yes').text(nn._(['overlay', 'button', 'Yes']));
+            $(msgOverlay).find('.scov-no').text(nn._(['overlay', 'button', 'No']));
+
+            $.blockUI({
+                message: msgOverlay
+            });
+            return false;
+        }
         return true;
     };
 
@@ -198,96 +392,6 @@
     $page.scrollToBottom = function () {
         var objDiv = document.getElementById("content-main-wrap");
         objDiv.scrollTop = objDiv.scrollHeight;
-    };
-
-    $page.uploadImage = function () {
-        var parameter = {
-            'prefix': 'cms',
-            'type':   'image',
-            'size':   20485760,
-            'acl':    'public-read'
-        };
-        nn.api('GET', cms.reapi('/api/s3/attributes'), parameter, function (s3attr) {
-            var timestamp = (new Date()).getTime(),
-                handlerFileDialogStart = function () {
-                    $('.upload-img .upload-notice').addClass('hide');
-                },
-                handlerUploadProgress = function (file, completed, total) {
-                    $('.upload-img .loading').show();
-                    this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Uploading...']) + '</span>');
-                },
-                handlerUploadSuccess = function (file, serverData, recievedResponse) {
-                    $('.upload-img .loading').hide();
-                    this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
-                    if (!file.type) {
-                        file.type = nn.getFileTypeByName(file.name);
-                    }
-                    this.setButtonDisabled(false); // enable upload button again
-                    var url = 'http://' + s3attr.bucket + '.s3.amazonaws.com/' + parameter.prefix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase();
-                    $('#thumbnail-imageUrl').attr('src', url + '?n=' + Math.random());
-                    $('#imageUrl').val(url);
-                },
-                handlerUploadError = function (file, code, message) {
-                    $('.upload-img .loading').hide();
-                    this.setButtonText('<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>');
-                    this.setButtonDisabled(false);
-                    if (code === -280) { // user cancel upload
-                        nn.log(message, 'error'); // show some error prompt
-                    } else {
-                        nn.log(message, 'error'); // show some error prompt
-                    }
-                },
-                handlerFileQueue = function (file) {
-                    if (!file.type) {
-                        file.type = nn.getFileTypeByName(file.name); // Mac Chrome compatible
-                    }
-                    var postParams = {
-                        "AWSAccessKeyId": s3attr.id,
-                        "key":            parameter.prefix + '-thumbnail-' + timestamp + '-' + file.size + file.type.toLowerCase(),
-                        "acl":            parameter.acl,
-                        "policy":         s3attr.policy,
-                        "signature":      s3attr.signature,
-                        "content-type":   parameter.type,
-                        "success_action_status": "201"
-                    };
-                    this.setPostParams(postParams);
-                    this.startUpload(file.id);
-                    this.setButtonDisabled(true);
-                },
-                handlerFileQueueError = function (file, code, message) {
-                    if (code === -130) { // error file type
-                        $('.upload-img .upload-notice').removeClass('hide');
-                    }
-                },
-                settings = {
-                    flash_url:                  'javascripts/libs/swfupload/swfupload.swf',
-                    upload_url:                 'http://' + s3attr.bucket + '.s3.amazonaws.com/', // http://9x9tmp-ds.s3.amazonaws.com/
-                    file_size_limit:            parameter.size,
-                    file_types:                 '*.jpg; *.png; *.gif',
-                    file_types_description:     'Thumbnail',
-                    file_post_name:             'file',
-                    button_placeholder:         $('#uploadThumbnail').get(0),
-                    button_image_url:           'images/btn-load.png',
-                    button_width:               '129',
-                    button_height:              '29',
-                    button_text:                '<span class="uploadstyle">' + nn._(['upload', 'Upload']) + '</span>',
-                    button_text_style:          '.uploadstyle { color: #555555; font-family: Arial, Helvetica; font-size: 15px; text-align: center; } .uploadstyle:hover { color: #999999; }',
-                    button_text_top_padding:    1,
-                    button_action:              SWFUpload.BUTTON_ACTION.SELECT_FILE,
-                    button_cursor:              SWFUpload.CURSOR.HAND,
-                    button_window_mode:         SWFUpload.WINDOW_MODE.TRANSPARENT,
-                    http_success:               [ 201 ],
-                    file_dialog_start_handler:  handlerFileDialogStart,
-                    upload_progress_handler:    handlerUploadProgress,
-                    upload_success_handler:     handlerUploadSuccess,
-                    upload_error_handler:       handlerUploadError,
-                    file_queued_handler:        handlerFileQueue,
-                    file_queue_error_handler:   handlerFileQueueError,
-                    debug:                      false
-                },
-                swfu = new SWFUpload(settings);
-            swfu.debug = cms.config.IS_DEBUG;
-        });
     };
 
     $page.checkCriticalPerm = function (authResponse, callback) {
@@ -455,6 +559,7 @@
 
     // NOTE: page entry point (keep at the bottom of this file)
     $page.init = function (options) {
+        $page.prepareS3Attr();
         if (cms.global.USER_URL.attr('file') === 'channel-setting.html') {
             // update mode
             nn.log({
@@ -467,189 +572,180 @@
             cms.global.vIsYoutubeSync = false;
             cms.global.vIsYoutubeLive = false;
             if (id > 0 && !isNaN(id) && cms.global.USER_DATA.id) {
-                nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
-                    userId: cms.global.USER_DATA.id
-                }), null, function (data) {
-                    var channelIds = [];
-                    if (data.length > 0) {
-                        $.each(data, function (i, list) {
-                            channelIds.push(list.id);
-                        });
-                    }
-                    if (-1 === $.inArray(parseInt(id, 10), channelIds)) {
+                nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                    channelId: id
+                }), null, function (channel) {
+                    channel.intro = channel.intro.replace(/\{BR\}/g, '\n');
+                    if (channel.userIdStr !== cms.global.USER_DATA.idStr) {
                         $common.showSystemErrorOverlayAndHookError('You are not authorized to edit this program.');
                         return;
                     }
-                    nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                    if (channel.contentType === cms.config.YOUR_FAVORITE) {
+                        $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
+                        return;
+                    }
+                    // youtube live channel check
+                    if (13 == channel.contentType) {
+                        cms.global.vIsYoutubeLive = true;
+                    } else if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
+                        // youtube sync channel check
+                        cms.global.vIsYoutubeSync = true;
+                    }
+
+                    $common.showProcessingOverlay();
+                    $('#func-nav ul').html('');
+                    $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
+                    $('#content-main').html('');
+                    $('#content-main-tmpl').tmpl(channel).appendTo('#content-main');
+
+                    $page.youtubeYyncOnOff(channel.autoSync);
+                    $page.storePoolOnOff("init");
+
+                    if (cms.global.vIsYoutubeLive) {
+                        var tmpSourceUrl = $common.ytUrlLiveParser(channel.sourceUrl);
+                        if (3 === tmpSourceUrl.ytType) {
+                            $("#ytUrlLive").val(channel.sourceUrl);
+                            $("#ytUrlLive").trigger("change");
+                        } else {
+                            $page.fetchLiveUrl(channel.id);
+                        }
+                    }
+
+                    if (cms.global.vIsYoutubeSync === true) {
+                        var ytUrlParse = $common.ytUrlParser(channel.sourceUrl),
+                            ytObj = {};
+                        if (ytUrlParse.ytType > 0) {
+                            ytObj = {
+                                url: ytUrlParse.ytUrlApi,
+                                dataType: "json",
+                                context: self,
+                                success: function(res) {
+                                    if (ytUrlParse.ytType === 1) {
+                                        $("#ytUrl").val((res).entry.link[0].href);
+                                    }
+                                }
+                            }
+                            $.ajax(ytObj);
+                        }
+                    }
+
+                    // sharing url
+                    nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
                         channelId: id
-                    }), null, function (channel) {
-                        if (channel.contentType === cms.config.YOUR_FAVORITE) {
-                            $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
-                            return;
-                        }
-                        // youtube live channel check
-                        if (13 == channel.contentType) {
-                            cms.global.vIsYoutubeLive = true;
-                        } else if (null != channel.sourceUrl && channel.sourceUrl.length > 10) {
-                            // youtube sync channel check
-                            cms.global.vIsYoutubeSync = true;
-                        }
-
-                        $common.showProcessingOverlay();
-                        $('#func-nav ul').html('');
-                        $('#func-nav-tmpl').tmpl(channel).appendTo('#func-nav ul');
-                        $('#content-main').html('');
-                        $('#content-main-tmpl').tmpl(channel).appendTo('#content-main');
-
-                        $page.youtubeYyncOnOff(channel.autoSync);
-                        $page.storePoolOnOff("init");
-
-                        if (cms.global.vIsYoutubeLive) {
-                            var tmpSourceUrl = $common.ytUrlLiveParser(channel.sourceUrl);
-                            if (3 === tmpSourceUrl.ytType) {
-                                $("#ytUrlLive").val(channel.sourceUrl);
-                                $("#ytUrlLive").trigger("change");
-                            } else {
-                                $page.fetchLiveUrl(channel.id);
-                            }
-                        }
-
-                        if (cms.global.vIsYoutubeSync === true) {
-                            var ytUrlParse = $common.ytUrlParser(channel.sourceUrl),
-                                ytObj = {};
-                            if (ytUrlParse.ytType > 0) {
-                                ytObj = {
-                                    url: ytUrlParse.ytUrlApi,
-                                    dataType: "json",
-                                    context: self,
-                                    success: function(res) {
-                                        if (ytUrlParse.ytType === 1) {
-                                            $("#ytUrl").val((res).entry.link[0].href);
-                                        }
-                                    }
-                                }
-                                $.ajax(ytObj);
-                            }
-                        }
-
-                        // sharing url
-                        nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
+                    }), null, function (cBrand) {
+                        $("#surl-text").text(cBrand.brand);
+                    }).then(function (ccBrand) {
+                        nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
                             channelId: id
-                        }), null, function (cBrand) {
-                            $("#surl-text").text(cBrand.brand);
-                        }).then(function (ccBrand) {
-                            nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/validBrands', {
-                                channelId: id
-                            }), null, function (cBrands) {
-                                $('#surl-ul').html('');
-                                $('#surl-tmpl-item').tmpl(cBrands, {
-                                    selBrand: ccBrand.brand
-                                }).appendTo('#surl-ul');
-                            });
+                        }), null, function (cBrands) {
+                            $('#surl-ul').html('');
+                            $('#surl-tmpl-item').tmpl(cBrands, {
+                                selBrand: ccBrand.brand
+                            }).appendTo('#surl-ul');
                         });
+                    });
 
-                        $('#name').charCounter(20, {
-                            container: '#name-charcounter',
-                            format: '%1',
-                            delay: 0,
-                            clear: false,
-                            countDown: false
-                        });
-                        $('#intro').charCounter(200, {
-                            container: '#intro-charcounter',
-                            format: '%1',
-                            delay: 0,
-                            clear: true,
-                            countDown: false
-                        });
-                        if ($('#uploadThumbnail').length > 0) {
-                            $page.uploadImage();
+                    $('#name').charCounter(20, {
+                        container: '#name-charcounter',
+                        format: '%1',
+                        delay: 0,
+                        clear: false,
+                        countDown: false
+                    });
+                    $('#intro').charCounter(1000, {
+                        container: '#intro-charcounter',
+                        format: '%1',
+                        delay: 0,
+                        clear: true,
+                        countDown: false
+                    });
+                    if ($('.connected input').length > 0) {
+                        $('.connected input').uniform();
+                    }
+                    $common.initFacebookJavaScriptSdk();
+                    $('#channel-name').data('width', $('#channel-name').width());
+                    // setup channel data
+                    if ('' !== $.trim(channel.imageUrl)) {
+                    	$("#imageUrl").val(channel.imageUrl);
+                    	$("#iupLogo .imgUpShow").css('background-image', "url('"+ channel.imageUrl +"')").removeClass("no-image").removeClass("is-loading");
+                    }
+                    if ('' !== channel.lang && cms.config.LANG_MAP[channel.lang]) {
+                        $('#lang-select-txt').text(cms.config.LANG_MAP[channel.lang]);
+                    }
+                    $page.paidChannelInit();
+                    // $page.setSocialFeeds();
+                    if ('' !== channel.sphere && cms.config.SPHERE_MAP[channel.sphere]) {
+                        $('#sphere-select-txt').text(cms.config.SPHERE_MAP[channel.sphere]);
+                        $('.category').removeClass('disable').addClass('enable');
+                        var sphere = channel.sphere;
+                        if ('other' === sphere) {
+                            sphere = 'en';
                         }
-                        if ($('.connected input').length > 0) {
-                            $('.connected input').uniform();
-                        }
-                        $common.initFacebookJavaScriptSdk();
-                        $('#channel-name').data('width', $('#channel-name').width());
-                        // setup channel data
-                        if ('' !== $.trim(channel.imageUrl)) {
-                            $('#thumbnail-imageUrl').attr('src', channel.imageUrl + '?n=' + Math.random());
-                        }
-                        if ('' !== channel.lang && cms.config.LANG_MAP[channel.lang]) {
-                            $('#lang-select-txt').text(cms.config.LANG_MAP[channel.lang]);
-                        }
-                        if ('' !== channel.sphere && cms.config.SPHERE_MAP[channel.sphere]) {
-                            $('#sphere-select-txt').text(cms.config.SPHERE_MAP[channel.sphere]);
-                            $('.category').removeClass('disable').addClass('enable');
-                            var sphere = channel.sphere;
-                            if ('other' === sphere) {
-                                sphere = 'en';
-                            }
-                            nn.api('GET', cms.reapi('/api/categories'), {
-                                lang: sphere
-                            }, function (categories) {
-                                $('#browse-category').data('realCateCnt', categories.length);
-                                $.each(categories, function (i, list) {
-                                    cms.config.CATEGORY_MAP[list.id] = list.name;
-                                });
-                                var rowNum = ($(window).width() > 1356) ? 4 : 3,
-                                    modCatLen = categories.length % rowNum,
-                                    i = 0;
-                                if (modCatLen > 0) {
-                                    modCatLen = rowNum - modCatLen;
-                                    for (i = 0; i < modCatLen; i += 1) {
-                                        categories.push({
-                                            id: 0,
-                                            name: ''
-                                        });
-                                    }
-                                }
-                                $('#browse-category').html('');
-                                $('#category-list-tmpl-item').tmpl(categories, {
-                                    dataArrayIndex: function (item) {
-                                        return $.inArray(item, categories);
-                                    }
-                                }).appendTo('#browse-category');
-                                $('#browse-category li[data-meta=0]').addClass('none');
-                                if ('' !== channel.categoryId && cms.config.CATEGORY_MAP[channel.categoryId]) {
-                                    $('.tag-list').removeClass('hide');
-                                    $('#categoryId-select-txt').text(cms.config.CATEGORY_MAP[channel.categoryId]);
-                                    nn.api('GET', cms.reapi('/api/tags'), {
-                                        categoryId: channel.categoryId,
-                                        lang: sphere
-                                    }, function (tags) {
-                                        $('#tag-list').html('');
-                                        if (tags && tags.length > 0) {
-                                            $('.tag-list').removeClass('hide');
-                                            var currentTags = $('#tag').val();
-                                            currentTags = currentTags.split(',');
-                                            if (!currentTags) {
-                                                currentTags = [];
-                                            }
-                                            $('#tag-list-tmpl-item').tmpl({
-                                                tags: tags
-                                            }).appendTo('#tag-list');
-                                            if (currentTags.length > 0) {
-                                                $('#tag-list li span a').each(function () {
-                                                    if (-1 !== $.inArray($(this).text(), currentTags)) {
-                                                        $(this).parent().parent().addClass('on');
-                                                    }
-                                                });
-                                            }
-                                        } else {
-                                            $('.tag-list').addClass('hide');
-                                        }
+                        nn.api('GET', cms.reapi('/api/categories'), {
+                            lang: sphere
+                        }, function (categories) {
+                            $('#browse-category').data('realCateCnt', categories.length);
+                            $.each(categories, function (i, list) {
+                                cms.config.CATEGORY_MAP[list.id] = list.name;
+                            });
+                            var rowNum = ($(window).width() > 1356) ? 4 : 3,
+                                modCatLen = categories.length % rowNum,
+                                i = 0;
+                            if (modCatLen > 0) {
+                                modCatLen = rowNum - modCatLen;
+                                for (i = 0; i < modCatLen; i += 1) {
+                                    categories.push({
+                                        id: 0,
+                                        name: ''
                                     });
                                 }
-                            });
-                        }
-                        $page.truncateFormTitle();
-                        // ON PURPOSE to wait api (async)
-                        $('#overlay-s').fadeOut(5000, function () {
-                            $('#content-main-wrap').perfectScrollbar({marginBottom:63});
-                            $common.hideFbPageList();
-                            $('#settingForm .btn-save').removeClass('disable').addClass('enable');
-                            $page.handleButtonPosition();
+                            }
+                            $('#browse-category').html('');
+                            $('#category-list-tmpl-item').tmpl(categories, {
+                                dataArrayIndex: function (item) {
+                                    return $.inArray(item, categories);
+                                }
+                            }).appendTo('#browse-category');
+                            $('#browse-category li[data-meta=0]').addClass('none');
+                            if ('' !== channel.categoryId && cms.config.CATEGORY_MAP[channel.categoryId]) {
+                                $('.tag-list').removeClass('hide');
+                                $('#categoryId-select-txt').text(cms.config.CATEGORY_MAP[channel.categoryId]);
+                                nn.api('GET', cms.reapi('/api/tags'), {
+                                    categoryId: channel.categoryId,
+                                    lang: sphere
+                                }, function (tags) {
+                                    $('#tag-list').html('');
+                                    if (tags && tags.length > 0) {
+                                        $('.tag-list').removeClass('hide');
+                                        var currentTags = $('#tag').val();
+                                        currentTags = currentTags.split(',');
+                                        if (!currentTags) {
+                                            currentTags = [];
+                                        }
+                                        $('#tag-list-tmpl-item').tmpl({
+                                            tags: tags
+                                        }).appendTo('#tag-list');
+                                        if (currentTags.length > 0) {
+                                            $('#tag-list li span a').each(function () {
+                                                if (-1 !== $.inArray($(this).text(), currentTags)) {
+                                                    $(this).parent().parent().addClass('on');
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        $('.tag-list').addClass('hide');
+                                    }
+                                });
+                            }
                         });
+                    }
+                    $page.truncateFormTitle();
+                    // ON PURPOSE to wait api (async)
+                    $('#overlay-s').fadeOut(5000, function () {
+                        $('#content-main-wrap').perfectScrollbar({marginBottom:63});
+                        $common.hideFbPageList();
+                        $('#settingForm .btn-save').removeClass('disable').addClass('enable');
+                        $page.handleButtonPosition();
                     });
                 });
             } else {
@@ -681,16 +777,13 @@
                 clear: false,
                 countDown: false
             });
-            $('#intro').charCounter(200, {
+            $('#intro').charCounter(1000, {
                 container: '#intro-charcounter',
                 format: '%1',
                 delay: 0,
                 clear: true,
                 countDown: false
             });
-            if ($('#uploadThumbnail').length > 0) {
-                $page.uploadImage();
-            }
             if ($('.connected input').length > 0) {
                 $('.connected input').uniform();
             }

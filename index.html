@@ -5,24 +5,25 @@
 <meta http-equiv="cache-control" content="no-cache" />
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="expires" content="0" />
-<link rel="stylesheet" href="stylesheets/perfect-scrollbar.css?v=411104" />
-<link rel="stylesheet" href="stylesheets/overlay.css?v=411104" />
-<link rel="stylesheet" href="stylesheets/style.css?v=411104" />
-<link rel="stylesheet" href="stylesheets/lightbox.css?v=411104" />
-<link rel="stylesheet" href="stylesheets/channel.css?v=411104" />
-<link rel="stylesheet" href="stylesheets/com-9x9-cycle.css?v=411104" />
-<link rel="stylesheet" href="stylesheets/cms-component.css?v=411104" />
+<link rel="shortcut icon" type="image/ico" href="favicon_flipr_pg.ico" />
+<link rel="stylesheet" href="stylesheets/perfect-scrollbar.css?v=41110499" />
+<link rel="stylesheet" href="stylesheets/overlay.css?v=41110499" />
+<link rel="stylesheet" href="stylesheets/style.css?v=41110499" />
+<link rel="stylesheet" href="stylesheets/lightbox.css?v=41110499" />
+<link rel="stylesheet" href="stylesheets/channel.css?v=41110499" />
+<link rel="stylesheet" href="stylesheets/com-9x9-cycle.css?v=41110499" />
+<link rel="stylesheet" href="stylesheets/cms-component.css?v=41110499" />
 <title>FLIPr.tv - My Programs</title>
 </head>
-<body>
+<body data-mso="flipr">
 <div id="fb-root"></div>
 <!-- template = #lightbox-create-channel-tmpl -->
 
 <!-- Header Layer Begin -->
 <div id="header">
-    <a href="../" target="_blank" id="logo"></a>
+    <img src="images/logo_flipr_pg.png" style="width:103px; height:29px; margin-left:6px; margin-top:6px" />
     <ul id="nav">
-        <li id="tv"><span><a href="../" target="_blank">Link to FLIPr.tv</a></span></li>
+        <li id="tv"><span class="fliprOptions hide"><a href="../" target="_blank">Link to FLIPr.tv</a></span></li>
         <li id="profile">
             <p id="btn-profile"></p>
             <p id="selected-profile">Guest</p>
@@ -142,7 +143,7 @@
 <!-- Footer Layer Begin -->
 <p id="footer-control"></p>
 <div id="footer">
-    <span>© 2014 FLIPr.tv. All rights reserved.</span>
+    <span>© 2014 <fliprElm class="fliprOptions hide">FLIPr.tv.</fliprElm> All rights reserved.</span>
 </div>
 <!-- Footer Layer End -->
 
@@ -222,6 +223,10 @@
 <div id="terms-overlay" class="overlay-h501 terms-overlay"></div>
 
 
+<!-- Create Episode Options Begin -->
+<div id="new-Episode-Option" class="overlay-h316 create-episode-options central-l fixed-l align-center">
+</div>
+<!-- Create Episode Options End -->
 
 
 <div id="tmpHtml2" style="display: none"></div>
@@ -233,12 +238,12 @@
     <div class="overlay-h316-center">
         <p class="overlay-button-close"></p>
         <h2 class="overlay-title langkey">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Create a New Program'])}}</h2>
-        <h3 class="overlay-subtitle">{{html nn._([cms.global.PAGE_ID, 'overlay', 'Choose a type'])}}</h3>
+        <h3 class="overlay-subtitle">{{html nn._([cms.global.PAGE_ID, 'overlay', 'You can set it as a PAID or FREE program!'])}}</h3>
         {{if !cms.global.USER_PRIV.isYoutuber}}
             <div id="create-9x9-program" class="btn-large btn-create">
                 <div class="left"></div>
                 <div class="center">    
-                    <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'FLIPr<br />Program'])}}</p>
+                    <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'Curated<br />Program'])}}</p>
                     <img src="images/icon_9x9.png" alt="">               
                 </div>
                 <div class="right"></div>
@@ -248,8 +253,8 @@
             <div id="create-youtube-program" class="btn-large btn-create">
                 <div class="left"></div>
                 <div class="center">
-                    <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'YouTube Sync<br />Program'])}}</p>
-                    <img src="images/icon_youtube.png" alt="">
+                    <p>{{html nn._([cms.global.PAGE_ID, 'overlay', 'Sync<br />Program'])}}</p>
+                    <img src="images/icon_sync.png" alt="">
                 </div>
                 <div class="right"></div>
             </div>
@@ -322,23 +327,36 @@
 
 <script id="title-func-tmpl" type="text/x-jquery-tmpl">
 <h2>${nn._([cms.global.PAGE_ID, 'title-func', 'My Programs'])} (<span id="channel-counter">${$item.cntChannel}</span>)</h2>
-<ul>
-    <li><p class="curate btns"><span><a class="btn_create_new" >${nn._([cms.global.PAGE_ID, 'title-func', 'Create a new program'])}</a></span></p></li>
-    <li class="last"><p class="order btns"><span><a href="javascript:void(0);" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder programs'])}</a></span></p></li>
-</ul>
-{{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
-<p class="radio-list filterType hide">
-    <span>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</span>
-    <label for="filter_all" class="lbTypeLists checked">
-        <input type="radio" name="filter" value="all" id="filter_all" class="lbTypeItem" checked> {{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</label>
-    <label for="filter_9x9" class="lbTypeLists">
-        <input type="radio" name="filter" value="9x9" id="filter_9x9" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'FLIPr programs'])}}</label>
-    <label for="filter_youtube" class="lbTypeLists">
-        <input type="radio" name="filter" value="YoutubeSync" id="filter_youtube" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'YouTube sync programs'])}}</label>
-    <label for="filter_youtubelive" class="lbTypeLists">
-        <input type="radio" name="filter" value="YoutubeLive" id="filter_youtubelive" class="lbTypeItem"> {{html nn._([cms.global.PAGE_ID, 'title-func', 'Live programs'])}}</label>
+<div class="form-group search-input ">
+    <input class="keyword-search disabled" disabled type="text" placeholder="${nn._([cms.global.PAGE_ID, 'title-func', 'Search program'])}">
+    <div class="search-button btn-search hide"></div>
+</div>
+
+<p class="radio-list filterType">
+    <div id="filterProgram" class="fminput clearfix">
+
+        {{if cms.global.MSO > 0 && !cms.global.USER_PRIV.isYoutuber}}
+        <label>{{html nn._([cms.global.PAGE_ID, 'title-func', 'Filtered by:'])}}</label>
+        <div class="fmfield">
+            <div class="select enable disabled">
+                <p class="select-btn on"></p>
+                <p class="select-txt"><a href="#" onclick="return false;">{{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</a></p>
+                <ul class="select-list" style="display: none;">
+                    <li data-meta="all"        >{{html nn._([cms.global.PAGE_ID, 'title-func', 'All'])}}</li>
+                    <li data-meta="9x9"        >{{html nn._([cms.global.PAGE_ID, 'title-func', 'Curated programs'])}}</li>
+                    <li data-meta="YoutubeSync">{{html nn._([cms.global.PAGE_ID, 'title-func', 'Sync programs'])}}</li>
+                    <li data-meta="YoutubeLive">{{html nn._([cms.global.PAGE_ID, 'title-func', 'Live programs'])}}</li>
+                </ul>
+            </div>
+        </div>
+        {{/if}}
+
+        <ul style="height:32px;">
+            <li><p class="curate btns"><span><a class="btn_create_new" >${nn._([cms.global.PAGE_ID, 'title-func', 'Create a new program'])}</a></span></p></li>
+            <li class="last"><p class="order btns"><span><a href="javascript:void(0);" class="reorder">${nn._([cms.global.PAGE_ID, 'title-func', 'Reorder programs'])}</a></span></p></li>
+        </ul>
+    </div>
 </p>
-{{/if}}
 </script>
 
 <script id="get-url-part-tmpl" type="text/x-jquery-tmpl">
@@ -349,7 +367,7 @@
 <script id="get-url-tmpl" type="text/x-jquery-tmpl">
 <ul class="tooltip-content-list">
     <li>
-        <label class="title">${nn._([cms.global.PAGE_ID, 'channel-list', "URL"])}</label>
+        <label class="title">${nn._([cms.global.PAGE_ID, 'channel-list', "Share URL"])}</label>
         <input class="input-gray srul-text" onclick="this.select()" value="http://www.FLIPr.tv">
     </li>
 </ul>
@@ -379,7 +397,7 @@
                 {{if cms.global.MSO > 0}}
                 <li>
                     <div class="img"><a ><img width="781" height="274" src="images/banner_01.png"></a></div>
-                    <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sync with <strong>YouTube channel or playlist</strong> to get online videos.'])}}</span></p></div>
+                    <div class="desc"><p><span>{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sync with <strong>channel or playlist</strong> to get online videos.'])}}</span></p></div>
                 </li>
                 <li>
                     <div class="img"><a ><img width="781" height="274" src="images/banner_liveprogran.png"></a></div>
@@ -420,27 +438,34 @@
             <a href="${cms.global.SHARE_URL_BASE}/view/p${id}" target="_blank"><img src="images/icon_playlist.png" alt="" class="watermark" /></a>
         </div>
         <div class="info">
-            <h3><a href="{{if true === isYoutubeLive}}javascript:void(0);{{else}}episode-list.html?id=${id}{{/if}}">${name}</a></h3>
+            <h3>
+                {{if paidChannel || cntItem > 0}}
+                    <span class="badge {{if paidChannel}}danger{{else}}warning{{/if}}">${nn._([cms.global.PAGE_ID, 'channel-list', 'Paid'])}</span>
+                {{/if}}
+                <a href="{{if true === isYoutubeLive}}javascript:void(0);{{else}}episode-list.html?id=${id}{{/if}}">${name}</a>
+            </h3>
+            <div class="badge-list">
+                {{if status === 0}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Publish'])}</span>
+                {{else}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Unpublish'])}</span>
+                {{/if}}
+
+                
+                {{if true === isYoutubeSync}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Sync program'])}</span>
+                {{else true === isYoutubeLive}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Live program'])}</span>
+                {{else}}
+                    <span class="badge outline">${nn._([cms.global.PAGE_ID, 'channel-list', 'Curated program'])}</span>
+                {{/if}}
+            </div>
             <p><span>${cntEpisode}</span>${nn._([cms.global.PAGE_ID, 'channel-list', 'Episodes'])}</p>
             <p><span>${cntSubscribe}</span>${nn._([cms.global.PAGE_ID, 'channel-list', 'Followers'])}</p>
         </div>
         <div class="func-wrap">
             <p class="time">
                 ${nn._([cms.global.PAGE_ID, 'channel-list', 'Update:'])} ${cms.common.formatTimestamp(updateDate)} 
-                {{if true === isYoutubeSync}}
-                    <img id="ytSync_${id}" class="fucnYtSync" data-meta="${autoSync}"  data-program="${id}"
-                         title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'YouTube sync program'])}}"
-                         src="images/icon_youtube_sm_${autoSync}.png">
-                    <img title="{{if 4 === sorting}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by YouTube order'])}}{{else}}{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Sort by YouTube reverse order'])}}{{/if}}"
-                         src="images/icon_youtube_order_${sorting}.png">
-                {{else true === isYoutubeLive}}
-                    <img title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'Live program'])}}"
-                             src="images/icon_live_program_sm.png">
-                {{/if}}
-                {{if cms.global.USER_PRIV.isAutoOn === true && status === 0}}
-                    <img title="{{html nn._([cms.global.PAGE_ID, 'channel-list', 'In my app'])}}"
-                         src="images/icon_program_store.png">
-                {{/if}}
             </p>
             <div class="func-btns">
                 <div class="btn-wrap enable">
@@ -451,7 +476,7 @@
                             {{if true === isYoutubeLive}}
                             <li><a class="add disable">Add</a></li>
                             {{else}}
-                            <li><a href="epcurate-curation.html?cid=${id}" class="add">Add<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Curate a new episode'])}</span></span></span></span></a></li>
+                            <li><a data-meta="${id}" class="add btnNewEpisode">Add<span class="tip"><img src="images/bg_tip_bottom.png" alt="" /><span class="tip-left"><span class="tip-right"><span class="tip-middle">${nn._([cms.global.PAGE_ID, 'channel-list', 'Curate a new episode'])}</span></span></span></span></a></li>
                             {{/if}}
                         {{/if}}
                         {{if !cms.global.IS_REMARK}}
@@ -470,7 +495,7 @@
                 <div id="get-url-${id}" class="get-url tooltip-wrap show-top" data-metain="0" data-metaep="0" data-metach="${id}">
                     <ul class="tooltip-content-list">
                         <li>
-                            <label class="title">URL</label>
+                            <label class="title">Share URL</label>
                             <input class="input-gray srul-text" onclick="this.select()" value="http://www.FLIPr.tv">
                         </li>
                     </ul>
@@ -487,6 +512,78 @@
 </script>
 <!-- channel-list-tmpl-item End -->
 
+<!-- new-Episode-Option-tmpl Begin -->
+<script id="new-Episode-Option-tmpl" type="text/x-jquery-tmpl">
+    <div class="overlay-h316-left"></div>
+
+    <div id="areaOption" class="overlay-h316-center">
+        <p class="overlay-button-close ov-cancel"></p>
+        <h2 class="overlay-title">${nn._([cms.global.PAGE_ID, 'episode-list', 'Create a New Episode'])}</h2>
+        <div id="func-upvideo" data-meta="${oid}" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">    
+                <p>${nn._([cms.global.PAGE_ID, 'episode-list', 'By upload video'])}</p> 
+                <img src="images/icon-upload.png" alt="">               
+            </div>
+            <div class="right"></div>
+        </div>
+        <div id="func-episode" data-meta="${oid}" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">
+                <p>${nn._([cms.global.PAGE_ID, 'episode-list', 'By curation'])}</p>    
+                <img src="images/icon-pencel.png" alt="">                   
+            </div>
+            <div class="right"></div>
+        </div>
+        {{if true === cms.global.USER_PRIV.isImportEpisode}}
+        <div id="func-fromepisode" data-meta="${oid}" class="btn-large btn-create">
+            <div class="left"></div>
+            <div class="center">
+                <p>${nn._([cms.global.PAGE_ID, 'episode-list', 'Import episode'])}</p>    
+                <img src="images/icon-pencel.png" alt="">                   
+            </div>
+            <div class="right"></div>
+        </div>
+        {{/if}}
+
+        <div class="overlay-button-holder">
+            <div class="btn-gray ov-cancel">
+                <p class="left"></p>
+                <p  class="center langkey">${nn._([cms.global.PAGE_ID, 'episode-list', 'Close'])}</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+
+    {{if true === cms.global.USER_PRIV.isImportEpisode}}
+    <div id="areaImport" class="overlay-h316-center hide">
+        <p class="overlay-button-close ov-cancel"></p>
+        <h2 class="overlay-title">${nn._([cms.global.PAGE_ID, 'episode-list', 'Create a New Episode'])}</h2>
+
+        <div class="overlay-content">
+            <div class="form-wrap">
+                <br /><br /><br />
+                ${nn._([cms.global.PAGE_ID, 'episode-list', 'Episode URL'])} : &nbsp; <input id="importInText" type="text" placeholder="http://www.mars.cms/view/p35443/e995914" style="width: 68%; height:1.6rem; font-size: 1.1rem" />
+                <br /><br />
+                <div class="notice hide" id="epImportNotice" style="color: red">請輸入必填項目。</div>
+            </div>
+        </div>
+
+        <div class="overlay-button-holder">
+            <div class="btn-gray btnImportEp">
+                <p class="left"></p>
+                <p  class="center">${nn._([cms.global.PAGE_ID, 'episode-list', 'Import'])}</p>
+                <p class="right"></p>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+
+    <div class="overlay-h316-right"></div>
+</script>
+<!-- new-Episode-Option-tmpl End -->
+
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="javascripts/libs/nn-sdk.js?v=411104"></script>
@@ -500,12 +597,12 @@
 <script src="javascripts/libs/jquery.cookie.min.js?v=411104"></script>
 <script src="javascripts/libs/json2.min.js?v=411104"></script>
 <script src="javascripts/libs/purl.min.js?v=411104"></script>
-<script src="javascripts/v3/config.js?v=411104"></script>
-<script src="javascripts/v3/func.common.js?v=411104"></script>
-<script src="javascripts/v3/func.get-url.js?v=411104"></script>
-<script src="javascripts/v3/func.index.js?v=411104"></script>
-<script src="javascripts/v3/domready.common.js?v=411104"></script>
-<script src="javascripts/v3/domready.get-url.js?v=411104"></script>
-<script src="javascripts/v3/domready.index.js?v=411104"></script>
+<script src="javascripts/v3/config.js?v=41110499"></script>
+<script src="javascripts/v3/func.common.js?v=41110499"></script>
+<script src="javascripts/v3/func.get-url.js?v=41110499"></script>
+<script src="javascripts/v3/func.index.js?v=41110499"></script>
+<script src="javascripts/v3/domready.common.js?v=41110499"></script>
+<script src="javascripts/v3/domready.get-url.js?v=41110499"></script>
+<script src="javascripts/v3/domready.index.js?v=41110499"></script>
 </body>
 </html>

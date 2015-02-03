@@ -360,6 +360,8 @@
             "Processing...": "Processing..."
         },
         "channel-list": {
+            "UNDER REVIEW": "UNDER REVIEW",
+            "Paid": "Paid",
             "Sorted by": "Sorted by",
             "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.": "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.",
             "Updated time": "Updated time ",
@@ -417,9 +419,14 @@
             "Save order": "Save order"
         },
         "channel-list": {
+            "Paid": "Paid",
+            "Publish": "Publish",
+            "Unpublish": "Unpublish",
+            "Sync programe": "Sync programe",
+            "Live programe": "Live programe",
             "Get URL": "Get URL",
             "Brand": "Brand",
-            "URL": "URL",
+            "Share URL": "Share URL",
             "Episodes": "Episodes",
             "Followers": "Followers",
             "Views": "Views",
@@ -432,6 +439,7 @@
             "No Episodes": "No Episodes",
             "'s Favorite": "'s Favorite",
             "You don't have any programs yet": "You don't have any programs yet",
+            "Your search - [xxx] didn't match any programs.": "Your search - [<span>{0}</span>] didn't match any programs.",
             "Create a new program": "Create a new program",
             "Create your own <strong>personal and unique</strong> program.": "Create your own <strong>personal and unique</strong> program.",
             "Add online videos into episode and start to <strong>curate your own program.</strong>": "Add online videos into episode and start to <strong>curate your own program.</strong>",
@@ -444,12 +452,12 @@
             "Create a New Program": "Create a New Program",
             "Choose a type": "Choose a type",
             "YouTube Sync<br />Program": "YouTube Sync<br />Program",
-            "FLIPr<br />Program": "FLIPr<br />Program",
+            "Curated<br />Program": "Curated<br />Program",
             "Terms of use": "Terms of use",
             "Agree": "Agree",
             "Disagree": "Disagree",
-            "You have ? invalid YouTube sync program.": "You have {0} invalid YouTube sync program.",
-            "You have ? invalid YouTube sync programs.": "You have {0} invalid YouTube sync programs."
+            "You have ? invalid Sync program.": "You have {0} invalid sync program.",
+            "You have ? invalid Sync programs.": "You have {0} invalid sync programs."
         }
     },
     "cms-settings": {
@@ -503,7 +511,7 @@
         },
         "title-func": {
             "My Programs": "My Programs",
-            "Create a new FLIPr Program": "Create a new FLIPr Program",
+            "Create a new Curated Program": "Create a new Curated Program",
             "Create a new YouTube Sync Program": "Create a new YouTube Sync Program",
             "Settings": "Settings",
             "Required field": "Required field"
@@ -517,7 +525,7 @@
             "Better results with 300x300 or higher resolution image": "Better results with 300x300 or higher resolution image",
             "Please upload jpeg, png, or gif files.": "Please upload jpeg, png, or gif files.",
             "Description": "Description",
-            "Best within 52 characters": "Best within 52 characters",
+            "Best within 1000 characters": "Best within 1000 characters",
             "Program language": "Program language",
             "Select a language": "Select a language",
             "English": "English",
@@ -545,8 +553,8 @@
             "Create": "Create",
             "Save": "Save",
             "Episode sort by": "Episode sort by",
-            "YouTube playlist or YouTube channel order": "YouTube playlist or YouTube channel order",
-            "YouTube playlist or YouTube channel reverse order": "YouTube playlist or YouTube channel reverse order",
+            "Playlist or channel order": "Playlist or channel order",
+            "Playlist or channel reverse order": "Playlist or channel reverse order",
             "Add to My App": "Add to My App",
             "You can search the programs which has been added to \"Main Channels\" and \"Program store\" of My App.": "You can search the programs which has been added to \"Main Channels\" and \"Program store\" of My App."
         }
@@ -642,14 +650,14 @@
             "Delete": "Delete",
             "Get URL": "Get URL",
             "Brand": "Brand",
-            "URL": "URL",
+            "Share URL": "Share URL",
             "Draft": "Draft",
             "Curate new episode to tell a story": "Curate new episode to tell a story",
             "<strong>Curate online videos</strong> into each single episode.": "<strong>Curate online videos</strong> into each single episode.",
             "Tell your story by <strong>arranging the video sequence.</strong>": "Tell your story by <strong>arranging the video sequence.</strong>",
             "<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.": "<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.",
             "<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.": "<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.",
-            "Video check": "Video check",
+            "Check the video of the episode if it's invalid.": "Check the video of the episode if it's invalid.",
             "No video has problem": "No video has problem",
             "Find ? video has problem.": "Find {0} video has problem.",
             "Find ? videos have problem.": "Find {0} videos have problem."        }
@@ -687,7 +695,7 @@
             "Save": "Save",
             "Please fill in all required fields.": "Please fill in all required fields.",
             "Best within 20 characters.": "Best within 20 characters.",
-            "Best within 52 characters.": "Best within 52 characters."
+            "Best within 300 characters.": "Best within 300 characters."
         }
     },
     "epcurate-curation": {
@@ -712,7 +720,7 @@
             "Next to Publish >": "Next to Publish >"
         },
         "add-video": {
-            "Paste YouTube video URLs to add (separate with different lines)": "Paste YouTube video URLs to add (separate with different lines)",
+            "Paste YouTube or Vimeo video URLs to add (separate with different lines)": "Paste YouTube or Vimeo video URLs to add (separate with different lines)",
             "Paste YouTube video URLs to add.": "Paste YouTube video URLs to add.",
             "You have reached the maximum amount of 50 videos.": "You have reached the maximum amount of 50 videos.",
             "Invalid URL, please try again.": "Invalid URL, please try again.",
@@ -768,7 +776,7 @@
             "Choose a type": "Choose a type",
             "Hyper Link": "Hyper Link",
             "Poll": "Poll",
-            "User can go to watch another FLIPr.tv program or episode.": "User can go to watch another FLIPr.tv program or episode.",
+            "You can promote the video content by setting the image or text commercials.": "You can promote the video content by setting the image or text commercials.",
             "Scheduled Notification": "Scheduled Notification",
             "Send a scheduled notification to user to get more information.": "Send a scheduled notification to user to get more information.",
             "Instant Notification": "Instant Notification",
@@ -785,7 +793,7 @@
             "Button text": "Button text",
             "Input button text": "Input button text",
             "Hyper link": "Hyper link",
-            "Input FLIPr program or episode URL": "Input FLIPr program or episode URL",
+            "Input Curated program or episode URL": "Input Curated program or episode URL",
             "Invalid FLIPr URL, please try again.": "Invalid FLIPr URL, please try again.",
             "Mobile Notification and Time": "Mobile Notification and Time",
             "iOS": "iOS",

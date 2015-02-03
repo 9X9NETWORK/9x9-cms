@@ -140,6 +140,7 @@ var cms = {};
             '/api/store':                                           'fakeapi/json/store_search.json'
         },
         YOUR_FAVORITE: 11,
+        FLIPR_VIDEO: 5,
         PROGRAM_MAX: 50,
         LANG_MAP: {
             'en': 'English',
@@ -352,7 +353,7 @@ var cms = {};
         break;
     }
 
-    if (location.host === "localhost") {
+    if (location.host === "localhost" || location.host === "mars.cms") {
         cms.config.API_BASE = 'http://beagle.flipr.tv';
     }
 
@@ -360,6 +361,7 @@ var cms = {};
     case 'dev6.flipr.tv':
     case 'beagle.flipr.tv':
         cms.global.IS_REMARK = false;
+        cms.config.API_BASE = 'http://beagle.flipr.tv';
         break;
     case 'www.flipr.tv':
         cms.global.IS_REMARK = true;

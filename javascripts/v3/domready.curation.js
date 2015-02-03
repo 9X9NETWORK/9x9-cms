@@ -9,6 +9,81 @@ $(function () {
         $common = cms.common,
         videoDeleteIdList = [];
 
+    $(document).on('keyup', '#hyper_button_text', function (e) {
+        var hyButtonText = $("#hyper_button_text"),
+            hyDisplayText = $("#hyper_display_text");
+        if ("image" === hyDisplayText.val()) {
+            $("#poi-btn").css("background-image", "url(" + hyButtonText.val() + ")");
+
+        }
+    });
+
+    $(document).on('click', '.btnUploadImage', function() {
+        if (!$page.s3Info.isGet) {
+            $page.prepareS3Attr();
+        }
+        $("#fup").trigger("click");
+    });
+
+    $(document).on('change', '#fup', function() {
+        var cntFiles = this.files.length,
+            arrUpFiles = [];
+        if ($page.s3Info.isGet && cntFiles > 0) {
+            $.each(this.files, function(eKey, eValue) {
+                // nn.log("eValue.type ["+eValue.type+"]");
+                $page.imageUpload(eValue, eKey);
+            });
+        }
+    });
+
+    $(document).on('change', '#poiDisplayType', function (e) {
+        var that = $(this),
+            dtype = that.val(),
+            hyDisplayText = $("#hyper_display_text"),
+            hyButtonText = $("#hyper_button_text"),
+            defImage = "images/poi_image_default.jpg",
+            varImage = "",
+            fm = document.forms["eventHyperForm"];
+
+        switch (dtype) {
+            case "text":
+                hyButtonText.data("image", hyButtonText.val());
+                hyButtonText.val(hyButtonText.data("text"));
+                $(".poi-button-input-text").text(hyButtonText.val());
+
+                $("#hyper_button_text").attr("placeholder", nn._([cms.global.PAGE_ID, 'poi-event', 'Input text']));
+
+                hyDisplayText.val(dtype);
+                $(".btnUploadImage").addClass("hide");
+                $("#poi-btn-holder").removeClass("hide");
+                $("#poi-btn").removeClass("poi-image");
+                $("#poi-btn").css('background-image', 'none');
+                break;
+
+            case "image":
+                hyButtonText.data("text", hyButtonText.val());
+                hyButtonText.val(hyButtonText.data("image"));
+
+                $("#hyper_button_text").attr("placeholder", nn._([cms.global.PAGE_ID, 'poi-event', 'Upload image']));
+
+                varImage = $("#hyper_button_text").val();
+                if ("" === varImage) {
+                    $("#poi-btn").css("background-image", "url(" + defImage + ")");
+                }else{
+                    $("#poi-btn").css("background-image", "url(" + varImage + ")");
+                }
+                hyDisplayText.val(dtype);
+
+                $(".btnUploadImage").removeClass("hide");
+                $("#poi-btn-holder").addClass("hide");
+                $("#poi-btn").addClass("poi-image");
+                $("#hyper_button_text").val(varImage);
+
+                break;
+        }
+
+    });
+
     // $page.setVideoMeasure();
     // $page.setSpace();
     // $common.scrollbarX('#storyboard-wrap', '#storyboard-list', '#storyboard-slider');
@@ -299,13 +374,15 @@ $(function () {
     });
     $('#btn-add-videourl').click(function () {
         $('#cur-add .notice').addClass('hide').hide();
-        var videoUrl = $.trim($('#videourl').val()),
+        var videoUrl = $page.getTermVideos(),
             urlList = videoUrl.split('\n'),
             patternLong = /^http(?:s)?:\/\/www.youtube.com\/watch\?/,
             patternShort = /^http(?:s)?:\/\/youtu.be\//,
+            patternVimeo = /^http(?:s)?:\/\/vimeo.com\//,
             matchKey = '',
             matchList = [],
             normalList = [],
+            contentTypeList = [],
             existList = [],
             invalidList = [],
             privateVideoList = [],
@@ -321,10 +398,18 @@ $(function () {
             hasLimitedSyndication = null,
             isSyndicateLimited = null,
             isEmbedLimited = null,
-            isUnplayableVideo = null;
-        if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add (separate with different lines)']) === videoUrl) {
+            isUnplayableVideo = null,
+            inContentType = 1,
+            cntVimeoPrivacyErr = 0,
+            cntVimeoEmbedErr = 0;
+        if ('' === videoUrl || nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube or Vimeo video URLs to add (separate with different lines)']) === videoUrl) {
             $('#videourl').get(0).focus();
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Paste YouTube video URLs to add.'])).removeClass('hide').show();
+            return false;
+        }
+        if(!$page.chkVideoContentTyep()){
+            // episode don't support multiple video sources
+            $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', "We don't support multiple video sources in one episode. Please import the same video source as the first one."])).removeClass('hide').show();
             return false;
         }
         $('#storyboard-list li').each(function () {
@@ -332,27 +417,39 @@ $(function () {
         });
         $.each(urlList, function (i, url) {
             url = $.trim(url);
+            inContentType = 1;
             if ('' !== url) {
                 if (patternLong.test(url)) {
                     matchKey = $.url(url).param('v');
                 } else if (patternShort.test(url)) {
                     matchKey = $.url(url).segment(1);
+                } else if (patternVimeo.test(url)) {
+                    matchKey = $.url(url).segment(1);
+                    inContentType = 7;
                 } else {
                     matchKey = '';
                 }
-                if (!matchKey || matchKey.length !== 11) {
+                if (!matchKey || (inContentType === 1 && matchKey.length !== 11)) {
                     matchKey = '';
                     invalidList.push(url);
                 }
+
                 if ('' !== matchKey) {
+                    if(inContentType === 7){
+                        normalList.push("https://vimeo.com/" + matchKey);
+                    } else {
+                        normalList.push("http://www.youtube.com/watch?v=" + matchKey);
+                    }
                     matchList.push(matchKey);
+                    contentTypeList.push(inContentType);
                 }
             }
         });
+        // return false;
         if (matchList.length > 0) {
-            normalList = $.map(matchList, function (k, i) {
-                return 'http://www.youtube.com/watch?v=' + k;
-            });
+            // normalList = $.map(matchList, function (k, i) {
+            //     return 'http://www.youtube.com/watch?v=' + k;
+            // });
             if ((existList.length + matchList.length) > cms.config.PROGRAM_MAX) {
                 $('#videourl').val(normalList.join('\n'));
                 $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'You have reached the maximum amount of 50 videos.'])).removeClass('hide').show();
@@ -363,80 +460,126 @@ $(function () {
             $('body').addClass('has-change');
             $common.showProcessingOverlay();
             $.each(matchList, function (idx, key) {
-                nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + key + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
-                    committedCnt += 1;
+                switch(contentTypeList[idx]){
+                    case 1:
+                        // youtube video
+                        nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + key + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
+                            committedCnt += 1;
+                            var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
 
-                    var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
-
-                    if (true === checkResult.isEmbedLimited) {
-                        embedLimitedList.push(normalList[idx]);
-                    }
-                    if (youtubes.data && !checkResult.isEmbedLimited && !checkResult.isProcessing && !checkResult.isRequesterRegionRestricted) {
-                        ytData = youtubes.data;
-                        ytItem = {
-                            poiList: [],
-                            beginTitleCard: null,
-                            endTitleCard: null,
-                            id: 0,                          // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
-                            ytId: ytData.id,
-                            fileUrl: normalList[idx],
-                            imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
-                            duration: ytData.duration,      // keep trimmed duration from FLIPr API
-                            ytDuration: ytData.duration,    // keep original duration from YouTube
-                            startTime: 0,
-                            endTime: ytData.duration,
-                            name: ytData.title,
-                            intro: ytData.description,
-                            uploader: ytData.uploader,
-                            uploadDate: ytData.uploaded
-                        };
-                        ytItem = $.extend(ytItem, checkResult);
-                        ytList[idx] = ytItem;
-                    } else {
-                        if (youtubes.error) {
-                            nn.log(youtubes.error, 'warning');
-                            if (youtubes.error.code && 403 === youtubes.error.code) {
-                                privateVideoList.push(normalList[idx]);
+                            if (true === checkResult.isEmbedLimited) {
+                                embedLimitedList.push(normalList[idx]);
                             }
-                        }
-                        nn.log(normalList[idx], 'debug');
-                        invalidList.push(normalList[idx]);
-                        $('#videourl').val(invalidList.join('\n'));
-                        if (true === checkResult.isEmbedLimited && 0 === privateVideoList.length && invalidList.length === embedLimitedList.length) {
-                            $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This video is not playable outside Youtube]'])).removeClass('hide').show();
-                        } else if (true === checkResult.isPrivateVideo && 0 === embedLimitedList.length && invalidList.length === privateVideoList.length) {
-                            $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This is a private video]'])).removeClass('hide').show();
-                        } else if (checkResult.isUnplayableVideo || checkResult.isProcessing || checkResult.isRequesterRegionRestricted) {
-                            $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Unplayable video, please try again!'])).removeClass('hide').show();
-                        } else {
-                            $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!'])).removeClass('hide').show();
-                        }
-                    }
-                    if (committedCnt === matchList.length) {
-                        var videoOkCnt, oriLiCnt = $('#storyboard-list li').length;
-                        committedCnt = -1;   // reset to avoid collision
-                        $page.animateStoryboard(ytList.length);
-                        $('#storyboard-listing-tmpl-item').tmpl(ytList).hide().appendTo('#storyboard-listing').fadeIn(2000);
-                        $page.sumStoryboardInfo();
-                        $page.rebuildVideoNumber(videoNumberBase);
-                        $('.ellipsis').ellipsis();
-
-                        videoOkCnt = $('#storyboard-list li a.video_ok').length ;
-                        if (videoOkCnt > 0) {
-                            var liIndex = $('#storyboard-list li a.video_ok').eq(videoOkCnt-1).parent("li").index(), liShift = 0 ;
-                            if( liIndex >= oriLiCnt ){
-                                $('#storyboard-list li').eq(liIndex).find(".hover-func a.video-play").trigger("click");
-                                $("#storyboard-wrap").scrollLeft('update');
-                                if( liIndex > 0 ){
-                                    liShift = 123 * liIndex - 61 ;
+                            nn.log("checkResult");
+                            nn.log(checkResult);
+                            if (youtubes.data && !checkResult.isEmbedLimited && !checkResult.isProcessing && !checkResult.isRequesterRegionRestricted) {
+                                ytData = youtubes.data;
+                                ytItem = {
+                                    poiList: [],
+                                    beginTitleCard: null,
+                                    endTitleCard: null,
+                                    id: 0,                          // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
+                                    ytId: ytData.id,
+                                    fileUrl: normalList[idx],
+                                    imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
+                                    duration: ytData.duration,      // keep trimmed duration from FLIPr API
+                                    ytDuration: ytData.duration,    // keep original duration from YouTube
+                                    startTime: 0,
+                                    endTime: ytData.duration,
+                                    name: ytData.title,
+                                    intro: ytData.description,
+                                    uploader: ytData.uploader,
+                                    uploadDate: ytData.uploaded,
+                                    contentType: contentTypeList[idx]
+                                };
+                                ytItem = $.extend(ytItem, checkResult);
+                                ytList[idx] = ytItem;
+                            } else {
+                                if (youtubes.error) {
+                                    nn.log(youtubes.error, 'warning');
+                                    if (youtubes.error.code && 403 === youtubes.error.code) {
+                                        privateVideoList.push(normalList[idx]);
+                                    }
                                 }
-                                $("#storyboard-wrap").scrollLeft(liShift);
+                                nn.log(normalList[idx], 'debug');
+                                invalidList.push(normalList[idx]);
+                                
                             }
-                        }
+                            
+                            if (true === checkResult.isEmbedLimited && 0 === privateVideoList.length && invalidList.length === embedLimitedList.length) {
+                                $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This video is not playable outside Youtube]'])).removeClass('hide').show();
+                            } else if (true === checkResult.isPrivateVideo && 0 === embedLimitedList.length && invalidList.length === privateVideoList.length) {
+                                $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This is a private video]'])).removeClass('hide').show();
+                            } else if (checkResult.isUnplayableVideo || checkResult.isProcessing || checkResult.isRequesterRegionRestricted) {
+                                $('#cur-add .notice').html(nn._([cms.global.PAGE_ID, 'add-video', 'Unplayable video, please try again!'])).removeClass('hide').show();
+                            }
 
-                        $('#overlay-s').fadeOut();
-                    }
-                }, 'jsonp');
+                            chkLoop();
+                        }, 'jsonp');
+
+                        break;
+
+                    case 7:
+                        // vimeo video
+                        $.ajax({
+                                url: normalList[idx].replace("vimeo.com/", "api.vimeo.com/videos/"),
+                                type: "GET",
+                                cache: false,
+                                beforeSend: function (jqXHR) {
+                                    $.each(cms.config.VIMEO_PAT, function(eKey, eValue) {
+                                        jqXHR.setRequestHeader(eKey, eValue);
+                                    });
+                                }
+                            })
+                            .done(function (vimeoVideo) {
+                                var checkResult = cms.vimeoUtility.checkVideoValidity(vimeoVideo),
+                                    videoObj = $page.infoParserVimeo(vimeoVideo, true);
+
+                                committedCnt += 1;
+                                if (videoObj.v_read > 0 && !checkResult.isPrivateVideo && !checkResult.isEmbedLimited && !checkResult.isInvalid) {
+                                    ytItem = {
+                                        poiList: [],
+                                        beginTitleCard: null,
+                                        endTitleCard: null,
+                                        id: 0, // fake program.id for rebuild identifiable url #!pid={program.id}&ytid={youtubeId}&tid={titlecardId}
+                                        ytId: videoObj.id,
+                                        fileUrl: videoObj.v_url,
+                                        embedUrl: videoObj.embedUrl,
+                                        imageUrl: videoObj.thumbnail,
+                                        duration: videoObj.duration, // keep trimmed duration from FLIPr API
+                                        ytDuration: videoObj.duration, // keep original duration from YouTube
+                                        startTime: 0,
+                                        endTime: videoObj.duration,
+                                        name: videoObj.title,
+                                        intro: videoObj.description,
+                                        uploader: videoObj.uploader,
+                                        uploader_name: videoObj.uploader_name,
+                                        uploadDate: videoObj.uploaded,
+                                        contentType: contentTypeList[idx]
+                                    };
+                                    ytItem = $.extend(ytItem, checkResult);
+                                    ytList[idx] = ytItem;
+                                } else {
+                                    if(checkResult.isPrivateVideo || checkResult.isEmbedLimited){
+                                        cntVimeoPrivacyErr += 1;
+                                        if(checkResult.isEmbedLimited){
+                                            cntVimeoEmbedErr += 1;
+                                        }
+                                    }
+                                    invalidList.push(normalList[idx]);
+                                    $('#videourl').val(invalidList.join('\n'));
+                                }
+                                chkLoop();
+                            })
+                            .fail(function() {
+                                committedCnt += 1;
+                                cntVimeoPrivacyErr += 1;
+                                invalidList.push(normalList[idx]);
+                                chkLoop();
+                            });
+                        break;
+                }
+
             });
         }
         $('#videourl').val('');
@@ -445,6 +588,54 @@ $(function () {
             $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again.'])).removeClass('hide').show();
         }
         return false;
+
+        function chkLoop(){
+            if (committedCnt === matchList.length) {
+                var videoOkCnt = 0,
+                    oriLiCnt = $('#storyboard-list li').length,
+                    errMsg = "";
+
+                committedCnt = -1; // reset to avoid collision
+                $page.animateStoryboard(ytList.length);
+                $('#storyboard-listing-tmpl-item').tmpl(ytList).hide().appendTo('#storyboard-listing').fadeIn(2000);
+                $page.sumStoryboardInfo();
+                $page.rebuildVideoNumber(videoNumberBase);
+                $('.ellipsis').ellipsis();
+
+                videoOkCnt = $('#storyboard-list li a.video_ok').length ;
+                if (videoOkCnt > 0) {
+                    var liIndex = $('#storyboard-list li a.video_ok').eq(videoOkCnt-1).parent("li").index(), liShift = 0 ;
+                    if( liIndex >= oriLiCnt ){
+                        $('#storyboard-list li').eq(liIndex).find(".hover-func a.video-play").trigger("click");
+                        $("#storyboard-wrap").scrollLeft('update');
+                        if( liIndex > 0 ){
+                            liShift = 123 * liIndex - 61 ;
+                        }
+                        $("#storyboard-wrap").scrollLeft(liShift);
+                    }
+                }
+
+                if (invalidList.length > 0) {
+                    $('#videourl').val(invalidList.join('\n'));
+                    if(cntVimeoEmbedErr > 0){
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This video is not playable outside Vimeo]']);
+                    } else if(cntVimeoPrivacyErr > 0){
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Fail to add this video, please try another one.<br />[This is an invalid video]']);
+                    } else {
+                        errMsg = nn._([cms.global.PAGE_ID, 'add-video', 'Invalid URL, please try again!']);
+                    }
+                    $('#cur-add .notice').html(errMsg).removeClass('hide').show();
+                }
+
+                $('#overlay-s').fadeOut();
+            }
+        }
+
+        function funcT(inKey){
+            nn.log(inKey + " *** " + matchList[inKey]);
+            nn.log(inKey + " *** " + normalList[inKey]);
+            chkLoop();
+        }
     });
 
     $('#cur-add .checkbox a').click(function () {
@@ -475,7 +666,8 @@ $(function () {
         if ($('#epcurate-curation > .curation-content > ul.tabs > li.poi').hasClass('hide')) {
             $('#epcurate-curation ul.tabs li').removeClass('on');
             $('#epcurate-curation ul.tabs li a.cur-add').parent().parent().removeClass('last');
-            $('#epcurate-curation ul.tabs li a.cur-edit').parent().parent().removeClass('hide').addClass('last on');
+            $('#epcurate-curation ul.tabs li a.cur-edit').parent().parent().removeClass('hide last').addClass('on');
+            $('#epcurate-curation ul.tabs li a.cur-poi').parent().parent().removeClass('hide');
             $('#epcurate-curation .tab-content').addClass('hide');
             $('#cur-edit').removeClass('hide');
             $('#cur-edit .edit-time').removeClass('hide');
@@ -525,20 +717,19 @@ $(function () {
             deleting.remove();
             $('#storyboard-list > p.notice:eq(0)').show();
         } else {
-            if (length > 1) {
-                if (deleting.hasClass('playing') && (length - eq - 1) === 0) {
-                    // video-info-tmpl (auto turn by del)
-                    // return to first video
-                    elemtli = $('#storyboard-list li:first');
-                    $page.playTitleCardAndVideo(elemtli);
-                }
-                if (tmplItemData.id && tmplItemData.id > 0) {
-                    videoDeleteIdList.push(tmplItemData.id);
-                }
-                deleting.remove();
-                $('#storyboard-list > p.notice:eq(0)').show();
-            } else {
-                $common.showSystemErrorOverlay('There must be at least one video in this episode.');
+            if (deleting.hasClass('playing') && (length - eq - 1) === 0) {
+                // video-info-tmpl (auto turn by del)
+                // return to first video
+                elemtli = $('#storyboard-list li:first');
+                $page.playTitleCardAndVideo(elemtli);
+            }
+            if (tmplItemData.id && tmplItemData.id > 0) {
+                videoDeleteIdList.push(tmplItemData.id);
+            }
+            deleting.remove();
+            $('#storyboard-list > p.notice:eq(0)').show();
+            if(1 === length){
+                $('#epcurate-curation ul.tabs li a.cur-add').trigger("click");
             }
         }
         nn.log({
@@ -1063,7 +1254,7 @@ $(function () {
                 nn.api('DELETE', cms.reapi('/api/poi_points/{poiPointId}', {
                     poiPointId: poiPointId
                 }), null, function (data) {
-                    $('#overlay-s').fadeOut(0);
+                    $page._doEpisodeUpdate($("#id").val(), true);
                 });
             } else {
                 $('#overlay-s').fadeOut(0);
@@ -1310,7 +1501,7 @@ $(function () {
                                     $page.buildPoiEventOverlayTmpl(poiPointEventData);
 
                                     // For poll event buttons
-                                    if (poiPointEventData.pollButtons.length > 2) {                                                    
+                                    if (poiPointEventData.pollButtons && poiPointEventData.pollButtons.length > 2) {                                                    
                                         $('.poll-button-del').addClass('deletable');
                                         if (poiPointEventData.pollButtons.length > 3) {
                                             $('#btn-add-poll-item').addClass('disabled');
@@ -1336,17 +1527,30 @@ $(function () {
                                         nn.api('GET', cms.reapi('/api/poi_events/{poiEventId}', {
                                             poiEventId: poiEventId
                                         }), null, function (poi_event) {
+                                            var tmpMessage = "",
+                                                tmpBotton = "";
                                             poiEventContext = $.parseJSON(poi_event.context);
+                                            if (undefined !== poiEventContext.button[0].imageUrl) {
+                                                tmpMessage = "image";
+                                                tmpBotton = poiEventContext.button[0].imageUrl;
+                                            } else if (undefined !== poiEventContext.button[0].text) {
+                                                tmpMessage = "text";
+                                                tmpBotton = poiEventContext.button[0].text;
+                                            } else {
+                                                tmpMessage = poiEventContext.message;
+                                                tmpBotton = poiEventContext.button[0].text;
+                                            }
+
                                             poiEventData = {
                                                 eventId: poi_event.id,
                                                 eventType: poi_event.type,
-                                                message: poiEventContext.message,
-                                                button: poiEventContext.button[0].text,
+                                                message: tmpMessage,
+                                                button: tmpBotton,
                                                 link: poiEventContext.button[0].actionUrl,
                                                 notifyMsg: poi_event.notifyMsg,
                                                 notifyScheduler: poi_event.notifyScheduler
                                             };
-
+                                            
                                             // For poll event
                                             poiEventData.pollButtons = [];
                                             $.each(poiEventContext.button, function (i, item) {
@@ -1716,6 +1920,7 @@ $(function () {
                         tag: $('#poiTag').val()
                     },
                     poiEventContext = {
+                        "name": poiPointData.name,
                         "message": displayText,
                         "button": [{
                             "text": btnText,
@@ -1739,13 +1944,36 @@ $(function () {
                         notifyMsg: notifyMsg,
                         notifyScheduler: notifyScheduler
                     };
+
+                if (1 === poiEventType) {
+                    // fix hyper data 
+                    nn.log("displayText ["+displayText+"]");
+                    if ("text" === displayText) {
+                        nn.log("in text");
+                        poiEventContext.message = "";
+                        poiEventData.context = JSON.stringify(poiEventContext);
+                    } else if("image" === displayText){
+                        nn.log("in image");
+                        poiEventContext = null;
+                        poiEventContext = {
+                            "name": poiPointData.name,
+                            "message": "",
+                            "button": [{
+                                "imageUrl": btnText,
+                                "actionUrl": channelUrl
+                            }]
+                        };
+                        poiEventData.context = JSON.stringify(poiEventContext);
+                    }
+                }
+
                 if ($('#cur-poi-edit').hasClass('edit') && poiPointId) {
                     // update mode
                     if (poiPointId > 0 && !isNaN(poiPointId)) {
                         nn.api('PUT', cms.reapi('/api/poi_events/{poiEventId}', {
                             poiEventId: poiEventId
                         }), poiEventData, function (poi_event) {
-                            $('#overlay-s').fadeOut(0);
+                            $page._doEpisodeUpdate($("#id").val(), true);
                         });
                     } else {
                         $('#overlay-s').fadeOut(0);
@@ -1806,7 +2034,7 @@ $(function () {
                                         $('body').removeClass('has-poi-change');
                                         $('#poi-event-overlay .wrap').html('');
                                         $('#epcurate-curation ul.tabs li a.cur-poi').trigger('click');
-                                        $('#overlay-s').fadeOut(0);
+                                        $page._doEpisodeUpdate($("#id").val(), true);
                                     });
                                 });
                             });
@@ -2071,13 +2299,23 @@ $(function () {
                 };
                 // POI event context.
                 if (tmplItemData.poiList[key].eventType !== 4) {
-                    poiEventContext = {
-                        "message": tmplItemData.poiList[key].message,
-                        "button": [{
-                            "text": tmplItemData.poiList[key].button,
-                            "actionUrl": tmplItemData.poiList[key].link
-                        }]
-                    };
+                    if (1 === tmplItemData.poiList[key].eventType && 'image' === tmplItemData.poiList[key].message) {
+                        poiEventContext = {
+                            "message": tmplItemData.poiList[key].message,
+                            "button": [{
+                                "imageUrl": tmplItemData.poiList[key].button,
+                                "actionUrl": tmplItemData.poiList[key].link
+                            }]
+                        };
+                    } else {
+                        poiEventContext = {
+                            "message": tmplItemData.poiList[key].message,
+                            "button": [{
+                                "text": tmplItemData.poiList[key].button,
+                                "actionUrl": tmplItemData.poiList[key].link
+                            }]
+                        };
+                    }
                 } else {
                     poiEventContext = {
                         message: tmplItemData.poiList[key].message,
@@ -2160,7 +2398,7 @@ $(function () {
                 programList = [],
                 parameter = null;
 
-            $('#storyboard-list li').each(function (idx) {
+            $('#storyboard-list li').each(function (idx, eValue) {
                 programItem = $(this).tmplItem().data;
                 if (parseInt(programItem.ytDuration, 10) > 0) {
                     totalDuration += parseInt(programItem.duration, 10);
@@ -2173,8 +2411,7 @@ $(function () {
                 }
                 $.extend(programItem, {
                     channelId: $('#channelId').val(),   // api readonly
-                    subSeq: idx + 1,
-                    contentType: 1
+                    subSeq: idx + 1
                 });
                 programList.push(programItem);
             });
@@ -2348,8 +2585,7 @@ $(function () {
                         // insert program
                         parameter = $.extend({}, programItem, {
                             channelId: $('#channelId').val(),   // api readonly
-                            subSeq: idx + 1,
-                            contentType: 1
+                            subSeq: idx + 1
                         });
                         nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
                             episodeId: $('#id').val()

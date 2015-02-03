@@ -136,7 +136,8 @@
             nowHour = today.getHours() + 1,
             todayDate = '',
             time = [],
-            hour = '';
+            hour = '',
+            min = '';
 
         if (todayDay.length < 2) {
             todayDay = '0' + todayDay;
@@ -155,7 +156,7 @@
                 $('body').addClass('has-change');
                 var selectDay   = parseInt(inst.currentDay, 10).toString(),
                     selectMonth = parseInt(inst.currentMonth + 1, 10).toString(),
-                    activeHour  = $('#date-time .time ul li.active').index(),
+                    activeHour  = $("#schedule-hour").val() + ":" + $("#schedule-minute").val(),
                     date = '';
                 if (selectDay.length < 2) {
                     selectDay = '0' + selectDay;
@@ -165,49 +166,35 @@
                 }
                 date = inst.currentYear + '/' + selectMonth + '/' + selectDay;
 
+                $("#schedule-hour option").removeProp('disabled');
+                $("#schedule-hour option").removeProp('selected');
+                $("#schedule-hour option:eq(" + nowHour + ")").prop('selected', 'selected');
                 if (date === todayDate) {
-                    if (activeHour <= nowHour) {
-                        $('#date-time .time ul li').removeAttr('class');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').addClass('active').addClass('enable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
-                    } else {
-                        $('#date-time .time ul li').removeClass('enable').removeClass('disable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').addClass('enable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
-                        $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
-                    }
-                } else {
-                    $('#date-time .time ul li').removeClass('enable').removeClass('disable');
-                    $('#date-time .time ul li').addClass('enable');
+                    $("#schedule-hour option:eq(" + nowHour + ")").prevAll().prop('disabled', 'disabled');
                 }
                 $('#publishDate').val(date);
-                $('#publishHour').val($('#date-time .time ul li.active').text());
+                $('#publishHour').val($("#schedule-hour").val() + ":" + $("#schedule-minute").val());
+
             }
         });
         $.datepicker.setDefaults($.datepicker.regional[cms.global.USER_DATA.lang]);
 
-        $('#date-time .time ul li').removeAttr('class');
-        $('#date-time .time ul li:eq(' + nowHour + ')').addClass('active').addClass('enable');
-        $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
-        $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
+        $("#schedule-hour option").removeProp('disabled');
+        $("#schedule-hour option:eq(" + nowHour + ")").prop('selected', 'selected');
+        $("#schedule-hour option:eq(" + nowHour + ")").prevAll().prop('disabled', 'disabled');
 
         if ('' === $('#publishDate').val() || '' === $('#publishHour').val()) {
             $('#publishDate').val(todayDate);
-            $('#publishHour').val($('#date-time .time ul li.active').text());
+            $('#publishHour').val($("#schedule-hour").val() + ":" + $("#schedule-minute").val());
         } else {
             time = $('#publishHour').val().split(':');
             hour = time[0];
-            if ($('#publishDate').val() === todayDate) {
-                $('#date-time .time ul li').removeAttr('class');
-                $('#date-time .time ul li:eq(' + hour + ')').addClass('active').addClass('enable');
-                $('#date-time .time ul li:eq(' + nowHour + ')').prevAll().addClass('disable');
-                $('#date-time .time ul li:eq(' + nowHour + ')').nextAll().addClass('enable');
-                $('#date-time .time ul li:eq(' + nowHour + ')').addClass('enable');
-            } else {
+            min = time[1];
+            $("#schedule-hour").val(hour);
+            $("#schedule-minute").val(min);
+            if ($('#publishDate').val() !== todayDate) {
                 $('#date-time .datepicker').datepicker('setDate', $('#publishDate').val());
-                $('#date-time .time ul li').removeClass('active').removeClass('disable').removeClass('enable').addClass('enable');
-                $('#date-time .time ul li:eq(' + hour + ')').addClass('active').addClass('enable');
+                $("#schedule-hour option").removeProp('disabled');
             }
         }
     };
@@ -273,134 +260,125 @@
         nn.api('GET', cms.reapi('/api/episodes/{episodeId}', {
             episodeId: $('#id').val()
         }), null, function (episode) {
+            episode.intro = episode.intro.replace(/\{BR\}/g, '\n');
             if (cid > 0 && parseInt(cid, 10) !== episode.channelId) {
                 $common.showSystemErrorOverlayAndHookError('You are not authorized to edit this episode.');
                 return;
             }
             $('#channelId').val(episode.channelId);
-            nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
-                userId: cms.global.USER_DATA.id
-            }), null, function (data) {
-                var channelIds = [];
-                if (data.length > 0) {
-                    $.each(data, function (i, list) {
-                        channelIds.push(list.id);
-                    });
-                }
-                if (-1 === $.inArray(parseInt(episode.channelId, 10), channelIds)) {
+            nn.api('GET', cms.reapi('/api/channels/{channelId}', {
+                channelId: episode.channelId
+            }), null, function (channel) {
+                if (channel.userIdStr !== cms.global.USER_DATA.idStr) {
                     $common.showSystemErrorOverlayAndHookError('You are not authorized to edit episodes in this program.');
                     return;
                 }
-                nn.api('GET', cms.reapi('/api/channels/{channelId}', {
-                    channelId: episode.channelId
-                }), null, function (channel) {
-                    if (channel.contentType === cms.config.YOUR_FAVORITE) {
-                        $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
-                        return;
-                    }
-                    $common.showProcessingOverlay();
-                    $('#epcurateForm .constrain').html('');
-                    $('#epcurate-form-tmpl').tmpl(episode, {
-                        publishLabel: (true === episode.isPublic) ? 'Published' : 'Publish Now'
-                    }).appendTo('#epcurateForm .constrain');
-                    $('#content-main-wrap').perfectScrollbar('update');
-                    if ($('#uploadThumbnail').length > 0) {
-                        $page.uploadImage();
-                    }
-                    $('#origin_status').val('Draft');
-                    $('#status_draft').prop('checked', true);
-                    $('p.radio-list input').uniform();
+                if (channel.contentType === cms.config.YOUR_FAVORITE) {
+                    $common.showSystemErrorOverlayAndHookError('The favorites program can not be edited.');
+                    return;
+                }
+                $common.showProcessingOverlay();
+                $('#epcurateForm .constrain').html('');
+                $('#epcurate-form-tmpl').tmpl(episode, {
+                    publishLabel: (true === episode.isPublic) ? 'Published' : 'Publish Now'
+                }).appendTo('#epcurateForm .constrain');
+                $('#content-main-wrap').perfectScrollbar('update');
+                if ($('#uploadThumbnail').length > 0) {
+                    $page.uploadImage();
+                }
+                $('#origin_status').val('Draft');
+                $('#status_draft').prop('checked', true);
+                $('p.radio-list input').uniform();
+                if (true === episode.isPublic) {
+                    $('#origin_status').val('Published');
+                    $('p.radio-list').removeClass('draft');
+                    $('#schedule-publish-label').addClass('hide');
+                    $('#schedule-publish').addClass('hide');
+                    $('#schedule-rerun-label').removeClass('hide');
+                    $('#schedule-rerun').removeClass('hide');
+                    $('#status_published').prop('checked', true);
+                } else {
+                    $('p.radio-list').addClass('draft');
+                    $('#schedule-publish-label').removeClass('hide');
+                    $('#schedule-publish').removeClass('hide');
+                    $('#schedule-rerun-label').addClass('hide');
+                    $('#schedule-rerun').addClass('hide');
+                }
+                if (episode.scheduleDate) {
                     if (true === episode.isPublic) {
-                        $('#origin_status').val('Published');
-                        $('p.radio-list').removeClass('draft');
-                        $('#schedule-publish-label').addClass('hide');
-                        $('#schedule-publish').addClass('hide');
-                        $('#schedule-rerun-label').removeClass('hide');
-                        $('#schedule-rerun').removeClass('hide');
-                        $('#status_published').prop('checked', true);
+                        $('#origin_status').val('Scheduled to rerun');
+                        $('#rerun_y').prop('checked', true);
                     } else {
-                        $('p.radio-list').addClass('draft');
-                        $('#schedule-publish-label').removeClass('hide');
-                        $('#schedule-publish').removeClass('hide');
-                        $('#schedule-rerun-label').addClass('hide');
-                        $('#schedule-rerun').addClass('hide');
+                        $('#origin_status').val('Scheduled to publish');
+                        $('#status_scheduled').prop('checked', true);
                     }
-                    if (episode.scheduleDate) {
-                        if (true === episode.isPublic) {
-                            $('#origin_status').val('Scheduled to rerun');
-                            $('#rerun_y').prop('checked', true);
-                        } else {
-                            $('#origin_status').val('Scheduled to publish');
-                            $('#status_scheduled').prop('checked', true);
-                        }
-                        scheduleDateTime = $common.formatTimestamp(episode.scheduleDate, '/', ':').split(' ');
-                        $('#publishDate').val(scheduleDateTime[0]);
-                        $('#publishHour').val(scheduleDateTime[1]);
-                    } else {
-                        // default schedule
-                        tomorrow = new Date((new Date()).getTime() + (24 * 60 * 60 * 1000));
-                        $('#publishDate').val(tomorrow.getFullYear() + '/' + (tomorrow.getMonth() + 1) + '/' + tomorrow.getDate());
-                        $('#publishHour').val('20:00');
-                    }
-                    $page.switchPublishStatus($('input[name=status]:checked').val(), $('input[name=status]:checked').attr('name'));
-                    $page.switchRerunCheckbox();
-                    $.uniform.update();
-                    nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
-                        episodeId: $('#id').val()
-                    }), null, function (programs) {
-                        $('#img-list').html('');
-                        $('#img-list-tmpl-item').tmpl(programs).appendTo('#img-list');
-                        if ('' !== episode.imageUrl) {
-                            var hasMatch = false;
-                            $('#imageUrl').val(episode.imageUrl);
-                            $('#imageUrlOld').val(episode.imageUrl);
-                            $('#img-list li').each(function () {
-                                if (episode.imageUrl === $(this).children('.img').children('img').attr('src')) {
-                                    hasMatch = true;
-                                    $(this).clone().prependTo('#img-list');
-                                    $(this).remove();
-                                }
-                            });
-                            if (!hasMatch) {
-                                $('#img-list-new-tmpl-item').tmpl({
-                                    imageUrl: episode.imageUrl,
-                                    name: episode.name
-                                }).prependTo('#img-list');
-                            }
-                        }
-                        $('#thumbnail-list ul').cycle({
-                            fx: 'scrollHorz',
-                            prev: '#thumbnail-list .img-prev',
-                            next: '#thumbnail-list .img-next',
-                            speed: 1000,
-                            timeout: 0,
-                            cleartypeNoBg: true,
-                            before: function () {
-                                $('body').addClass('has-change');                   // NOTE: must to remove change hook after first load
-                                $('#imageUrl').val($('img', this).attr('src'));
+                    scheduleDateTime = $common.formatTimestamp(episode.scheduleDate, '/', ':').split(' ');
+                    $('#publishDate').val(scheduleDateTime[0]);
+                    $('#publishHour').val(scheduleDateTime[1]);
+                } else {
+                    // default schedule
+                    tomorrow = new Date((new Date()).getTime() + (24 * 60 * 60 * 1000));
+                    $('#publishDate').val(tomorrow.getFullYear() + '/' + (tomorrow.getMonth() + 1) + '/' + tomorrow.getDate());
+                    $('#publishHour').val('20:00');
+                }
+                $page.switchPublishStatus($('input[name=status]:checked').val(), $('input[name=status]:checked').attr('name'));
+                $page.switchRerunCheckbox();
+                $.uniform.update();
+                nn.api('GET', cms.reapi('/api/episodes/{episodeId}/programs', {
+                    episodeId: $('#id').val()
+                }), null, function (programs) {
+                    $('#img-list').html('');
+                    $('#img-list-tmpl-item').tmpl(programs).appendTo('#img-list');
+                    if ('' !== episode.imageUrl) {
+                        var hasMatch = false;
+                        $('#imageUrl').val(episode.imageUrl);
+                        $('#imageUrlOld').val(episode.imageUrl);
+                        $('#img-list li').each(function () {
+                            if (episode.imageUrl === $(this).children('.img').children('img').attr('src')) {
+                                hasMatch = true;
+                                $(this).clone().prependTo('#img-list');
+                                $(this).remove();
                             }
                         });
-                        $('#epcurate-nav-curation, #form-btn-save, #form-btn-back').click(function (e) {
-                            $(fm).trigger('submit', e);
-                            return false;
-                        });
-                        $('#name').charCounter(100, {
-                            container: '#name-charcounter',
-                            format: '%1',
-                            delay: 0,
-                            clear: true,
-                            countDown: false
-                        });
-                        $('#intro').charCounter(200, {
-                            container: '#intro-charcounter',
-                            format: '%1',
-                            delay: 0,
-                            clear: true,
-                            countDown: false
-                        });
-                        $('body').removeClass('has-change');                        // NOTE: remove change hook after first load
-                        $('#overlay-s').fadeOut();
+                        if (!hasMatch) {
+                            $('#img-list-new-tmpl-item').tmpl({
+                                imageUrl: episode.imageUrl,
+                                name: episode.name
+                            }).prependTo('#img-list');
+                        }
+                    }
+                    $('#thumbnail-list ul').cycle({
+                        fx: 'scrollHorz',
+                        prev: '#thumbnail-list .img-prev',
+                        next: '#thumbnail-list .img-next',
+                        speed: 1000,
+                        timeout: 0,
+                        cleartypeNoBg: true,
+                        before: function () {
+                            $('body').addClass('has-change');                   // NOTE: must to remove change hook after first load
+                            $('#imageUrl').val($('img', this).attr('src'));
+                        }
                     });
+                    $('#epcurate-nav-curation, #form-btn-save, #form-btn-back').click(function (e) {
+                        $(fm).trigger('submit', e);
+                        return false;
+                    });
+                    $('#name').charCounter(100, {
+                        container: '#name-charcounter',
+                        format: '%1',
+                        delay: 0,
+                        clear: true,
+                        countDown: false
+                    });
+                    $('#intro').charCounter(900, {
+                        container: '#intro-charcounter',
+                        format: '%1',
+                        delay: 0,
+                        clear: true,
+                        countDown: false
+                    });
+                    $('body').removeClass('has-change');                        // NOTE: remove change hook after first load
+                    $('#overlay-s').fadeOut();
                 });
             });
         });

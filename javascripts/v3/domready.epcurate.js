@@ -113,6 +113,11 @@ $(function () {
     $('#content-wrap').on('click', 'input[name=rerun]', function () {
         $page.switchRerunCheckbox();
     });
+    $(document).on('change', '#schedule-hour, #schedule-minute', function () {
+        $('body').addClass('has-change');
+        $('#publishHour').val($("#schedule-hour").val() + ":" + $("#schedule-minute").val());
+        return false;
+    });
     $('#content-wrap').on('click', '#date-time .time ul li.enable a', function () {
         $('body').addClass('has-change');
         $('#date-time .time ul li').removeClass('active');
@@ -204,7 +209,7 @@ $(function () {
                 }
                 params = {
                     name: $('#name').val(),
-                    intro: $('#intro').val(),
+                    intro: $('#intro').val().replace(/\n/g, '{BR}'),
                     imageUrl: $('#imageUrl').val()
                 };
                 $.extend(params, status_params);

@@ -4,17 +4,295 @@
 (function ($common) {
     'use strict';
 
+    $common.createFromEpisode = function (episode, programs, toChId, inPage) {
+        function addPoi(inProgramIdNew, oldPoiPoint, poi_event, newEpId, inPage) {
+            var procPoiPoint = {
+                eventType: oldPoiPoint.eventType,
+                name: oldPoiPoint.name,
+                tag: oldPoiPoint.tag,
+                startTime: oldPoiPoint.startTime,
+                endTime: oldPoiPoint.endTime
+            },
+                procPoiEvent = {
+                    context: poi_event.context,
+                    name: poi_event.name,
+                    notifyMsg: poi_event.notifyMsg,
+                    notifyScheduler: poi_event.notifyScheduler,
+                    pointType: poi_event.pointType,
+                    type: poi_event.type
+                };
+
+            nn.api('POST', cms.reapi('/api/programs/{programId}/poi_points', {
+                programId: inProgramIdNew
+            }), procPoiPoint, function (add_poi_point) {
+
+                nn.api('POST', cms.reapi('/api/users/{userId}/poi_events', {
+                    userId: cms.global.USER_DATA.id
+                }), procPoiEvent, function (add_poi_event) {
+                    var poiData = {
+                        pointId: add_poi_point.id,
+                        eventId: add_poi_event.id
+                    };
+                    nn.api('POST', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
+                        poiCampaignId: cms.global.CAMPAIGN_ID
+                    }), poiData, function (add_poi) {
+                        inPage.importPrograms -= 1;
+                        if (0 === inPage.importPrograms) {
+                            setTimeout(function () {
+                                // if not delay last campaigns will not finish
+                                location.href = "epcurate-curation.html?id=" + newEpId;
+                            }, 500);
+                        }
+                    });
+                });
+            });
+        }
+
+        var chId = toChId;
+
+        episode.storageId = episode.id;
+        episode.isPublic = false;
+        episode.name = episode.name;
+        episode.publishDate = '';
+        episode.scheduleDate = '';
+        episode.updateDate = '';
+        episode.updateDate = '';
+        delete episode.id;
+        delete episode.seq;
+        delete episode.channelId;
+
+        nn.api('POST', cms.reapi('/api/channels/{channelId}/episodes', {
+            channelId: chId
+        }), episode, function (newEpisode) {
+            var newEpisodeId = newEpisode.id,
+                cntPoiPoint = 0,
+                oldProgramId = 0;
+
+            inPage.importPrograms = programs.length;
+
+            $.each(programs, function (eKey, programItem) {
+                oldProgramId = programItem.id;
+                // get points
+                nn.api('GET', cms.reapi('/api/programs/{programId}/poi_points', {
+                    programId: oldProgramId
+                }), null, function (poi_points) {
+
+                    programItem.cntView = 0;
+                    delete programItem.id;
+                    delete programItem.channelId;
+                    delete programItem.episodeId;
+
+                    if (!(parseInt(programItem.endTime, 10) > 0)) {
+                        // youtube sync fill endTime for old version
+                        programItem.endTime = programItem.duration;
+                        programItem.endTimeInt = programItem.durationInt;
+                    }
+
+                    // add program
+                    nn.api('POST', cms.reapi('/api/episodes/{episodeId}/programs', {
+                        episodeId: newEpisodeId
+                    }), programItem, function (newProgram) {
+
+                        cntPoiPoint = poi_points.length;
+                        if (cntPoiPoint > 0) {
+                            $.each(poi_points, function (eeKey, oldPoiPoint) {
+                                nn.api('GET', cms.reapi('/api/poi_campaigns/{poiCampaignId}/pois', {
+                                    poiCampaignId: cms.global.CAMPAIGN_ID
+                                }), {
+                                    poiPointId: oldPoiPoint.id
+                                }, function (pois) {
+                                    nn.api('GET', cms.reapi('/api/poi_events/{poiEventId}', {
+                                        poiEventId: pois[0].eventId
+                                    }), null, function (poi_event) {
+                                        // add poi
+                                        addPoi(newProgram.id, oldPoiPoint, poi_event, newEpisodeId, inPage);
+                                    });
+                                });
+                            });
+                        } else {
+                            inPage.importPrograms -= 1;
+                        }
+
+                        if (0 === inPage.importPrograms) {
+                            location.href = "epcurate-curation.html?id=" + newEpisodeId;
+                        }
+
+                    });
+                });
+            });
+        });
+    };
+
+    $common.importEp = function (inObj, toChId, inPage) {
+        // depanden on $common.setupUserCampaignId(); load it at .init
+        nn.api('GET', cms.reapi('/api/episodes/{epId}', {
+            epId: inObj
+        }), null, function (episode) {
+            nn.api('GET', cms.reapi('/api/episodes/{epId}/programs', {
+                epId: inObj
+            }), null, function (programs) {
+                $("#new-Episode-Option").addClass("hide");
+                $common.showProcessingOverlay();
+                $common.createFromEpisode(episode, programs, toChId, inPage);
+            });
+        });
+    };
+
+    $common.prepareChannelsFilter = function (inList) {
+        var retValue = [],
+            countList = inList.length,
+            allowStatus = 0,
+            tmpObj = {},
+            i = 0;
+        for (i = 0; i < countList; i += 1) {
+            tmpObj = inList[i];
+            if (allowStatus === tmpObj.status) {
+                retValue.push(tmpObj);
+            }
+        }
+        return retValue;
+    };
+
+    $common.prepareChannels = function (inList, currentList) {
+        var retValue = [],
+            temp = [],
+            tmpId = 0,
+            tmpMsoName = cms.global.MSOINFO.name || "9x9";
+
+        $.each(inList, function (i, channel) {
+            temp = [];
+            if ('' === channel.imageUrl) {
+                channel.imageUrl = 'images/ch_default.png';
+                if (channel.moreImageUrl && '' !== $.trim(channel.moreImageUrl)) {
+                    temp = channel.moreImageUrl.split('|');
+                    if (temp[0] && temp[0] !== cms.config.EPISODE_DEFAULT_IMAGE) {
+                        channel.imageUrl = temp[0];
+                    }
+                }
+            }
+            tmpId = parseInt(channel.id, 10);
+            if (-1 === $.inArray(tmpId, currentList)) {
+                channel.alreadyAdd = false;
+            } else {
+                channel.alreadyAdd = true;
+            }
+            channel.msoName = tmpMsoName;
+            retValue.push(channel);
+        });
+        return retValue;
+    };
+
+    $common.pcsGetPlayableChannels = function (inPage, currentList, inPublic) {
+        var getParm = {
+            page: inPage,
+            rows: 40,
+            mso: cms.global.MSOINFO.name
+        };
+
+        nn.api('GET', cms.reapi('/api/users/{userId}/channels', {
+            userId: cms.global.USER_DATA.id
+        }), getParm, function (channels) {
+            var cntChannel = channels.length,
+                items = [],
+                nextPage = inPage + 1,
+                cntChannelAll = 0,
+                cntChannelPage = 0;
+
+            items = channels;
+            items = $common.prepareChannelsFilter(items);
+            items = $common.prepareChannels(items, currentList);
+            cntChannel = items.length;
+
+            $('#portal-search-item-tmpl').tmpl(items).appendTo('#search-channel-list');
+
+            cntChannelAll = $("#search-channel-list li").length;
+
+            $("#sResultHead").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "My programs:"]));
+
+            if (cntChannelAll > 0) {
+                $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Find [<span>?</span>] programs."], [cntChannelAll]));
+            } else {
+                $("#sRusult").html(nn._([cms.global.PAGE_ID, 'portal-add-layer', "Your didn't have any programs."]));
+            }
+
+            if (1 === inPage) {
+                cntChannelPage = Math.floor($(".list-holder").width() / 117) * 2;
+                if (cntChannel > cntChannelPage) {
+                    $("#searchNext").show();
+                }
+                $("#portal-add-layer").fadeIn();
+                $('#overlay-s').fadeOut("slow");
+            }
+
+            if (cntChannel > 0) {
+                $common.pcsGetPlayableChannels(nextPage, currentList, inPublic);
+            }
+
+        });
+    };
+
+    $common.isImportEpisode = function (inOid) {
+        var ids = [40347, 57626, 59657],
+            retValue = false;
+        if ($.inArray(inOid, ids) > -1) {
+            retValue = true;
+        }
+        return retValue;
+    };
+
+    $common.isFliprBlock = function () {
+        var bodyMSO = $("body").data("mso"),
+            retValue = false;
+        if ("flipr" === bodyMSO) {
+            retValue = true;
+        }
+        return retValue;
+    };
+
+    $common.fliprBlockCheck = function () {
+        if ($common.isFliprBlock()) {
+            $(".fliprOptions").removeClass("hide");
+        }
+    };
+
+    $common.fileSizeUnit = function (dg, inNum) {
+        var dgLists = ["KB", "MB", "GB", "TB"],
+            retNum = inNum / 1000 || 0,
+            retNumRound = Math.round(inNum / 10) / 100,
+            retValue = "";
+
+        if (retNum > 999) {
+            dg += 1;
+            retValue = $common.fileSizeUnit(dg, retNum);
+        } else {
+            if (dg < 1) {
+                retValue = retNum + " " + dgLists[dg];
+            } else {
+                retValue = retNumRound + " " + dgLists[dg];
+            }
+
+        }
+        return retValue;
+    };
+
     $common.privParser = function (inPriv) {
         var countPriv = inPriv.length,
             strCMS = "",
             strPCS = "",
             strAutoOn = "",
+            strVideoAuth = "",
             retValue = {
                 isCMS: false,
                 isYoutuber: false,
                 isPCS: false,
-                isAutoOn: false
+                isAutoOn: false,
+                isVideoAuth: false,
+                isImportEpisode: false
             };
+
+        if (countPriv >= 8) {
+            strVideoAuth = inPriv.substr(7, 1);
+        }
 
         if (countPriv > 5) {
             strCMS = inPriv.substr(3, 3);
@@ -42,6 +320,10 @@
             retValue.isAutoOn = true;
         }
 
+        if ("1" === strVideoAuth) {
+            retValue.isVideoAuth = true;
+        }
+
         return retValue;
     };
 
@@ -67,7 +349,7 @@
     };
 
     $common.ytUrlLiveParser = function (inUrl) {
-        // ytType = 0 : unknow, 1: yturl, 2: m3u8, 3: ustream.tv
+        // ytType = 0 : unknow, 1: yturl, 2: m3u8, 3: ustream.tv, 4: livestream.com
         var inURL = $.url(inUrl),
             ytUrlPattern = ["http://www.youtube.com/watch?v="],
             retValue = {
@@ -95,7 +377,44 @@
             $("#ytUrlLive").attr("name", "sourceUrl");
             retValue.ytType = 3;
             retValue.ytUrlFormat = inUrl;
-            retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").split("/").pop() + "/getValueOf/id?callback=?";
+            // retValue.ytUrlApi = "//api.ustream.tv/json/channel/" + inURL.attr("path").split("/").pop() + "/getValueOf/id?callback=?";
+            retValue.ytUrlApi = "/api/ustream";
+        } else if (inURL.attr("host").indexOf("livestream.com") > -1) {
+            // 4: livestream.com
+            $("#ytUrlLive").attr("name", "sourceUrl");
+            retValue.ytType = 4;
+            retValue.ytUrlFormat = inUrl;
+            retValue.ytUrlApi = "/apis/livestream.php";
+        }
+
+        return retValue;
+    };
+
+    $common.vimeoUrlParser = function (inUrl) {
+        // ytType = 0 : unknow, 1: user, 2: channel
+        // user https://vimeo.com/api/v2/adoramatv/info.json
+        // channel https://vimeo.com/api/v2/channel/worldhd/info.json
+        var inURL = $.url(inUrl),
+            ytUrlPattern = ["https://vimeo.com/", "https://vimeo.com/channels/"],
+            retValue = {
+                ytType: 0,
+                ytId: "",
+                ytUrlFormat: "",
+                ytUrlApi: ""
+            },
+            arrPath = inURL.attr("path").split("/");
+
+        if (arrPath.length === 3 && "channels" === arrPath[1]) {
+            retValue.ytType = 2;
+            retValue.ytId = arrPath[2];
+            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
+            retValue.ytUrlApi = "https://vimeo.com/api/v2/channel/" + retValue.ytId + "/info.json";
+
+        } else if ((arrPath.length === 2 && arrPath[1] !== "") || (arrPath.length === 3 && "videos" === arrPath[2])) {
+            retValue.ytType = 1;
+            retValue.ytId = arrPath[1];
+            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
+            retValue.ytUrlApi = "https://vimeo.com/api/v2/" + retValue.ytId + "/info.json";
         }
 
         return retValue;
@@ -594,12 +913,12 @@
                     $common.checkRestartConnect(facebook, function (facebook, isRestartConnect) {
                         // sync cms settings
                         cms.global.FB_RESTART_CONNECT = isRestartConnect;
-                        if (true === isRestartConnect) {
-                        	// 暫時 - fbconnect 暫時不處理，所以這個訊息顯示先不處理
-                            // $('#studio-nav .reconnect-notice').removeClass('hide');
-                            // $('#studio-nav .reconnect-notice .notice-left').stop(true).delay(2000).slideDown(100).delay(10000).fadeOut(1500);
-                            // $('#cms-setting .connect .notice, #cms-setting .connect .notify').removeClass('hide');
-                        }
+                        // if (true === isRestartConnect) {
+                        //     // 暫時 - fbconnect 暫時不處理，所以這個訊息顯示先不處理
+                        //     // $('#studio-nav .reconnect-notice').removeClass('hide');
+                        //     // $('#studio-nav .reconnect-notice .notice-left').stop(true).delay(2000).slideDown(100).delay(10000).fadeOut(1500);
+                        //     // $('#cms-setting .connect .notice, #cms-setting .connect .notify').removeClass('hide');
+                        // }
                         cms.global.FB_PAGES_MAP = $common.buildFacebookPagesMap(facebook);
                         cms.global.USER_SNS_AUTH = facebook;
                         // sync connect switch
@@ -841,9 +1160,6 @@
             $('#studio-nav a, #studio-nav .langkey').each(function () {
                 $(this).html(nn._(['studio-nav', $(this).data('langkey')]));
             });
-            $('#footer span, #footer a').each(function () {
-                $(this).text(nn._(['footer', $(this).data('langkey')]));
-            });
             $('.setup-notice h4, .setup-notice h5, .setup-notice .content').each(function () {
                 $(this).html(nn._(['overlay', 'facebook', $(this).data('langkey')]));
             });
@@ -884,6 +1200,7 @@
             $page.init({
                 init: true
             });
+            $common.fliprBlockCheck();
         }, 'json');
     };
 

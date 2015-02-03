@@ -8,6 +8,185 @@ $(function () {
     var $page = cms['episode-list'],
         $common = cms.common;
 
+
+    $(document).on('change', '#importInText', function () {
+        var arrUrl = $common.playerUrlParser($(this).val());
+
+        if (!arrUrl.isAllow) {
+            $("#epImportNotice").removeClass("hide");
+            // errmsg
+        } else {
+            // success
+            $("#epImportNotice").addClass("hide");
+        }
+    });
+
+    $(document).on('click', '.btnImportEp', function () {
+        var arrUrl = $common.playerUrlParser($("#importInText").val()),
+            thisEpId = arrUrl.epId.replace("e", "") || 0;
+
+        $("#epImportNotice").addClass("hide");
+        if (arrUrl.isAllow && thisEpId > 0) {
+            $common.importEp(thisEpId, cms.global.USER_URL.param('id'), $page);
+        } else {
+            // errmsg
+            $("#epImportNotice").removeClass("hide");
+        }
+    });
+
+    $(document).on('click', '#upload-box', function () {
+        $("#upImage").trigger("click");
+    });
+
+    $(document).on('change', '#upImage', function () {
+        var cntFiles = this.files.length;
+        if ($page.s3Info.isGet && cntFiles > 0) {
+            $.each(this.files, function (eKey, eValue) {
+                if ("video/mp4" === eValue.type && eValue.size > 0) {
+                    $page.imageUpload(eValue, eKey);
+                } else {
+
+                    nn.log(eValue);
+                    $page.imageUpload(eValue, eKey);
+
+                }
+            });
+        }
+    });
+
+    $(document).on('click', '.btnEpSave', function () {
+        var epId = $(this).data("meta"),
+            progId = $(this).data("program"),
+            oldIsPublic = $(this).data("ispublic"),
+            newIsPublic = false,
+            inputInfo = {
+                "name": $("#epName").val(),
+                "intro": $("#epIntro").val(),
+                "imageUrl": $("#epImage").attr("src")
+            },
+            status_params = {
+                isPublic: $('input[name=isPublic]:checked').val(),
+                publishDate: 'NOW',
+                scheduleDate: ''
+            },
+            inputInfoEp = {},
+            isFormCheck = false;
+
+        $("#epEditNotice").addClass("hide");
+
+        if (status_params.isPublic === "true") {
+            status_params.publishDate = "NOW";
+            newIsPublic = true;
+        } else {
+            status_params.publishDate = "";
+        }
+
+        inputInfoEp = {
+            "name": inputInfo.name,
+            "intro": inputInfo.intro,
+            "imageUrl": inputInfo.imageUrl
+        };
+        if (oldIsPublic !== newIsPublic) {
+            $.extend(inputInfoEp, status_params);
+        }
+
+        if (inputInfo.name.length) {
+            isFormCheck = true;
+        }
+
+        if (isFormCheck) {
+            $.unblockUI();
+            $common.showSavingOverlay();
+            nn.api('PUT', cms.reapi('/api/episodes/{episodesId}', {
+                episodesId: epId
+            }), inputInfoEp, function (epObj) {
+
+                nn.api('PUT', cms.reapi('/api/programs/{programId}', {
+                    programId: progId
+                }), inputInfo, function (pgObj) {
+                    var epItemObj = "#li_" + epObj.id,
+                        epLists = [];
+
+                    epObj.seq = $(epItemObj).find("div.seqNumber").text();
+                    epLists.push(epObj);
+                    $(epItemObj).replaceWith($('#episode-list-tmpl-item').tmpl(epLists));
+                    $('#overlay-s').fadeOut();
+                });
+            });
+        } else {
+            $("#epEditNotice").removeClass("hide");
+        }
+    });
+
+    $(document).on('click', '.ov-cancel', function () {
+        $("#edit-Episode-Info").empty();
+        $.unblockUI();
+    });
+
+    $(document).on('click', '.btn-create', function () {
+        var thisOption = $(this).attr("id"),
+            objId = $(this).data("meta"),
+            nextUrl = "index.html";
+
+        switch (thisOption) {
+        case "func-upvideo":
+            nextUrl = "video-upload.html?cid=" + objId;
+            break;
+
+        case "func-episode":
+            nextUrl = "epcurate-curation.html?cid=" + objId;
+            break;
+
+        case "func-fromepisode":
+            nextUrl = "";
+            $("#areaOption").addClass("hide");
+            $("#areaImport").removeClass("hide");
+            break;
+        }
+        if ("" !== nextUrl) {
+            location.href = nextUrl;
+        }
+    });
+
+    $(document).on('click', '.btnEditEpisode', function () {
+        var isVideoAuth = cms.global.USER_PRIV.isVideoAuth,
+            objId = $(this).data("meta"),
+            inTyep = $(this).data("contentype");
+
+        if (isVideoAuth && inTyep === cms.config.FLIPR_VIDEO) {
+            $page.prepareS3Attr();
+            $page.getEpisodeAndProgram(objId);
+            return false;
+        } else {
+            $(this).attr("href", "epcurate-curation.html?id=" + objId);
+        }
+    });
+
+    $(document).on('click', '.btnNewEpisode', function () {
+        var isVideoAuth = cms.global.USER_PRIV.isVideoAuth,
+            objId = $(this).data("meta");
+
+        if ($common.isImportEpisode(parseInt(cms.global.USER_DATA.id, 10))) {
+            cms.global.USER_PRIV.isImportEpisode = true;
+        }
+
+        if (isVideoAuth) {
+            // curated program && with isVideoAuth , can choose add yt episode or upload video
+            $('#new-Episode-Option').empty();
+            $('#new-Episode-Option-tmpl').tmpl({
+                oid: objId
+            }).appendTo('#new-Episode-Option');
+            $.blockUI({
+                message: $('#new-Episode-Option')
+            });
+            return false;
+        } else {
+            // curated program && without isVideoAuth , only add yt episode
+            $(this).attr("href", "epcurate-curation.html?cid=" + objId);
+        }
+    });
+
+
     $('#content-main-wrap').perfectScrollbar({marginTop: 30, marginBottom: 60});
 
     $('body').keyup(function (e) {
@@ -20,6 +199,7 @@ $(function () {
             return false;
         }
     });
+
     $(document).on('click', '.check', function () {
         var this_id = parseInt($(this).data("meta"), 10),
             this_btn = "#yuchk-btn-" + this_id;

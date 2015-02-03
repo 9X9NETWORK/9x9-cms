@@ -19,9 +19,82 @@ $(function () {
         }
     });
 
+    $(document).on('click', '.imgUploadBtn', function () {
+        var btnClick = $(this),
+            blockUpload = btnClick.parent(),
+            fileUpload = blockUpload.find(".toUploadImage");
+        if(!btnClick.hasClass("disabled")){
+            fileUpload.click();
+        }
+    });
+
+    $(document).on('change', '.toUploadImage', function () {
+        if(this.files.length >0){
+            $page.doImageUpload($(this), this.files[0]);
+        }
+    });
+
+    $(document).on('click', '.system-confirm-btn', function () {
+        var msgOverlay = $('#system-confirm-alert-overlay'),
+            btnAct = $(this).data("act");
+
+        if ($(msgOverlay).hasClass("isPaidAgree")) {
+            // paid confirm
+            $(msgOverlay).removeClass("isPaidAgree");
+            if ("yes" === btnAct) {
+                $("#settingForm").data("isPaidAgree", "yes");
+                $.unblockUI();
+                if (cms.global.USER_URL.attr('file') === 'channel-setting.html') {
+                    $("#settingForm .btn-save.enable").trigger("click");
+                } else {
+                    $("#settingForm .btn-create.enable").trigger("click");
+                }
+            } else if ("no" === btnAct) {
+                $.unblockUI();
+            }
+        }else if($(msgOverlay).hasClass("isStoreSwitch")) {
+            // store switch to off
+            $(msgOverlay).removeClass("isStoreSwitch");
+            if ("yes" === btnAct) {
+                $page.storePoolOnOff("off");
+                $.unblockUI();
+            } else if ("no" === btnAct) {
+                $.unblockUI();
+            }
+        }
+    });
+
+    $(document).on('change', '#tmpSocialFeeds', function () {
+        var thisObj = $(this),
+            opObj = $("#socialFeeds"),
+            inURL = $.url(thisObj.val()),
+            tmpPath = inURL.attr("path").split("/"),
+            fbPage = "";
+
+        if (2 === tmpPath.length) {
+            fbPage = tmpPath.pop();
+        }
+
+        if ("https://www.facebook.com" === inURL.attr("base") && "" !== fbPage) {
+            thisObj.val(inURL.attr("base") + "/" + fbPage);
+            opObj.val("facebook " + fbPage + ";");
+        } else {
+            thisObj.val("");
+            opObj.val("");
+        }
+    });
+
     $(document).on('click', '#add-store-switch', function () {
         if ($(this).hasClass("switch-on")) {
-            $page.storePoolOnOff("off");
+            var msgOverlay = $('#system-confirm-alert-overlay');
+            $(msgOverlay).addClass("isStoreSwitch");
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'The subscribers and paid users can‘t watch the program after you change to unpublished. Are you sure to change to unpublish?']));
+            $(msgOverlay).find('.scov-yes').text(nn._(['overlay', 'button', 'Yes']));
+            $(msgOverlay).find('.scov-no').text(nn._(['overlay', 'button', 'No']));
+
+            $.blockUI({
+                message: msgOverlay
+            });
         } else {
             $page.storePoolOnOff("on");
         }
@@ -33,7 +106,7 @@ $(function () {
             $page.youtubeYyncOnOff("off");
         } else {
             var msgOverlay = $('#youtube-sync-alert-overlay');
-            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
+            $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize videos from video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
             $(msgOverlay).find('#yes-sync').text(nn._(['overlay', 'button', 'Yes']));
             $(msgOverlay).find('#no-sync').text(nn._(['overlay', 'button', 'No']));
 
@@ -55,7 +128,7 @@ $(function () {
         var thisUrl = $(this).val().trim(),
             ytUrlParse = $common.ytUrlLiveParser(thisUrl),
             ytObj = {},
-            strDefErr = nn._([cms.global.PAGE_ID, 'setting-form', 'Invalid URL, please check the URL and try again.']);;
+            strDefErr = nn._([cms.global.PAGE_ID, 'setting-form', 'Invalid URL, please check the URL and try again.']);
 
         $("#ytSyncMsg").html("");
         $("#ytSyncMsg").addClass("hide");
@@ -134,8 +207,8 @@ $(function () {
                                 }
 
                                 if ("images/ch_default.png" !== ytImg) {
-                                    $("#thumbnail-imageUrl").attr("src", ytImg);
                                     $('#imageUrl').val(ytImg);
+                    				$("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
                                 }
                             },
                             error: function() {
@@ -163,60 +236,100 @@ $(function () {
             $("#intro").val("");
             $("#name").val("");
 
-            $.getJSON(ytUrlParse.ytUrlApi, {
-                format: "json"
-            })
-                .done(function (data) {
-                    if (data > 0) {
-                        var retiveUrl = "https://api.ustream.tv/channels/" + data + ".json";
-                        $.getJSON(retiveUrl, {
-                            format: "json"
+            nn.api('GET', cms.reapi('/api/ustream'), {
+                url: thisUrl
+            }, function (ursreamObj) {
+                var tmpId = 0;
+                if (ursreamObj.length > 0) {
+                    tmpId = ursreamObj[0].id;
+                    var retiveUrl = "https://api.ustream.tv/channels/" + tmpId + ".json";
+                    $.getJSON(retiveUrl, {
+                        format: "json"
+                    })
+                        .done(function (datas) {
+
+                            var ytTitle = "",
+                                ytDesc = "",
+                                ytImg = "images/ch_default.png";
+
+                            ytTitle = datas.channel.title;
+                            ytDesc = datas.channel.description;
+
+                            if (undefined !== datas.channel.owner.picture) {
+                                ytImg = datas.channel.owner.picture;
+                            }
+                            cms.global.vYoutubeLiveIn.fileUrl = datas.channel.stream.hls; // 
+                            cms.global.vYoutubeLiveIn.imageUrl = datas.channel.thumbnail.live; // 
+                            cms.global.vYoutubeLiveIn.name = ytTitle; //
+                            cms.global.vYoutubeLiveIn.intro = ytDesc; // 
+
+                            cms.global.vYoutubeLiveIn.uploader = datas.channel.owner.username; // 
+                            cms.global.vYoutubeLiveIn.uploadDate = datas.channel.last_broadcast_at; // 
+                            cms.global.vYoutubeLiveIn.ytId = datas.channel.url; //
+
+                            if ("images/ch_default.png" !== ytImg) {
+                                $('#imageUrl').val(ytImg);
+                    			$("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
+                            }
+                            $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
+                            $("#name").val(ytTitle);
+                            $("#intro").val(ytDesc);
+                            $("#ytUrlLive").data("status", "processing");
+
                         })
-                            .done(function (datas) {
-
-                                var ytTitle = "",
-                                    ytDesc = "",
-                                    ytImg = "images/ch_default.png";
-
-                                ytTitle = datas.channel.title;
-                                ytDesc = datas.channel.description;
-
-                                if (undefined !== datas.channel.owner.picture) {
-                                    ytImg = datas.channel.owner.picture;
-                                }
-                                cms.global.vYoutubeLiveIn.fileUrl = datas.channel.stream.hls; // 
-                                cms.global.vYoutubeLiveIn.imageUrl = datas.channel.thumbnail.live; // 
-                                cms.global.vYoutubeLiveIn.name = ytTitle; //
-                                cms.global.vYoutubeLiveIn.intro = ytDesc; // 
-
-                                cms.global.vYoutubeLiveIn.uploader = datas.channel.owner.username; // 
-                                cms.global.vYoutubeLiveIn.uploadDate = datas.channel.last_broadcast_at; // 
-                                cms.global.vYoutubeLiveIn.ytId = datas.channel.url; //
-
-                                if ("images/ch_default.png" !== ytImg) {
-                                    $("#thumbnail-imageUrl").attr("src", ytImg);
-                                    $('#imageUrl').val(ytImg);
-                                }
-                                $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
-                                $("#name").val(ytTitle);
-                                $("#intro").val(ytDesc);
-                                $("#ytUrlLive").data("status", "processing");
-
-                            })
-                            .fail(function() {
-                                $("#ytSyncMsg").html(strDefErr);
-                                $("#ytSyncMsg").removeClass("hide");
-                            });
-                    } else {
-                        $("#ytSyncMsg").html(strDefErr);
-                        $("#ytSyncMsg").removeClass("hide");
-                    }
-
-                }).fail(function() {
+                        .fail(function() {
+                            $("#ytSyncMsg").html(strDefErr);
+                            $("#ytSyncMsg").removeClass("hide");
+                        });
+                } else {
                     $("#ytSyncMsg").html(strDefErr);
                     $("#ytSyncMsg").removeClass("hide");
-                });
+                }
+            });
+        } else if (4 === ytUrlParse.ytType) {
+            // http://api.new.livestream.com/accounts/5057055/events/3448924
+            // [{id: {accounts: 5057055, events:3448924}}]
 
+            // http://api.new.livestream.com/accounts/5057055/events/3394212/videos/63036075
+            // [{id: {accounts: 1714160, events:1614682, videos:63036075}}]
+
+            // http://new.livestream.com/accounts/5057055/events/3448924
+
+            $("#intro").val("");
+            $("#name").val("");
+
+            nn.api('GET', 'apis/livestream.php', {
+                url: thisUrl
+            }, function (ursreamObj) {
+                var opObj = {},
+                    retiveUrl = "";
+
+                if (ursreamObj.length > 0) {
+                    opObj = ursreamObj[0];
+                    $("#ytUrlLive").val(opObj.url);
+                    $("#name").val(opObj.caption);
+
+                    if ("" !== opObj.thumbnail_url) {
+                        $('#imageUrl').val(opObj.thumbnail_url);
+                    	$("#iupLogo .imgUpShow").css('background-image', "url('"+ opObj.thumbnail_url +"')").removeClass("no-image").removeClass("is-loading");
+                    }
+
+                    cms.global.vYoutubeLiveIn.fileUrl = opObj.url;
+                    cms.global.vYoutubeLiveIn.imageUrl = opObj.thumbnail_url;
+                    cms.global.vYoutubeLiveIn.name = opObj.caption;
+                    cms.global.vYoutubeLiveIn.intro = $("#intro").val();
+
+                    cms.global.vYoutubeLiveIn.uploader = opObj.short_name;
+                    cms.global.vYoutubeLiveIn.uploadDate = opObj.created_at;
+                    cms.global.vYoutubeLiveIn.ytId = "";
+
+                    $("#ytUrlLive").data("status", "processing");
+
+                } else {
+                    $("#ytSyncMsg").html(strDefErr);
+                    $("#ytSyncMsg").removeClass("hide");
+                }
+            });
         } else {
             $("#ytSyncMsg").html(strDefErr);
             $("#ytSyncMsg").removeClass("hide");
@@ -229,12 +342,20 @@ $(function () {
     $(document).on('change', '#ytUrl', function () {
         var thisUrl = $(this).val().trim(),
             ytUrlParse = $common.ytUrlParser(thisUrl),
-            ytObj = {};
+            ytObj = {},
+            thisUrlInfo = $.url(thisUrl),
+            thisHost = thisUrlInfo.attr("host"),
+            pgType = "youtube";
         // console.log( "this is a cou****" + $(this).data("ctype") );
         $("#ytSyncMsg").html("");
         $("#ytSyncMsg").addClass("hide");
         $("#intro").val("");
         $("#name").val("");
+
+        if("vimeo.com" === thisHost){
+            ytUrlParse = $common.vimeoUrlParser(thisUrl);
+            pgType = "vimeo";
+        }
 
         if (ytUrlParse.ytType > 0) {
             ytObj = {
@@ -247,25 +368,51 @@ $(function () {
                         ytImg = "images/ch_default.png",
                         ytImgCount = 0;
 
-                    if (ytUrlParse.ytType === 1) {
-                        ytTitle = (res).entry.title.$t;
-                        ytDesc = (res).entry.summary.$t;
+                    if("vimeo" === pgType){
+                        if (ytUrlParse.ytType === 1) {
+                            ytTitle = res.display_name;
+                            ytDesc = res.bio;
 
-                        if(undefined !== (res).entry.media$thumbnail.url){
-                            ytImg = (res).entry.media$thumbnail.url;
+                            if(undefined !== res.portrait_huge && res.portrait_huge !== ""){
+                                ytImg = res.portrait_huge;
+                            }else if(undefined !== res.portrait_large && res.portrait_large !== ""){
+                                ytImg = res.portrait_large;
+                            }else if(undefined !== res.portrait_medium && res.portrait_medium !== ""){
+                                ytImg = res.portrait_medium;
+                            }else if(undefined !== res.portrait_small && res.portrait_small !== ""){
+                                ytImg = res.portrait_small;
+                            }
+                           
+                        } else {
+                            ytTitle = res.name;
+                            ytDesc = res.description;
+
+                            if (res.logo !== "") {
+                                ytImg = res.logo;
+                            }
                         }
-                    } else {
-                        ytTitle = (res).feed.title.$t;
-                        ytDesc = (res).feed.subtitle.$t;
 
-                        if ((res).feed.media$group.media$thumbnail) {
-                            ytImgCount = (res).feed.media$group.media$thumbnail.length;
-                        }
+                    }else{
+                        if (ytUrlParse.ytType === 1) {
+                            ytTitle = (res).entry.title.$t;
+                            ytDesc = (res).entry.summary.$t;
 
-                        if (ytImgCount > 1) {
-                            ytImg = (res).feed.media$group.media$thumbnail[1].url;
-                        }else if(ytImgCount > 0){
-                            ytImg = (res).feed.media$group.media$thumbnail[0].url;
+                            if(undefined !== (res).entry.media$thumbnail.url){
+                                ytImg = (res).entry.media$thumbnail.url;
+                            }
+                        } else {
+                            ytTitle = (res).feed.title.$t;
+                            ytDesc = (res).feed.subtitle.$t;
+
+                            if ((res).feed.media$group.media$thumbnail) {
+                                ytImgCount = (res).feed.media$group.media$thumbnail.length;
+                            }
+
+                            if (ytImgCount > 1) {
+                                ytImg = (res).feed.media$group.media$thumbnail[1].url;
+                            }else if(ytImgCount > 0){
+                                ytImg = (res).feed.media$group.media$thumbnail[0].url;
+                            }
                         }
                     }
 
@@ -273,8 +420,8 @@ $(function () {
                     $("#name").val(ytTitle);
                     $("#intro").val(ytDesc);
                     if("images/ch_default.png" !== ytImg){
-                        $("#thumbnail-imageUrl").attr("src", ytImg);
                         $('#imageUrl').val(ytImg);
+                    	$("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
                     }
 
                 },
@@ -285,7 +432,7 @@ $(function () {
 
             $.ajax(ytObj);
         } else {
-            $("#ytSyncMsg").html("Invalid URL, please check the URL and try again.");
+            $("#ytSyncMsg").html(nn._([cms.global.PAGE_ID, 'setting-form', 'Invalid URL, please check the URL and try again.']));
             $("#ytSyncMsg").removeClass("hide");
         }
         // console.log( "this is a cou****" + $(this).val() );
@@ -385,84 +532,102 @@ $(function () {
             sphere = '',
             rowNum = 0,
             modCatLen = 0,
-            i = 0;
+            i = 0,
+            actObjId = $(this).parent().attr('id');
+            
         // sharing url
         if ($(this).hasClass('surl-li')) {
             $('#surl-ul .surl-li').removeClass('on');
             $(this).addClass('on');
         }
-        // region (sphere) relate to category
-        if ('sphere-select-list' === $(this).parent().attr('id')) {
-            srcname = $(this).parent().parent().children('.select-txt').children().text();
-            if (srcname !== selectOption) {
-                $('.category').removeClass('enable').addClass('disable');
-                $('#categoryId').val(0);
-                $('#browse-category').html('');
-                sphere = metadata;
-                if ('other' === sphere) {
-                    sphere = 'en';
-                }
-                nn.api('GET', cms.reapi('/api/categories'), {
-                    lang: sphere
-                }, function (categories) {
-                    $('#browse-category').data('realCateCnt', categories.length);
-                    $.each(categories, function (i, list) {
-                        cms.config.CATEGORY_MAP[list.id] = list.name;
+
+        switch (actObjId) {
+            case "sphere-select-list":
+                // region (sphere) relate to category
+                srcname = $(this).parent().parent().children('.select-txt').children().text();
+                if (srcname !== selectOption) {
+                    $('.category').removeClass('enable').addClass('disable');
+                    $('#categoryId').val(0);
+                    $('#browse-category').html('');
+                    sphere = metadata;
+                    if ('other' === sphere) {
+                        sphere = 'en';
+                    }
+                    nn.api('GET', cms.reapi('/api/categories'), {
+                        lang: sphere
+                    }, function(categories) {
+                        $('#browse-category').data('realCateCnt', categories.length);
+                        $.each(categories, function(i, list) {
+                            cms.config.CATEGORY_MAP[list.id] = list.name;
+                        });
+                        rowNum = ($(window).width() > 1356) ? 4 : 3;
+                        modCatLen = categories.length % rowNum;
+                        if (modCatLen > 0) {
+                            modCatLen = rowNum - modCatLen;
+                            for (i = 0; i < modCatLen; i += 1) {
+                                categories.push({
+                                    id: 0,
+                                    name: ''
+                                });
+                            }
+                        }
+                        $('#category-list-tmpl-item').tmpl(categories, {
+                            dataArrayIndex: function(item) {
+                                return $.inArray(item, categories);
+                            }
+                        }).appendTo('#browse-category');
+                        $('#browse-category li[data-meta=0]').addClass('none');
+                        $page.scrollToBottom();
+                        $('.category').removeClass('disable').addClass('enable');
+                        $('#categoryId-select-txt').text(nn._([cms.global.PAGE_ID, 'setting-form', 'Select a category']));
                     });
-                    rowNum = ($(window).width() > 1356) ? 4 : 3;
-                    modCatLen = categories.length % rowNum;
-                    if (modCatLen > 0) {
-                        modCatLen = rowNum - modCatLen;
-                        for (i = 0; i < modCatLen; i += 1) {
-                            categories.push({
-                                id: 0,
-                                name: ''
+                }
+                break;
+
+            case "browse-category":
+                // category relate to tags
+                nn.api('GET', cms.reapi('/api/tags'), {
+                    categoryId: metadata,
+                    lang: $('#sphere').val()
+                }, function(tags) {
+                    $('#tag-list').html('');
+                    if (tags && tags.length > 0) {
+                        $('.tag-list').removeClass('hide');
+                        var currentTags = $('#tag').val();
+                        currentTags = currentTags.split(',');
+                        if (!currentTags) {
+                            currentTags = [];
+                        }
+                        $('#tag-list-tmpl-item').tmpl({
+                            tags: tags
+                        }).appendTo('#tag-list');
+                        if (currentTags.length > 0) {
+                            $('#tag-list li span a').each(function() {
+                                if (-1 !== $.inArray($(this).text(), currentTags)) {
+                                    $(this).parent().parent().addClass('on');
+                                }
                             });
                         }
+                    } else {
+                        $('.tag-list').addClass('hide');
                     }
-                    $('#category-list-tmpl-item').tmpl(categories, {
-                        dataArrayIndex: function (item) {
-                            return $.inArray(item, categories);
-                        }
-                    }).appendTo('#browse-category');
-                    $('#browse-category li[data-meta=0]').addClass('none');
-                    $page.scrollToBottom();
-                    $('.category').removeClass('disable').addClass('enable');
-                    $('#categoryId-select-txt').text(nn._([cms.global.PAGE_ID, 'setting-form', 'Select a category']));
-                });
-            }
-        }
-        // category relate to tags
-        if ('browse-category' === $(this).parent().attr('id')) {
-            nn.api('GET', cms.reapi('/api/tags'), {
-                categoryId: metadata,
-                lang: $('#sphere').val()
-            }, function (tags) {
-                $('#tag-list').html('');
-                if (tags && tags.length > 0) {
-                    $('.tag-list').removeClass('hide');
-                    var currentTags = $('#tag').val();
-                    currentTags = currentTags.split(',');
-                    if (!currentTags) {
-                        currentTags = [];
-                    }
-                    $('#tag-list-tmpl-item').tmpl({
-                        tags: tags
-                    }).appendTo('#tag-list');
-                    if (currentTags.length > 0) {
-                        $('#tag-list li span a').each(function () {
-                            if (-1 !== $.inArray($(this).text(), currentTags)) {
-                                $(this).parent().parent().addClass('on');
-                            }
-                        });
-                    }
-                } else {
-                    $('.tag-list').addClass('hide');
-                }
 
-                $page.scrollToBottom();
-            });
+                    $page.scrollToBottom();
+                });
+                break;
+
+            case "paid-select-list":
+                if (metadata) {
+                    $("#paidBlock").removeClass("hide");
+                    $("#isPublic").val(false);
+                } else {
+                    $("#paidBlock").addClass("hide");
+                    $("#isPublic").val(true);
+                }
+                break;
+
         }
+
         $(this).parent().parent().children('.select-meta').val(metadata);
         $(this).parent().parent().children('.select-btn').removeClass('on');
         $(this).parent().parent().children('.select-txt').children().text(selectOption);
@@ -621,190 +786,211 @@ $(function () {
         return false;
     });
 
-    // channel form button
-    $('#content-main').on('click', '#settingForm .btn-save.enable', function () {
-        // update mode
-        if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable') && cms.global.USER_URL.param('id') > 0) {
-            $common.showSavingOverlay();
-            nn.on(400, function (jqXHR, textStatus) {
-                $('#overlay-s').fadeOut(0, function () {
-                    nn.log(textStatus + ': ' + jqXHR.responseText, 'error');
-                });
-            });
-            var qrystring = $('#settingForm').serialize(),
-                parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
-            // sharing url
-            nn.api('GET', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
-                channelId: cms.global.USER_URL.param('id')
-            }), null, function (cBrand) {
-                var surlText = $('#surl-text').text();
-                if (cBrand.brand !== surlText && '' !== surlText) {
-                    nn.api('PUT', cms.reapi('/api/channels/{channelId}/autosharing/brand', {
-                        channelId: cms.global.USER_URL.param('id')
-                    }), {
-                        brand: surlText
-                    });
-                }
-            });
-
-            nn.api('PUT', cms.reapi('/api/channels/{channelId}', {
-                channelId: cms.global.USER_URL.param('id')
-            }), parameter, function (channel) {
-                if (true === cms.global.vIsYoutubeLive) {
-                    if ("processing" === $("#ytUrlLive").data("status")){
-                        nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
-                            channelId: channel.id
-                        }), null, function(episodes) {
-                            var cntEpisode = episodes.length;
-                            if (cntEpisode > 0) {
-                                nn.api('DELETE', cms.reapi('/api/episodes/{episodeId}', {
-                                    episodeId: episodes[0].id
-                                }), null, function(programs) {
-                                    $page.ytLiveCreate(channel.id);
-                                });
-                            } else {
-                                $page.ytLiveCreate(channel.id);
-                            }
-                            $('body').removeClass('has-change');
-                        });
-                    } else {
-                        $page.saveAfter();
-                    }
-               }else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
-                    var userIds = [],
-                        accessTokens = [];
-                    if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {
-                        userIds = $.trim($('#pageId').val()).split(',');
-                        $.each(userIds, function (i, userId) {
-                            accessTokens.push(cms.global.FB_PAGES_MAP[userId]);
-                        });
-                    }
-                    if ($('#fbTimeline').is(':checked')) {
-                        userIds.push(cms.global.USER_SNS_AUTH.userId);
-                        accessTokens.push(cms.global.USER_SNS_AUTH.accessToken);
-                    }
-                    nn.api('DELETE', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
-                        channelId: channel.id
-                    }), null, function () {
-                        if (userIds.length > 0) {
-                            parameter = {
-                                userId: userIds.join(','),
-                                accessToken: accessTokens.join(',')
-                            };
-                            nn.api('POST', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
-                                channelId: channel.id
-                            }), parameter, function () {
-                                $('#overlay-s').fadeOut(1000, function () {
-                                    $('body').removeClass('has-change');
-                                    $('#imageUrlOld').val(channel.imageUrl);
-                                });
-                            });
-                        } else {
-                            $('#overlay-s').fadeOut(1000, function () {
-                                $('body').removeClass('has-change');
-                                $('#imageUrlOld').val(channel.imageUrl);
-                            });
-                        }
-                    });
-                } else {
-                    $('#overlay-s').fadeOut(1000, function () {
-                        $('body').removeClass('has-change');
-                        $('#imageUrlOld').val(channel.imageUrl);
-                    });
-                }
-            });
-        }
-        return false;
-    });
-
 
     $('#ytsync-prompt').on('click', '.btn-leave, .btn-close', function () {
         $.unblockUI();
         location.href = 'index.html';
     });
 
-    $('#content-main').on('click', '#settingForm .btn-create.enable', function () {
-        // insert mode
+    $('#content-main').on('click', '#settingForm .btn-create.enable, #settingForm .btn-save.enable', function () {
+        var isEnable = $(this).hasClass('enable'),
+            isCreate = $(this).hasClass('btn-create'),
+            qrystring = "",
+            parameter = {};
 
-        if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && $(this).hasClass('enable')) {
+        // program proc [add | edit]
+        function procChannel() {
+            var deferred = $.Deferred(),
+                parameterChannel = {},
+                filterFields = ["paidChannel", "cntItem"];
+
+            // for special case under review
+            $.each(parameter, function (eKey, eValue) {
+                if (-1 === $.inArray(eKey, filterFields)) {
+                    parameterChannel[eKey] = eValue;
+                }
+            });
+
+            if (isCreate) {
+                // insert mode
+                nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
+                    userId: cms.global.USER_DATA.id
+                }), parameterChannel, function (channel) {
+                    deferred.resolve(channel);
+                });
+            } else {
+                // edit mode
+                nn.api('PUT', cms.reapi('/api/channels/{channelId}', {
+                    channelId: cms.global.USER_URL.param('id')
+                }), parameterChannel, function (channel) {
+                    deferred.resolve(channel);
+                });
+            }
+
+            return deferred.promise();
+        }
+
+        // IAP add
+        function procIAP(channel) {
+            var deferred = $.Deferred(),
+                isPaidSend = $page.isPaidSend(),
+                infoPaid = $page.getPaidInfo();
+            if (isPaidSend && infoPaid.isVailed) {
+                nn.api('POST', cms.reapi('/api/billing/channels/{channelId}/iap_info', {
+                    channelId: channel.id
+                }), infoPaid, function (iapInfo) {
+                    nn.api('POST', cms.reapi('/api/billing/channels/{channelId}/iap_items', {
+                        channelId: channel.id
+                    }), {
+                        msoId: cms.global.USER_DATA.msoId
+                    }, function (iapItem) {
+                        if (!isCreate) {
+                            $page.paidChannelInit();
+                        }
+                        deferred.resolve(channel);
+                    });
+                });
+            } else {
+                deferred.resolve(channel);
+            }
+
+            return deferred.promise();
+        }
+
+        // auto share
+        function procAutoShare(channel) {
+            var deferred = $.Deferred();
+            if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
+                var userIds = [],
+                    accessTokens = [];
+                if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {
+                    userIds = $.trim($('#pageId').val()).split(',');
+                    $.each(userIds, function(i, userId) {
+                        accessTokens.push(cms.global.FB_PAGES_MAP[userId]);
+                    });
+                }
+                if ($('#fbTimeline').is(':checked')) {
+                    userIds.push(cms.global.USER_SNS_AUTH.userId);
+                    accessTokens.push(cms.global.USER_SNS_AUTH.accessToken);
+                }
+                nn.api('DELETE', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
+                    channelId: channel.id
+                }), null, function () {
+                    if (userIds.length > 0) {
+                        parameter = {
+                            userId: userIds.join(','),
+                            accessToken: accessTokens.join(',')
+                        };
+                        nn.api('POST', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
+                            channelId: channel.id
+                        }), parameter, function () {
+                            deferred.resolve(channel);
+                        });
+                    } else {
+                        deferred.resolve(channel);
+                    }
+                });
+            } else {
+                deferred.resolve(channel);
+            }
+
+            return deferred.promise();
+        }
+
+        // Sync Program
+        function procSyncProgram(channel) {
+            var deferred = $.Deferred();
+            if (channel.id > 0 && cms.global.vIsYoutubeSync === true) {
+                nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
+                    channelId: channel.id
+                }), null, function (msg) {
+                    deferred.resolve(channel);
+                });
+            } else {
+                deferred.resolve(channel);
+            }
+
+            return deferred.promise();
+        }
+
+        // Live program [add | edit]
+        function procLiveProgram(channel) {
+            var deferred = $.Deferred();
+            if (true === cms.global.vIsYoutubeLive) {
+                if(isCreate){
+                    // insert mode
+                    $page.ytLiveCreate(channel.id);
+                    deferred.resolve(channel);
+                }else{
+                    // edit mode
+                    nn.api('GET', cms.reapi('/api/channels/{channelId}/episodes', {
+                        channelId: channel.id
+                    }), null, function (episodes) {
+                        var cntEpisode = episodes.length;
+                        if (cntEpisode > 0) {
+                            nn.api('DELETE', cms.reapi('/api/episodes/{episodeId}', {
+                                episodeId: episodes[0].id
+                            }), null, function(programs) {
+                                $page.ytLiveCreate(channel.id);
+                                deferred.resolve(channel);
+                            });
+                        } else {
+                            $page.ytLiveCreate(channel.id);
+                            deferred.resolve(channel);
+                        }
+                    });
+                }
+            } else {
+                deferred.resolve(channel);
+            }
+
+            return deferred.promise();
+        }
+
+        function procEnd(channel) {
+            var deferred = $.Deferred();
+            $('#overlay-s').fadeOut(1000, function() {
+                $('body').removeClass('has-change');
+                $('#imageUrlOld').val(channel.imageUrl);
+                $page.saveAfter();
+                deferred.resolve();
+            });
+
+            return deferred.promise();
+        }
+
+        function procStart() {
+            var deferred = $.Deferred();
             $common.showSavingOverlay();
+            deferred.resolve();
+
+            return deferred.promise();
+        }
+
+
+        // insert || edit
+        if ($page.chkData(document.settingForm) && cms.global.USER_DATA.id && isEnable) {
             nn.on(400, function (jqXHR, textStatus) {
                 $('#overlay-s').fadeOut(0, function () {
                     nn.log(textStatus + ': ' + jqXHR.responseText, 'error');
                 });
             });
-            // note: channel-add.html hard code hidden field isPublic=true
-            var qrystring = $('#settingForm').serialize(),
-                parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
 
-            if (cms.global.vIsYoutubeSync === true) {
-                qrystring = $('#settingForm').serialize();
-                parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
-            }
+            $("#intro").val($("#intro").val().replace(/\n/g, '{BR}'));
+            qrystring = $('#settingForm').serialize();
+            parameter = $.url('http://fake.url.dev.teltel.com/?' + qrystring).param();
+            $("#intro").val($("#intro").val().replace(/\{BR\}/g, '\n'));
 
-            nn.api('POST', cms.reapi('/api/users/{userId}/channels', {
-                userId: cms.global.USER_DATA.id
-            }), parameter, function (channel) {
-                if(channel.id > 0 && cms.global.vIsYoutubeSync === true){
-                    nn.api('PUT', cms.reapi('/api/channels/{channelId}/youtubeSyncData', {
-                        channelId: channel.id
-                    }), null, function (msg) {
-                        nn.log("message --- " + msg);
-                    });
-                }
 
-                if (true === cms.global.vIsYoutubeLive) {
-                    // live program
-                    $page.ytLiveCreate(channel.id);
-
-                } else if ($('.connect-switch.hide').length > 0 && $('.reconnected.hide').length > 0) {
-                    var userIds = [],
-                        accessTokens = [];
-                    if ($('#fbPage').is(':checked') && '' !== $.trim($('#pageId').val())) {
-                        userIds = $.trim($('#pageId').val()).split(',');
-                        $.each(userIds, function (i, userId) {
-                            accessTokens.push(cms.global.FB_PAGES_MAP[userId]);
-                        });
-                    }
-                    if ($('#fbTimeline').is(':checked')) {
-                        userIds.push(cms.global.USER_SNS_AUTH.userId);
-                        accessTokens.push(cms.global.USER_SNS_AUTH.accessToken);
-                    }
-                    nn.api('DELETE', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
-                        channelId: channel.id
-                    }), null, function () {
-                        if (userIds.length > 0) {
-                            parameter = {
-                                userId: userIds.join(','),
-                                accessToken: accessTokens.join(',')
-                            };
-                            nn.api('POST', cms.reapi('/api/channels/{channelId}/autosharing/facebook', {
-                                channelId: channel.id
-                            }), parameter, function () {
-                                $('#overlay-s').fadeOut(1000, function () {
-                                    $('body').removeClass('has-change');
-                                    $('#imageUrlOld').val(channel.imageUrl);
-                                    $page.saveAfter();
-                                });
-                            });
-                        } else {
-                            $('#overlay-s').fadeOut(1000, function () {
-                                $('body').removeClass('has-change');
-                                $('#imageUrlOld').val(channel.imageUrl);
-                                $page.saveAfter();
-                            });
-                        }
-                    });
-                } else {
-                    $('#overlay-s').fadeOut(1000, function () {
-                        $('body').removeClass('has-change');
-                        $('#imageUrlOld').val(channel.imageUrl);
-                        
-                        $page.saveAfter();
-                    });
-                }
-            });
+            procStart()
+                .then(procChannel)
+                .then(procIAP)
+                .then(procAutoShare)
+                .then(procSyncProgram)
+                .then(procLiveProgram)
+                .then(procEnd);
         }
+
         return false;
     });
     $('#content-main').on('click', '.fminput', function () {

@@ -5,6 +5,7 @@
     'use strict';
 
     var $common = cms.common;
+    $page.actEpisode = 0;
     $page.channel9x9 = 0;
     $page.channelYouSync = 0;
     $page.syncingProcessCount = 10;
@@ -18,14 +19,26 @@
     $page.channelYouLiveAddUrl = "channel-add.html#ytlive";
     $page.channelEmptyMsg = [{
         'msg_name': '9x9',
-        'msg_body': "You don't have any FLIPr programs yet."
+        'msg_body': "You don't have any Curated programs yet."
     }, {
         'msg_name': 'YoutubeSync',
-        'msg_body': "You don't have any YouTube sync programs yet."
+        'msg_body': "You don't have any Sync programs yet."
     }, {
         'msg_name': 'YoutubeLive',
         'msg_body': "You don't have any live programs yet."
+    }, {
+        'msg_name': 'programSearch',
+        'msg_body': "Your search - [xx] didn't match any programs."
     }];
+
+    $page.edFilter = function (inSH) {
+        // inSH {true:enalbe, false:disabled}
+        if (inSH) {
+            $("#filterProgram .enable").removeClass("disabled");
+        } else {
+            $("#filterProgram .enable").addClass("disabled");
+        }
+    };
 
     // YouTube sync syncing processing
     $page.syncingProcess = function () {
@@ -85,9 +98,9 @@
     $page.failedYoutubeSyncPopUpMsg = function (inCount) {
         var tmpStr = "";
         if(inCount > 1){
-            tmpStr = "You have ? invalid YouTube sync programs.";
+            tmpStr = "You have ? invalid Sync programs.";
         } else {
-            tmpStr = "You have ? invalid YouTube sync program.";
+            tmpStr = "You have ? invalid Sync program.";
         }
         $.unblockUI();
         $('#system-notice .content').text(nn._([cms.global.PAGE_ID, 'overlay', tmpStr], [inCount]));
@@ -256,23 +269,21 @@
                     items.push(channel);
                 });
 
-                $('#channel-list-empty-msg-item').tmpl($page.channelEmptyMsg, null).appendTo('#channel-empty-msg');
                 $('#channel-list-tmpl-item').tmpl(items, {
                     userId: cms.global.USER_DATA.id
                 }).appendTo('#channel-list');
 
-            }
-            if (cntChannel <= 0 || (1 === cntChannel && hasFavoriteChannel)) {
-                if (!$.cookie('cms-cct')) {
-                    $.cookie('cms-cct', 'seen');
-                    $page.showCreateChannelTutorial();
-                }
             }
 
             $('#content-main-wrap').perfectScrollbar("update");
             if ($page.paging.currentPage === 1) {
                 $("#title-func .order").addClass("disable");
                 $('#overlay-s').fadeOut();
+            }
+
+            if(1 === $page.paging.currentPage && cntChannel !== $page.paging.cntItems && cntChannel !== $page.paging.pageLimit){
+                $page.paging.pageLimit = cntChannel;
+                $page.paging.cntPages = Math.ceil($page.paging.cntItems / $page.paging.pageLimit);
             }
 
             if ($page.paging.cntPages === $page.paging.currentPage) {
@@ -287,14 +298,18 @@
                 });
                 $('#channel-list').sortable('disable');
 
-                $(".radio-list").removeClass("hide");
                 $("#title-func .order").removeClass("disable");
+                $(".keyword-search").removeClass("disabled");
+                $(".keyword-search").removeProp("disabled");
+                $(".search-button").removeClass("hide");
 
                 // if has readonly
                 $page.syncingOnLoad();
+                $page.edFilter(true);
 
             }else{
                 $page.getPrograms();
+                $page.edFilter(false);
             }
         });
     };
@@ -307,6 +322,7 @@
             options: options
         }, 'debug');
 
+        $common.setupUserCampaignId();
         var pageId = cms.global.PAGE_ID;
         $page.paging.cntItems = cms.global.USER_DATA.cntChannel;
         $page.paging.cntPages = Math.ceil($page.paging.cntItems / $page.paging.pageLimit);
@@ -321,6 +337,8 @@
             $('#title-func-tmpl').tmpl(null, {
                 cntChannel: $page.paging.cntItems
             }).appendTo('#title-func');
+            $('#channel-list-empty-msg-item').tmpl($page.channelEmptyMsg, null).appendTo('#channel-empty-msg');
+
             if ($page.paging.cntItems > 0) {
                 // list protgrams
                 $('#channel-list').html('');
@@ -346,9 +364,15 @@
                     cleartypeNoBg: true
                 });
                 $('#func-nav ul li.btns').addClass("hide");
-                $(".radio-list").addClass("hide");
 
-                $('#overlay-s').fadeOut();
+                if (!$.cookie('cms-cct')) {
+                    $.cookie('cms-cct', 'seen');
+                	$('#overlay-s').fadeOut();
+                    $page.showCreateChannelTutorial();
+                }else{
+                	$('#overlay-s').fadeOut();
+                }
+
             }
         } else {
             location.href = '../';

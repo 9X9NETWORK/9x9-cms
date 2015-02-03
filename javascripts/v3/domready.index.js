@@ -10,6 +10,119 @@ $(function () {
 
     $('#content-main-wrap').perfectScrollbar({marginTop: 10, marginBottom: 60});
 
+    $(document).on('click', '.btn-search', function () {
+        var inKeyWord = $.trim($(".keyword-search").val()).toLowerCase(),
+            tmpObj = {},
+            tmpTitle = "",
+            cntMatch = 0;
+        $(".keyword-search").val(inKeyWord);
+        $(".msg-programSearch").addClass("hide");
+        if (inKeyWord.length > 0) {
+            $("#filterProgram p.select-txt a").text($("#filterProgram ul.select-list li:eq(0)").text());
+            $("#title-func .order").addClass("disable");
+
+            $('#channel-list > li').each(function (eKey, eValue) {
+                tmpObj = $(eValue).find(".info h3 a");
+                tmpTitle = $(tmpObj).text().toLowerCase();
+                if (-1 < tmpTitle.indexOf(inKeyWord)) {
+                    $(eValue).removeClass("hide");
+                    cntMatch += 1;
+                } else {
+                    $(eValue).addClass("hide");
+                }
+            });
+            $("#channel-counter").text(cntMatch);
+            if(0 === cntMatch) {
+                $(".msg-programSearch h3").html(nn._([cms.global.PAGE_ID, 'channel-list', "Your search - [xxx] didn't match any programs."], [inKeyWord]));
+                $(".msg-programSearch").removeClass("hide");
+            }
+            $("#content-main-wrap").scrollTop(0);
+            $("#content-main-wrap").perfectScrollbar('update');
+        }
+    });
+
+    $(document).on('change', '#importInText', function () {
+        var arrUrl = $common.playerUrlParser($(this).val());
+
+        if (!arrUrl.isAllow) {
+            $("#epImportNotice").removeClass("hide");
+            // errmsg
+        } else {
+            // success
+            $("#epImportNotice").addClass("hide");
+        }
+    });
+
+    $(document).on('click', '.btnImportEp', function () {
+        var hasDisabled = $(this).hasClass("disabled"),
+            arrUrl = $common.playerUrlParser($("#importInText").val()),
+            thisEpId = arrUrl.epId.replace("e", "") || 0,
+            chId = $page.actEpisode;
+
+        $("#epImportNotice").addClass("hide");
+        if (arrUrl.isAllow && thisEpId > 0) {
+            $common.importEp(thisEpId, chId, $page);
+        } else {
+            // errmsg
+            $("#epImportNotice").removeClass("hide");
+        }
+    });
+
+    $(document).on('click', '.ov-cancel', function () {
+        $.unblockUI();
+    });
+
+    $(document).on('click', '#new-Episode-Option .btn-create', function () {
+        var thisOption = $(this).attr("id"),
+            objId = $(this).data("meta"),
+            nextUrl = "index.html";
+
+        switch (thisOption) {
+            case "func-upvideo":
+                nextUrl = "video-upload.html?cid=" + objId;
+                break;
+
+            case "func-episode":
+                nextUrl = "epcurate-curation.html?cid=" + objId;
+                break;
+
+            case "func-fromepisode":
+                nextUrl = "";
+                $("#areaOption").addClass("hide");
+                $("#areaImport").removeClass("hide");
+                break;
+        }
+        if("" !== nextUrl){
+            location.href = nextUrl;
+        }
+    });
+
+    $(document).on('click', '.btnNewEpisode', function () {
+        var isVideoAuth = cms.global.USER_PRIV.isVideoAuth,
+            objId = $(this).data("meta");
+
+        if ($common.isImportEpisode(parseInt(cms.global.USER_DATA.id, 10))) {
+            cms.global.USER_PRIV.isImportEpisode = true;
+            $page.actEpisode = objId;
+        }
+
+        if (isVideoAuth) {
+            // curated program && with isVideoAuth , can choose add yt episode or upload video
+            $('#new-Episode-Option').empty();
+            $('#new-Episode-Option-tmpl').tmpl({
+                oid: objId
+            }).appendTo('#new-Episode-Option');
+            $.blockUI({
+                message: $('#new-Episode-Option')
+            });
+            return false;
+        } else {
+            // curated program && without isVideoAuth , only add yt episode
+            $(this).attr("href", "epcurate-curation.html?cid=" + objId);
+        }
+    });
+
+
     // common unblock
     $('body').keyup(function (e) {
         if (27 === e.which) { // Esc
@@ -113,32 +226,58 @@ $(function () {
         }
     });
 
+
     // program type filter
-    $(document).on('click', '.lbTypeItem', function () {
-        var thisObj = this,
-            selectType = $(thisObj).val(),
-            selectTypeTxt = ".ctype" + $(thisObj).val();
+    $(document).on('click', '#filterProgram .enable .select-btn, #filterProgram .enable .select-txt', function (event) {
+        if(!$("#filterProgram .enable").hasClass("disabled")){
+            $('.select-list').hide();
+            $(this).parent('li').siblings().children('.on').removeClass('on');
+            $(this).parent().children('.select-btn').toggleClass('on');
+            if ($(this).parent().children('.select-btn').hasClass('on')) {
+                $(this).parent().children('.select-list').slideDown();
+            } else {
+                $(this).parent().children('.select-list').hide();
+            }
+        }
+        event.stopPropagation();
+        return false;
+    });
 
-        $(".lbTypeLists").removeClass("checked");
-        $(thisObj).parent().addClass("checked");
-        $("#title-func .order").removeClass("disable");
-        $(".group-tmpty-msg").addClass("hide");
+    $('#content-main').on('click', '#filterProgram .select .select-list li', function () {
+        var thsiObj = this,
+            selectType = $(thsiObj).data("meta"),
+            selectTypeTxt = $(thsiObj).text(),
+            selectTypeClass = ".ctype" + selectType;
 
-        $(".chLi").addClass("hide").fadeOut(500);
+        $(".chLi").addClass("hide");
+
+        if("" !== $(".keyword-search").val()) {
+            $(".keyword-search").val("");
+            $(".msg-programSearch").addClass("hide");
+        }
+
         if ("all" !== selectType) {
-            $(selectTypeTxt).removeClass("hide");
-            $("#channel-counter").text($(selectTypeTxt).length);
+            $("#channel-counter").text($(selectTypeClass).length);
+
+            $(selectTypeClass).removeClass("hide");
             $("#title-func .order").addClass("disable");
-            if ($(selectTypeTxt).length < 1) {
+            if ($(selectTypeClass).length < 1) {
                 $(".msg-" + selectType).removeClass("hide");
             }
-        } else {
-            $(".chLi").removeClass("hide");
+        } else {        
             $("#channel-counter").text($(".chLi").length);
+            $(".chLi").removeClass("hide");
+            $("#title-func .order").removeClass("disable");
         }
         $("#content-main-wrap").scrollTop(0);
         $("#content-main-wrap").perfectScrollbar('update');
+
+        $(this).parent().parent().children('.select-btn').removeClass('on');
+        $(this).parent().parent().children('.select-txt').children().text(selectTypeTxt);
+        $(this).parent().hide();
+        return false;
     });
+
 
     // you tube sync , sync direct
     $(document).on('click', '.sync', function () {
@@ -323,7 +462,6 @@ $(function () {
                                 cleartypeNoBg: true
                             });
                             $('#func-nav ul li.btns').addClass("hide");
-                            $(".radio-list").addClass("hide");
                         }
 
                     });

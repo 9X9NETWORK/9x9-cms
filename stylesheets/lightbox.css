@@ -1059,7 +1059,7 @@ a.switch-off {
     bottom: 0;
     left: 15px;
     width: 788px;
-    height: 66px;
+    height: 60px;
     background: url(../images/bg_divider.png) repeat-x top;
 }
 
@@ -1161,8 +1161,8 @@ body.from-poi-edit-mode #poi-event-overlay .wrap .content .func ul li.notice {
 #poi-event-overlay .wrap .content .event-input .fminput label {
     float: left;
     width: 103px;
-    height: 30px;
-    line-height: 30px;
+    /*height: 30px;
+    line-height: 30px;*/
     color: #555;
     font-weight: bold;
     font-size: 13px;
@@ -1184,6 +1184,14 @@ body.from-poi-edit-mode #poi-event-overlay .wrap .content .func ul li.notice {
     height: 30px;
     padding: 0 3px 0 0;
     background-position: right -30px;
+}
+.fminput .charcounter{
+    background: none;
+    background: none;
+    line-height: 2.2;
+    padding-left: 1em;
+    color: #555;
+    font-size: 13px;
 }
 
 #poi-event-overlay .wrap .content .event-input .fminput p.text span .text {
