@@ -571,8 +571,18 @@
     };
 
     $common.showProcessingOverlay = function () {
-        $('#overlay-s .overlay-middle').html('<img src="images/icon_load_l.gif" alt="" />' + nn._(['overlay', 'loading', 'Processing...']));
-        $('#overlay-s').fadeIn().css('z-index', '1200');
+        if("app-brand.html" === cms.global.USER_URL.attr('file')){
+            $('#sysProcessing').modal('show');
+        } else {
+            $('#overlay-s .overlay-middle').html('<img src="images/icon_load_l.gif" alt="" />' + nn._(['overlay', 'loading', 'Processing...']));
+            $('#overlay-s').fadeIn().css('z-index', '1200');
+        }
+    };
+
+    $common.hideProcessingOverlay = function () {
+        if("app-brand.html" === cms.global.USER_URL.attr('file')){
+            $('#sysProcessing').modal('hide');
+        }
     };
 
     $common.showSavingOverlay = function () {
