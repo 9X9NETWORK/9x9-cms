@@ -504,6 +504,8 @@
         retValue.intro = $("#appIntro").val();
         retValue.shortIntro = $("#appSortIntro").val();
         retValue.slogan = $("#appSlogan").val();
+        retValue.iosUrl = $("#iosUrl").val();
+        retValue.androidUrl = $("#androidUrl").val();
         retValue.isChecked = true;
         return retValue;
     };
@@ -543,6 +545,9 @@
             $("#appIntro").val($.trim(msoInfo.intro));
             $("#appSortIntro").val($.trim(msoInfo.shortIntro));
             $("#appSlogan").val($.trim(msoInfo.slogan));
+
+            $("#iosUrl").val($.trim(msoInfo.iosUrl));
+            $("#androidUrl").val($.trim(msoInfo.androidUrl));
 
             $page.defaultMsoInfo();
 
