@@ -24,6 +24,8 @@
         if ($page.supportedRegion === "zh") {
             retValue = true;
         }
+        // allow every region use this feature
+        retValue = true;
         return retValue;
     };
 
