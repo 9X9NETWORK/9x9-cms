@@ -86,8 +86,8 @@
                 type: inType,
                 seq: opObj.seq
             };
-
-        if(inType === $page.typeSugg){
+        // sns add title too
+        if(inType === $page.typeSugg || inType === $page.typeSNS){
             objParameters.title = opObj.title;
         }
 
@@ -417,11 +417,12 @@
     };
 
     $page.seqUpdateSNS = function () {
-        var opObj, tmpLink, tmpLogoUrl, countI = 0;
+        var opObj, tmpLink, tmpLogoUrl, tmpTitle, countI = 0;
 
         $("#listsSNS  div.listItem").each(function () {
             opObj = $(this);
             tmpLink = opObj.find("input.inUrlSNS").val();
+            tmpTitle = opObj.find("input.inTitleSNS").val();
             tmpLogoUrl = opObj.find("img.logoUrl").attr("src");
 
             if (opObj.hasClass("newItem") && undefined === tmpLogoUrl && "" === tmpLink) {
@@ -466,6 +467,7 @@
             };
 
             tmpItem.link = opObj.find("input.inUrlSNS").val();
+            tmpItem.title = opObj.find("input.inTitleSNS").val();
             tmpItem.logoUrl = opObj.find("img.logoUrl").attr("src");
 
             if (!opObj.hasClass("delItem") && undefined === tmpItem.logoUrl || "" === tmpItem.link) {

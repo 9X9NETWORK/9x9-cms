@@ -106,6 +106,14 @@ $(function () {
     });
 
 
+    $(document).on("change", ".inTitleSNS", function (event) {
+        var thisSNS = $(this).parent().parent().parent();
+
+        $page.itemHasChange(thisSNS);
+        $("body").addClass("has-change");
+    });
+
+
     $(document).on("change", ".inUrlSNS", function (event) {
         var thisSNS = $(this).parent().parent().parent(),
             thisVal = $(this).val().trim(),
