@@ -1,0 +1,1014 @@
+{
+    "header": {
+        "Link to FLIPr.tv": "FLIPr.tv官方網站",
+        "Log out": "登出"
+    },
+    "studio-nav": {
+        "CMS": "後台管理系統",
+        "My Programs": "節目管理",
+        "My App": "App 管理",
+        "CMS Settings": "管理系統設定",
+        "Connection is inactive, click to restart it.": "連結授權已失效，請點此重啟連結。"
+    },
+    "func-nav": {
+        "Main Channels": "主頻道",
+        "Program Store": "節目商店",
+        "Brand Settings": "品牌設定",
+        "Brand Management": "品牌設定",
+        "Notification": "通知"
+    },
+    "footer": {
+        "© 2014 FLIPr.tv. All rights reserved.": "© 2014 FLIPr.tv. All rights reserved."
+    },
+    "overlay": {
+        "loading": {
+            "Saving...": "儲存中...",
+            "System Message": "系統訊息",
+            "Image Upload": "圖片上傳",
+            "Processing...": "處理中..."
+        },
+        "system-error": {
+            "Unknown error.": "未知的錯誤。",
+            "You are not authorized to PCS.": "你沒有授權使用PCS。",
+            "You are not authorized to edit this program.": "您沒有權限編輯此節目。",
+            "You are not authorized to edit this episode.": "您沒有權限編輯此節目。",
+            "You are not authorized to edit episodes in this program.": "您沒有權限編輯此節目的劇集。",
+            "Invalid program ID, please try again.": "節目ID有誤，請重試。",
+            "Invalid episode ID, please try again.": "劇集ID有誤，請重試。",
+            "Invalid program ID and episode ID, please try again.": "節目或劇集ID有誤，請重試。",
+            "The favorites program can not be edited.": "您無法編輯此節目。",
+            "Title text can't be empty!": "字卡內文不可空白！",
+            "There must be at least one video in this episode.": "請至少加入一部影片。",
+            "Please curate at least one valid video.": "請加入至少一個有效的影片。",
+            "You have reached the maximum amount of 50 videos.": "您加入的影片已達50個上限。"
+        },
+        "prompt": {
+            "Are you sure you want to delete this program? All data will be removed permanently.": "所有資料將永久刪除，確定刪除此節目？",
+            "Are you sure you want to delete this episode?": "確定刪除此劇集？",
+            "Are you sure you want to delete this title?": "確定刪除此字卡？",
+            "Are you sure you want to delete this POI with interactive event?": "確定刪除此互動時間與事件？",
+            "Unsaved changes will be lost, are you sure you want to leave?": "未儲存資料將遺失，確定離開？",
+            "Unsaved changes will be lost, are you sure you want to cancel editing?": "未儲存資料將遺失，確定結束編輯？",
+            "Synchronizing. This may take a few minutes.": "節目同步中，這可能需要幾分鐘的時間。"
+        },
+        "notice": {
+            "Password reset success!": "密碼重新設定成功！",
+            "New episode has been created as a draft!": "新建立劇集已被存為草稿！",
+            "<span>Publish this episode at the next step</span> whenever you finish editing.": "結束編輯後，<span>請於下一步發佈此劇集</span>。",
+            "This episode has been published.": "劇集發佈成功！",
+            "This episode has been saved as an unpublished draft.": "劇集已儲存為未發佈的草稿。"
+        },
+        "channel-tutorial": {
+            "Collect and Curate!": "蒐集影片 策展節目！",
+            "CMS is the management center for your FLIPr.tv list-form programs!": "後台管理系統是您策展FLIPr.tv節目的管理中心！",
+            "Create a<br />new program": "創建<br />新節目",
+            "Not right now, thanks!": "現在不要，謝謝！"
+        },
+        "facebook": {
+            "Connect to Facebook": "連結Facebook帳號",
+            "Connect to": "連結帳號",
+            "After connecting, you can enable Facebook auto sharing for each program in Program settings.": "連結帳號後，您可至節目設定頁面為每個節目設置是否自動分享至Facebook。",
+            "Auto sharing is disabled because permission to your connected account has been revoked, please click to restart the connection.": "自動分享功能已經停用！您的連結帳號授權已失效，請點擊重啟連結狀態。",
+            "Can not connect to Facebook correctly!": "無法正確連結至Facebook！",
+            "Please try again and make sure you agree on all permissions.": "請再試一次，並確保您已同意所有授權項目。",
+            "Account disconnected!": "帳號連結已取消！",
+            "{If you want to enable auto sharing again, please:}": "若您想要重新開啟自動分享功能，請：<br /><br />1. 連結帳號<br />2. 至節目設定頁面，為每個節目設定自動分享功能<br />3. 發佈新節目，FLIPr.tv將自動完成分享<br />",
+            "Disconnecting account will also disable auto sharing for every program. Are you sure you want to disconnect?": "取消帳號連結將會同時取消所有節目的自動分享設定，確定取消連結？"
+        },
+        "button": {
+            "OK": "OK",
+            "Yes": "是",
+            "No": "否",
+            "Back": "上一步",
+            "Disconnect": "取消連結",
+            "Restart connection": "重啟連結",
+            "Cancel": "取消",
+            "ON": "開",
+            "OFF": "關"
+
+        }
+    },
+    "upload": {
+        "Upload": "上傳",
+        "Uploading...": "上傳中..."
+    },
+    "lang-map": {
+        "en": "English",
+        "zh": "中文",
+        "other": "其他"
+    },
+    "sphere-map": {
+        "en": "美國",
+        "zh": "台灣",
+        "other": "全世界"
+    },
+    "effect-map": {
+        "none": "無效果",
+        "fade": "漸入",
+        "blind": "翻開",
+        "clip": "擦去",
+        "drop": "投擲"
+    },
+    "signin": {
+        "html-title": {
+            "FLIPr.tv - Sign In": "FLIPr.tv - 登入"
+        },
+        "login-holder": {
+            "Collect and Curate!": "蒐集影片 策展節目！",
+            "CMS is the management center for your FLIPr.tv list-form programs!": "後台管理系統是您策展FLIPr.tv節目的管理中心！",
+            "Sign In": "登入",
+            "Sign in with Facebook": "使用Facebook登入",
+            "Sign In with your E-mail and password": "輸入信箱與密碼登入",
+            "E-mail": "信箱",
+            "Password": "密碼",
+            "Forgot password?": "忘記密碼？",
+            "Need an account?": "還沒有帳號嗎？",
+            "Sign up Now!": "馬上註冊！",
+            "Sign Up": "註冊",
+            "Repeat Password": "再次輸入密碼",
+            "This email has been used.": "此信箱已被使用。",
+            "Two passwords don't match, please retype.": "輸入密碼不一致，請重新輸入。",
+            "I have read and accepted the User Agreement and Privacy Policy": "我已讀完並同意遵守<a target='_blank' href='/zh/policy.html'>隱私權政策</a>與<a target='_blank' href='/zh/terms.html'>使用條款</a>",
+            "User Name": "用戶名稱",
+            "Create a unique user name in FLIPr which composed of 6-16 English letters ,numbers or low line.": "用戶名稱請輸入6-16個字元，只能使用中英文、數字和底線。",
+            "Only letters, numbers or low line are allowed.": "用戶名稱只能使用中英文、數字或底線。",
+            "Please input 6-16 characters in username.": "請在用戶名稱輸入6-16範圍的字元。",
+            "Cancel": "取消",
+            "Create My Account": "送出",
+            "Forgot Password": "忘記密碼",
+            "Enter your email address and we`ll send you instructions.": "系統將會發送信件到您信箱，並導引您完成密碼設定。",
+            "Reset": "送出",
+            "Reset Password": "重設密碼",
+            "New Password": "新密碼",
+            "Repeat New Password": "再輸入新密碼",
+            "Back to Sign In": "回到登入頁",
+            "Success!": "完成！",
+            "You should receive an email shortly.": "請收信完成密碼重新設定。",
+            "If you still need assistance, please": "如果你還需要協助，請",
+            "contact us.": "連絡我們。"
+        },
+        "errMsg": {
+            "Two passwords don't match, please retype.": "輸入密碼不一致，請重新輸入。",
+            "USER_PERMISSION_ERROR": "密碼新設定定失敗，請重新申請密碼設定",
+            "Email format error!": "電子郵件格式錯誤！",
+            "Please input password!": "請輸入密碼！",
+            "Email and password do not match, please try again.": "信箱或密碼錯誤，請再次輸入。",
+            "Please fill your data!": "請確實填入資料！",
+            "Please click agree!": "你必需同意使用條款！",
+            "Passwrod not match!": "密碼輸入必需相同！",
+            "Passwrod Enter 8-16 English letters ,numbers or low line!": "密碼長度限制在6-16個字元內，組成字元沒有限制！",
+            "Invalid E-mail, please retry.": "無此帳號，請重新輸入。",
+            "This email has been used.": "此信箱已被使用。",
+            "Please input 6-16 characters in password.": "密碼長度限制為 6-16 個字元。",
+            "USER_INVALID": "無此帳號，請重新輸入。",
+            "Please accept the agreements below.": "請接受以下的隱私權政策與使用條款。",
+            "The two passwords you entered do not match.": "輸入密碼不一致，請重新輸入。",
+            "Please input 6 to 16 characters in username.": "用戶名稱限制長度為6-16個字元。",
+            "Only letters, numbers or low line are allowed.": "用戶名稱請輸入中英文、數字或底線。"
+        }
+    },
+    "app-brand": {
+        "html-title": {
+            "FLIPr.tv - Brand Settings": "FLIPr.tv - 品牌設定"
+        },
+        "main-area": {
+            "My App": "App 管理",
+            "Brand Management": "品牌設定",
+            "Input SNS link...": "請輸入社群連結...",
+            "Please upload SNS icon.": "請上傳連結圖示",
+            "Introduce your app": "介紹你的App!",
+            "Promote your app": "推廣你的App!",
+            "Suggested programs": "節目推薦",
+            "App Name": "APP 名稱",
+            "App Logo": "APP 商標",
+            "Detailed description": "App介紹",
+            "Short descript": "簡短介紹",
+            "call to action": "下載標語",
+            "SNS": "社群連結",
+            "Input program link...": "輸入節目網址...",
+            "Input program name...": "輸入節目名稱...",
+            "Save & Visit the page": "儲存 & 瀏覽結果",
+            "Best within 80 characters": "最佳字數80",
+            "Best within 40 characters": "最佳字數40",
+            "Best within 15 characters": "最佳字數15",
+            "where is 'Introduce your app'": "'app 介紹'在那裡",
+            "where is 'Promote your app'": "'社群推廣'在那裡",
+            "where is 'Suggested programs'": "'節目推薦'在那裡",
+            "Upload program logo": "上傳節目商標",
+            "Upload your personal SNS icon now! Better results with 50x50 image.": "立刻上傳個人化的社群圖示! 最佳建議解析度 50x50 。",
+            "Please fill in all required fields.": "請輸入必填項目。",
+            "Latest and popular videos all in FLIPr app!": "精采熱門影片每天更新，一切都在FLIPr app！",
+            "Latest and popular videos, updating EVERY DAY!": "最新、最熱門的線上影片，你不可錯過的每日精采！",
+            "FREE to download now!": "立刻下載FLIPr app！",
+            "Please use your branding URL": "請輸入你的品牌網址",
+            "+Add social network services": "+ 加入社群連結",
+            "+Add suggested program": "+ 加入節目推薦",
+
+
+
+            "Please fill in your brand name.": "請輸入品牌名稱",
+            "Better results with 260x200 or higher resolution image.": "圖檔最佳解析為 260x200, 檔案大小不超過500KB",
+            "Please upload png file.": "請上傳 PNG 格式圖檔",
+            "your upload file is large than 500KB, please reupload file.": "您上傳的檔案超過500KB，請重新上傳較小檔案。"
+        }
+    },
+    "app-notification": {
+        "html-title": {
+            "FLIPr.tv - App Notifiction": "FLIPr.tv - 推播通知"
+        },
+        "func-nav": {
+            "Main Channels": "主頻道",
+            "Program Store": "節目商店",
+            "Brand Settings": "品牌設定",
+            "Notification": "通知"
+        },
+        "title-func": {
+            "Schedule": "排程通知",
+            "Edit app notification": "編輯App通知",
+            "Notification": "通知",
+            "Create an app notification": "創建App通知",
+            "History": "已發送通知"
+
+        },
+         "notification": {
+            "Schedule": "排程通知",
+            "History": "已發送",
+            "Are you sure you want to delete this notification? All data will be removed permanently.": "所有資料將永久刪除，確定刪除此推撥通知？",
+            "Create a app notification": "創建App通知",
+            "Hour": "時",
+            "Minute": "分",
+            "Immediate": "立即發送",
+            "Scheduled": "排程通知",
+            "Invalid scheduled time, please try again.": "排程時間已失效，請重新填寫。",
+            "You have no history notification": "您尚未發送任何推播通知",
+            "You have no scheduled notification": "您尚未排程任何推播通知",
+            "You can schedule 20 notifications at the most": "最多可排程20個推播通知",
+            "Notification scheduled list (20 notifications displayed at the most.)": "排程通知列表 (至多20筆)",
+            "Create an app notification": "創建App通知",
+            "Waiting to send...": "等待發送...",
+            "You don't have been authorized to send notifications to the iOS app Android app users.": "您還沒有獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
+            "You have been authorized to send notifications to the iOS app users.": "您已經獲得授權，可以發送通知給 iOS app 用戶。",
+            "You have been authorized to send notifications to the Android app users.": "您已經獲得授權，可以發送通知給 Android app 用戶。",
+            "You are authorized to send notifications to the iOS app and Android app users.": "您已經獲得授權，可以發送通知給 iOS app 與 Android app 用戶。",
+            "Input notification message...": "輸入通知內容...",
+            "Tip : Input message within 17 Chinese characters or 34 English letters.": "建議字數為17個中文或34英文字母",
+            "Notification message": "通知內容",
+            "Click the notification to go to": "點擊通知後的行為",
+            "Run app": "開啟App",
+            "Playback for a program or episode": "播放特定節目或劇集",
+            "Input FLIPr program or episode URL...": "輸入FLIPr節目或劇集連結...",
+            "Please fill in all required fields.": "請輸入必填項目",
+            "Invalid URL, please try again.": "失效的連結，請重新輸入。",
+            "Unsaved changes will be lost, are you sure want to leave?": "未儲存資料將遺失，確定離開？",
+            "No": "否",
+            "Yes": "是",
+            "Cancel": "取消",
+            "Notification history list (20 notifications displayed at the most.)": "已發送通知列表(顯示最近20筆):",
+            "Input notification message...": "輸入通知內容...",
+            "Input FLIPr program or episode URL...": "輸入 FLIPr 節目或劇集網址..."
+        },
+        "schedule-form":{
+            "Schedule": "發送時間"
+        }
+    },
+    "brand-setting": {
+        "html-title": {
+            "FLIPr.tv - Brand Setting": "FLIPr.tv - 品牌設定"
+        },
+        "func-nav": {
+            "Main Channels": "主頻道",
+            "Program Store": "節目商店",
+            "Brand Settings": "品牌設定",
+            "Notification": "通知"
+
+        },
+        "title-func": {
+            "Portal": "我的入口",
+            "Brand Settings": "品牌設定",
+            "Save": "儲存"
+        },
+        "brand-layer": {
+            "Name:": "品牌名稱:",
+            "Brand Logo:": "品牌商標:",
+            "Best within 16 characters": "建議長度不超過16個字元 ",
+            "Please fill in your brand name.": "請輸入品牌名稱",
+            "Better results with 260x200 or higher resolution image.": "圖檔最佳解析為 260x200, 檔案大小不超過500KB",
+            "Please upload png file.": "請上傳 PNG 格式圖檔",
+            "your upload file is large than 500KB, please reupload file.": "您上傳的檔案超過500KB，請重新上傳較小檔案。"
+        }
+    },
+    "store-promotion": {
+        "html-title": {
+            "FLIPr.tv - Store Manage": "FLIPr.tv - 頻道商店 "
+        },
+        "func-nav": {
+            "Main Channels": "主頻道",
+            "Program Store": "節目商店",
+            "Promotion Category": "推薦類別",
+            "System Category": "系統類別",
+            "Brand Settings": "品牌設定",
+            "Notification": "通知"
+        },
+        "title-func": {
+            "Program Store": "節目商店",
+            "Promotion Category": "推薦類別",
+            "Portal": "我的入口",
+            "Preview": "預覽",
+            "Save": "儲存",
+            "Channel Name": "頻道名稱",
+            "Promotion category provides the best program impression in program store.": "您可將愈推薦的節目都收錄於\"推薦目錄\"內，推薦目錄將可優先曝光於節目商店中。",
+            "You can add 6 prmotion categories": "您可新增6個推薦目錄"
+        },
+        "store-layer": {
+            "Sorted by: Updated time": "預設排序: 依更新時間",
+            "xxx programs in category:": "{0} 個節目在這個類別:",
+            "You can manage your program store manually.": "你可以手動管理節目商店",
+            "Collapse": "收合類別",
+            "Expand Category": "展開類別",
+            "Load More": "載入更多",
+            "Processing...": "處理中..."
+        },
+        "overlay": {
+            "Add Category": "增加類別",
+            "Edit Category": "編輯類別",
+            "Cancel": "取消",
+            "Yes": "確定",
+            "English Name": "英文名稱",
+            "Chinese Name": "中文名稱",
+            "Max length is 14 characters": "最多14個英文字母",
+            "Max length is 8 chinese characters": "最多8個中文字",
+            "Are you sure to remove this promotion Category?": "你確定要刪除這個推薦類別?",
+            "Unsaved changes will be lost, are you sure you want to leave?": "所有的變更還沒有存檔，你確定要離開?"
+        },
+        "portal-add-layer": {
+            "Program URL": "節目網址",
+            "Keywords": "關鍵字",
+            "Search": "搜尋",
+            "Add": "增加",
+            "Find [<span>?</span>] programs.": "找到 [<span>{0}</span>] 個節目。",
+            "Your search - [xxx] didn't match any programs.": "找不到符合 [<span>{0}</span>] 的節目。",
+            "Search by:": "搜尋依:",
+            "My programs:": "節目管理:",
+            "Results:": "搜尋結果:",
+            "Add programs into “<span>Set 2</span>”": "增加節目到你的 “<span>{0}</span>”推薦類別",
+            "Please fill in the program url to search.": "請輸入節目網址搜尋",
+            "Please fill in the correct url.": "請輸入正確網址搜尋",
+            "Please fill in the keywords to search.": "請輸入關鍵字搜尋",
+            "Processing...": "處理中..."
+        },
+        "channel-list": {
+            "Program List : ? Programs": "節目列表 : {0} 節目",
+            "Best within 20 characters": "建議長度不超過20個字元",
+            "Program Name": "節目名稱 ",
+            "Program List": "節目列表 ",
+            "Programs": "節目",
+            "Add programs": "新增節目",
+            "Add programs sub": "",
+            "Please input program URL": "請輸入節目網址",
+            "Please input program name or curator name": "請輸入節目名稱或 Curator 名稱",
+            "Set this BEST": "設為推薦",
+            "remove BEST": "取消推薦",
+            "Set this HOT": "設為熱門",
+            "remove HOT": "取消熱門",
+            "Remove program": "移除此節目",
+            "You can only set ? programs on BEST": "只能設定 {0} 推薦節目",
+            "You can only set ? programs on HOT": "只能設定 {0} 熱門節目",
+            "Add program": "增加此節目",
+            "You can only set 4 programs on top": "只能設定4個置頂節目",
+            "Channel name can't be empty": "頻道名稱不可空白",
+            "Add Category": "增加推薦類別"
+        }
+    },
+    "store-manage": {
+        "html-title": {
+            "FLIPr.tv - Store Manage": "FLIPr.tv - 節目商店 "
+        },
+        "func-nav": {
+            "Main Channels": "主頻道",
+            "Program Store": "節目商店",
+            "Promotion Category": "推薦類別",
+            "System Category": "系統類別",
+            "Brand Settings": "品牌設定",
+            "Notification": "通知"
+        },
+        "title-func": {
+            "Program Store": "節目商店",
+            "System Category": "系統類別",
+            "Portal": "我的入口",
+            "Preview": "預覽",
+            "Save": "儲存",
+            "Channel Name": "頻道名稱",
+            "ON": "開",
+            "OFF": "關",
+            "There are over 1000 FREE programs for your selection, you can activate system categories to enrich your program store.": "我們提供超過1000個免費節目供您選擇、豐富您的節目商店，所有系統頻道將由自動更新，讓您可輕鬆管理這些節目。",
+            "You have turnned off system category, your viewers will not see these categories and programs in store.": ""
+        },
+        "store-layer": {
+            "xxx programs in category:": "{0} 個節目在這個類別:",
+            "Sorted by: Updated time": "預設排序: 依更新時間",
+            "You can manage your program store manually.": "你可以手動管理節目商店",
+            "Collapse": "收合類別",
+            "Expand Category": "展開類別",
+            "Load More": "載入更多",
+            "Processing...": "處理中..."
+        },
+        "channel-list": {
+            "Best within 20 characters": "建議長度不超過20個字元",
+            "Channel Name": "頻道名稱 ",
+            "Program List": "節目列表 ",
+            "Programs": "節目",
+            "Add programs": "新增節目",
+            "Add programs sub": "",
+            "Please input program URL": "請輸入節目網址",
+            "Please input program name or curator name": "請輸入節目名稱或 Curator 名稱",
+            "Set on top": "置頂",
+            "Remove from top": "取消置頂",
+            "Remove program": "移除此節目",
+            "Add program": "增加此節目",
+            "You can only set 4 programs on top": "只能設定4個置頂節目",
+            "Channel name can't be empty": "頻道名稱不可空白",
+            "Sorted by: Updated time": "預設排序: 依更新時間"
+        }
+    },
+    "portal-manage": {
+        "html-title": {
+            "FLIPr.tv - Main Channels": "FLIPr.tv - 主頻道"
+        },
+        "func-nav": {
+            "Main Channels": "主頻道",
+            "Program Store": "節目商店",
+            "Brand Settings": "品牌",
+            "Notification": "通知"
+        },
+        "sets-list": {
+            "Programs": "節目",
+            "Add Programs": "增加節目",
+            "Edit": "編輯"
+        },
+        "title-func": {
+            "Main Channels": "主頻道",
+            "Portal": "我的入口",
+            "Main channels are the first thing sighted by your audience, which offer the great opportunity for your fine programs to gain visibility and exposure.": "主頻道是用戶使用app時第一眼看到的內容，提供了最佳的節目曝光。",
+            "Preview": "預覽",
+            "Save": "儲存",
+            "Channel Name": "頻道名稱"
+        },
+        "portal-add-layer": {
+            "Program URL": "節目網址",
+            "Keywords": "關鍵字",
+            "Go": "搜尋",
+            "Add": "增加",
+            "Find [<span>?</span>] programs.": "找到 [<span>{0}</span>] 個節目。",
+            "Your search - [xxx] didn't match any programs.": "找不到符合 [<span>{0}</span>] 的節目。",
+            "Search by:": "搜尋依:",
+            "My programs:": "節目管理:",
+            "Results:": "搜尋結果:",
+            "Add programs into “<span>Set 2</span>”": "增加節目到 “<span>{0}</span>” 頻道",
+            "Please fill in the program url to search.": "請輸入節目網址搜尋",
+            "Please fill in the correct url.": "請輸入正確網址搜尋",
+            "Please fill in the keywords to search.": "請輸入關鍵字搜尋",
+            "Processing...": "處理中..."
+        },
+        "overlay": {
+            "Are you sure to remove this channel set?": "你確定要刪除這個頻道？",
+            "Unsaved changes will be lost, are you sure you want to leave?": "未儲存資料將遺失，確定離開？",
+            "Processing...": "處理中...",
+            "Add Channel": "增加頻道",
+            "Edit Channel Set": "編輯頻道",
+            "Cancel": "取消",
+            "Yes": "確定",
+            "Channel Set Name": "頻道名稱",
+            "Max length is 14 characters": "最多14個英文字母",
+            "Max length is 8 chinese characters": "最多8個中文字"
+        },
+        "prompt": {
+            "You channel set Quota was used.": "你的頻道數已達上限。",
+            "You program Quota was used.": "你的節目數已達上限。"
+        },
+        "portal-layer": {
+            "You can add 27 programs into your channel.": "你可以增加27個節目到你的頻道",
+            "Processing...": "處理中..."
+        },
+        "channel-list": {
+            "Sorted by": "預設排序",
+            "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.": "您將變更節目排序至\"更新時間\"，系統將依節目\"更新時間\"自動排序，除推薦節目外，其餘您將無法手動進行變更順序。",
+            "Updated time": "依更新時間 ",
+            "Customized Order": "依指定排序",
+            "Best within 20 characters": "建議長度不超過20個字元",
+            "Channel Name": "頻道名稱 ",
+            "Program List": "節目列表 ",
+            "Programs": "節目",
+            "Add Channel": "增加頻道",
+            "Add programs": "新增節目",
+            "Add programs sub": "",
+            "Please input program URL": "請輸入節目網址",
+            "Please input program name or curator name": "請輸入節目名稱或 Curator 名稱",
+            "Set this BEST": "設為推薦",
+            "remove BEST": "取消推薦",
+            "Set this HOT": "設為熱門",
+            "remove HOT": "取消熱門",
+            "Remove program": "移除此節目",
+            "You can only set ? programs on BEST": "只能設定 {0} 推薦節目",
+            "You can only set ? programs on HOT": "只能設定 {0} 熱門節目",
+            "Please fill in your channel name.": "請輸入頻道名稱",
+            "Program List : ? Programs": "節目列表 : {0} 個節目"
+        }
+    },
+    "portal-set": {
+        "html-title": {
+            "FLIPr.tv - Main Channels": "FLIPr.tv - 主頻道"
+        },
+        "func-nav": {
+            "Portal": "我的入口",
+            "Program Store": "節目商店",
+            "Main Channels": "主頻道",
+            "Brand Settings": "品牌設定"
+        },
+        "sets-list": {
+            "Programs": "節目",
+            "Add Programs": "增加節目",
+            "Edit": "編輯"
+        },
+        "title-func": {
+            "Main Channels": "主頻道",
+            "Portal": "我的入口"
+        }
+    },
+    "index": {
+        "html-title": {
+            "FLIPr.tv - My Programs": "FLIPr.tv - 節目管理"
+        },
+        "func-nav": {
+            "Create a new program": "創建節目"
+        },
+        "title-func": {
+            "My Programs": "節目管理",
+            "Reorder programs": "排序節目",
+            "Save order": "儲存排序",
+            "Create a new program": "創建節目",
+            "Filtered by:": "分類條件:",
+            "All": "全部",
+            "FLIPr programs": "FLIPr節目",
+            "YouTube sync programs": "YouTube同步節目",
+            "Live programs": "直播節目"
+        },
+        "channel-list": {
+            "Get URL": "網址",
+            "Brand": "品牌",
+            "URL": "網址",
+            "Episodes": "劇集",
+            "Followers": "粉絲",
+            "Views": "觀看次數",
+            "Update:": "更新:",
+            "Curate a new episode": "策展新劇集",
+            "Program POI": "節目互動時間點",
+            "Episode list": "劇集列表",
+            "Program settings": "節目設定",
+            "Delete this program": "刪除節目",
+            "No Episodes": "無劇集",
+            "'s Favorite": "的最愛",
+            "You don't have any programs yet": "你尚無任何節目",
+            "Create a new program": "創建節目",
+            "Create your own <strong>personal and unique</strong> program.": "創建屬於你<strong>個人且獨特</strong>的節目。",
+            "Add online videos into episode and start to <strong>curate your own program.</strong>": "在一集劇集中策展多個單元，開始<strong>策展你的專屬節目</strong>",
+            "Sync with <strong>YouTube channel or playlist</strong> to get online videos.": "連結<strong>YouTube頻道或播放清單</strong>取得影片。",
+            "Sync": "立即同步",
+            "You don't have any FLIPr programs yet.": "你尚無任何FLIPr節目",
+            "You don't have any YouTube sync programs yet.": "你尚無任何YouTube同步節目",
+            "You don't have any live programs yet.": "你尚無任何直播節目",
+            "Invalid auto-sync, please sync again and reset in settings.": "自動同步已失效，請再次同步並重新設定。",
+            "YouTube sync program": "YouTube 同步節目",
+            "Live program": "直播節目",
+            "Sort by YouTube order": "依 YouTube 順序排列",
+            "Sort by YouTube reverse order": "依 YouTube 反序排列",
+            "In my app": "已上架"
+        },
+        "overlay": {
+            "Create a New Program": "建立一個新的節目",
+            "Choose a type": "選一個類型",
+            "YouTube Sync<br />Program": "YouTube同步節目",
+            "FLIPr<br />Program": "FLIPr節目",
+            "Live<br />Program": "直播節目",
+            "Terms of use": "使用條款",
+            "Agree": "同意",
+            "Disagree": "不同意",
+            "You have ? invalid YouTube sync program.": "您有 {0} 個已失效的YouTube同步節目",
+            "You have ? invalid YouTube sync programs.": "您有 {0} 個已失效的YouTube同步節目"
+        }
+    },
+    "cms-settings": {
+        "html-title": {
+            "FLIPr.tv - CMS Settings": "FLIPr.tv - 管理系統設定"
+        },
+        "title-func": {
+            "CMS Settings": "管理系統設定"
+        },
+        "setting-form": {
+            "If you signed in with Facebook, you can't change your name and password.": "Facebook登入用戶不可更改用戶名稱與密碼",
+            "Email": "信箱",
+            "Language": "語言",
+            "Username": "用戶名稱",
+            "Username in FLIPr which is composed of 6-16 English letters, numbers or low line.": "用戶名稱請輸入6-16個字元，只能使用中英文、數字和底線。",
+            "Password": "密碼",
+            "Change password": "更改密碼",
+            "Facebook": "Facebook",
+            "Connect to Facebook": "連結Facebook帳號",
+            "YouTube": "YouTube",
+            "Connect to YouTube": "連結YouTube帳號",
+            "Save": "儲存",
+            "Connection is inactive, click to restart it.": "連結授權已失效，請點此重啟連結。",
+            "Only letters, numbers or low line are allowed.": "用戶名稱請輸入中英文、數字或底線。",
+            "Please input 6 to 16 characters in username.": "用戶名稱限制長度為6-16個字元。",
+            "Please fill in all required fields.": "請輸入必填項目。"
+        },
+        "overlay": {
+            "Change Password": "更改密碼",
+            "Old Password": "舊密碼",
+            "New Password": "新密碼",
+            "Repeat New Password": "再次輸入新密碼",
+            "Cancel": "取消",
+            "Change password": "確定送出",
+            "Please input 6-16 characters in password.": "密碼限制長度為6-16個字元。",
+            "Two passwords don't match, please retype.": "輸入密碼不一致，請重新輸入。",
+            "Please input your old password.": "請輸入舊密碼。",
+            "Please input your new password.": "請輸入新密碼。",
+            "Please repeat your new password.": "請再次輸入新密碼。",
+            "Invalid old password, please try again.": "舊密碼錯誤，請重新輸入。"
+        }
+    },
+    "channel": {
+        "html-title": {
+            "FLIPr.tv - Create a new program": "FLIPr.tv - 創建節目",
+            "FLIPr.tv - Program settings": "FLIPr.tv - 節目設定"
+        },
+        "func-nav": {
+            "Episode list": "劇集列表",
+            "Program POI": "節目互動時間點",
+            "Settings": "節目設定"
+        },
+        "title-func": {
+            "My Programs": "節目管理",
+            "Create a new FLIPr Program": "創建 FLIPr 節目",
+            "Create a new YouTube Sync Program": "創建 YouTube 同步節目",
+            "Create a new Live Program": "創建直播節目",
+            "Settings": "節目設定",
+            "Required field": "必填項目"
+        },
+        "setting-form": {
+            "Title": "名稱",
+            "Best within 10 characters": "建議10字以內",
+            "Program logo": "節目商標",
+            "Upload": "上傳",
+            "Uploading...": "上傳中...",
+            "Better results with 640x480 or higher resolution image": "建議圖片解析度為640x480或以上",
+            "Please upload jpeg, png, or gif files.": "請上傳jpeg, png或gif檔。",
+            "Description": "介紹",
+            "Best within 52 characters": "建議52字以內",
+            "Program language": "節目語言",
+            "Select a language": "選擇語言",
+            "English": "English",
+            "Chinese": "中文",
+            "Others": "其他",
+            "Audience region": "適合收看區域",
+            "Select a region": "選擇區域",
+            "US": "美國",
+            "Taiwan": "台灣",
+            "Worldwide": "全世界",
+            "Category": "類別",
+            "Select a category": "選擇類別",
+            "Tags": "標籤",
+            "Separate with commas": "用逗號分隔",
+            "Suggested Tags:": "熱門標籤:",
+            "Select brand to auto share": "選擇品牌自動分享<br />新劇集",
+            "Timeline": "動態時報",
+            "Page": "粉絲專頁",
+            "Select facebook pages": "選擇facebook粉絲專頁",
+            "If fail to auto share to Facebook, please go to CMS Settings to re-connect to Facebook and try again.": "若無法自動分享至Facebook，請至後台管理系統設定再度連結Facebook帳號，並再試一次。",
+            "Restart connection": "重啟連結",
+            "Auto sharing is disabled because permission to your connected account has been revoked, please click to restart the connection.": "自動分享功能已經停用！您的連結帳號授權已失效，請點擊重啟連結狀態。",
+            "Please fill in all required fields.": "請輸入必填項目。",
+            "Cancel": "取消",
+            "Create": "完成",
+            "Save": "儲存",
+            "Add Youtube channel or playlist URL": "輸入Youtube頻道或播放清單",
+            "Add live video URL": "輸入直播網址",
+            "Auto sync with YouTube": "YouTube自動同步",
+            "Program will auto-sync with YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Manually do so by clicking \"Sync\" in program list.": "系統會在每天早上0點、8點、中午12點、晚上6點、9點，與YouTube自動進行同步，或可在節目列表點擊「同步」按鈕進行同步。",
+            "This program will automatically synchronize information and videos from YouTube at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?": "YouTube 同步功能開啟後，系統會在每天早上0點、8點、中午12點、下午2點、晚上6點、9點，自動同步YouTube的資訊與影片，確定要進行同步?",
+            "Episode sort by": "劇集排序依照",
+            "YouTube playlist or YouTube channel order": "YouTube 播放清單或頻道順序排列",
+            "YouTube playlist or YouTube channel reverse order": "YouTube 播放清單或頻道反序排列",
+            "Add to My App": "上架到App",
+            "Invalid URL, please check the URL and try again.": "網址輸入錯誤，請檢查網址後重新輸入。",
+            "Input live video URL...": "輸入直播網址...",
+            "You can search the programs which has been added to \"Main Channels\" and \"Program store\" of My App.": "上架到App的節目，將能在「App管理」的「主頻道」與「類別」中被找到。"
+        }
+    },
+    "channel-poi": {
+        "html-title": {
+            "FLIPr.tv - Program POI": "FLIPr.tv - 節目互動時間點"
+        },
+        "func-nav": {
+            "Episode list": "劇集列表",
+            "Program POI": "節目互動時間點",
+            "Settings": "節目設定"
+        },
+        "poi-event": {
+            "+ Create Program POI & interactive event": "+ 新增節目互動時間點與事件",
+            "Program POI & interactive event list": "節目互動時間點與事件列表",
+            "Create a program interactive event and call to action message at a point of interaction.": "在一段特定的影片播放時間點，新增一個節目互動事件及其號召互動的訊息。",
+            "Please create an episode at least in the program.": "請在節目裡至少創建一個劇集。",
+            "You cannot have more than one Program POI & interactive event.": "您只能新增一個互動時間點與事件。",
+            "Create Program POI & interactive event": "新增節目互動時間點與事件",
+            "Edit Program POI & interactive event": "編輯節目互動時間點與事件",
+            "Create POI": "定義互動時間點",
+            "Edit POI": "編輯互動時間點",
+            "Required field": "必填項目",
+            "Name": "名稱",
+            "Tags": "標籤",
+            "Separate with commas": "用逗號分隔",
+            "Cancel": "取消",
+            "Next": "下一步",
+            "Save": "儲存",
+            "Please fill in all required fields.": "請輸入必填項目。",
+            "Add interactive event": "設定互動事件",
+            "Choose a type": "選擇事件類型",
+            "Coming Soon": "即將推出",
+            "Scheduled Notification": "排程通知",
+            "Send a scheduled notification to user to get more information.": "設定排程通知，使用者可於特定時間獲得更多資訊。",
+            "Instant Notification": "即時通知",
+            "Send an instant notification to user to get more information.": "設定即時通知，使用者可即時獲得更多資訊。",
+            "POI": "互動時間點",
+            "Interactive event : Scheduled Notification": "互動事件 : 排程通知",
+            "Interactive event : Instant Notification": "互動事件 : 即時通知",
+            "PREVIEW": "預覽畫面",
+            "There is no valid video to preview.": "找不到可有效預覽的畫面。",
+            "Display text": "訊息文字",
+            "Input display text": "輸入訊息文字",
+            "Button text": "按鈕文字",
+            "Input button text": "輸入按鈕文字",
+            "Mobile Notification and Time": "行動裝置通知與時間",
+            "iOS": "iOS",
+            "iOS-button": {
+                "Cancel": "關閉",
+                "OK": "啟動"
+            },
+            "Android": "Android",
+            "Preview": "預覽",
+            "Notification": "通知內容",
+            "Mobile notification message": "行動裝置通知內容",
+            "Input Mobile notification message": "輸入行動裝置通知內容",
+            "Recommend: less 34 bytes": "建議34字內",
+            "Mobile notification time": "行動裝置通知時間",
+            "Add a mobile notification time to remind your viewers.": "設定一個行動裝置通知時間提醒使用者。",
+            "Hour": "時",
+            "Minute": "分",
+            "Mobile Notification Message": "行動裝置通知內容",
+            "If users press OK or Enter, the mobile notification will be send immediately.": "當使用者按下OK或Enter時，通知會即時送出。"
+        }
+    },
+    "episode-list": {
+        "html-title": {
+            "FLIPr.tv - Episode list": "FLIPr.tv - 劇集列表"
+        },
+        "func-nav": {
+            "Episode list": "劇集列表",
+            "Program POI": "節目互動時間點",
+            "Settings": "節目設定"
+        },
+        "title-func": {
+            "Episode list": "劇集列表",
+            "'s Favorite": "的最愛",
+            "Curate a new episode": "策展新劇集",
+            "Reorder episodes": "排序劇集",
+            "Save order": "儲存排序",
+            "No.": "No.",
+            "Episode": "劇集",
+            "Scheduled time": "排程時間",
+            "Publish time": "發佈時間",
+            "Views": "觀看數",
+            "Sync time": "同步時間"
+        },
+        "episode-list": {
+            "You don't have any episodes yet": "您尚無任何劇集",
+            "Click on <span>Favorite</span> button when watching programs to collect more episodes": "觀看節目時，點 <span>Favorite</span> 將劇集收藏到我的最愛頻道。",
+            "Edit": "編輯",
+            "Delete": "刪除",
+            "Get URL": "網址",
+            "Brand": "品牌",
+            "URL": "網址",
+            "Draft": "草稿",
+            "Curate new episode to tell a story": "策展新劇集",
+            "<strong>Curate online videos</strong> into each single episode.": "在一集劇集中<strong>輕鬆策展多個影片</strong>。",
+            "Tell your story by <strong>arranging the video sequence.</strong>": "<strong>編排影片播放順序</strong>，說一個獨一無二的故事。",
+            "<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.": "<strong>剪輯影片與加入字卡</strong>，讓您的劇集更引人入勝。",
+            "<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.": "<strong>設定劇集自動排程發佈</strong>，讓粉絲定時享受最新劇集。",
+            "Video check": "失效影片檢查",
+            "No video has problem": "無問題影片",
+            "Find ? video has problem.": "找到 {0} 個問題影片",
+            "Find ? videos have problem.": "找到 {0} 個問題影片"
+        }
+    },
+    "epcurate-publish": {
+        "html-title": {
+            "FLIPr.tv - Episode Curation - Publish": "FLIPr.tv - 劇集策展 - 發佈設定"
+        },
+        "epcurate-nav": {
+            "Leave": "離開",
+            "Episode Curation": "劇集策展",
+            "Curation": "策展編輯",
+            "Publish": "發佈設定"
+        },
+        "epcurate-form": {
+            "Required field": "必填項目",
+            "Episode title": "劇集名稱",
+            "Episode description": "劇集介紹",
+            "Episode thumbnail": "劇集縮圖",
+            "Upload": "上傳",
+            "Uploading...": "上傳中...",
+            "Better results with 720x405 or higher resolution image": "建議圖片解析度為720x405或以上",
+            "Please upload jpeg, png, or gif files.": "請上傳jpeg, png或gif檔。",
+            "Publish status": "發佈狀態",
+            "Draft": "草稿",
+            "Publish Now": "立即發佈",
+            "Published": "發佈",
+            "Scheduled to publish": "排程發佈",
+            "This episode will be published at<br />the scheduled time.": "此劇集將於排程時間<br />自動發佈。",
+            "Scheduled to rerun": "排程重播",
+            "This episode will be published again as the latest episode at the scheduled time.": "此劇集將於排程時間自動<br />再度發佈為最新劇集。",
+            "Hour": "時間",
+            "< Back to Curation": "< 回策展編輯",
+            "Leave": "離開",
+            "Save": "儲存",
+            "Please fill in all required fields.": "請輸入必填項目。",
+            "Best within 20 characters.": "建議20字以內",
+            "Best within 52 characters.": "建議52字以內"
+        }
+    },
+    "epcurate-curation": {
+        "html-title": {
+            "FLIPr.tv - Episode Curation - Curation": "FLIPr.tv - 劇集策展 - 策展編輯"
+        },
+        "epcurate-nav": {
+            "Leave": "離開",
+            "Episode Curation": "劇集策展",
+            "Curation": "策展編輯",
+            "Publish": "發佈設定"
+        },
+        "epcurate-form": {
+            "Add Video": "新增影片",
+            "Edit": "編輯",
+            "POI & interactive event": "互動時間點與事件",
+            "Add video by URL": "新增影片連結",
+            "Add": "匯入",
+            "+ Add videos here": "+ 在此新增<br />影片",
+            "Leave": "離開",
+            "Save": "儲存",
+            "Next to Publish >": "前往發佈設定 >"
+        },
+        "add-video": {
+            "Paste YouTube video URLs to add (separate with different lines)": "輸入YouTube影片連結 (用換行區隔不同連結)",
+            "Paste YouTube video URLs to add.": "請先輸入YouTube影片連結。",
+            "You have reached the maximum amount of 50 videos.": "您加入的影片已達50個上限。",
+            "Invalid URL, please try again.": "連結有誤，請重新嘗試。",
+            "Invalid URL, please try again!": "連結有誤，請重新嘗試！",
+            "Fail to add this video, please try another one.<br />[This video is not playable outside Youtube]": "無法加入此影片，請嘗試其他影片。<br />[此影片無法在YouTube以外的網站播放]",
+            "Fail to add this video, please try another one.<br />[This video is not playable on mobile device]": "無法加入此影片，請嘗試其他影片。<br />[此影片無法於行動裝置播放]",
+            "Fail to add this video, please try another one.<br />[This is a private video]": "無法加入此影片，請嘗試其他影片。<br />[此影片為私人影片]",
+            "Unplayable video, please try again!": "無法播放的影片，請重新嘗試。"
+        },
+        "video-info": {
+            "Original": "原長度",
+            "From": "From",
+            "By": "By",
+            "on": "on",
+            "Not playable outside Youtube": "無法於YouTube以外的網站播放",
+            "Not playable in some regions": "無法於特定區域播放",
+            "Not playable on mobile device": "無法於行動裝置播放"
+        },
+        "trim-time": {
+            "Playback time": "播放時間",
+            "Start from:": "開始自:",
+            "To:": "結束至:",
+            "Duration:": "播放長度:",
+            "Invalid time, please try again.": "時間設定有誤，請重試。",
+            "Edit": "編輯",
+            "Cancel": "取消",
+            "Done": "完成"
+        },
+        "poi-event": {
+            "+ Create POI & interactive event": "+ 新增互動時間點與事件",
+            "POI & interactive event list": "互動時間點與事件列表",
+            "Add an interactive event and call to action message at a point of interaction.": "在一段特定的影片播放時間內，新增一個互動事件及其號召互動的訊息。",
+            "Create POI & interactive event": "新增互動時間點與事件",
+            "Edit POI & interactive event": "編輯互動時間點與事件",
+            "Create POI": "定義互動時間點",
+            "Edit POI": "編輯互動時間點",
+            "Required field": "必填項目",
+            "Name": "名稱",
+            "Duration": "互動時間",
+            "Start from:": "開始自:",
+            "To:": "結束至:",
+            "Reset": "重設",
+            "Invalid time, please try again.": "時間設定有誤，請重試。",
+            "Tags": "標籤",
+            "Separate with commas": "用逗號分隔",
+            "Cancel": "取消",
+            "Next": "下一步",
+            "Save": "儲存",
+            "Please fill in all required fields.": "請輸入必填項目。",
+            "Start time or end time is not in the video playback time:": "開始或結束時間不在影片實際播放的區間內:",
+            "Duration overlaps another POI's duration:": "設定時間與另一個互動時間點重疊:",
+            "Add interactive event": "設定互動事件",
+            "Choose a type": "選擇事件類型",
+            "Hyper Link": "超連結節目",
+            "Poll": "投票",
+            "User can go to watch another FLIPr.tv program or episode.": "使用者可前往觀賞另一個FLIPr.tv節目或劇集。",
+            "Scheduled Notification": "排程通知",
+            "Send a scheduled notification to user to get more information.": "設定排程通知，使用者可於特定時間獲得更多資訊。",
+            "Instant Notification": "即時通知",
+            "Send an instant notification to user to get more information.": "設定即時通知，使用者可即時獲得更多資訊。",
+            "POI": "互動時間點",
+            "Interactive event : Hyper Link": "互動事件 : 超連結節目",
+            "Interactive event : Scheduled Notification": "互動事件 : 排程通知",
+            "Interactive event : Instant Notification": "互動事件 : 即時通知",
+            "Interactive event : Poll": "互動事件 : 投票",
+            "PREVIEW": "預覽畫面",
+            "There is no valid video to preview.": "找不到可有效預覽的畫面。",
+            "Display text": "訊息文字",
+            "Input display text": "輸入訊息文字",
+            "Button text": "按鈕文字",
+            "Add button": "新增按鈕",
+            "Input button text": "輸入按鈕文字",
+            "Hyper link": "連結網址",
+            "Input FLIPr program or episode URL": "輸入FLIPr節目或劇集網址",
+            "Invalid FLIPr URL, please try again.": "FLIPr網址設定有誤，請重試。",
+            "Mobile Notification and Time": "行動裝置通知與時間",
+            "iOS": "iOS",
+            "iOS-button": {
+                "Cancel": "關閉",
+                "OK": "啟動"
+            },
+            "Android": "Android",
+            "Preview": "預覽",
+            "Notification": "通知內容",
+            "Mobile notification message": "行動裝置通知內容",
+            "Input Mobile notification message": "輸入行動裝置通知內容",
+            "Recommend: less 34 bytes": "建議34字內",
+            "Mobile notification time": "行動裝置通知時間",
+            "Add a mobile notification time to remind your viewers.": "設定一個行動裝置通知時間提醒使用者。",
+            "Hour": "時",
+            "Minute": "分",
+            "Mobile Notification Message": "行動裝置通知內容",
+            "If users press OK or Enter, the mobile notification will be send immediately.": "當使用者按下OK或Enter時，通知會即時送出。",
+            "Please decrease the number of text. The text of display text and button text are longer than the video width.": "訊息文字與按鈕文字總字數長度超過影片寬度，請縮減字數。"
+        },
+        "title-card": {
+            "Text": "字卡內文",
+            "Font": "文字屬性",
+            "Bold": "粗體",
+            "Italics": "斜體",
+            "Font color": "文字顏色",
+            "Font size +": "放大字型",
+            "Font size -": "縮小字型",
+            "Align left": "文字置左",
+            "Align center": "文字置中",
+            "Align right": "文字置右",
+            "Effect": "效果",
+            "None": "無效果",
+            "Fade": "漸入",
+            "Blind": "翻開",
+            "Clip": "擦去",
+            "Drop": "投擲",
+            "Background": "字卡背景",
+            "Color": "顏色",
+            "Image": "圖片",
+            "Upload": "上傳",
+            "Uploading...": "上傳中...",
+            "Better results with 720x405 image.": "建議圖片解析度為720x405或以上。",
+            "Please upload jpeg, png, or gif files.": "請上傳jpeg, png或gif檔。",
+            "Duration": "字卡長度",
+            "Invalid duration, please try again.": "長度設定有誤，請重試。",
+            "Cancel": "取消",
+            "Done": "完成",
+            "Edit Title": "編輯字卡"
+        },
+        "episode-storyboard": {
+            "Episode storyboard": "劇集腳本",
+            "videos left": "個影片可加入",
+            "Duration": "劇集總長度",
+            "Program:": "節目:",
+            "Episode:": "劇集:",
+            "Not playable outside YouTube": "無法於YouTube以外的網站播放",
+            "Not playable in some regions & on mobile device": "無法於特定區域及行動裝置播放",
+            "Not playable in some regions": "無法於特定區域播放",
+            "Not playable on mobile device": "無法於行動裝置播放",
+            "Edit Title": "編輯字卡",
+            "Add Title": "新增字卡",
+            "Invalid video": "失效的影片",
+            "Non-embeddable video": "外站禁播的影片",
+            "Private video": "私人的影片",
+            "Unplayable video": "無法播放的影片"
+        }
+    }
+}

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/pcs-landing.css" />
+
+    <title>FLIPr.tv - Brand Settings</title>
+</head>
+
+<body>
+
+    <header role="navigation" class="navbar navbar-default  navbar-fixed-top primaryNav previewNav">
+        <div id="header" class="container">
+            <div class="row">
+
+                <a href="http://www.flipr.tv" target="_blank" class="main-logo navbar-brand col-md-2"></a>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="http://www.flipr.tv" class="langkeyT">Link to FLIPr.tv</a></li>
+
+                    <li class="dropdown ">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="javascript:(0);"> 
+                            <span id="selected-profile"> User </span> <span class="caret"></span></a>
+                        <ul role="menu" class="dropdown-menu">
+                            <li><a id="profile-logout" class="langkeyT" href="#">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <div class="cms-nav jumbotron studio-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a href="index.html">
+                        <span class="cms-icon langkeyT">CMS</span>
+                        <span class="sub-title ">Content Management System</span>
+                    </a>
+                </div>
+                    <ul class="col-md-4 list-inline list-unstyled navbar-btn text-left">
+                        <li>
+                            <a href="index.html" class="btn btn-default langkeyT">My Programs</a>
+                        </li>
+                        <li id="my-portal" class="hide">
+                            <a cla href="portal-manage.html" class="btn btn-default langkeyT">My App</a>
+                        </li>
+                    </ul>
+
+                    <ul class="pull-right list-unstyled navbar-btn">
+                        <li>
+                            <a class="btn btn-default" href="cms-settings.html">
+                                <span class="glyphicon glyphicon-wrench"></span> <sapn class="langkeyT">CMS Settings</span></a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <ul class="nav nav-sidebar func-nav" data-spy="affix" data-offset-top="80" data-offset-bottom="50">
+                    <li><a href="portal-manage.html"><span class="icon-home"></span>  <sapn class="langkeyT">Main Channels</span></a></li>
+                    <li><a href="store-promotion.html"><span class="icon-store"></span> <sapn class="langkeyT">Program Store</span></a></li>
+                    <li><a href="brand-setting.html"><span class="icon-band"></span> <sapn class="langkeyT">Brand Management</span></a></li>
+                    <li><a href="app-notification.html"><span class="icon-notification"></span> <sapn class="langkeyT">Notification</span></a></li>
+                </ul>
+            </div>
+            <div class="col-md-9 main-area">
+                <ol class="breadcrumb">
+                    <li><a href="portal-manage.html" class="langkeyT">My App</a></li>
+                    <li class="langkeyT">Brand Management</li>
+                </ol>
+
+
+                <form id="msoInfo" class="form-horizontal" role="form">
+                    <h3><span class="langkeyT">Introduce your app</span>
+                        <span class="btn btn-default badge" data-container="body" data-toggle="popover"
+                            data-content="<img src='images/landing-tooltip1.gif'><br />">?</span>
+                    </h3>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label langkeyT">App Name</label>
+                        <div class="col-sm-10">
+                            <input id="appTitle" class="form-control" type="text" placeholder="Readonly input here…" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-2 control-label langkeyT">App Logo</label>
+                        <div class="col-sm-10">
+                            <img id="appLogo" class="img-thumbnail app-thumbnail" src="http://fakeimg.pl/100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <label class="col-sm-2 control-label"><span class="text-danger">*</span> <span class="langkeyT">Detailed description</span></label>
+                        <div class="col-sm-10">
+                            <textarea id="appIntro" class="col-sm-12 wordsCount langkeyPH" placeholder="Latest and popular videos all in FLIPr app!"></textarea>
+                             <span class="help-block text-right"><span class="words-amount">0</span> <span class="langkeyT">Best within 80 characters</span></span>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span class="text-danger">*</span>  <span class="langkeyT">Short descript</span></label>
+                        <div class="col-sm-10">
+                            <input id="appSortIntro" type="text" class="form-control wordsCount langkeyPH" placeholder="Latest and popular videos, updating EVERY DAY!">
+                            <span class="help-block text-right"><span class="words-amount ">0</span> <span class="langkeyT">Best within 40 characters</span></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"><span class="text-danger">*</span> <span class="langkeyT">call to action</span></label>
+                        <div class="col-sm-10">
+                            <input id="appSlogan" type="text" class="form-control wordsCount langkeyPH" placeholder="FREE to download now!">
+                            <span class="help-block text-right "><span class="words-amount">0</span> <span class="langkeyT">Best within 15 characters</span></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"> <span class="langkeyT">iOS app download link</span></label>
+                        <div class="col-sm-10">
+                            <input id="iosUrl" type="text" class="form-control wordsCount langkeyPH" placeholder="iOS app download link">
+                            <span class="help-block text-right "></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"> <span class="langkeyT">Android app download link</span></label>
+                        <div class="col-sm-10">
+                            <input id="androidUrl" type="text" class="form-control wordsCount langkeyPH" placeholder="Android app download link" >
+                            <span class="help-block text-right "></span>
+                        </div>
+                    </div>
+
+                    <hr>
+                </form>
+
+
+
+                <form class="form-horizontal" role="form">
+
+                    <h3>
+                        <span class="langkeyT">Promote your app</span>
+                        <span class="btn btn-default badge" data-container="body" data-toggle="popover" 
+                            data-content="<img src='images/landing-tooltip2.gif'><br />">?</span></h3>
+
+                    <h4 class="langkeyT">SNS</h4>
+                    <div id="listsSNS"></div>
+
+                    <div id="addNewSNS" class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <div class="empty-add">
+                                <span class="empty-add-text langkeyT">+Add social network services</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+                <form class="form-horizontal formSugg hide" role="form">
+                    <h4>
+                        <span class="text-danger">*</span>
+                        <span class="langkeyT">Suggested programs</span>
+                        <span class="btn btn-default badge" data-container="body" data-toggle="popover" 
+                            data-content="<img src='images/landing-tooltip3.gif'><br />">?</span></h4>
+
+                    <div class="row">
+                        <div id="listsSuggested"></div>
+
+                        <div id="addNewSuggested" class="col-sm-6 col-md-4">
+                            <div class="thumbnail empty-add">
+                                <span class="empty-add-text langkeyT">+Add suggested program</span> 
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+                <form class="form-horizontal" role="form">
+                    <hr>
+                    <div class="pull-right">
+                    <span id="sbErrMsg" class="text-danger"></span><span> &nbsp; &nbsp; </span> 
+                    <!--<a id="funcCancel" class="btn btn-default" >Cancel</a>-->
+                    <a id="btnSave" class="btn btn-primary langkeyT">Save & Visit the page</a>
+                    </div>
+
+
+
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+    <footer class="navbar navbar-default" >
+    	<div class="container">
+    		<p class="navbar-text navbar-right">© 2014 FLIPr.tv. All rights reserved</p>
+    	</div>
+    </footer>
+
+
+    <script id="tmpl-lists-SNS" type="text/x-jquery-tmpl">
+        <div id="SNS_${id}" data-meta="${id}" data-seq="${seq}"
+             class="form-group listItem{{if id > 1407400000000}} newItem{{/if}}">
+            <label class="col-sm-2 control-label SNS-Seq"></label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input type="text" value="${link}" class="form-control inUrlSNS" 
+                        placeholder="${nn._([cms.global.PAGE_ID, 'main-area', 'Input SNS link...'])}">
+                    <div class="input-group-btn">
+                        <a class="btn btn-default logoSNS"  data-toggle="popover" data-placement="top"  data-container="body" 
+                            data-content="${nn._([cms.global.PAGE_ID, 'main-area', 'Upload your personal SNS icon now! Better results with 50x50 image.'])}">
+                            {{if '' != logoUrl}}
+                                <img class="logoUrl btn-inner-image" src="${logoUrl}">
+                            {{else}}
+                                <span class="glyphicon glyphicon-cloud-upload"></span>
+                            {{/if}}</a>
+                        <a class="btn btn-default delSNS" ><span class="glyphicon glyphicon-trash"></span></a>
+                    </div>
+                </div>
+                <span class="help-block text-right text-danger msgSNS {{if logoUrl !== ''}} hide{{/if}}">${nn._([cms.global.PAGE_ID, 'main-area', 'Please upload SNS icon.'])}</span>
+            </div>
+        </div>
+    </script>
+
+    <script id="tmpl-lists-Suggested" type="text/x-jquery-tmpl">
+        <div id="Sugg_${id}" data-meta="${id}" data-seq="${seq}"
+             class="col-sm-6 col-md-4 listItem{{if id > 1407400000000}} newItem{{/if}}">
+            <div class="thumbnail suggested-programs-thumb">
+                <div class="caption">
+                    <p class="{{if isSecII === true }}col-md-11 row{{/if}}">
+                        <input type="text" class="form-control inLinkSugg" value="${link}" 
+                        placeholder="${nn._([cms.global.PAGE_ID, 'main-area', 'Input program link...'])}">
+                    </p>
+                    {{if isSecII === true}}
+                    <a class="btn btn-default pull-right delSugg"><span class="glyphicon glyphicon-remove"></span></a>
+                    {{/if}}
+                    <p  class="{{if isSecII === true}}clearfix{{/if}}">
+                        <input type="text" class="form-control inTitleSugg" value="${title}" 
+                        placeholder="${nn._([cms.global.PAGE_ID, 'main-area', 'Input program name...'])}">
+                    </p>
+                </div>
+
+                <img class="logoUrl" src="${logoUrl}">
+                <a class="btn btn-default btn-thumbnail uploadSugg" data-toggle="tooltip" data-placement="top" 
+                    title="${nn._([cms.global.PAGE_ID, 'main-area', 'Upload program logo'])}"><sapn class="glyphicon glyphicon-cloud-upload"></sapn></a>
+            </div>
+        </div>
+    </script>
+
+
+    <!-- Modal -->
+    <div class="modal fade langOverlay" id="imageUpload" tabindex="-1" role="dialog" aria-hidden="true" 
+         data-backdrop="static" data-target=".bs-example-modal-sm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" ><span class="langkeyT">Image Upload</span></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="modalUpload">
+                        <p id="uploadThumbnail"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade langOverlay" id="sysMessage" tabindex="-1" role="dialog" aria-hidden="true" 
+         data-backdrop="static" data-target=".bs-example-modal-sm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title langkeyT" >System Message</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- put message here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade langOverlay " id="sysProcessing" tabindex="-1" role="dialog" aria-hidden="true" 
+         data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm modal-center">
+            <div class="modal-content" style="padding:10px;">
+                <img alt="" src="images/icon_load_l.gif">
+                <span class="langkeyT">Processing...</span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="javascripts/libs/nn-sdk.js?v=411104"></script>
+
+    <script src="javascripts/libs/jquery.tmpl.min.js?v=411104"></script>
+    <script src="javascripts/libs/jquery.cookie.min.js?v=411104"></script>
+    <script src="javascripts/libs/json2.min.js?v=411104"></script>
+    <script src="javascripts/libs/purl.min.js?v=411104"></script>
+
+    <script src="javascripts/libs/jquery.ellipsis.min.js?v=431625"></script>
+
+    <script src="javascripts/libs/swfupload/swfupload.js?v=411104"></script>
+
+    <script src="javascripts/v3/config.js?v=411104"></script>
+    <script src="javascripts/v3/func.common.js?v=411104"></script>
+    <script src="javascripts/v3/domready.common.js?v=411104"></script>
+
+    <script src="javascripts/v4/func.app.brand.js?v=411104"></script>
+    <script src="javascripts/v4/domready.app.brand.js?v=411104"></script>
+
+
+</body>
+
+</html>
