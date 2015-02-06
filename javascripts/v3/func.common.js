@@ -4,6 +4,29 @@
 (function ($common) {
     'use strict';
 
+    $common.playerUrlParserMso = function (inUrl) {
+        var inUrlParser = $common.playerUrlParser(inUrl),
+            inHost = $.url(inUrl).attr("host"),
+            thisMso = cms.global.MSOINFO.name,
+            thisHostBase = [thisMso + ".flipr.tv", thisMso + ".beagle.flipr.tv", thisMso + ".dev6.flipr.tv"],
+            isAllow = false,
+            strProgram = inUrlParser.chId,
+            strEpisod = inUrlParser.epId;
+
+        if ($.inArray(inHost, thisHostBase) > -1) {
+            isAllow = true;
+        } else {
+            strProgram = 0;
+            strEpisod = 0;
+        }
+
+        return {
+            chId: strProgram,
+            isAllow: isAllow,
+            epId: strEpisod
+        };
+    };
+
     $common.createFromEpisode = function (episode, programs, toChId, inPage) {
         function addPoi(inProgramIdNew, oldPoiPoint, poi_event, newEpId, inPage) {
             var procPoiPoint = {
