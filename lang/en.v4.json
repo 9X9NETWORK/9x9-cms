@@ -1,0 +1,859 @@
+{
+    "header": {
+        "Link to FLIPr.tv": "Link to FLIPr.tv",
+        "Log out": "Log out"
+    },
+    "studio-nav": {
+        "CMS": "CMS",
+        "My Programs": "My Programs",
+        "My App": "My App",
+        "CMS Settings": "CMS Settings",
+        "Connection is inactive, click to restart it.": "Connection is inactive, click to restart it."
+    },
+    "func-nav": {
+        "Main Channels": "Main Channels",
+        "Program Store": "Program Store",
+        "Brand Settings": "Brand Settings",
+        "Notification": "Notification"
+    },
+     "footer": {
+        "© 2014 FLIPr.tv. All rights reserved.": "© 2014 FLIPr.tv. All rights reserved."
+    },
+    "overlay": {
+        "loading": {
+            "Saving...": "Saving...",
+            "Processing...": "Processing..."
+        },
+        "system-error": {
+            "Unknown error.": "Unknown error.",
+            "You are not authorized to PCS.": "You are not authorized to PCS.",
+            "You are not authorized to edit this program.": "You are not authorized to edit this program.",
+            "You are not authorized to edit this episode.": "You are not authorized to edit this episode.",
+            "You are not authorized to edit episodes in this program.": "You are not authorized to edit episodes in this program.",
+            "Invalid program ID, please try again.": "Invalid program ID, please try again.",
+            "Invalid episode ID, please try again.": "Invalid episode ID, please try again.",
+            "Invalid program ID and episode ID, please try again.": "Invalid program ID and episode ID, please try again.",
+            "The favorites program can not be edited.": "The favorites program can not be edited.",
+            "Title text can't be empty!": "Title text can't be empty!",
+            "There must be at least one video in this episode.": "There must be at least one video in this episode.",
+            "Please curate at least one valid video.": "Please curate at least one valid video.",
+            "You have reached the maximum amount of 50 videos.": "You have reached the maximum amount of 50 videos."
+        },
+        "prompt": {
+            "Are you sure you want to delete this program? All data will be removed permanently.": "Are you sure you want to delete this program? All data will be removed permanently.",
+            "Are you sure you want to delete this episode?": "Are you sure you want to delete this episode?",
+            "Are you sure you want to delete this title?": "Are you sure you want to delete this title?",
+            "Are you sure you want to delete this POI with interactive event?": "Are you sure you want to delete this POI with interactive event?",
+            "Unsaved changes will be lost, are you sure you want to leave?": "Unsaved changes will be lost, are you sure you want to leave?",
+            "Unsaved changes will be lost, are you sure you want to cancel editing?": "Unsaved changes will be lost, are you sure you want to cancel editing?"
+        },
+        "notice": {
+            "Password reset success!": "Password reset success!",
+            "New episode has been created as a draft!": "New episode has been created as a draft!",
+            "<span>Publish this episode at the next step</span> whenever you finish editing.": "<span>Publish this episode at the next step</span> whenever you finish editing.",
+            "This episode has been published.": "This episode has been published.",
+            "This episode has been saved as an unpublished draft.": "This episode has been saved as an unpublished draft."
+        },
+        "channel-tutorial": {
+            "Collect and Curate!": "Collect and Curate!",
+            "CMS is the management center for your FLIPr.tv list-form programs!": "CMS is the management center for your FLIPr.tv list-form programs!",
+            "Create a<br />new program": "Create a<br />new program",
+            "Not right now, thanks!": "Not right now, thanks!"
+        },
+        "facebook": {
+            "Connect to Facebook": "Connect to Facebook",
+            "Connect to": "Connect to",
+            "After connecting, you can enable Facebook auto sharing for each program in Program settings.": "After connecting, you can enable Facebook auto sharing for each program in Program settings.",
+            "Auto sharing is disabled because permission to your connected account has been revoked, please click to restart the connection.": "Auto sharing is disabled because permission to your connected account has been revoked, please click to restart the connection.",
+            "Can not connect to Facebook correctly!": "Can not connect to Facebook correctly!",
+            "Please try again and make sure you agree on all permissions.": "Please try again and make sure you agree on all permissions.",
+            "Account disconnected!": "Account disconnected!",
+            "{If you want to enable auto sharing again, please:}": "If you want to enable auto sharing again, please:<br /><br />1. Connect to account<br />2. Enable auto sharing for each program in Program settings<br />3. Publish a new episode, FLIPr.tv will automatically share it<br />",
+            "Disconnecting account will also disable auto sharing for every program. Are you sure you want to disconnect?": "Disconnecting account will also disable auto sharing for every program. Are you sure you want to disconnect?"
+        },
+        "button": {
+            "OK": "OK",
+            "Yes": "Yes",
+            "No": "No",
+            "Back": "Back",
+            "Disconnect": "Disconnect",
+            "Restart connection": "Restart connection"
+        }
+    },
+    "upload": {
+        "Upload": "Upload",
+        "Uploading...": "Uploading..."
+    },
+    "lang-map": {
+        "en": "English",
+        "zh": "Chinese",
+        "other": "Others"
+    },
+    "sphere-map": {
+        "en": "US",
+        "zh": "Taiwan",
+        "other": "Worldwide"
+    },
+    "effect-map": {
+        "none": "None",
+        "fade": "Fade",
+        "blind": "Blind",
+        "clip": "Clip",
+        "drop": "Drop"
+    },
+    "signin": {
+        "html-title": {
+            "FLIPr.tv - Sign In": "FLIPr.tv - Sign In"
+        },
+        "login-holder": {
+            "Collect and Curate!": "Collect and Curate!",
+            "CMS is the management center for your FLIPr.tv list-form programs!": "CMS is the management center for your FLIPr.tv list-form programs!",
+            "Sign In": "Sign In",
+            "Sign in with Facebook": "Sign in with Facebook",
+            "Sign In with your E-mail and password": "Sign In with your E-mail and password",
+            "E-mail": "E-mail",
+            "Password": "Password",
+            "Forgot password?": "Forgot password?",
+            "Need an account?": "Need an account?",
+            "Sign up Now!": "Sign up Now!",
+            "Sign Up": "Sign Up",
+            "Repeat Password": "Repeat Password",
+            "This email has been used.": "This email has been used.",
+            "Two passwords don't match, please retype.": "Two passwords don't match, please retype.",
+            "I have read and accepted the User Agreement and Privacy Policy": "I have read and accepted the <a target='_blank' href='/en/terms.html'>User Agreement</a> and <a target='_blank' href='/en/policy.html'>Privacy Policy</a>",
+            "User Name": "User Name",
+            "Create a unique user name in FLIPr which composed of 6-16 English letters ,numbers or low line.": "Create a unique user name in FLIPr which composed of 6-16 English letters ,numbers or low line.",
+            "Only letters, numbers or low line are allowed.": "Only letters, numbers or low line are allowed.",
+            "Please input 6-16 characters in username.": "Please input 6-16 characters in username.",
+            "Cancel": "Cancel",
+            "Create My Account": "Create My Account",
+            "Forgot Password": "Forgot Password",
+            "Enter your email address and we`ll send you instructions.": "Enter your email address and we`ll send you instructions.",
+            "Reset": "Reset",
+            "Reset Password": "Reset Password",
+            "New Password": "New Password",
+            "Repeat New Password": "Repeat New Password",
+            "Back to Sign In": "Back to Sign In",
+            "Success!": "Success!",
+            "You should receive an email shortly.": "You should receive an email shortly.",
+            "If you still need assistance, please": "If you still need assistance, please",
+            "contact us.": "contact us."
+        },
+        "errMsg": {
+            "Two passwords don't match, please retype.": "Two passwords don't match, please retype.",
+            "USER_PERMISSION_ERROR": "Password reset failure, please try a again",
+            "Email format error!": "Email format error!",
+            "Please input password!": "Please input password!",
+            "Email and password do not match, please try again.": "Email and password do not match, please try again.",
+            "Please fill your data!": "Please fill your data!",
+            "Please click agree!": "Please click agree!",
+            "Passwrod not match!": "Passwrod not match!",
+            "Passwrod Enter 8-16 English letters ,numbers or low line!": "Passwrod Enter 8-16 English letters ,numbers or low line!",
+            "Invalid E-mail, please retry.": "Invalid E-mail, please retry.",
+            "This email has been used.": "This email has been used.",
+            "Please input 6-16 characters in password.": "Please input 6-16 characters in password.",
+            "USER_INVALID": "Invalid E-mail, please retry.",
+            "Please accept the agreements below.": "Please accept the agreements below.",
+            "The two passwords you entered do not match.": "The two passwords you entered do not match.",
+            "Please input 6 to 16 characters in username.": "Please input 6 to 16 characters in username.",
+            "Only letters, numbers or low line are allowed.": " letters, numbers or low line are allowed."
+        }
+    },
+    "app-notification": {
+        "html-title": {
+            "FLIPr.tv - App Notifiction": "FLIPr.tv - App Notifiction"
+        },
+        "func-nav": {
+            "Main Channels": "Main Channels",
+            "Program Store": "Program Store",
+            "Brand Settings": "Brand Settings"
+        },
+        "title-func": {
+            "Portal": "Portal",
+            "Brand Settings": "Brand Settings",
+            "Save": "Save"
+        },
+        "notification": {
+            "Name:": "Name:",
+            "Brand Logo:": "Brand Logo:",
+            "Best within 16 characters": "Best within 16 characters",
+            "Please fill in your brand name.": "Please fill in your brand name.",
+            "Better results with 260x200 or higher resolution image.": "Better results with 260x200 or higher resolution image, file size can't over 500KB",
+            "Please upload png file.": "Please upload png file.",
+            "your upload file is large than 500KB, please reupload file.": "your upload file is large than 500KB, please reupload file."
+        }
+    },
+    "brand-setting": {
+        "html-title": {
+            "FLIPr.tv - Brand Setting": "FLIPr.tv - Brand Setting"
+        },
+        "func-nav": {
+            "Main Channels": "Main Channels",
+            "Program Store": "Program Store",
+            "Brand Settings": "Brand Settings"
+        },
+        "title-func": {
+            "Portal": "Portal",
+            "Brand Settings": "Brand Settings",
+            "Save": "Save"
+        },
+        "brand-layer": {
+            "Name:": "Name:",
+            "Brand Logo:": "Brand Logo:",
+            "Best within 16 characters": "Best within 16 characters",
+            "Please fill in your brand name.": "Please fill in your brand name.",
+            "Better results with 260x200 or higher resolution image.": "Better results with 260x200 or higher resolution image, file size can't over 500KB",
+            "Please upload png file.": "Please upload png file.",
+            "your upload file is large than 500KB, please reupload file.": "your upload file is large than 500KB, please reupload file."
+        }
+    },
+    "store-promotion": {
+        "html-title": {
+            "FLIPr.tv - Store Manage": "FLIPr.tv - Store Manage Promotion"
+        },
+        "func-nav": {
+            "Main Channels": "Main Channels",
+            "Program Store": "Program Store",
+            "Brand Settings": "Brand Settings"
+        },
+        "title-func": {
+            "Program Store": "Program Store",
+            "Portal": "Preview",
+            "Preview": "Preview",
+            "Save": "Save",
+            "Channel Name": "Channel Name"
+        },
+        "store-layer": {
+            "xxx programs in category:": "{0} programs in category:",
+            "You can manage your program store manually.": "You can manage your program store manually.",
+            "Collapse": "Collapse",
+            "Expand Category": "Expand Category",
+            "Load More": "Load More",
+            "Processing...": "Processing..."
+        },
+        "portal-add-layer": {
+          "Find [<span>?</span>] programs.": "Find [<span>{0}</span>] programs.",
+          "Your search - [xxx] didn't match any programs.": "Your search - [<span>{0}</span>] didn't match any programs.",
+          "Add programs into “<span>Set 2</span>”": "Add programs into \"<span>{0}</span>\" promotion category"
+        },
+        "channel-list": {
+            "Program List : ? Programs": "Program List : {0} Programs",
+            "Best within 20 characters": "Best within 20 characters",
+            "Channel Name": "Channel Name ",
+            "Program List": "Program List ",
+            "Programs": "Programs",
+            "Add programs": "Add",
+            "Add programs sub": "　Program",
+            "Please input program URL": "Please input program URL",
+            "Please input program name or curator name": "Please input program name or curator name",
+            "Set this BEST": "Set this BEST",
+            "remove BEST": "remove BEST",
+            "Set this HOT": "Set this HOT",
+            "remove HOT": "remove HOT",
+            "You can only set ? programs on BEST": "You can only set {0} programs on BEST",
+            "You can only set ? programs on HOT": "You can only set {0} programs on HOT",
+            "Remove from top": "Remove from top",
+            "Remove program": "Remove program",
+            "Add program": "Add program",
+            "You can only set 4 programs on top": "You can only set 4 programs on top",
+            "Channel name can't be empty": "Channel name can't be empty"
+        }
+    },
+    "store-manage": {
+        "html-title": {
+            "FLIPr.tv - Store Manage": "FLIPr.tv - Store Manage"
+        },
+        "func-nav": {
+            "Main Channels": "Main Channels",
+            "Program Store": "Program Store",
+            "Brand Settings": "Brand Settings"
+        },
+        "title-func": {
+            "Program Store": "Program Store",
+            "Portal": "Preview",
+            "Preview": "Preview",
+            "Save": "Save",
+            "Set Name": "Set Name"
+        },
+        "store-layer": {
+            "xxx programs in category:": "{0} programs in category:",
+            "You can manage your program store manually.": "You can manage your program store manually.",
+            "Collapse": "Collapse",
+            "Expand Category": "Expand Category",
+            "Load More": "Load More",
+            "Processing...": "Processing..."
+        },
+        "channel-list": {
+            "Sorted by": "Sorted by",
+            "Updated time": "Updated time ",
+            "Customized Order": "Customized Order",
+            "Best within 20 characters": "Best within 20 characters",
+            "Channel Name": "Channel Name",
+            "Program List": "Program List",
+            "Programs": "Programs",
+            "Add programs": "Add programs",
+            "Add programs sub": "",
+            "Please input program URL": "Please input program URL",
+            "Please input program name or curator name": "Please input program name or curator name",
+            "Set on top": "Set on top",
+            "Remove from top": "Remove from top",
+            "Remove program": "Remove program",
+            "Add program": "Add program",
+            "You can only set 4 programs on top": "You can only set 4 programs on top",
+            "Channel name can't be empty": "Channel name can't be empty"
+        }
+    },
+    "portal-manage": {
+        "html-title": {
+            "FLIPr.tv - Main Channels": "FLIPr.tv - Main Channels"
+        },
+        "func-nav": {
+            "Main Channels": "Main Channels",
+            "Program Store": "Program Store",
+            "Brand": "Brand"
+        },
+        "sets-list": {
+            "Programs": "Programs",
+            "Add Programs": "Add Programs",
+            "Edit": "Edit"
+        },
+        "title-func": {
+            "Main Channels": "Main Channels",
+            "Portal": "Portal",
+            "Main channels are the first thing sighted by your audience, which offer the great opportunity for your fine programs to gain visibility and exposure.": "Main channels are the first thing sighted by your audience, which offer the great opportunity for your fine programs to gain visibility and exposure.",
+            "Preview": "Preview",
+            "Save": "Save",
+            "Channel Name": "Channel Name"
+        },
+        "portal-add-layer": {
+            "Program URL": "Program URL",
+            "Keywords": "Keywords",
+            "Go": "Go",
+            "Add": "Add",
+            "Find [<span>?</span>] programs.": "Find [<span>{0}</span>] programs.",
+            "Your search - [xxx] didn't match any programs.": "Your search - [<span>{0}</span>] didn't match any programs.",
+            "Search by:": "Search by:",
+            "Results:": "Results:",
+            "Add programs into “<span>Set 2</span>”": "Add programs into “<span>{0}</span>”",
+            "Please fill in the program url to search.": "Please fill in the program url to search.",
+            "Please fill in the correct url.": "Please fill in the correct url.",
+            "Please fill in the keywords to search.": "Please fill in the keywords to search.",
+            "Processing...": "Processing..."
+        },
+        "overlay": {
+            "Are you sure to remove this channel set?": "Are you sure to remove this channel set?",
+            "Unsaved changes will be lost, are you sure you want to leave?": "Unsaved changes will be lost, are you sure you want to leave?",
+            "Processing...": "處理中...",
+            "Add Channel": "Add Channel",
+            "Edit Channel Set": "Edit Channel Set",
+            "Cancel": "Cancel",
+            "Yes": "Yes",
+            "Channel Set Name": "Channel Set Name",
+            "Max length is 14 characters": "Max length is 14 characters",
+            "Max length is 8 chinese characters": "Max length is 8 chinese characters"
+        },
+        "prompt": {
+            "You channel set Quota was used.": "You channel set Quota was used.",
+            "You program Quota was used.": "You program Quota was used."
+        },
+        "portal-layer": {
+            "You can add 27 programs into your channel.": "You can add 27 programs into your channel.",
+            "Processing...": "Processing..."
+        },
+        "channel-list": {
+            "Sorted by": "Sorted by",
+            "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.": "You will change the order of program list to \"update time\", it will sort by update time of programs automatically so you can't change the order manually except set this BEST programs.",
+            "Updated time": "Updated time ",
+            "Customized Order": "Customized Order",
+            "Best within 20 characters": "Best within 20 characters",
+            "Channel Name": "Channel Name",
+            "Program List": "Program List ",
+            "Programs": "Programs",
+            "Add programs": "Add programs",
+            "Add programs": "Add",
+            "Add programs sub": "&nbsp;&nbsp;&nbsp;programs",
+            "Please input program URL": "Please input program URL",
+            "Please input program name or curator name": "Please input program name or curator name",
+            "Set this BEST": "Set this BEST",
+            "remove BEST": "remove BEST",
+            "Set this HOT": "Set this HOT",
+            "remove HOT": "remove HOT",
+            "Remove program": "Remove program",
+            "You can only set ? programs on BEST": "You can only set {0} programs on BEST",
+            "You can only set ? programs on HOT": "You can only set {0} programs on HOT",
+            "Please fill in your channel name.": "Please fill in your channel name.",
+            "Program List : ? Programs": "Program List : {0} Programs"
+        }
+    },
+    "portal-set": {
+        "html-title": {
+            "FLIPr.tv - Main Channels": "FLIPr.tv - Main Channels"
+        },
+        "func-nav": {
+            "Portal": "Portal",
+            "Program Store": "Program Store",
+            "Main Channels": "Main Channels",
+            "Brand Settings": "Brand Settings"
+        },
+        "sets-list": {
+            "Programs": "Programs",
+            "Add Programs": "Add Programs",
+            "Edit": "Edit"
+        },
+        "title-func": {
+            "Main Channels": "Main Channels",
+            "Portal": "Portal"
+        }
+    },
+    "index": {
+        "html-title": {
+            "FLIPr.tv - My Programs": "FLIPr.tv - My Programs"
+        },
+        "func-nav": {
+            "Create a new program": "Create a new program"
+        },
+        "title-func": {
+            "My Programs": "My Programs",
+            "Reorder programs": "Reorder programs",
+            "Save order": "Save order"
+        },
+        "channel-list": {
+            "Get URL": "Get URL",
+            "Brand": "Brand",
+            "URL": "URL",
+            "Episodes": "Episodes",
+            "Followers": "Followers",
+            "Views": "Views",
+            "Update:": "Update:",
+            "Curate a new episode": "Curate a new episode",
+            "Program POI": "Program POI",
+            "Episode list": "Episode list",
+            "Program settings": "Program settings",
+            "Delete this program": "Delete this program",
+            "No Episodes": "No Episodes",
+            "'s Favorite": "'s Favorite",
+            "You don't have any programs yet": "You don't have any programs yet",
+            "Create a new program": "Create a new program",
+            "Create your own <strong>personal and unique</strong> program.": "Create your own <strong>personal and unique</strong> program.",
+            "Add online videos into episode and start to <strong>curate your own program.</strong>": "Add online videos into episode and start to <strong>curate your own program.</strong>",
+            "YouTube sync program": "YouTube sync program",
+            "Sort by YouTube order": "Sort by YouTube order",
+            "Sort by YouTube reverse order": "Sort by YouTube reverse order",
+            "In my app": "In my app"
+        },
+        "overlay": {
+            "Create a New Program": "Create a New Program",
+            "Choose a type": "Choose a type",
+            "YouTube Sync<br />Program": "YouTube Sync<br />Program",
+            "FLIPr<br />Program": "FLIPr<br />Program",
+            "Terms of use": "Terms of use",
+            "Agree": "Agree",
+            "Disagree": "Disagree",
+            "You have ? invalid YouTube sync program.": "You have {0} invalid YouTube sync program.",
+            "You have ? invalid YouTube sync programs.": "You have {0} invalid YouTube sync programs."
+        }
+    },
+    "cms-settings": {
+        "html-title": {
+            "FLIPr.tv - CMS Settings": "FLIPr.tv - CMS Settings"
+        },
+        "title-func": {
+            "CMS Settings": "CMS Settings"
+        },
+        "setting-form": {
+            "If you signed in with Facebook, you can't change your name and password.": "If you signed in with Facebook, you can't change your name and password.",
+            "Email": "Email",
+            "Username": "Username",
+            "Username in FLIPr which is composed of 6-16 English letters, numbers or low line.": "Username in FLIPr which is composed of 6-16 English letters, numbers or low line.",
+            "Password": "Password",
+            "Change password": "Change password",
+            "Facebook": "Facebook",
+            "Connect to Facebook": "Connect to Facebook",
+            "YouTube": "YouTube",
+            "Connect to YouTube": "Connect to YouTube",
+            "Save": "Save",
+            "Connection is inactive, click to restart it.": "Connection is inactive, click to restart it.",
+            "Only letters, numbers or low line are allowed.": "Only letters, numbers or low line are allowed.",
+            "Please input 6 to 16 characters in username.": "Please input 6 to 16 characters in username.",
+            "Please fill in all required fields.": "Please fill in all required fields."
+        },
+        "overlay": {
+            "Change Password": "Change Password",
+            "Old Password": "Old Password",
+            "New Password": "New Password",
+            "Repeat New Password": "Repeat New Password",
+            "Cancel": "Cancel",
+            "Change password": "Change password",
+            "Please input 6-16 characters in password.": "Please input 6-16 characters in password.",
+            "Two passwords don't match, please retype.": "Two passwords don't match, please retype.",
+            "Please input your old password.": "Please input your old password.",
+            "Please input your new password.": "Please input your new password.",
+            "Please repeat your new password.": "Please repeat your new password.",
+            "Invalid old password, please try again.": "Invalid old password, please try again."
+        }
+    },
+    "channel": {
+        "html-title": {
+            "FLIPr.tv - Create a new program": "FLIPr.tv - Create a new program",
+            "FLIPr.tv - Program settings": "FLIPr.tv - Program settings"
+        },
+        "func-nav": {
+            "Episode list": "Episode list",
+            "Program POI": "Program POI",
+            "Settings": "Settings"
+        },
+        "title-func": {
+            "My Programs": "My Programs",
+            "Create a new FLIPr Program": "Create a new FLIPr Program",
+            "Create a new YouTube Sync Program": "Create a new YouTube Sync Program",
+            "Settings": "Settings",
+            "Required field": "Required field"
+        },
+        "setting-form": {
+            "Title": "Title",
+            "Best within 10 characters": "Best within 10 characters",
+            "Program logo": "Program logo",
+            "Upload": "Upload",
+            "Uploading...": "Uploading...",
+            "Better results with 300x300 or higher resolution image": "Better results with 300x300 or higher resolution image",
+            "Please upload jpeg, png, or gif files.": "Please upload jpeg, png, or gif files.",
+            "Description": "Description",
+            "Best within 52 characters": "Best within 52 characters",
+            "Program language": "Program language",
+            "Select a language": "Select a language",
+            "English": "English",
+            "Chinese": "Chinese",
+            "Others": "Others",
+            "Audience region": "Audience region",
+            "Select a region": "Select a region",
+            "US": "US",
+            "Taiwan": "Taiwan",
+            "Worldwide": "Worldwide",
+            "Category": "Category",
+            "Select a category": "Select a category",
+            "Tags": "Tags",
+            "Separate with commas": "Separate with commas",
+            "Suggested Tags:": "Suggested Tags:",
+            "Select brand to auto share": "Select brand to auto share",
+            "Timeline": "Timeline",
+            "Page": "Page",
+            "Select facebook pages": "Select facebook pages",
+            "If fail to auto share to Facebook, please go to CMS Settings to re-connect to Facebook and try again.": "If fail to auto share to Facebook, please go to CMS Settings to re-connect to Facebook and try again.",
+            "Restart connection": "Restart connection",
+            "Auto sharing is disabled because permission to your connected account has been revoked, please click to restart the connection.": "Auto sharing is disabled because permission to your connected account has been revoked, please click to restart the connection.",
+            "Please fill in all required fields.": "Please fill in all required fields.",
+            "Cancel": "Cancel",
+            "Create": "Create",
+            "Save": "Save",
+            "Episode sort by": "Episode sort by",
+            "YouTube playlist or YouTube channel order": "YouTube playlist or YouTube channel order",
+            "YouTube playlist or YouTube channel reverse order": "YouTube playlist or YouTube channel reverse order",
+            "Add to My App": "Add to My App",
+            "You can search the programs which has been added to \"Main Channels\" and \"Program store\" of My App.": "You can search the programs which has been added to \"Main Channels\" and \"Program store\" of My App."
+        }
+    },
+    "channel-poi": {
+        "html-title": {
+            "FLIPr.tv - Program POI": "FLIPr.tv - Program POI"
+        },
+        "func-nav": {
+            "Episode list": "Episode list",
+            "Program POI": "Program POI",
+            "Settings": "Settings"
+        },
+        "poi-event": {
+            "+ Create Program POI & interactive event": "+ Create Program POI & interactive event",
+            "Program POI & interactive event list": "Program POI & interactive event list",
+            "Create a program interactive event and call to action message at a point of interaction.": "Create a program interactive event and call to action message at a point of interaction.",
+            "Please create an episode at least in the program.": "Please create an episode at least in the program.",
+            "You cannot have more than one Program POI & interactive event.": "You cannot have more than one Program POI & interactive event.",
+            "Create Program POI & interactive event": "Create Program POI & interactive event",
+            "Edit Program POI & interactive event": "Edit Program POI & interactive event",
+            "Create POI": "Create POI",
+            "Edit POI": "Edit POI",
+            "Required field": "Required field",
+            "Name": "Name",
+            "Tags": "Tags",
+            "Separate with commas": "Separate with commas",
+            "Cancel": "Cancel",
+            "Next": "Next",
+            "Save": "Save",
+            "Please fill in all required fields.": "Please fill in all required fields.",
+            "Add interactive event": "Add interactive event",
+            "Choose a type": "Choose a type",
+            "Coming Soon": "Coming Soon",
+            "Scheduled Notification": "Scheduled Notification",
+            "Send a scheduled notification to user to get more information.": "Send a scheduled notification to user to get more information.",
+            "Instant Notification": "Instant Notification",
+            "Send an instant notification to user to get more information.": "Send an instant notification to user to get more information.",
+            "POI": "POI",
+            "Interactive event : Scheduled Notification": "Interactive event : Scheduled Notification",
+            "Interactive event : Instant Notification": "Interactive event : Instant Notification",
+            "PREVIEW": "PREVIEW",
+            "There is no valid video to preview.": "There is no valid video to preview.",
+            "Display text": "Display text",
+            "Input display text": "Input display text",
+            "Button text": "Button text",
+            "Input button text": "Input button text",
+            "Mobile Notification and Time": "Mobile Notification and Time",
+            "iOS": "iOS",
+            "iOS-button": {
+                "Cancel": "Cancel",
+                "OK": "OK"
+            },
+            "Android": "Android",
+            "Preview": "Preview",
+            "Notification": "Notification",
+            "Mobile notification message": "Mobile notification message",
+            "Input Mobile notification message": "Input Mobile notification message",
+            "Recommend: less 34 bytes": "Recommend: less 34 bytes",
+            "Mobile notification time": "Mobile notification time",
+            "Add a mobile notification time to remind your viewers.": "Add a mobile notification time to remind your viewers.",
+            "Hour": "Hour",
+            "Minute": "Minute",
+            "Mobile Notification Message": "Mobile Notification Message",
+            "If users press OK or Enter, the mobile notification will be send immediately.": "If users press OK or Enter, the mobile notification will be send immediately."
+        }
+    },
+    "episode-list": {
+        "html-title": {
+            "FLIPr.tv - Episode list": "FLIPr.tv - Episode list"
+        },
+        "func-nav": {
+            "Episode list": "Episode list",
+            "Program POI": "Program POI",
+            "Settings": "Settings"
+        },
+        "title-func": {
+            "Episode list": "Episode list",
+            "'s Favorite": "'s Favorite",
+            "Curate a new episode": "Curate a new episode",
+            "Reorder episodes": "Reorder episodes",
+            "Save order": "Save order",
+            "No.": "No.",
+            "Episode": "Episode",
+            "Scheduled time": "Scheduled time",
+            "Publish time": "Publish time",
+            "Views": "Views"
+        },
+        "episode-list": {
+            "You don't have any episodes yet": "You don't have any episodes yet",
+            "Click on <span>Favorite</span> button when watching programs to collect more episodes": "Click on <span>Favorite</span> button when watching programs to collect more episodes",
+            "Edit": "Edit",
+            "Delete": "Delete",
+            "Get URL": "Get URL",
+            "Brand": "Brand",
+            "URL": "URL",
+            "Draft": "Draft",
+            "Curate new episode to tell a story": "Curate new episode to tell a story",
+            "<strong>Curate online videos</strong> into each single episode.": "<strong>Curate online videos</strong> into each single episode.",
+            "Tell your story by <strong>arranging the video sequence.</strong>": "Tell your story by <strong>arranging the video sequence.</strong>",
+            "<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.": "<strong>Trim the videos and add titles</strong> to make your episodes more intriguing.",
+            "<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.": "<strong>Schedule your episodes,</strong> and FLIPr will publish the episodes automatically.",
+            "Video check": "Video check",
+            "No video has problem": "No video has problem",
+            "Find ? video has problem.": "Find {0} video has problem.",
+            "Find ? videos have problem.": "Find {0} videos have problem."        }
+    },
+    "epcurate-publish": {
+        "html-title": {
+            "FLIPr.tv - Episode Curation - Publish": "FLIPr.tv - Episode Curation - Publish"
+        },
+        "epcurate-nav": {
+            "Leave": "Leave",
+            "Episode Curation": "Episode Curation",
+            "Curation": "Curation",
+            "Publish": "Publish"
+        },
+        "epcurate-form": {
+            "Required field": "Required field",
+            "Episode title": "Episode title",
+            "Episode description": "Episode description",
+            "Episode thumbnail": "Episode thumbnail",
+            "Upload": "Upload",
+            "Uploading...": "Uploading...",
+            "Better results with 720x405 or higher resolution image": "Better results with 720x405 or higher resolution image",
+            "Please upload jpeg, png, or gif files.": "Please upload jpeg, png, or gif files.",
+            "Publish status": "Publish status",
+            "Draft": "Draft",
+            "Publish Now": "Publish Now",
+            "Published": "Published",
+            "Scheduled to publish": "Scheduled to publish",
+            "This episode will be published at<br />the scheduled time.": "This episode will be published at<br />the scheduled time.",
+            "Scheduled to rerun": "Scheduled to rerun",
+            "This episode will be published again as the latest episode at the scheduled time.": "This episode will be published again as the latest episode at the scheduled time.",
+            "Hour": "Hour",
+            "< Back to Curation": "< Back to Curation",
+            "Leave": "Leave",
+            "Save": "Save",
+            "Please fill in all required fields.": "Please fill in all required fields.",
+            "Best within 20 characters.": "Best within 20 characters.",
+            "Best within 52 characters.": "Best within 52 characters."
+        }
+    },
+    "epcurate-curation": {
+        "html-title": {
+            "FLIPr.tv - Episode Curation - Curation": "FLIPr.tv - Episode Curation - Curation"
+        },
+        "epcurate-nav": {
+            "Leave": "Leave",
+            "Episode Curation": "Episode Curation",
+            "Curation": "Curation",
+            "Publish": "Publish"
+        },
+        "epcurate-form": {
+            "Add Video": "Add Video",
+            "Edit": "Edit",
+            "POI & interactive event": "POI & interactive event",
+            "Add video by URL": "Add video by URL",
+            "Add": "Add",
+            "+ Add videos here": "+ Add videos here",
+            "Leave": "Leave",
+            "Save": "Save",
+            "Next to Publish >": "Next to Publish >"
+        },
+        "add-video": {
+            "Paste YouTube video URLs to add (separate with different lines)": "Paste YouTube video URLs to add (separate with different lines)",
+            "Paste YouTube video URLs to add.": "Paste YouTube video URLs to add.",
+            "You have reached the maximum amount of 50 videos.": "You have reached the maximum amount of 50 videos.",
+            "Invalid URL, please try again.": "Invalid URL, please try again.",
+            "Invalid URL, please try again!": "Invalid URL, please try again!",
+            "Fail to add this video, please try another one.<br />[This video is not playable outside Youtube]": "Fail to add this video, please try another one.<br />[This video is not playable outside Youtube]",
+            "Fail to add this video, please try another one.<br />[This video is not playable on mobile device]": "Fail to add this video, please try another one.<br />[This video is not playable on mobile device]",
+            "Fail to add this video, please try another one.<br />[This is a private video]": "Fail to add this video, please try another one.<br />[This is a private video]",
+            "Unplayable video, please try again!": "Unplayable video, please try again!"
+        },
+        "video-info": {
+            "Original": "Original",
+            "From": "From",
+            "By": "By",
+            "on": "on",
+            "Not playable outside Youtube": "Not playable outside Youtube",
+            "Not playable in some regions": "Not playable in some regions",
+            "Not playable on mobile device": "Not playable on mobile device"
+        },
+        "trim-time": {
+            "Playback time": "Playback time",
+            "Start from:": "Start from:",
+            "To:": "To:",
+            "Duration:": "Duration:",
+            "Invalid time, please try again.": "Invalid time, please try again.",
+            "Edit": "Edit",
+            "Cancel": "Cancel",
+            "Done": "Done"
+        },
+        "poi-event": {
+            "+ Create POI & interactive event": "+ Create POI & interactive event",
+            "POI & interactive event list": "POI & interactive event list",
+            "Add an interactive event and call to action message at a point of interaction.": "Add an interactive event and call to action message at a point of interaction.",
+            "Create POI & interactive event": "Create POI & interactive event",
+            "Edit POI & interactive event": "Edit POI & interactive event",
+            "Create POI": "Create POI",
+            "Edit POI": "Edit POI",
+            "Required field": "Required field",
+            "Name": "Name",
+            "Duration": "Duration",
+            "Start from:": "Start from:",
+            "To:": "To:",
+            "Reset": "Reset",
+            "Invalid time, please try again.": "Invalid time, please try again.",
+            "Tags": "Tags",
+            "Separate with commas": "Separate with commas",
+            "Cancel": "Cancel",
+            "Next": "Next",
+            "Save": "Save",
+            "Please fill in all required fields.": "Please fill in all required fields.",
+            "Start time or end time is not in the video playback time:": "Start time or end time is not in the video playback time:",
+            "Duration overlaps another POI's duration:": "Duration overlaps another POI's duration:",
+            "Add interactive event": "Add interactive event",
+            "Choose a type": "Choose a type",
+            "Hyper Link": "Hyper Link",
+            "Poll": "Poll",
+            "User can go to watch another FLIPr.tv program or episode.": "User can go to watch another FLIPr.tv program or episode.",
+            "Scheduled Notification": "Scheduled Notification",
+            "Send a scheduled notification to user to get more information.": "Send a scheduled notification to user to get more information.",
+            "Instant Notification": "Instant Notification",
+            "Send an instant notification to user to get more information.": "Send an instant notification to user to get more information.",
+            "POI": "POI",
+            "Interactive event : Hyper Link": "Interactive event : Hyper Link",
+            "Interactive event : Scheduled Notification": "Interactive event : Scheduled Notification",
+            "Interactive event : Instant Notification": "Interactive event : Instant Notification",
+            "Interactive event : Poll": "Interactive event : Poll",
+            "PREVIEW": "PREVIEW",
+            "There is no valid video to preview.": "There is no valid video to preview.",
+            "Display text": "Display text",
+            "Input display text": "Input display text",
+            "Button text": "Button text",
+            "Input button text": "Input button text",
+            "Hyper link": "Hyper link",
+            "Input FLIPr program or episode URL": "Input FLIPr program or episode URL",
+            "Invalid FLIPr URL, please try again.": "Invalid FLIPr URL, please try again.",
+            "Mobile Notification and Time": "Mobile Notification and Time",
+            "iOS": "iOS",
+            "iOS-button": {
+                "Cancel": "Cancel",
+                "OK": "OK"
+            },
+            "Android": "Android",
+            "Preview": "Preview",
+            "Notification": "Notification",
+            "Mobile notification message": "Mobile notification message",
+            "Input Mobile notification message": "Input Mobile notification message",
+            "Recommend: less 34 bytes": "Recommend: less 34 bytes",
+            "Mobile notification time": "Mobile notification time",
+            "Add a mobile notification time to remind your viewers.": "Add a mobile notification time to remind your viewers.",
+            "Hour": "Hour",
+            "Minute": "Minute",
+            "Mobile Notification Message": "Mobile Notification Message",
+            "If users press OK or Enter, the mobile notification will be send immediately.": "If users press OK or Enter, the mobile notification will be send immediately.",
+            "Please decrease the number of text. The text of display text and button text are longer than the video width.": "Please decrease the number of text. The text of display text and button text are longer than the video width."
+        },
+        "title-card": {
+            "Text": "Text",
+            "Font": "Font",
+            "Bold": "Bold",
+            "Italics": "Italics",
+            "Font color": "Font color",
+            "Font size +": "Font size +",
+            "Font size -": "Font size -",
+            "Align left": "Align left",
+            "Align center": "Align center",
+            "Align right": "Align right",
+            "Effect": "Effect",
+            "None": "None",
+            "Fade": "Fade",
+            "Blind": "Blind",
+            "Clip": "Clip",
+            "Drop": "Drop",
+            "Background": "Background",
+            "Color": "Color",
+            "Image": "Image",
+            "Upload": "Upload",
+            "Uploading...": "Uploading...",
+            "Better results with 720x405 image.": "Better results with 720x405 image.",
+            "Please upload jpeg, png, or gif files.": "Please upload jpeg, png, or gif files.",
+            "Duration": "Duration",
+            "Invalid duration, please try again.": "Invalid duration, please try again.",
+            "Cancel": "Cancel",
+            "Done": "Done",
+            "Edit Title": "Edit Title"
+        },
+        "episode-storyboard": {
+            "Episode storyboard": "Episode storyboard",
+            "videos left": "videos left",
+            "Duration": "Duration",
+            "Channel:": "Channel:",
+            "Episode:": "Episode:",
+            "Not playable outside YouTube": "Not playable outside YouTube",
+            "Not playable in some regions & on mobile device": "Not playable in some regions & on mobile device",
+            "Not playable in some regions": "Not playable in some regions",
+            "Not playable on mobile device": "Not playable on mobile device",
+            "Edit Title": "Edit Title",
+            "Add Title": "Add Title",
+            "Invalid video": "Invalid video",
+            "Non-embeddable video": "Non-embeddable video",
+            "Private video": "Private video",
+            "Unplayable video": "Unplayable video"
+        }
+    }
+}
