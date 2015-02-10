@@ -244,7 +244,7 @@
     }
 
     $page.ytLiveCreate = function(channelId) {
-        var epName = "Live auto Episode",
+        var epName = cms.global.vYoutubeLiveIn.name,
         inObj = cms.global.vYoutubeLiveIn,
         ytUrlParse = $common.ytUrlLiveParser($("#ytUrlLive").val());
 
