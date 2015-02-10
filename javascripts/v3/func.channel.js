@@ -244,13 +244,15 @@
     }
 
     $page.ytLiveCreate = function(channelId) {
-        var epName = cms.global.vYoutubeLiveIn.name,
+        var epName = $("#name").val(),
         inObj = cms.global.vYoutubeLiveIn,
         ytUrlParse = $common.ytUrlLiveParser($("#ytUrlLive").val());
 
         if (2 === ytUrlParse.ytType) {
             $page.liveType2Prepare(ytUrlParse);
         }
+        inObj.name = epName;
+
         nn.api('POST', cms.reapi('/api/channels/{channelId}/episodes', {
             channelId: channelId
         }), {
