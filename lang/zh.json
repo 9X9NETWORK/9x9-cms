@@ -107,6 +107,64 @@
         "clip": "擦去",
         "drop": "投擲"
     },
+    "app-brand": {
+        "html-title": {
+            "FLIPr.tv - Brand Settings": "FLIPr.tv - 品牌設定"
+        },
+        "main-area": {
+            "Content Management System": "後台管理系統",
+            "My Programs": "節目管理",
+            "My App": "App 管理",
+            "CMS Settings": "管理系統設定",
+
+            "Main Channels": "主頻道",
+            "Program Store": "節目商店",
+            "Brand Settings": "品牌設定",
+            "Brand Management": "品牌管理",
+            "Notification": "通知",
+
+            "My App": "App 管理",
+            "Brand Management": "品牌管理",
+            "Input SNS link...": "請輸入社群連結...",
+            "Please upload SNS icon.": "請上傳連結圖示",
+            "Introduce your app": "介紹你的App!",
+            "Promote your app": "推廣你的App!",
+            "Suggested programs": "節目推薦",
+            "App Name": "APP 名稱",
+            "App Logo": "APP 商標",
+            "Detailed description": "App介紹",
+            "Short descript": "簡短介紹",
+            "call to action": "下載標語",
+            "SNS": "社群連結",
+            "Input program link...": "輸入節目網址...",
+            "Input program name...": "輸入節目名稱...",
+            "Save & Visit the page": "儲存 & 瀏覽結果",
+            "Best within 80 characters": "最佳字數80",
+            "Best within 40 characters": "最佳字數40",
+            "Best within 15 characters": "最佳字數15",
+            "where is 'Introduce your app'": "'app 介紹'在那裡",
+            "where is 'Promote your app'": "'社群推廣'在那裡",
+            "where is 'Suggested programs'": "'節目推薦'在那裡",
+            "Upload program logo": "上傳節目商標",
+            "Upload your personal SNS icon now! Better results with 50x50 image.": "立刻上傳個人化的社群圖示! 最佳建議解析度 50x50 。",
+            "Please fill in all required fields.": "請輸入必填項目。",
+            "Latest and popular videos all in FLIPr app!": "精采熱門影片每天更新，一切都在FLIPr app！",
+            "Latest and popular videos, updating EVERY DAY!": "最新、最熱門的線上影片，你不可錯過的每日精采！",
+            "FREE to download now!": "立刻下載FLIPr app！",
+            "Please use your branding URL": "請輸入你的品牌網址",
+            "+Add social network services": "+ 加入社群連結",
+            "+Add suggested program": "+ 加入節目推薦",
+            "iOS app download link": "iOS 下載連結",
+            "Android app download link": "Android 下載連結",
+            "Input SNS name...": "請輸入社群連結名稱...",
+
+
+            "Please fill in your brand name.": "請輸入品牌名稱",
+            "Better results with 260x200 or higher resolution image.": "圖檔最佳解析為 260x200, 檔案大小不超過500KB",
+            "Please upload png file.": "請上傳 PNG 格式圖檔",
+            "your upload file is large than 500KB, please reupload file.": "您上傳的檔案超過500KB，請重新上傳較小檔案。"
+        }
+    },
     "signin": {
         "html-title": {
             "FLIPr.tv - Sign In": "FLIPr.tv - 登入"
@@ -173,6 +231,7 @@
             "Main Channels": "主頻道",
             "Program Store": "節目商店",
             "Brand Settings": "品牌設定",
+            "Brand Management": "品牌管理",
             "Notification": "通知"
         },
         "title-func": {
@@ -232,6 +291,7 @@
             "Main Channels": "主頻道",
             "Program Store": "節目商店",
             "Brand Settings": "品牌設定",
+            "Brand Management": "品牌管理",
             "Notification": "通知"
 
         },
@@ -260,6 +320,7 @@
             "Promotion Category": "推薦類別",
             "System Category": "系統類別",
             "Brand Settings": "品牌設定",
+            "Brand Management": "品牌管理",
             "Notification": "通知"
         },
         "title-func": {
@@ -344,6 +405,7 @@
             "Promotion Category": "推薦類別",
             "System Category": "系統類別",
             "Brand Settings": "品牌設定",
+            "Brand Management": "品牌管理",
             "Notification": "通知"
         },
         "title-func": {
@@ -393,6 +455,7 @@
             "Main Channels": "主頻道",
             "Program Store": "節目商店",
             "Brand Settings": "品牌",
+            "Brand Management": "品牌管理",
             "Notification": "通知"
         },
         "sets-list": {
@@ -488,7 +551,8 @@
             "Portal": "我的入口",
             "Program Store": "節目商店",
             "Main Channels": "主頻道",
-            "Brand Settings": "品牌設定"
+            "Brand Settings": "品牌設定",
+            "Brand Management": "品牌管理"
         },
         "sets-list": {
             "Programs": "節目",

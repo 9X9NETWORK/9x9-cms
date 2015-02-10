@@ -1179,6 +1179,10 @@
                 $('#portal-add-layer .langkeyH').each(function () {
                     $(this).data('langkey', $(this).html());
                 });
+                $('div.main-area .langkeyT, .func-nav span.langkeyT, .studio-nav .langkeyT').each(function () {
+                    $(this).data('langkey', $(this).text());
+                });
+
             }
 
             // replace lang value
@@ -1214,6 +1218,9 @@
             $('#language').text($('#language-' + lang).text());
             $('#language-en, #language-zh').parent('li').removeClass('on');
             $('#language-' + lang).parent('li').addClass('on');
+            $('div.main-area .langkeyT, .func-nav span.langkeyT, .studio-nav .langkeyT').each(function () {
+                $(this).text(nn._([cms.global.PAGE_ID, 'main-area', $(this).data('langkey')]));
+            });
 
             // setup POI campaign Id
             if (-1 !== $.inArray(userUrlFile, ['epcurate-curation.html', 'channel-poi.html'])) {
