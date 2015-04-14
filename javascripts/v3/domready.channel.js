@@ -366,7 +366,8 @@ $(function () {
                     var ytTitle = "",
                         ytDesc = "",
                         ytImg = "images/ch_default.png",
-                        ytImgCount = 0;
+                        ytImgCount = 0,
+                        tmpObj = res.items[0];
 
                     if("vimeo" === pgType){
                         if (ytUrlParse.ytType === 1) {
@@ -393,27 +394,13 @@ $(function () {
                         }
 
                     }else{
-                        if (ytUrlParse.ytType === 1) {
-                            ytTitle = (res).entry.title.$t;
-                            ytDesc = (res).entry.summary.$t;
+                        ytTitle = tmpObj.snippet.title;
+                        ytDesc = tmpObj.snippet.description;
 
-                            if(undefined !== (res).entry.media$thumbnail.url){
-                                ytImg = (res).entry.media$thumbnail.url;
-                            }
-                        } else {
-                            ytTitle = (res).feed.title.$t;
-                            ytDesc = (res).feed.subtitle.$t;
-
-                            if ((res).feed.media$group.media$thumbnail) {
-                                ytImgCount = (res).feed.media$group.media$thumbnail.length;
-                            }
-
-                            if (ytImgCount > 1) {
-                                ytImg = (res).feed.media$group.media$thumbnail[1].url;
-                            }else if(ytImgCount > 0){
-                                ytImg = (res).feed.media$group.media$thumbnail[0].url;
-                            }
-                        }
+                        $.each(tmpObj.snippet.thumbnails, function(eKey, eValue) {
+                            ytImg = eValue.url;
+                            return false;
+                        });
                     }
 
                     $("#ytUrl").val(ytUrlParse.ytUrlFormat);
