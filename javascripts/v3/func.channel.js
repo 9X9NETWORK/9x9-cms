@@ -623,7 +623,7 @@
                                 context: self,
                                 success: function(res) {
                                     if (ytUrlParse.ytType === 1) {
-                                        $("#ytUrl").val((res).entry.link[0].href);
+                                        $("#ytUrl").val(ytUrlParse.ytUrlFormat);
                                     }
                                 }
                             }
