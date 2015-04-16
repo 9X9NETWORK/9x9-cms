@@ -255,6 +255,9 @@ var cms = {};
                 plugin: 'poll',
                 formId: 'eventPollForm'
             }
+        },
+        PUBKEY: {
+            YOUTUBE: "AIzaSyDLlUyPG-tnvoaONwgqYqte3tWpazeSghs"
         }
     };
 

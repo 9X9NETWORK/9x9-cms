@@ -125,11 +125,16 @@
         }
 
         function _getYoutubes(ytVideo) {
-            var deferred = $.Deferred();
-
-            nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + ytVideo.slice(-11) + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
-                deferred.resolve(youtubes);
-            }, 'jsonp');
+            var deferred = $.Deferred(),
+            	tmmApi = "";
+            	
+			tmmApi = "https://www.googleapis.com/youtube/v3/videos?key=" + cms.config.PUBKEY.YOUTUBE;
+			tmmApi += "&part=snippet,contentDetails,statistics,status";
+			tmmApi += "&id=" + ytVideo.slice(-11);
+            	
+			nn.api('GET', tmmApi, null, function (ytObj) {
+				deferred.resolve(ytObj);
+			});  	
             return deferred.promise();
         }
 
@@ -199,7 +204,7 @@
                     .then(function (youtubes) {
                         var ytCheck = null;
 
-                        if (youtubes.data) {
+                        if (youtubes.items) {
                             ytCheck = cms.youtubeUtility.checkVideoValidity(youtubes);
                             if (ytCheck.isZoneLimited || ytCheck.isEmbedLimited || ytCheck.isSyndicateLimited || ytCheck.isUnplayableVideo) {
                                 // unplayable = true;

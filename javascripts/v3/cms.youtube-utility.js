@@ -34,16 +34,16 @@
 
             var ytData, hasSyndicateDenied, hasLimitedSyndication;
 
-            if (youtube.data) {
-                ytData = youtube.data;
+            if (!!youtube.items) {
+                ytData = youtube.items[0];
                 checkResult.isPrivateVideo = false;
-                checkResult.isZoneLimited = !!ytData.restrictions;
+                checkResult.isZoneLimited = false; // !!ytData.restrictions; // 待查辦
                 hasSyndicateDenied = !!(ytData.accessControl && ytData.accessControl.syndicate && 'denied' === ytData.accessControl.syndicate);
                 hasLimitedSyndication = !!(ytData.status && ytData.status.reason && 'limitedSyndication' === ytData.status.reason);
                 checkResult.isSyndicateLimited = !!(hasSyndicateDenied || hasLimitedSyndication);
                 checkResult.isEmbedLimited = !!(ytData.accessControl && ytData.accessControl.embed && 'denied' === ytData.accessControl.embed);
-                checkResult.isUnplayableVideo = !!(checkResult.isEmbedLimited || hasSyndicateDenied || (ytData.status && !hasLimitedSyndication));
-                checkResult.isProcessing = !!(ytData.status && ytData.status.value === 'processing');
+                checkResult.isUnplayableVideo = !!(ytData.status.privacyStatus !== "public");
+                checkResult.isProcessing = !!(ytData.status && ytData.status.uploadStatus !== 'processed');
                 checkResult.isRequesterRegionRestricted = !!(checkResult.isZoneLimited && ytData.status && ytData.status.reason === 'requesterRegion' && ytData.status.value === 'restricted');
                 // if (checkResult.isZoneLimited) {
                     // for (var i = ytData.restrictions.length - 1; i >= 0; i--) {
