@@ -257,7 +257,7 @@ var cms = {};
             }
         },
         PUBKEY: {
-            YOUTUBE: "AIzaSyDLlUyPG-tnvoaONwgqYqte3tWpazeSghs"
+            YOUTUBE: "AIzaSyBWTbnENN8StmCSjgRwJ5AfGhEvXewgAJk"
         }
     };
 
