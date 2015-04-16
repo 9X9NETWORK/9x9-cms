@@ -450,6 +450,7 @@ $(function () {
             // normalList = $.map(matchList, function (k, i) {
             //     return 'http://www.youtube.com/watch?v=' + k;
             // });
+            var tmmApi = "";
             if ((existList.length + matchList.length) > cms.config.PROGRAM_MAX) {
                 $('#videourl').val(normalList.join('\n'));
                 $('#cur-add .notice').text(nn._([cms.global.PAGE_ID, 'add-video', 'You have reached the maximum amount of 50 videos.'])).removeClass('hide').show();
@@ -463,15 +464,19 @@ $(function () {
                 switch(contentTypeList[idx]){
                     case 1:
                         // youtube video
-                        nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + key + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
+						tmmApi = "https://www.googleapis.com/youtube/v3/videos?key=" + cms.config.PUBKEY.YOUTUBE;
+						tmmApi += "&part=snippet,contentDetails,statistics,status";
+						tmmApi += "&id=" + key;
+                        nn.api('GET', tmmApi, null, function (youtubes) {
                             committedCnt += 1;
                             var checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
 
                             if (true === checkResult.isEmbedLimited) {
                                 embedLimitedList.push(normalList[idx]);
                             }
-                            nn.log("checkResult");
-                            nn.log(checkResult);
+
+                            youtubes.data = youtubes.items[0] || {};
+
                             if (youtubes.data && !checkResult.isEmbedLimited && !checkResult.isProcessing && !checkResult.isRequesterRegionRestricted) {
                                 ytData = youtubes.data;
                                 ytItem = {
@@ -482,14 +487,14 @@ $(function () {
                                     ytId: ytData.id,
                                     fileUrl: normalList[idx],
                                     imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
-                                    duration: ytData.duration,      // keep trimmed duration from FLIPr API
-                                    ytDuration: ytData.duration,    // keep original duration from YouTube
+                                    duration: $common.ytV3Duration(ytData.contentDetails.duration),      // keep trimmed duration from FLIPr API
+                                    ytDuration: $common.ytV3Duration(ytData.contentDetails.duration),    // keep original duration from YouTube
                                     startTime: 0,
-                                    endTime: ytData.duration,
-                                    name: ytData.title,
-                                    intro: ytData.description,
-                                    uploader: ytData.uploader,
-                                    uploadDate: ytData.uploaded,
+                                    endTime: $common.ytV3Duration(ytData.contentDetails.duration),
+                                    name: ytData.snippet.title,
+                                    intro: ytData.snippet.description,
+                                    uploader: "uploader",
+                                    uploadDate: ytData.snippet.publishedAt,
                                     contentType: contentTypeList[idx]
                                 };
                                 ytItem = $.extend(ytItem, checkResult);
