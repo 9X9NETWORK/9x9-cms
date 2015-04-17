@@ -2158,7 +2158,7 @@
                     } else {
                         checkResult = cms.youtubeUtility.checkVideoValidity(youtubes);
                     }
-
+                    youtubes.data = youtubes.items[0] || {};
                     if (youtubes.data && false === checkResult.isEmbedLimited || programItem.isVimeo) {
                         if(programItem.isVimeo){
                             // vimeo video source
@@ -2189,11 +2189,11 @@
                                 fileUrl: programItem.fileUrl,
                                 imageUrl: 'http://i.ytimg.com/vi/' + ytData.id + '/mqdefault.jpg',
                                 //duration: ytData.duration,      // ON PURPOSE to mark this line to keep trimmed duration from 9x9 API
-                                ytDuration: ytData.duration, // keep original duration from YouTube
-                                name: ytData.title,
-                                intro: ytData.description,
-                                uploader: ytData.uploader,
-                                uploadDate: ytData.uploaded,
+                                ytDuration: $common.ytV3Duration(ytData.contentDetails.duration), // keep original duration from YouTube
+                                name: ytData.snippet.title,
+                                intro: ytData.snippet.description,
+                                uploader: "uploader",
+                                uploadDate: ytData.snippet.publishedAt,
                             };
                         }
                     } else {
@@ -2244,7 +2244,8 @@
         }
 
         function getYoutubes(programItem) {
-            var deferred = $.Deferred();
+            var deferred = $.Deferred(),
+                tmmApi = "";
             if(programItem.contentType === 7){
                 $.ajax({
                         url: programItem.fileUrl.replace("vimeo.com/", "api.vimeo.com/videos/"),
@@ -2260,7 +2261,11 @@
                         deferred.resolve(programItem, vimeoVideo);
                     });
             } else {
-                nn.api('GET', 'http://gdata.youtube.com/feeds/api/videos/' + programItem.fileUrl.slice(-11) + '?alt=jsonc&v=2&callback=?', null, function (youtubes) {
+                tmmApi = "https://www.googleapis.com/youtube/v3/videos?key=" + cms.config.PUBKEY.YOUTUBE;
+                tmmApi += "&part=snippet,contentDetails,statistics,status";
+                tmmApi += "&id=" + programItem.fileUrl.slice(-11);
+
+                nn.api('GET', tmmApi, null, function (youtubes) {
                     deferred.resolve(programItem, youtubes);
                 }, 'jsonp');
             }

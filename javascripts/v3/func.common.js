@@ -4,6 +4,29 @@
 (function ($common) {
     'use strict';
 
+    $common.ytVideoData = function (inObj) {
+        var retValue = {};
+    };
+
+    $common.ytV3Duration = function (inObj) {
+        var retValue = 0,
+            expHours = new RegExp("(\\d+)H", "gi"),
+            expMinute = new RegExp("(\\d+)M", "gi"),
+            expSecond = new RegExp("(\\d+)S", "gi");
+        if(inObj.match(expHours)){
+            retValue += 60 * 60 * parseInt(RegExp.$1,10);
+        }
+
+        if(inObj.match(expMinute)){
+            retValue += 60 * parseInt(RegExp.$1,10);
+        }
+
+        if(inObj.match(expSecond)){
+            retValue += parseInt(RegExp.$1,10);
+        }
+        return retValue;
+    };
+
     $common.playerUrlParserMso = function (inUrl) {
         var inUrlParser = $common.playerUrlParser(inUrl),
             inHost = $.url(inUrl).attr("host"),
@@ -374,7 +397,7 @@
     $common.ytUrlLiveParser = function (inUrl) {
         // ytType = 0 : unknow, 1: yturl, 2: m3u8, 3: ustream.tv, 4: livestream.com
         var inURL = $.url(inUrl),
-            ytUrlPattern = ["http://www.youtube.com/watch?v="],
+            ytUrlPattern = ["https://www.youtube.com/watch?v="],
             retValue = {
                 ytType: 0,
                 ytId: "",
@@ -382,15 +405,19 @@
                 ytUrlApi: ""
             },
             tmpListId = inURL.param('v'),
-            arrFilename = inURL.attr("file").split('.');
+            arrFilename = inURL.attr("file").split('.'),
+            tmmApi = "";
 
         $("#ytUrlLive").attr("name", "sourceUrl2");
 
         if (undefined !== tmpListId && tmpListId.length > 6) {
+			tmmApi = "https://www.googleapis.com/youtube/v3/videos?key=" + cms.config.PUBKEY.YOUTUBE;
+			tmmApi += "&part=snippet,contentDetails,statistics,status";
+			tmmApi += "&id=" + tmpListId;
             retValue.ytType = 1;
             retValue.ytId = tmpListId;
             retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
-            retValue.ytUrlApi = "http://gdata.youtube.com/feeds/api/videos/" + retValue.ytId + "?alt=jsonc&v=2";
+            retValue.ytUrlApi = tmmApi;
         } else if (2 === arrFilename.length && "m3u8" === arrFilename[1]) {
             retValue.ytType = 2;
             retValue.ytUrlFormat = inUrl;
@@ -446,7 +473,8 @@
     $common.ytUrlParser = function (inUrl) {
         // ytType = 0 : unknow, 1: user, 2: playlist
         var inURL = $.url(inUrl),
-            ytUrlPattern = ["http://www.youtube.com/user/", "http://www.youtube.com/view_play_list?p="],
+            ytChannelsPattern = ["channel", "user"],
+            ytChannelsValue = ["id", "forUsername"],
             retValue = {
                 ytType: 0,
                 ytId: "",
@@ -454,20 +482,31 @@
                 ytUrlApi: ""
             },
             tmpListId = inURL.param('list') || inURL.param('p'),
+            tmpVideoId = inURL.param('v'),
             tmpSegment = inURL.segment(),
-            tmpSeqmentLoc = tmpSegment.indexOf("user") + 1 || tmpSegment.indexOf("channel") + 1;
+            tmpSeqmentLoc = tmpSegment.indexOf("user") + 1 || tmpSegment.indexOf("channel") + 1,
+            tmpSeqmentType = tmpSegment[tmpSeqmentLoc -1];
 
-        if (undefined !== tmpListId && tmpListId.length > 6) {
+        if (undefined !== tmpListId && undefined !== tmpVideoId && tmpListId.length > 6 && tmpVideoId.length > 6) {
+            // https://www.youtube.com/watch?v=uuZE_IRwLNI&list=RDHCwAreVUykmIA
             retValue.ytType = 2;
             retValue.ytId = tmpListId;
-            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
-            retValue.ytUrlApi = "http://gdata.youtube.com/feeds/api/playlists/" + retValue.ytId + "?v=2&alt=json&start-index=1&max-results=50&orderby=position";
+            retValue.ytUrlFormat = "https://www.youtube.com/watch?list=" + retValue.ytId + "&v=" + tmpVideoId;
+
+            retValue.ytUrlApi = "https://www.googleapis.com/youtube/v3/playlists?key=" + cms.config.PUBKEY.YOUTUBE;
+            retValue.ytUrlApi += "&part=snippet";
+            retValue.ytUrlApi += "&id=" + retValue.ytId;
 
         } else if (tmpSeqmentLoc > 0 && tmpSegment.length > tmpSeqmentLoc) {
+            // user : https://www.youtube.com/user/JessieJVEVO
+            // channel : https://www.youtube.com/channel/UCGej5zp_KWZ-b_1w4Rq2hyA
             retValue.ytType = 1;
             retValue.ytId = tmpSegment[tmpSeqmentLoc];
-            retValue.ytUrlFormat = ytUrlPattern[retValue.ytType - 1] + retValue.ytId;
-            retValue.ytUrlApi = "https://gdata.youtube.com/feeds/api/users/" + retValue.ytId + "?v=2&alt=json";
+            retValue.ytUrlFormat = "https://www.youtube.com/" + tmpSeqmentType + "/" + retValue.ytId;
+
+            retValue.ytUrlApi = "https://www.googleapis.com/youtube/v3/channels?key=" + cms.config.PUBKEY.YOUTUBE;
+            retValue.ytUrlApi += "&part=snippet,contentDetails,statistics,status";
+            retValue.ytUrlApi += "&" + ytChannelsValue[ytChannelsPattern.indexOf(tmpSeqmentType)] + "=" + retValue.ytId;
         }
 
         return retValue;

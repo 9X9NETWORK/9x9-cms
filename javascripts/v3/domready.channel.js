@@ -29,7 +29,7 @@ $(function () {
     });
 
     $(document).on('change', '.toUploadImage', function () {
-        if(this.files.length >0){
+        if(this.files.length > 0){
             $page.doImageUpload($(this), this.files[0]);
         }
     });
@@ -103,7 +103,7 @@ $(function () {
 
     $(document).on('click', '#youtube-sync-switch', function () {
         if ($(this).hasClass("switch-on")) {
-            $page.youtubeYyncOnOff("off");
+            $page.youtubeSyncOnOff("off");
         } else {
             var msgOverlay = $('#youtube-sync-alert-overlay');
             $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize videos from video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
@@ -113,13 +113,13 @@ $(function () {
             $.blockUI({
                 message: msgOverlay
             });
-            // $page.youtubeYyncOnOff(true);
+            // $page.youtubeSyncOnOff(true);
         }
         return false;
     });
 
     $(document).on('click', '#yes-sync', function () {
-        $page.youtubeYyncOnOff("on");
+        $page.youtubeSyncOnOff("on");
         $.unblockUI();
         return false;
     });
@@ -146,44 +146,31 @@ $(function () {
                         ytDesc = "",
                         ytImg = "images/ch_default.png",
                         ytImgCount = 0,
-                        ytLiveDuration = (res).data.duration,
+                        ytLiveDuration = 0,
                         ytLiveStatus = "",
-                        ytObjSub = {};
+                        ytObjSub = {},
+                        ytRes = res.items[0];
 
-                    if (undefined !== (res).data.status && undefined !== (res).data.status) {
-                        ytLiveStatus = (res).data.status.value;
-                    }
-                    if (0 == ytLiveDuration && "processing" === ytLiveStatus) {
+                    ytLiveDuration = $common.ytV3Duration(ytRes.contentDetails.duration);
+                    ytLiveStatus = ytRes.snippet.liveBroadcastContent;
+
+                    if (0 == ytLiveDuration && "live" === ytLiveStatus) {
                         // live video
-                        if (ytUrlParse.ytType === 1) {
-                            ytTitle = (res).data.title;
-                            ytDesc = (res).data.description;
-
-                            if (undefined !== (res).data.thumbnail.hqDefault) {
-                                ytImg = (res).data.thumbnail.hqDefault;
-                            } else {
-                                ytImg = (res).data.thumbnail.sqDefault;
-                            }
+                        ytLiveStatus = "processing";
+                        ytTitle = ytRes.snippet.title;
+                        ytDesc = ytRes.snippet.description;
+                        if (undefined !== ytRes.snippet.thumbnails.high) {
+                            ytImg = ytRes.snippet.thumbnails.high.url;
                         } else {
-                            ytTitle = (res).feed.title.$t;
-                            ytDesc = (res).feed.subtitle.$t;
-
-                            if ((res).feed.media$group.media$thumbnail) {
-                                ytImgCount = (res).feed.media$group.media$thumbnail.length;
-                            }
-
-                            if (ytImgCount > 1) {
-                                ytImg = (res).feed.media$group.media$thumbnail[1].url;
-                            } else if (ytImgCount > 0) {
-                                ytImg = (res).feed.media$group.media$thumbnail[0].url;
-                            }
+                            ytImg = ytRes.snippet.thumbnails.default.url;
                         }
+
                         cms.global.vYoutubeLiveIn.fileUrl = ytUrlParse.ytUrlFormat;
                         cms.global.vYoutubeLiveIn.imageUrl = ytImg;
                         cms.global.vYoutubeLiveIn.name = ytTitle;
                         cms.global.vYoutubeLiveIn.intro = ytDesc;
-                        cms.global.vYoutubeLiveIn.uploader = (res).data.uploader;
-                        cms.global.vYoutubeLiveIn.uploadDate = (res).data.uploaded;
+                        cms.global.vYoutubeLiveIn.uploader = "uploader";
+                        cms.global.vYoutubeLiveIn.uploadDate = ytRes.snippet.publishedAt;
                         cms.global.vYoutubeLiveIn.ytId = ytUrlParse.ytId;
 
                         $("#ytUrlLive").val(ytUrlParse.ytUrlFormat);
@@ -191,31 +178,36 @@ $(function () {
                         $("#intro").val(ytDesc);
                         $("#ytUrlLive").data("status", ytLiveStatus);
 
-                        ytObjSub = {
-                            url: "https://gdata.youtube.com/feeds/api/users/" + cms.global.vYoutubeLiveIn.uploader + "?v=2&alt=json",
-                            dataType: "json",
-                            context: self,
-                            success: function (res) {
-                                var ytTitle = "",
-                                    ytDesc = "",
-                                    ytImg = "images/ch_default.png",
-                                    ytImgCount = 0,
-                                    ytObjSub = {};
-
-                                if (undefined !== (res).entry.media$thumbnail.url) {
-                                    ytImg = (res).entry.media$thumbnail.url;
-                                }
-
-                                if ("images/ch_default.png" !== ytImg) {
-                                    $('#imageUrl').val(ytImg);
-                    				$("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
-                                }
-                            },
-                            error: function() {
-                                nn.log("err Youtube Live sub call!!");
-                            }
+                        if ("images/ch_default.png" !== ytImg) {
+                            $('#imageUrl').val(ytImg);
+                            $("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
                         }
-                        $.ajax(ytObjSub);
+
+                        // ytObjSub = {
+                        //     url: "https://gdata.youtube.com/feeds/api/users/" + cms.global.vYoutubeLiveIn.uploader + "?v=2&alt=json",
+                        //     dataType: "json",
+                        //     context: self,
+                        //     success: function (res) {
+                        //         var ytTitle = "",
+                        //             ytDesc = "",
+                        //             ytImg = "images/ch_default.png",
+                        //             ytImgCount = 0,
+                        //             ytObjSub = {};
+
+                        //         if (undefined !== (res).entry.media$thumbnail.url) {
+                        //             ytImg = (res).entry.media$thumbnail.url;
+                        //         }
+
+                        //         if ("images/ch_default.png" !== ytImg) {
+                        //             $('#imageUrl').val(ytImg);
+                    	//             $("#iupLogo .imgUpShow").css('background-image', "url('"+ ytImg +"')").removeClass("no-image").removeClass("is-loading");
+                        //         }
+                        //     },
+                        //     error: function() {
+                        //         nn.log("err Youtube Live sub call!!");
+                        //     }
+                        // }
+                        // $.ajax(ytObjSub);
                     } else {
                         $("#ytSyncMsg").html(strDefErr);
                         $("#ytSyncMsg").removeClass("hide");
@@ -366,7 +358,8 @@ $(function () {
                     var ytTitle = "",
                         ytDesc = "",
                         ytImg = "images/ch_default.png",
-                        ytImgCount = 0;
+                        ytImgCount = 0,
+                        tmpObj = res.items[0];
 
                     if("vimeo" === pgType){
                         if (ytUrlParse.ytType === 1) {
@@ -392,28 +385,15 @@ $(function () {
                             }
                         }
 
-                    }else{
-                        if (ytUrlParse.ytType === 1) {
-                            ytTitle = (res).entry.title.$t;
-                            ytDesc = (res).entry.summary.$t;
+                    } else {
+                        ytTitle = tmpObj.snippet.title;
+                        ytDesc = tmpObj.snippet.description;
 
-                            if(undefined !== (res).entry.media$thumbnail.url){
-                                ytImg = (res).entry.media$thumbnail.url;
-                            }
-                        } else {
-                            ytTitle = (res).feed.title.$t;
-                            ytDesc = (res).feed.subtitle.$t;
-
-                            if ((res).feed.media$group.media$thumbnail) {
-                                ytImgCount = (res).feed.media$group.media$thumbnail.length;
-                            }
-
-                            if (ytImgCount > 1) {
-                                ytImg = (res).feed.media$group.media$thumbnail[1].url;
-                            }else if(ytImgCount > 0){
-                                ytImg = (res).feed.media$group.media$thumbnail[0].url;
-                            }
-                        }
+                        $.each(tmpObj.snippet.thumbnails, function(eKey, eValue) {
+                            ytImg = eValue.url;
+                            return false;
+                        });
+                        ytUrlParse.ytUrlFormat = ytUrlParse.ytUrlFormat.replace('/channel/', '/user/');
                     }
 
                     $("#ytUrl").val(ytUrlParse.ytUrlFormat);
