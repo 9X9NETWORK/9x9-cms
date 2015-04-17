@@ -29,7 +29,7 @@ $(function () {
     });
 
     $(document).on('change', '.toUploadImage', function () {
-        if(this.files.length >0){
+        if(this.files.length > 0){
             $page.doImageUpload($(this), this.files[0]);
         }
     });
@@ -385,7 +385,7 @@ $(function () {
                             }
                         }
 
-                    }else{
+                    } else {
                         ytTitle = tmpObj.snippet.title;
                         ytDesc = tmpObj.snippet.description;
 
@@ -393,6 +393,7 @@ $(function () {
                             ytImg = eValue.url;
                             return false;
                         });
+                        ytUrlParse.ytUrlFormat = ytUrlParse.ytUrlFormat.replace('/channel/', '/user/');
                     }
 
                     $("#ytUrl").val(ytUrlParse.ytUrlFormat);
