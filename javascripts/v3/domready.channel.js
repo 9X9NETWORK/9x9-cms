@@ -103,7 +103,7 @@ $(function () {
 
     $(document).on('click', '#youtube-sync-switch', function () {
         if ($(this).hasClass("switch-on")) {
-            $page.youtubeYyncOnOff("off");
+            $page.youtubeSyncOnOff("off");
         } else {
             var msgOverlay = $('#youtube-sync-alert-overlay');
             $(msgOverlay).find('.vMsg').text(nn._([cms.global.PAGE_ID, 'setting-form', 'This program will automatically synchronize videos from video source at 0 AM, 8 AM, 12 PM, 2 PM, 6 PM and 9 PM every day. Are you sure to auto sync?']));
@@ -113,13 +113,13 @@ $(function () {
             $.blockUI({
                 message: msgOverlay
             });
-            // $page.youtubeYyncOnOff(true);
+            // $page.youtubeSyncOnOff(true);
         }
         return false;
     });
 
     $(document).on('click', '#yes-sync', function () {
-        $page.youtubeYyncOnOff("on");
+        $page.youtubeSyncOnOff("on");
         $.unblockUI();
         return false;
     });

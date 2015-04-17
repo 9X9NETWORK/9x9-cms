@@ -285,7 +285,7 @@
         });
     };
 
-    $page.youtubeYyncOnOff = function (isOn) {
+    $page.youtubeSyncOnOff = function (isOn) {
         var thisObj = $("#youtube-sync-switch");
         if ("on" === isOn) {
             thisObj.removeClass("switch-off");
@@ -600,7 +600,7 @@
                     $('#content-main').html('');
                     $('#content-main-tmpl').tmpl(channel).appendTo('#content-main');
 
-                    $page.youtubeYyncOnOff(channel.autoSync);
+                    $page.youtubeSyncOnOff(channel.autoSync);
                     $page.storePoolOnOff("init");
 
                     if (cms.global.vIsYoutubeLive) {
