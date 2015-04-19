@@ -393,7 +393,6 @@ $(function () {
                             ytImg = eValue.url;
                             return false;
                         });
-                        ytUrlParse.ytUrlFormat = ytUrlParse.ytUrlFormat.replace('/channel/', '/user/');
                     }
 
                     $("#ytUrl").val(ytUrlParse.ytUrlFormat);
