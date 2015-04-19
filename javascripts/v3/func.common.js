@@ -482,27 +482,28 @@
                 ytUrlApi: ""
             },
             tmpListId = inURL.param('list') || inURL.param('p'),
-            tmpVideoId = inURL.param('v'),
             tmpSegment = inURL.segment(),
             tmpSeqmentLoc = tmpSegment.indexOf("user") + 1 || tmpSegment.indexOf("channel") + 1,
             tmpSeqmentType = tmpSegment[tmpSeqmentLoc -1];
 
-        if (undefined !== tmpListId && undefined !== tmpVideoId && tmpListId.length > 6 && tmpVideoId.length > 6) {
+        if (undefined !== tmpListId && tmpListId.length > 6) {
+
             // https://www.youtube.com/watch?v=uuZE_IRwLNI&list=RDHCwAreVUykmIA
             retValue.ytType = 2;
             retValue.ytId = tmpListId;
-            retValue.ytUrlFormat = "https://www.youtube.com/watch?list=" + retValue.ytId + "&v=" + tmpVideoId;
+            retValue.ytUrlFormat = "http://www.youtube.com/view_play_list?p=" + retValue.ytId;
 
             retValue.ytUrlApi = "https://www.googleapis.com/youtube/v3/playlists?key=" + cms.config.PUBKEY.YOUTUBE;
             retValue.ytUrlApi += "&part=snippet";
             retValue.ytUrlApi += "&id=" + retValue.ytId;
 
         } else if (tmpSeqmentLoc > 0 && tmpSegment.length > tmpSeqmentLoc) {
+
             // user : https://www.youtube.com/user/JessieJVEVO
             // channel : https://www.youtube.com/channel/UCGej5zp_KWZ-b_1w4Rq2hyA
             retValue.ytType = 1;
             retValue.ytId = tmpSegment[tmpSeqmentLoc];
-            retValue.ytUrlFormat = "https://www.youtube.com/" + tmpSeqmentType + "/" + retValue.ytId;
+            retValue.ytUrlFormat = "http://www.youtube.com/user/" + retValue.ytId;
 
             retValue.ytUrlApi = "https://www.googleapis.com/youtube/v3/channels?key=" + cms.config.PUBKEY.YOUTUBE;
             retValue.ytUrlApi += "&part=snippet,contentDetails,statistics,status";
