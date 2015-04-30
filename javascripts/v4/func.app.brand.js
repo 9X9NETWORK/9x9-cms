@@ -17,7 +17,11 @@
     $page.saveItems = 0;
     $page.typeSNS = 1;
     $page.typeSugg = 2;
-    $page.defImgsSNS = ["images/icon-pcs-sns-fb.png", "images/icon-pcs-sns-gplus.png", "images/icon-pcs-sns-youtube.png", "images/icon-pcs-sns-twitter.png"];
+    $page.defImgsSNS = [
+        "/cms/images/icon-pcs-sns-fb.png",
+        "/cms/images/icon-pcs-sns-gplus.png",
+        "/cms/images/icon-pcs-sns-youtube.png",
+        "/cms/images/icon-pcs-sns-twitter.png"];
 
     $page.isDoSuggested = function() {
         var retValue = false;
