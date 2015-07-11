@@ -1273,10 +1273,6 @@
                 $.removeCookie('cms-crumb');
             }
 
-            // render page
-            if (-1 === $.inArray(userUrlFile, ['channel-add.html', 'channel-setting.html', 'epcurate-publish.html', 'epcurate-curation.html'])) {
-                $common.initFacebookJavaScriptSdk();
-            }
             $page.init({
                 init: true
             });
